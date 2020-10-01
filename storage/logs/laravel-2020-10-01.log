@@ -12,3 +12,245 @@
 #9 C:\\xampp\\htdocs\sudiskak\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #10 {main}
 "} 
+[2020-10-01 14:48:21] local.ERROR: No suitable servers found (`serverSelectionTryOnce` set): [Failed to resolve 'locahost'] {"exception":"[object] (MongoDB\\Driver\\Exception\\ConnectionTimeoutException(code: 13053): No suitable servers found (`serverSelectionTryOnce` set): [Failed to resolve 'locahost'] at C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\functions.php:431)
+[stacktrace]
+#0 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\functions.php(431): MongoDB\\Driver\\Manager->selectServer(Object(MongoDB\\Driver\\ReadPreference))
+#1 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Database.php(436): MongoDB\\select_server(Object(MongoDB\\Driver\\Manager), Array)
+#2 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(44): MongoDB\\Database->listCollections()
+#3 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(58): Jenssegers\\Mongodb\\Schema\\Builder->hasCollection('migrations')
+#4 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\DatabaseMigrationRepository.php(169): Jenssegers\\Mongodb\\Schema\\Builder->hasTable('migrations')
+#5 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(556): Illuminate\\Database\\Migrations\\DatabaseMigrationRepository->repositoryExists()
+#6 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(91): Illuminate\\Database\\Migrations\\Migrator->repositoryExists()
+#7 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(63): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->prepareDatabase()
+#8 [internal function]: Illuminate\\Database\\Console\\Migrations\\MigrateCommand->handle()
+#9 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#10 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#11 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#12 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#13 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#14 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#15 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(1009): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#17 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(273): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Migrations\\MigrateCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(149): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(89): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(122): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 C:\\xampp\\htdocs\sudiskak\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 {main}
+"} 
+[2020-10-01 15:23:10] local.ERROR: Authentication failed. {"exception":"[object] (MongoDB\\Driver\\Exception\\AuthenticationException(code: 11): Authentication failed. at C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php:114)
+[stacktrace]
+#0 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php(114): MongoDB\\Driver\\Server->executeReadCommand('rsudiskak', Object(MongoDB\\Driver\\Command), Array)
+#1 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Operation\\ListCollections.php(76): MongoDB\\Command\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#2 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Database.php(438): MongoDB\\Operation\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#3 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(44): MongoDB\\Database->listCollections()
+#4 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(58): Jenssegers\\Mongodb\\Schema\\Builder->hasCollection('migrations')
+#5 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\DatabaseMigrationRepository.php(169): Jenssegers\\Mongodb\\Schema\\Builder->hasTable('migrations')
+#6 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(556): Illuminate\\Database\\Migrations\\DatabaseMigrationRepository->repositoryExists()
+#7 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(91): Illuminate\\Database\\Migrations\\Migrator->repositoryExists()
+#8 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(63): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->prepareDatabase()
+#9 [internal function]: Illuminate\\Database\\Console\\Migrations\\MigrateCommand->handle()
+#10 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#11 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#12 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#13 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#14 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#15 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#17 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(1009): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(273): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Migrations\\MigrateCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(149): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(89): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(122): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 C:\\xampp\\htdocs\sudiskak\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#23 {main}
+"} 
+[2020-10-01 15:24:23] local.ERROR: Authentication failed. {"exception":"[object] (MongoDB\\Driver\\Exception\\AuthenticationException(code: 11): Authentication failed. at C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php:114)
+[stacktrace]
+#0 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php(114): MongoDB\\Driver\\Server->executeReadCommand('rsudiskak', Object(MongoDB\\Driver\\Command), Array)
+#1 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Operation\\ListCollections.php(76): MongoDB\\Command\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#2 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Database.php(438): MongoDB\\Operation\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#3 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(44): MongoDB\\Database->listCollections()
+#4 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(58): Jenssegers\\Mongodb\\Schema\\Builder->hasCollection('migrations')
+#5 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\DatabaseMigrationRepository.php(169): Jenssegers\\Mongodb\\Schema\\Builder->hasTable('migrations')
+#6 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(556): Illuminate\\Database\\Migrations\\DatabaseMigrationRepository->repositoryExists()
+#7 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(91): Illuminate\\Database\\Migrations\\Migrator->repositoryExists()
+#8 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(63): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->prepareDatabase()
+#9 [internal function]: Illuminate\\Database\\Console\\Migrations\\MigrateCommand->handle()
+#10 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#11 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#12 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#13 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#14 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#15 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#17 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(1009): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(273): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Migrations\\MigrateCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(149): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(89): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(122): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 C:\\xampp\\htdocs\sudiskak\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#23 {main}
+"} 
+[2020-10-01 15:24:39] local.ERROR: Authentication failed. {"exception":"[object] (MongoDB\\Driver\\Exception\\AuthenticationException(code: 11): Authentication failed. at C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php:114)
+[stacktrace]
+#0 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php(114): MongoDB\\Driver\\Server->executeReadCommand('rsudiskak', Object(MongoDB\\Driver\\Command), Array)
+#1 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Operation\\ListCollections.php(76): MongoDB\\Command\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#2 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Database.php(438): MongoDB\\Operation\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#3 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(44): MongoDB\\Database->listCollections()
+#4 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(58): Jenssegers\\Mongodb\\Schema\\Builder->hasCollection('migrations')
+#5 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\DatabaseMigrationRepository.php(169): Jenssegers\\Mongodb\\Schema\\Builder->hasTable('migrations')
+#6 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(556): Illuminate\\Database\\Migrations\\DatabaseMigrationRepository->repositoryExists()
+#7 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(91): Illuminate\\Database\\Migrations\\Migrator->repositoryExists()
+#8 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(63): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->prepareDatabase()
+#9 [internal function]: Illuminate\\Database\\Console\\Migrations\\MigrateCommand->handle()
+#10 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#11 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#12 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#13 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#14 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#15 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#17 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(1009): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(273): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Migrations\\MigrateCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(149): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(89): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(122): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 C:\\xampp\\htdocs\sudiskak\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#23 {main}
+"} 
+[2020-10-01 15:25:57] local.ERROR: Authentication failed. {"exception":"[object] (MongoDB\\Driver\\Exception\\AuthenticationException(code: 11): Authentication failed. at C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php:114)
+[stacktrace]
+#0 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php(114): MongoDB\\Driver\\Server->executeReadCommand('rsudiskak', Object(MongoDB\\Driver\\Command), Array)
+#1 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Operation\\ListCollections.php(76): MongoDB\\Command\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#2 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Database.php(438): MongoDB\\Operation\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#3 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(44): MongoDB\\Database->listCollections()
+#4 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(58): Jenssegers\\Mongodb\\Schema\\Builder->hasCollection('migrations')
+#5 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\DatabaseMigrationRepository.php(169): Jenssegers\\Mongodb\\Schema\\Builder->hasTable('migrations')
+#6 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(556): Illuminate\\Database\\Migrations\\DatabaseMigrationRepository->repositoryExists()
+#7 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(91): Illuminate\\Database\\Migrations\\Migrator->repositoryExists()
+#8 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(63): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->prepareDatabase()
+#9 [internal function]: Illuminate\\Database\\Console\\Migrations\\MigrateCommand->handle()
+#10 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#11 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#12 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#13 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#14 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#15 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#17 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(1009): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(273): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Migrations\\MigrateCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(149): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(89): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(122): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 C:\\xampp\\htdocs\sudiskak\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#23 {main}
+"} 
+[2020-10-01 15:29:52] local.ERROR: Authentication failed. {"exception":"[object] (MongoDB\\Driver\\Exception\\AuthenticationException(code: 11): Authentication failed. at C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php:114)
+[stacktrace]
+#0 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php(114): MongoDB\\Driver\\Server->executeReadCommand('rsudiskak', Object(MongoDB\\Driver\\Command), Array)
+#1 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Operation\\ListCollections.php(76): MongoDB\\Command\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#2 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Database.php(438): MongoDB\\Operation\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#3 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(44): MongoDB\\Database->listCollections()
+#4 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(58): Jenssegers\\Mongodb\\Schema\\Builder->hasCollection('migrations')
+#5 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\DatabaseMigrationRepository.php(169): Jenssegers\\Mongodb\\Schema\\Builder->hasTable('migrations')
+#6 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(556): Illuminate\\Database\\Migrations\\DatabaseMigrationRepository->repositoryExists()
+#7 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(91): Illuminate\\Database\\Migrations\\Migrator->repositoryExists()
+#8 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(63): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->prepareDatabase()
+#9 [internal function]: Illuminate\\Database\\Console\\Migrations\\MigrateCommand->handle()
+#10 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#11 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#12 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#13 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#14 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#15 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#17 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(1009): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(273): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Migrations\\MigrateCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(149): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(89): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(122): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 C:\\xampp\\htdocs\sudiskak\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#23 {main}
+"} 
+[2020-10-01 15:31:49] local.ERROR: Authentication failed. {"exception":"[object] (MongoDB\\Driver\\Exception\\AuthenticationException(code: 11): Authentication failed. at C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php:114)
+[stacktrace]
+#0 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php(114): MongoDB\\Driver\\Server->executeReadCommand('rsudiskak', Object(MongoDB\\Driver\\Command), Array)
+#1 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Operation\\ListCollections.php(76): MongoDB\\Command\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#2 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Database.php(438): MongoDB\\Operation\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#3 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(44): MongoDB\\Database->listCollections()
+#4 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(58): Jenssegers\\Mongodb\\Schema\\Builder->hasCollection('migrations')
+#5 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\DatabaseMigrationRepository.php(169): Jenssegers\\Mongodb\\Schema\\Builder->hasTable('migrations')
+#6 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(556): Illuminate\\Database\\Migrations\\DatabaseMigrationRepository->repositoryExists()
+#7 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(91): Illuminate\\Database\\Migrations\\Migrator->repositoryExists()
+#8 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(63): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->prepareDatabase()
+#9 [internal function]: Illuminate\\Database\\Console\\Migrations\\MigrateCommand->handle()
+#10 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#11 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#12 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#13 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#14 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#15 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#17 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(1009): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(273): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Migrations\\MigrateCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(149): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(89): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(122): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 C:\\xampp\\htdocs\sudiskak\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#23 {main}
+"} 
+[2020-10-01 15:36:50] local.ERROR: Authentication failed. {"exception":"[object] (MongoDB\\Driver\\Exception\\AuthenticationException(code: 11): Authentication failed. at C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php:114)
+[stacktrace]
+#0 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php(114): MongoDB\\Driver\\Server->executeReadCommand('rsudiskak', Object(MongoDB\\Driver\\Command), Array)
+#1 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Operation\\ListCollections.php(76): MongoDB\\Command\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#2 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Database.php(438): MongoDB\\Operation\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#3 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(44): MongoDB\\Database->listCollections()
+#4 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(58): Jenssegers\\Mongodb\\Schema\\Builder->hasCollection('migrations')
+#5 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\DatabaseMigrationRepository.php(169): Jenssegers\\Mongodb\\Schema\\Builder->hasTable('migrations')
+#6 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(556): Illuminate\\Database\\Migrations\\DatabaseMigrationRepository->repositoryExists()
+#7 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(91): Illuminate\\Database\\Migrations\\Migrator->repositoryExists()
+#8 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(63): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->prepareDatabase()
+#9 [internal function]: Illuminate\\Database\\Console\\Migrations\\MigrateCommand->handle()
+#10 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#11 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#12 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#13 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#14 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#15 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#17 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(1009): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(273): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Migrations\\MigrateCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(149): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(89): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(122): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 C:\\xampp\\htdocs\sudiskak\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#23 {main}
+"} 
+[2020-10-01 15:39:34] local.ERROR: Authentication failed. {"exception":"[object] (MongoDB\\Driver\\Exception\\AuthenticationException(code: 11): Authentication failed. at C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php:114)
+[stacktrace]
+#0 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Command\\ListCollections.php(114): MongoDB\\Driver\\Server->executeReadCommand('rsudiskak', Object(MongoDB\\Driver\\Command), Array)
+#1 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Operation\\ListCollections.php(76): MongoDB\\Command\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#2 C:\\xampp\\htdocs\sudiskak\\vendor\\mongodb\\mongodb\\src\\Database.php(438): MongoDB\\Operation\\ListCollections->execute(Object(MongoDB\\Driver\\Server))
+#3 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(44): MongoDB\\Database->listCollections()
+#4 C:\\xampp\\htdocs\sudiskak\\vendor\\jenssegers\\mongodb\\src\\Jenssegers\\Mongodb\\Schema\\Builder.php(58): Jenssegers\\Mongodb\\Schema\\Builder->hasCollection('migrations')
+#5 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\DatabaseMigrationRepository.php(169): Jenssegers\\Mongodb\\Schema\\Builder->hasTable('migrations')
+#6 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(556): Illuminate\\Database\\Migrations\\DatabaseMigrationRepository->repositoryExists()
+#7 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(91): Illuminate\\Database\\Migrations\\Migrator->repositoryExists()
+#8 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(63): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->prepareDatabase()
+#9 [internal function]: Illuminate\\Database\\Console\\Migrations\\MigrateCommand->handle()
+#10 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#11 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#12 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#13 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#14 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(183): Illuminate\\Container\\Container->call(Array)
+#15 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Command\\Command.php(255): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(170): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#17 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(1009): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(273): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Migrations\\MigrateCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 C:\\xampp\\htdocs\sudiskak\\vendor\\symfony\\console\\Application.php(149): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(89): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 C:\\xampp\\htdocs\sudiskak\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(122): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#22 C:\\xampp\\htdocs\sudiskak\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#23 {main}
+"} 
