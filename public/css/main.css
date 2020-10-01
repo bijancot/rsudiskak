@@ -10906,7 +10906,6 @@ a {
 
 a:hover {
   text-decoration: none;
-  color: #505050;
 }
 
 nav {
@@ -11039,26 +11038,26 @@ nav ul li.profile img {
   border: none;
 }
 
-.keterangan {
+.label-keterangan {
   color: white;
   display: block;
   border-radius: 5px;
   text-align: center;
 }
 
-.keterangan.menunggu {
+.label-keterangan.yellow {
   background: #F2C94C;
 }
 
-.keterangan.diperiksa {
+.label-keterangan.blue {
   background: #2D9CDB;
 }
 
-.keterangan.selesai {
+.label-keterangan.lime {
   background: #9AD042;
 }
 
-.keterangan.belum {
+.label-keterangan.orange {
   background: #F2994A;
 }
 
@@ -11078,9 +11077,49 @@ nav ul li.profile img {
   background: #EB5757;
 }
 
+.btn.green-long {
+  background: #009241;
+  width: 100%;
+  height: 50px;
+  font-size: 14px;
+}
+
 .soft-shadow {
   box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
   -webkit-box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
+}
+
+.content {
+  border-radius: 8px;
+  background: white;
+  width: 100%;
+  color: #00451F;
+}
+
+.content hr {
+  margin: 0;
+}
+
+.content label {
+  margin: 5px 0 0 0;
+  color: #AEAEAE;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.content input {
+  background: #F7FAF8;
+  border: 1px solid #E5E5E5;
+  border-radius: 5px;
+  color: #00451F;
+  height: 50px;
+  width: 100%;
+  padding: 0px 16px;
+  font-weight: 500;
+}
+
+.content .separator {
+  opacity: 0;
 }
 

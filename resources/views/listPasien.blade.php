@@ -31,8 +31,8 @@
                             <td>25 Th</td>
                             <td>Laki-Laki</td>
                             <td>27/08/2020 - 13.02</td>
-                            <td><span class="keterangan menunggu">Menunggu</span></td>
-                            <td class="d-flex flex-row"><a href="#" class="btn btn-light diagnosa">Diagnosa</a><a href="#" class="btn batal">Batal</a></td>
+                            <td><span class="label-keterangan yellow">Menunggu</span></td>
+                            <td class="d-flex flex-row"><a href="#" class="btn btn-dark diagnosa">Diagnosa</a><a href="#" class="btn btn-dark batal">Batal</a></td>
                         </tr>
                         <tr>
                             <td>001</td>
@@ -42,8 +42,8 @@
                             <td>25 Th</td>
                             <td>Laki-Laki</td>
                             <td>27/08/2020 - 13.02</td>
-                            <td><span class="keterangan diperiksa">Diperiksa</span></td>
-                            <td class="d-flex flex-row"><a href="#" class="btn btn-light diagnosa">Diagnosa</a><a href="#" class="btn batal">Batal</a></td>
+                            <td><span class="label-keterangan blue">Diperiksa</span></td>
+                            <td class="d-flex flex-row"><a href="#" class="btn btn-dark diagnosa">Diagnosa</a><a href="#" class="btn btn-dark batal">Batal</a></td>
                         </tr>
                         <tr>
                             <td>001</td>
@@ -53,8 +53,8 @@
                             <td>25 Th</td>
                             <td>Laki-Laki</td>
                             <td>27/08/2020 - 13.02</td>
-                            <td><span class="keterangan selesai">Selesai</span></td>
-                            <td class="d-flex flex-row"><a href="#" class="btn btn-light diagnosa">Diagnosa</a><a href="#" class="btn batal">Batal</a></td>
+                            <td><span class="label-keterangan lime">Selesai</span></td>
+                            <td class="d-flex flex-row"><a href="#" class="btn btn-dark diagnosa">Diagnosa</a><a href="#" class="btn btn-dark batal">Batal</a></td>
                         </tr>
                         <tr>
                             <td>001</td>
@@ -64,8 +64,8 @@
                             <td>25 Th</td>
                             <td>Laki-Laki</td>
                             <td>27/08/2020 - 13.02</td>
-                            <td><span class="keterangan belum">Belum</span></td>
-                            <td class="d-flex flex-row"><a href="#" class="btn btn-light diagnosa">Diagnosa</a><a href="#" class="btn batal">Batal</a></td>
+                            <td><span class="label-keterangan orange">Belum</span></td>
+                            <td class="d-flex flex-row"><a href="#" class="btn btn-dark diagnosa">Diagnosa</a><a href="#" class="btn btn-dark batal">Batal</a></td>
                         </tr>
                     </tbody>
                 </table>

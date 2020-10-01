@@ -16,9 +16,9 @@ a {
 }
 a:hover {
     text-decoration: none;
-    color: $black;
-}
 
+}
+ 
 nav {
     width: 100%;
     height: 60px;
@@ -142,22 +142,22 @@ nav {
     }
 }
 
-.keterangan {
+.label-keterangan {
     color: white;
     display: block;
     border-radius: 5px;
     text-align: center;
 
-    &.menunggu {
+    &.yellow {
         background: $yellow;
     }
-    &.diperiksa {
+    &.blue {
         background: $blue;
     }
-    &.selesai {
+    &.lime {
         background: $lime;
     }
-    &.belum {
+    &.orange {
         background: $orange;
     }
 }
@@ -175,6 +175,12 @@ nav {
     &.batal {
         background: $red;
     }
+    &.green-long {
+        background: $green;
+        width: 100%;
+        height: 50px;
+        font-size: 14px;
+    }
 }
 
 .soft-shadow {
@@ -183,4 +189,34 @@ nav {
     -moz-box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
 }
 
+.content {
+    border-radius: 8px;
+    background: white;
+    width: 100%;
+    color: $darkgreen;
+
+    hr {
+        margin: 0;
+    }
+
+    label {
+        margin: 5px 0 0 0 ;
+        color: $grey3;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+    input {
+        background: $greenishgrey;
+        border: 1px solid $outlinegrey;
+        border-radius: 5px;
+        color: $darkgreen;
+        height: 50px;
+        width: 100%;
+        padding: 0px 16px;
+        font-weight: 500;
+    }
+    .separator {
+        opacity: 0;
+    }
+}
 

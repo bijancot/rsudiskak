@@ -23,6 +23,10 @@ Route::get('listPasien', function() {
     return view('listPasien');
 });
 
+Route::get('dataPasien', function() {
+    return view('dataPasien');
+});
+
 Route::get('login', function() {
     return view('login');
 });
