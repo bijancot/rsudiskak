@@ -9,5 +9,4 @@ return array(
     'UpdateHelper\\' => array($vendorDir . '/kylekatarnls/update-helper/src'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
-    'Jenssegers\\Mongodb' => array($vendorDir . '/jenssegers/mongodb/src'),
 );
