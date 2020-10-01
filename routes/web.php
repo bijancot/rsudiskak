@@ -14,3 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('layout', function() {
+    return view('layout');
+});
+
+Route::get('listPasien', function() {
+    return view('listPasien');
+});
+
+Route::get('login', function() {
+    return view('login');
+});
