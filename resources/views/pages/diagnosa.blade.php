@@ -1,11 +1,17 @@
-@extends('layout')
+@extends('layouts.layout')
 
 @section('content')
+
+    @include('includes.navbar')
+
     <div class="bg-greenishwhite">
         <div class="wrapper">
+
+            @include('includes.subNavbar')
+            
             <div class="content soft-shadow">
                 <div class="p-3">
-                    <p class="h4">Diagnosa Awal Pasien</p>
+                    <p class="h5">Diagnosa Awal Pasien</p>
                 </div>
                 <hr>
                 <div class="row p-3 py-4">

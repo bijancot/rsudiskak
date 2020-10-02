@@ -16,7 +16,16 @@ a {
 }
 a:hover {
     text-decoration: none;
-
+    text-transform: none;
+}
+input:focus {
+    outline: none;
+}
+textarea:focus {
+    outline: none;
+}
+select:focus {
+    outline: none;
 }
  
 nav {
@@ -24,6 +33,7 @@ nav {
     height: 60px;
     padding: 0px;
     position: fixed !important;
+    z-index: 3;
 
     background: $green;
     color: white;
@@ -96,7 +106,7 @@ nav {
 .wrapper {
     height: 100%;
     padding: 3rem;
-    padding-top: 120px;
+    padding-top: 100px;
 }
 
 .search-box-box {
@@ -131,8 +141,8 @@ nav {
     border-radius: 8px;
     background: white;
     color: $black;
-    height: 100%;
-    margin-top: 60px;
+    min-height: 600px;
+    margin-top: 50px;
 
     table {
         th {
@@ -183,6 +193,28 @@ nav {
     }
 }
 
+.capsule-btn {
+    background: $grey4;
+    border: 4px solid $outlinegrey;
+    color: white;
+    padding: 8px 16px;
+
+    &.active {
+        background: $green;
+    }
+
+    &:nth-child(2){
+        border-radius: 24px 0px 0px 24px;
+    }
+    &:nth-child(3){
+        border-right: none;
+        border-left: none;
+    }
+    &:nth-child(4){
+        border-radius: 0 24px 24px 0;
+    }
+}
+
 .soft-shadow {
     box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
     -webkit-box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
@@ -227,13 +259,19 @@ nav {
     }
     .separator {
         opacity: 0;
+        pointer-events: none;
     }
 
     select {
         height: 50px;
 
-        option {
-            padding: 3rem;
+        &.custom-select {
+            background: $greenishgrey;
+            border: 1px solid $outlinegrey;
+            
+            option.active {
+                background: $greenishgrey;
+            }
         }
     }
     select:focus {
@@ -242,5 +280,36 @@ nav {
     select:active {
         outline: none;
     }
+
+    textarea {
+
+        &.form-control {
+            resize: none;
+            height: 83%;
+        }
+    }
 }
 
+footer {
+    height: 48px;
+    background: $green;
+    color: white;
+    position: fixed;
+
+    label {
+        margin: 0 10px 0 0;
+        font-weight: 500;
+        font-size: 18px;    
+    }
+    input {
+        border: none;
+        border-radius: 5px;
+        height: 28px;
+        width: 200px;
+        padding: 0 10px;
+
+        &:disabled {
+            background: $greenishgrey;
+        }
+    }
+}

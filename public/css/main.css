@@ -10906,6 +10906,19 @@ a {
 
 a:hover {
   text-decoration: none;
+  text-transform: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+select:focus {
+  outline: none;
 }
 
 nav {
@@ -10913,6 +10926,7 @@ nav {
   height: 60px;
   padding: 0px;
   position: fixed !important;
+  z-index: 3;
   background: #009241;
   color: white;
   font-size: 14px;
@@ -10983,7 +10997,7 @@ nav ul li.profile img {
 .wrapper {
   height: 100%;
   padding: 3rem;
-  padding-top: 120px;
+  padding-top: 100px;
 }
 
 .search-box-box {
@@ -11029,8 +11043,8 @@ nav ul li.profile img {
   border-radius: 8px;
   background: white;
   color: #505050;
-  height: 100%;
-  margin-top: 60px;
+  min-height: 600px;
+  margin-top: 50px;
 }
 
 .table-container table th {
@@ -11082,6 +11096,30 @@ nav ul li.profile img {
   width: 100%;
   height: 50px;
   font-size: 14px;
+}
+
+.capsule-btn {
+  background: #EEF2ED;
+  border: 4px solid #E5E5E5;
+  color: white;
+  padding: 8px 16px;
+}
+
+.capsule-btn.active {
+  background: #009241;
+}
+
+.capsule-btn:nth-child(2) {
+  border-radius: 24px 0px 0px 24px;
+}
+
+.capsule-btn:nth-child(3) {
+  border-right: none;
+  border-left: none;
+}
+
+.capsule-btn:nth-child(4) {
+  border-radius: 0 24px 24px 0;
 }
 
 .soft-shadow {
@@ -11141,14 +11179,20 @@ nav ul li.profile img {
 
 .content .separator {
   opacity: 0;
+  pointer-events: none;
 }
 
 .content select {
   height: 50px;
 }
 
-.content select option {
-  padding: 3rem;
+.content select.custom-select {
+  background: #F7FAF8;
+  border: 1px solid #E5E5E5;
+}
+
+.content select.custom-select option.active {
+  background: #F7FAF8;
 }
 
 .content select:focus {
@@ -11157,5 +11201,35 @@ nav ul li.profile img {
 
 .content select:active {
   outline: none;
+}
+
+.content textarea.form-control {
+  resize: none;
+  height: 83%;
+}
+
+footer {
+  height: 48px;
+  background: #009241;
+  color: white;
+  position: fixed;
+}
+
+footer label {
+  margin: 0 10px 0 0;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+footer input {
+  border: none;
+  border-radius: 5px;
+  height: 28px;
+  width: 200px;
+  padding: 0 10px;
+}
+
+footer input:disabled {
+  background: #F7FAF8;
 }
 

@@ -16,21 +16,48 @@ Route::get('/', function () {
 });
 
 Route::get('layout', function() {
-    return view('layout');
+    return view('layouts.layout');
 });
 
+
+
+
 Route::get('listPasien', function() {
-    return view('listPasien');
+    return view('pages.listPasien');
+});
+
+Route::get('listPasienKirimPoli', function() {
+    return view('pages.listPasienKirimPoli');
+});
+
+Route::get('listPasienHasilLab', function() {
+    return view('pages.listPasienHasilLab');
 });
 
 Route::get('dataPasien', function() {
-    return view('dataPasien');
+    return view('pages.dataPasien');
 });
 
 Route::get('diagnosa', function() {
-    return view('diagnosa');
+    return view('pages.diagnosa');
 });
 
-Route::get('login', function() {
-    return view('login');
+Route::get('diagnosaAkhir', function() {
+    return view('pages.diagnosaAkhir');
+});
+
+
+
+
+
+Route::get('subNavbar', function() {
+    return view('includes.subNavbar');
+});
+
+Route::get('navbar', function() {
+    return view('includes.navbar');
+});
+
+Route::get('footer', function() {
+    return view('includes.footer');
 });
