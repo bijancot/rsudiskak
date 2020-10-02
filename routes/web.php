@@ -27,6 +27,10 @@ Route::get('dataPasien', function() {
     return view('dataPasien');
 });
 
+Route::get('diagnosa', function() {
+    return view('diagnosa');
+});
+
 Route::get('login', function() {
     return view('login');
 });

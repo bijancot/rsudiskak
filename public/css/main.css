@@ -11097,6 +11097,10 @@ nav ul li.profile img {
   color: #00451F;
 }
 
+.content p {
+  margin: 0;
+}
+
 .content hr {
   margin: 0;
 }
@@ -11119,7 +11123,39 @@ nav ul li.profile img {
   font-weight: 500;
 }
 
+.content input:focus {
+  outline: none;
+}
+
+.content input::-moz-placeholder {
+  color: #C7D3CC;
+}
+
+.content input:-ms-input-placeholder {
+  color: #C7D3CC;
+}
+
+.content input::placeholder {
+  color: #C7D3CC;
+}
+
 .content .separator {
   opacity: 0;
+}
+
+.content select {
+  height: 50px;
+}
+
+.content select option {
+  padding: 3rem;
+}
+
+.content select:focus {
+  outline: none;
+}
+
+.content select:active {
+  outline: none;
 }
 
