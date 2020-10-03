@@ -18,12 +18,12 @@
                     <div class="col-6">
                         <div class="row">
                             <div class="col-12">
-                                <label for="anamnesis">Anamnesis</label>
-                                <input type="text" name="anamnesis" value="Sesak Napas, Muntah Darah 3x, BAB Hitam pekat">
+                                <label for="anamnesis">Dokter Pemeriksa</label>
+                                <input type="text" name="anamnesis" value="dr. Heri Sutrisno Sp. PD" disabled>
                             </div>
                             <div class="col-12">
                                 <label for="alamat">Pemeriksaan</label>
-                                <select class="custom-select">
+                                <select class="custom-select" disabled>
                                     <option selected>Diagnosa</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
@@ -32,7 +32,7 @@
                             </div>
                             <div class="col-12">
                                 <label for="alamat">Penunjang</label>
-                                <select class="custom-select">
+                                <select class="custom-select" disabled>
                                     <option selected>Diagnosa</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
@@ -41,11 +41,11 @@
                             </div>
                             <div class="col-8">
                                 <label for="beratbadan">Kompilasi</label>
-                                <input type="text" name="beratbadan" placeholder="Berat">
+                                <input type="text" name="beratbadan" placeholder="Berat" disabled>
                             </div>
                             <div class="col-4 pl-0">
                                 <label >Triase</label>
-                                <select class="custom-select">
+                                <select class="custom-select" disabled>
                                     <option selected>Hitam</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
@@ -60,11 +60,11 @@
                         <div class="row">
                             <div class="col-12">
                                 <label for="alamat">Riwayat Alergi</label>
-                                <input type="text" name="beratbadan" value="-">
+                                <input type="text" name="beratbadan" value="-" disabled>
                             </div>
                             <div class="col-12">
                                 <label for="alamat">Diagnosa Akhir</label>
-                                <select class="custom-select">
+                                <select class="custom-select" disabled>
                                     <option selected>Animeia</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
@@ -78,19 +78,20 @@
             </div>
 
             <div class="content soft-shadow mt-4">
-                <div class="p-3">
-                    <p class="h5">Data Resep</p>
+                <div class="d-flex">
+                    <p class="h5 p-3">Data Resep</p>
+                    <button class="ml-auto btn diagnosa px-5 m-2 mr-3" data-toggle="modal" data-target="#exampleModal">Simpan</button>
                 </div>
                 <hr>
                 <div class="row p-3 py-4">
                     <div class="col-6">
                         <div class="row">
                             <div class="col-12">
-                                <label for="anamnesis">Anamnesis</label>
-                                <input type="text" name="anamnesis" value="Sesak Napas, Muntah Darah 3x, BAB Hitam pekat">
+                                <label for="anamnesis">No Resep</label>
+                                <input type="text" name="anamnesis" value="5151185" disabled>
                             </div>
                             <div class="col-12">
-                                <label for="alamat">Pemeriksaan</label>
+                                <label for="alamat">Apotek Tujuan</label>
                                 <select class="custom-select">
                                     <option selected>Diagnosa</option>
                                     <option value="1">One</option>

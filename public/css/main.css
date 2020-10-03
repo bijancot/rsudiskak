@@ -1,6 +1,6 @@
-@import url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;
+@import url(https://fonts.googleapis.com/css2?family=Roboto:wght@100;
 
-0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap);@charset "UTF-8";
+300;400;500;700;900&display=swap);@charset "UTF-8";
 
 :root {
   --blue: #2D9CDB;
@@ -10994,10 +10994,13 @@ nav ul li.profile img {
   min-height: 100vh;
 }
 
+.fullvh {
+  min-height: 100vh;
+}
+
 .wrapper {
   height: 100%;
-  padding: 3rem;
-  padding-top: 100px;
+  padding: 6.25rem 3rem 6.5rem 3rem;
 }
 
 .search-box-box {
@@ -11080,14 +11083,15 @@ nav ul li.profile img {
   margin: 0 2px;
   border: none;
   color: white;
-  display: block;
 }
 
 .btn.diagnosa {
+  color: white;
   background: #009241;
 }
 
 .btn.batal {
+  color: white;
   background: #EB5757;
 }
 
@@ -11107,6 +11111,10 @@ nav ul li.profile img {
 
 .capsule-btn.active {
   background: #009241;
+}
+
+.capsule-btn.secondary {
+  background: #AEAEAE;
 }
 
 .capsule-btn:nth-child(2) {
@@ -11150,8 +11158,9 @@ nav ul li.profile img {
   white-space: nowrap;
 }
 
-.content input {
-  background: #F7FAF8;
+.content input[type=text],
+.content input[type=password] {
+  background: white;
   border: 1px solid #E5E5E5;
   border-radius: 5px;
   color: #00451F;
@@ -11161,19 +11170,27 @@ nav ul li.profile img {
   font-weight: 500;
 }
 
-.content input:focus {
+.content input[type=text]:disabled,
+.content input[type=password]:disabled {
+  background: #F7FAF8;
+  color: #00451F;
+}
+
+.content input[type=text]:focus,
+.content input[type=password]:focus {
   outline: none;
 }
 
-.content input::-moz-placeholder {
+.content input[type=text]::-moz-placeholder, .content input[type=password]::-moz-placeholder {
   color: #C7D3CC;
 }
 
-.content input:-ms-input-placeholder {
+.content input[type=text]:-ms-input-placeholder, .content input[type=password]:-ms-input-placeholder {
   color: #C7D3CC;
 }
 
-.content input::placeholder {
+.content input[type=text]::placeholder,
+.content input[type=password]::placeholder {
   color: #C7D3CC;
 }
 
@@ -11187,12 +11204,12 @@ nav ul li.profile img {
 }
 
 .content select.custom-select {
-  background: #F7FAF8;
   border: 1px solid #E5E5E5;
 }
 
-.content select.custom-select option.active {
+.content select.custom-select:disabled {
   background: #F7FAF8;
+  color: #00451F;
 }
 
 .content select:focus {
@@ -11210,9 +11227,12 @@ nav ul li.profile img {
 
 footer {
   height: 48px;
+  width: 100%;
   background: #009241;
   color: white;
   position: fixed;
+  left: 0;
+  bottom: 0;
 }
 
 footer label {
@@ -11231,5 +11251,55 @@ footer input {
 
 footer input:disabled {
   background: #F7FAF8;
+}
+
+.doktor {
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.doktor .asd {
+  background: rgba(9, 105, 52, 0.54);
+  height: 100%;
+}
+
+.doktor .top {
+  position: absolute;
+  top: 50px;
+  right: 60px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+}
+
+.doktor .copyright {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  font-weight: 400;
+  color: white;
+  line-height: 16.41px;
+}
+
+.modal {
+  background: rgba(0, 40, 18, 0.75);
+}
+
+.submit-btn {
+  width: 100%;
+  height: 50px;
+}
+
+@media (min-width: 992px) {
+  .submit-btn {
+    width: 50%;
+    height: 40px;
+  }
 }
 

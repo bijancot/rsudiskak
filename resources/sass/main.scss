@@ -1,5 +1,5 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 // Variables
 @import 'variables';
 // Bootstrap
@@ -103,10 +103,13 @@ nav {
 
 }
 
+.fullvh {
+    min-height: 100vh;
+}
+
 .wrapper {
     height: 100%;
-    padding: 3rem;
-    padding-top: 100px;
+    padding: 6.25rem 3rem 6.5rem 3rem;
 }
 
 .search-box-box {
@@ -177,12 +180,13 @@ nav {
     margin: 0 2px;
     border: none;
     color: white;
-    display: block;
 
     &.diagnosa {
+        color: white;
         background: $green;
     }
     &.batal {
+        color: white;
         background: $red;
     }
     &.green-long {
@@ -201,6 +205,9 @@ nav {
 
     &.active {
         background: $green;
+    }
+    &.secondary {
+        background: $grey3;
     }
 
     &:nth-child(2){
@@ -241,8 +248,8 @@ nav {
         font-size: 12px;
         white-space: nowrap;
     }
-    input {
-        background: $greenishgrey;
+    input[type=text],input[type=password] {
+        background: white;
         border: 1px solid $outlinegrey;
         border-radius: 5px;
         color: $darkgreen;
@@ -250,13 +257,19 @@ nav {
         width: 100%;
         padding: 0px 16px;
         font-weight: 500;
+    
+        &:disabled {
+            background: $greenishgrey;
+            color: $darkgreen;
+        }
+        &:focus {
+            outline: none;
+        }
+        &::placeholder {
+            color: $grey2;
+        }
     }
-    input:focus {
-        outline: none;
-    }
-    input::placeholder {
-        color: $grey2;
-    }
+
     .separator {
         opacity: 0;
         pointer-events: none;
@@ -266,11 +279,11 @@ nav {
         height: 50px;
 
         &.custom-select {
-            background: $greenishgrey;
             border: 1px solid $outlinegrey;
             
-            option.active {
+            &:disabled {
                 background: $greenishgrey;
+                color: $darkgreen;
             }
         }
     }
@@ -292,9 +305,12 @@ nav {
 
 footer {
     height: 48px;
+    width: 100%;
     background: $green;
     color: white;
     position: fixed;
+    left: 0;
+    bottom: 0;
 
     label {
         margin: 0 10px 0 0;
@@ -311,5 +327,55 @@ footer {
         &:disabled {
             background: $greenishgrey;
         }
+    }
+}
+
+.doktor {
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    .asd {
+        background: rgba(9, 105, 52, 0.54);
+        height: 100%;
+    }
+
+    .top {
+        position: absolute;
+        top: 50px;
+        right: 60px;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: white;
+    }
+    
+    .copyright {
+        position: absolute;
+        bottom: 50px;
+        right: 50px;
+        font-weight: 400;
+        color: white;
+        line-height: 16.41px;
+    }
+}
+
+.modal {
+    background: rgba(0, 40, 18, 0.75);
+}
+
+.submit-btn {
+    width: 100%;
+    height: 50px;
+}
+
+@media(min-width: 992px) {
+    .submit-btn {
+        width: 50%;
+        height: 40px;
     }
 }

@@ -21,6 +21,9 @@ Route::get('layout', function() {
 
 
 
+Route::get('login', function() {
+    return view('pages.login');
+});
 
 Route::get('listPasien', function() {
     return view('pages.listPasien');
@@ -44,6 +47,10 @@ Route::get('diagnosa', function() {
 
 Route::get('diagnosaAkhir', function() {
     return view('pages.diagnosaAkhir');
+});
+
+Route::get('riwayat', function() {
+    return view('pages.riwayat');
 });
 
 

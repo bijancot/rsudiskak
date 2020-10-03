@@ -76,7 +76,6 @@
                         </div>
                     </div>
                     <div class="col-12 mt-5">
-                        
                         <button class="btn btn-dark green-long m-0">Diagnosa</button>
                     </div>
                 </div>
