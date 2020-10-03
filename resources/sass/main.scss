@@ -1,0 +1,393 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+// Variables
+@import 'variables';
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: $black;
+}
+a:hover {
+    text-decoration: none;
+    text-transform: none;
+}
+input:focus {
+    outline: none;
+}
+textarea:focus {
+    outline: none;
+}
+select:focus {
+    outline: none;
+}
+ 
+nav {
+    width: 100%;
+    height: 60px;
+    padding: 0px;
+    position: fixed !important;
+    z-index: 3;
+
+    background: $green;
+    color: white;
+    font-size: 14px;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        position: relative;
+
+        li  {
+            margin: 0 34px;
+            font-weight: 300;
+
+            a {
+                color: white;
+                opacity: 0.7;
+            }
+            a:hover {
+                color: white;
+                opacity: 1;
+            }
+
+            &.active {
+                font-weight: 700;
+                border-bottom: 2px solid white;
+                padding-bottom: 5px;
+
+                a {
+                    opacity: 1;
+                }
+            }
+            
+            &.profile {
+                margin: 0;
+                border: none;
+                position: absolute;
+                right:0;
+
+                p {
+                    font-weight: 500;
+                    margin: 0 0 0 10px;
+                }
+
+                img {
+                    width: 40px;
+                    height: 40px;
+                    border: 2px solid white;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+
+}
+
+.bg-white {
+    background: $body-bg;
+    min-height: 100vh;
+}
+
+.bg-greenishwhite {
+    background: $greenishgrey;
+    min-height: 100vh;
+
+}
+
+.fullvh {
+    min-height: 100vh;
+}
+
+.wrapper {
+    height: 100%;
+    padding: 6.25rem 3rem 6.5rem 3rem;
+}
+
+.search-box-box {
+
+    position: relative;
+
+    input {
+        border: none;
+        border-radius: 30px;
+        color: $black;
+        font-weight: 500;
+        padding-left: 45px;
+        width: 60%;
+        height: 50px;
+    }
+    input:focus {
+        outline: none;
+    }
+    input::placeholder {
+        color: $grey2;
+        opacity: 1;
+    }
+
+    span {
+        position: absolute;
+        left: 15px;
+        transform: translateY(55%);
+    }
+}
+
+.table-container {
+    border-radius: 8px;
+    background: white;
+    color: $black;
+    min-height: 600px;
+    margin-top: 50px;
+
+    table {
+        th {
+            color: $grey3;
+            border: none;
+        }
+    }
+}
+
+.label-keterangan {
+    color: white;
+    display: block;
+    border-radius: 5px;
+    text-align: center;
+
+    &.yellow {
+        background: $yellow;
+    }
+    &.blue {
+        background: $blue;
+    }
+    &.lime {
+        background: $lime;
+    }
+    &.orange {
+        background: $orange;
+    }
+}
+
+.btn {
+    padding: 0px 10px;
+    margin: 0 2px;
+    border: none;
+    color: white;
+
+    &.diagnosa {
+        color: white;
+        background: $green;
+    }
+    &.batal {
+        color: white;
+        background: $red;
+    }
+    &.green-long {
+        background: $green;
+        width: 100%;
+        height: 50px;
+        font-size: 14px;
+    }
+}
+
+.capsule-btn {
+    background: $grey4;
+    border: 4px solid $outlinegrey;
+    color: white;
+    padding: 8px 16px;
+
+    &.active {
+        background: $green;
+    }
+    &.secondary {
+        background: $grey3;
+    }
+
+    &:nth-child(2){
+        border-radius: 24px 0px 0px 24px;
+    }
+    &:nth-child(3){
+        border-right: none;
+        border-left: none;
+    }
+    &:nth-child(4){
+        border-radius: 0 24px 24px 0;
+    }
+}
+
+.soft-shadow {
+    box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
+}
+
+.content {
+    border-radius: 8px;
+    background: white;
+    width: 100%;
+    color: $darkgreen;
+
+    p {
+        margin: 0;
+    }
+
+    hr {
+        margin: 0;
+    }
+
+    label {
+        margin: 5px 0 0 0 ;
+        color: $grey3;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+    input[type=text],input[type=password] {
+        background: white;
+        border: 1px solid $outlinegrey;
+        border-radius: 5px;
+        color: $darkgreen;
+        height: 50px;
+        width: 100%;
+        padding: 0px 16px;
+        font-weight: 500;
+    
+        &:disabled {
+            background: $greenishgrey;
+            color: $darkgreen;
+        }
+        &:focus {
+            outline: none;
+        }
+        &::placeholder {
+            color: $grey2;
+        }
+    }
+
+    .separator {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    select {
+        height: 50px;
+
+        &.custom-select {
+            border: 1px solid $outlinegrey;
+            
+            &:disabled {
+                background: $greenishgrey;
+                color: $darkgreen;
+            }
+        }
+    }
+    select:focus {
+        outline: none;
+    }
+    select:active {
+        outline: none;
+    }
+
+    textarea {
+
+        &.form-control {
+            resize: none;
+            height: 83%;
+        }
+    }
+}
+
+footer {
+    height: 48px;
+    width: 100%;
+    background: $green;
+    color: white;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+
+    label {
+        margin: 0 10px 0 0;
+        font-weight: 500;
+        font-size: 18px;    
+    }
+    input {
+        border: none;
+        border-radius: 5px;
+        height: 28px;
+        width: 200px;
+        padding: 0 10px;
+
+        &:disabled {
+            background: $greenishgrey;
+        }
+    }
+}
+
+.doktor {
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    .asd {
+        background: rgba(9, 105, 52, 0.54);
+        height: 100%;
+    }
+
+    .top {
+        position: absolute;
+        top: 50px;
+        right: 60px;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: white;
+    }
+    
+    .copyright {
+        position: absolute;
+        bottom: 50px;
+        right: 50px;
+        font-weight: 400;
+        color: white;
+        line-height: 16.41px;
+    }
+}
+
+.modal {
+    background: rgba(0, 40, 18, 0.75);
+}
+
+.submit-btn {
+    width: 100%;
+    height: 50px;
+}
+
+.btn-tambah {
+    border: 2px solid $outlinegrey;
+    color: $darkgreen;
+    width: 100%;
+    height: 50px;
+    font-weight: bold;
+}
+.btn-tambah:hover {
+    background: $green;
+    color: white;
+}
+
+@media(min-width: 992px) {
+    .submit-btn {
+        width: 50%;
+        height: 40px;
+    }
+}
