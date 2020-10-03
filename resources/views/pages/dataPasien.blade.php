@@ -129,7 +129,7 @@
 
                             <div class="col-12">
                                 <label class="separator">Y</label>      <!-- KOSONGAN LUR, CUMA SEPARATOR, PUSING -->
-                                <input class="separator">               <!-- KOSONGAN LUR, BEN BUTTON E NDEK ISOR -->
+                                <input type="text" class="separator">               <!-- KOSONGAN LUR, BEN BUTTON E NDEK ISOR -->
                             </div>
                             <div class="col-12 mt-auto">
                                 <label class="separator">Y</label>      <!-- KOSONGAN LUR -->

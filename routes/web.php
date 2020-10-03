@@ -41,6 +41,10 @@ Route::get('dataPasien', function() {
     return view('pages.dataPasien');
 });
 
+Route::get('dataResep', function() {
+    return view('pages.dataResep');
+});
+
 Route::get('diagnosa', function() {
     return view('pages.diagnosa');
 });
