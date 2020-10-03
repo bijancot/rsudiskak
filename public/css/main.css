@@ -11296,6 +11296,19 @@ footer input:disabled {
   height: 50px;
 }
 
+.btn-tambah {
+  border: 2px solid #E5E5E5;
+  color: #00451F;
+  width: 100%;
+  height: 50px;
+  font-weight: bold;
+}
+
+.btn-tambah:hover {
+  background: #009241;
+  color: white;
+}
+
 @media (min-width: 992px) {
   .submit-btn {
     width: 50%;
