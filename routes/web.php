@@ -72,7 +72,7 @@ Route::get('navbar', function() {
 Route::get('footer', function() {
     return view('includes.footer');
 });
-// =======
+// ======= 
 // Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
