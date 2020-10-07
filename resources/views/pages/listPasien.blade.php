@@ -26,50 +26,34 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($datas['data'] as $data)
+                        @php
+                            // set style status periksa
+                            if($data['Status Periksa'] == "Menunggu"){
+                                $status = "yellow";
+                            }else if($data['Status Periksa'] == "Diperiksa"){
+                                $status = "blue";
+                            }else if($data['Status Periksa'] == "Selesai"){
+                                $status = "lime";
+                            }else if($data['Status Periksa'] == "Belum"){
+                                $status = "orange";
+                            }
+                            // set detail JK
+                            $jenkel = ($data['JK'] == "L" ? "Laki - Laki" : "Perempuan");
+                        @endphp
                         <tr>
-                            <td>001</td>
-                            <td>234232</td>
-                            <td>11930222</td>
-                            <td>Jacob Jones Harianto</td>
-                            <td>25 Th</td>
-                            <td>Laki-Laki</td>
-                            <td>27/08/2020 - 13.02</td>
-                            <td><span class="label-keterangan yellow">Menunggu</span></td>
-                            <td class="d-flex flex-row"><a href="#" class="btn btn-dark diagnosa">Diagnosa</a><a href="#" class="btn btn-dark batal">Batal</a></td>
+                            <td>{{$data['No. Urut']}}</td>
+                            <td>{{$data['NoPendaftaran']}}</td>
+                            <td>{{$data['NoCM']}}</td>
+                            <td>{{$data['Nama Pasien']}}</td>
+                            <td>{{$data['UmurTahun']}} Th</td>
+                            <td>{{$jenkel}}</td>
+                            <td>{{$data['TglMasuk']}}</td>
+                        <td>
+                            <span class="label-keterangan {{$status}}">{{$data['Status Periksa']}}</span></td>
+                            <td class="d-flex flex-row"><a href="{{action('PasienController@DataPasien', $data['NoCM'])}}" class="btn btn-dark diagnosa">Diagnosa</a><a href="#" class="btn btn-dark batal">Batal</a></td>
                         </tr>
-                        <tr>
-                            <td>001</td>
-                            <td>234232</td>
-                            <td>11930222</td>
-                            <td>Jacob Jones Harianto</td>
-                            <td>25 Th</td>
-                            <td>Laki-Laki</td>
-                            <td>27/08/2020 - 13.02</td>
-                            <td><span class="label-keterangan blue">Diperiksa</span></td>
-                            <td class="d-flex flex-row"><a href="#" class="btn btn-dark diagnosa">Diagnosa</a><a href="#" class="btn btn-dark batal">Batal</a></td>
-                        </tr>
-                        <tr>
-                            <td>001</td>
-                            <td>234232</td>
-                            <td>11930222</td>
-                            <td>Jacob Jones Harianto</td>
-                            <td>25 Th</td>
-                            <td>Laki-Laki</td>
-                            <td>27/08/2020 - 13.02</td>
-                            <td><span class="label-keterangan lime">Selesai</span></td>
-                            <td class="d-flex flex-row"><a href="#" class="btn btn-dark diagnosa">Diagnosa</a><a href="#" class="btn btn-dark batal">Batal</a></td>
-                        </tr>
-                        <tr>
-                            <td>001</td>
-                            <td>234232</td>
-                            <td>11930222</td>
-                            <td>Jacob Jones Harianto</td>
-                            <td>25 Th</td>
-                            <td>Laki-Laki</td>
-                            <td>27/08/2020 - 13.02</td>
-                            <td><span class="label-keterangan orange">Belum</span></td>
-                            <td class="d-flex flex-row"><a href="#" class="btn btn-dark diagnosa">Diagnosa</a><a href="#" class="btn btn-dark batal">Batal</a></td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

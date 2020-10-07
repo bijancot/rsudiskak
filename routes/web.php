@@ -25,9 +25,11 @@ Route::get('login', function() {
     return view('pages.login');
 });
 
-Route::get('listPasien', function() {
-    return view('pages.listPasien');
-});
+Route::get('listPasien', 'PasienController@ListPasien');
+Route::get('dataPasien/{no_cm}', 'PasienController@DataPasien');
+Route::get('diagnosa', 'DiagnosaController@DiagnosaAwal');
+
+Route::post('diagnosa', 'DiagnosaController@InsertDiagnosaAwal');
 
 Route::get('listPasienKirimPoli', function() {
     return view('pages.listPasienKirimPoli');
@@ -37,17 +39,12 @@ Route::get('listPasienHasilLab', function() {
     return view('pages.listPasienHasilLab');
 });
 
-Route::get('dataPasien', function() {
-    return view('pages.dataPasien');
-});
+
 
 Route::get('dataResep', function() {
     return view('pages.dataResep');
 });
 
-Route::get('diagnosa', function() {
-    return view('pages.diagnosa');
-});
 
 Route::get('diagnosaAkhir', function() {
     return view('pages.diagnosaAkhir');
