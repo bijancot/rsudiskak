@@ -7,6 +7,10 @@ use GuzzleHttp\Client;
 
 class PasienController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function ListPasien(){
         //get data
         $client = new Client();

@@ -12,14 +12,17 @@
                         <p class="h2 mb-3 font-weight-bold" style="margin-top: 5rem">
                             Masuk
                         </p>
-        
-                        <label for="username" class="my-2">Username</label>
-                        <input type="text" placeholder="username">
-                        
-                        <label for="password" class="mb-2 mt-3">Password</label>
-                        <input type="password" placeholder="password">
-                        
-                        <input type="submit" value="Masuk" class="btn diagnosa submit-btn ml-auto mr-0 mt-4">
+                        <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                            <label for="kodedokter" class="my-2">Username</label>
+                            <input type="text" name="kodedokter" placeholder="username">
+                            
+                            <label for="password" class="mb-2 mt-3">Password</label>
+                            <input type="password" name="password" placeholder="password">
+                            <button type="submit" class="btn diagnosa submit-btn ml-auto mr-0 mt-4">
+                                    Masuk
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
