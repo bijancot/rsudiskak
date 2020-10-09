@@ -20,14 +20,14 @@ Route::get('layout', function() {
 });
 
 
+// Route::get('login', function() {
+//     return view('pages.login');
+// });
 
-Route::get('login', function() {
-    return view('pages.login');
-});
-
-Route::get('listPasien', 'PasienController@ListPasien');
+Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
+Route::get('listPasien', 'PasienController@ListPasien')->name('perawat')->middleware('perawatRole');
 Route::get('dataPasien/{no_cm}', 'PasienController@DataPasien');
-Route::get('diagnosa', 'DiagnosaController@DiagnosaAwal');
+Route::get('diagnosa', 'DiagnosaController@DiagnosaAwal')->name('dokter')->middleware('dokterRole');;
 Route::get('listPasienKirimPoli', 'PasienController@ListPasienKirimPoli');
 Route::get('listPasienHasilLab', 'PasienController@ListPasienHasilLab');
 Route::get('dataResep', 'DiagnosaController@DataResep');
@@ -45,7 +45,7 @@ Route::get('footer', function() {
     return view('includes.footer');
 });
 // ======= 
-// Auth::routes();
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
