@@ -29,4 +29,16 @@ class PasienController extends Controller
 
         return view('pages.dataPasien', compact('data'));
     }
+
+    public function ListPasienKirimPoli(){
+        return view('pages.listPasienKirimPoli');
+    }
+
+    public function ListPasienHasilLab(){
+        return view('pages.listPasienHasilLab');
+    }
+
+    public function Riwayat(){
+        return view('pages.riwayat');
+    }
 }

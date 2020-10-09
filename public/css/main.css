@@ -11046,7 +11046,7 @@ nav ul li.profile img {
   border-radius: 8px;
   background: white;
   color: #505050;
-  min-height: 600px;
+  /* min-height: 600px; */
   margin-top: 50px;
 }
 

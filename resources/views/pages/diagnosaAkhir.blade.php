@@ -80,7 +80,7 @@
             <div class="content soft-shadow mt-4">
                 <div class="d-flex">
                     <p class="h5 p-3">Data Resep</p>
-                    <button class="ml-auto btn diagnosa px-5 m-2 mr-3" data-toggle="modal" data-target="#exampleModal">Simpan</button>
+                    <button class="ml-auto btn diagnosa px-5 m-2 mr-3" data-toggle="modal" data-target="#modal_diagnosaAkhir">Simpan</button>
                 </div>
                 <hr>
                 <div class="row p-3 py-4">

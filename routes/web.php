@@ -28,36 +28,11 @@ Route::get('login', function() {
 Route::get('listPasien', 'PasienController@ListPasien');
 Route::get('dataPasien/{no_cm}', 'PasienController@DataPasien');
 Route::get('diagnosa', 'DiagnosaController@DiagnosaAwal');
-
-Route::post('diagnosa', 'DiagnosaController@InsertDiagnosaAwal');
-
-Route::get('listPasienKirimPoli', function() {
-    return view('pages.listPasienKirimPoli');
-});
-
-Route::get('listPasienHasilLab', function() {
-    return view('pages.listPasienHasilLab');
-});
-
-
-
-Route::get('dataResep', function() {
-    return view('pages.dataResep');
-});
-
-
-Route::get('diagnosaAkhir', function() {
-    return view('pages.diagnosaAkhir');
-});
-
-Route::get('riwayat', function() {
-    return view('pages.riwayat');
-});
-
-
-
-
-
+Route::get('listPasienKirimPoli', 'PasienController@ListPasienKirimPoli');
+Route::get('listPasienHasilLab', 'PasienController@ListPasienHasilLab');
+Route::get('dataResep', 'DiagnosaController@DataResep');
+Route::get('diagnosaAkhir', 'DiagnosaController@DiagnosaAkhir');
+Route::get('riwayat', 'PasienController@Riwayat');
 Route::get('subNavbar', function() {
     return view('includes.subNavbar');
 });
@@ -73,3 +48,5 @@ Route::get('footer', function() {
 // Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('diagnosa', 'DiagnosaController@InsertDiagnosaAwal');
