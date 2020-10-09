@@ -15,4 +15,14 @@ class DiagnosaController extends Controller
         $view = new PasienController();
         return $view->ListPasien();
     }
+
+    public function DiagnosaAkhir(){
+        return view('pages.diagnosaAkhir');
+    }
+
+    public function DataResep(){
+        return view('pages.dataResep');
+    }
+
+    
 }
