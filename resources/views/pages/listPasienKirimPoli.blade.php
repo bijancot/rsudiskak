@@ -33,7 +33,7 @@
                             <td>25 Th</td>
                             <td>Laki-Laki</td>
                             <td>27/08/2020 - 13.02</td>
-                            <td><a href="{{action('DiagnosaController@DiagnosaAkhir')}}"><span class="label-keterangan lime">Poli Syaraf</span></a></td>
+                            <td><a href=""><span class="label-keterangan lime">Poli Syaraf</span></a></td>
                         </tr>
                         <tr>
                             <td>001</td>
@@ -43,7 +43,7 @@
                             <td>25 Th</td>
                             <td>Laki-Laki</td>
                             <td>27/08/2020 - 13.02</td>
-                            <td><a href="{{action('DiagnosaController@DiagnosaAkhir')}}"><span class="label-keterangan orange">Poli Mata</span></a></td>
+                            <td><a href=""><span class="label-keterangan orange">Poli Mata</span></a></td>
                         </tr>
                         <tr>
                             <td>001</td>
@@ -53,7 +53,7 @@
                             <td>25 Th</td>
                             <td>Laki-Laki</td>
                             <td>27/08/2020 - 13.02</td>
-                            <td><a href="{{action('DiagnosaController@DiagnosaAkhir')}}"><span class="label-keterangan yellow">Poli Paru</span></a></td>
+                            <td><a href=""><span class="label-keterangan yellow">Poli Paru</span></a></td>
                         </tr>
                         <tr>
                             <td>001</td>
@@ -63,7 +63,7 @@
                             <td>25 Th</td>
                             <td>Laki-Laki</td>
                             <td>27/08/2020 - 13.02</td>
-                            <td><a href="{{action('DiagnosaController@DiagnosaAkhir')}}"><span class="label-keterangan blue">Poli Roli</span></a></td>
+                            <td><a href=""><span class="label-keterangan blue">Poli Roli</span></a></td>
                         </tr>
                     </tbody>
                 </table>

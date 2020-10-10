@@ -24,5 +24,14 @@ class DiagnosaController extends Controller
         return view('pages.dataResep');
     }
 
+    public function PilihDokter($no_cm){
+        return view('pages.pilihDokter', compact('no_cm'));
+    }
+    
+    public function InsertPilihDokter(){
+        $view = new PasienController();
+        return $view->ListPasien();
+    }
+
     
 }

@@ -11129,6 +11129,23 @@ nav ul li.profile img {
 .capsule-btn:nth-child(4) {
   border-radius: 0 24px 24px 0;
 }
+/* capsule-btn periksa */
+.capsule-btn2 {
+  background: #EEF2ED;
+  border: 4px solid #E5E5E5;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  width: 140px;
+}
+
+.capsule-btn2.active {
+  background: #009241;
+}
+
+.capsule-btn2.secondary {
+  background: #AEAEAE;
+}
 
 .soft-shadow {
   box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);

@@ -78,11 +78,16 @@
                             </div>
                         </div>
                         <div class="col-12 mt-5">
-                            <button type="submit" class="btn btn-dark green-long m-0" data-toggle="modal" data-target="#modal_diagnosaAwal">Submit</button>
+                            <button type="submit" class="btn btn-dark green-long m-0" data-toggle="modal" data-target="#modal_success">Submit</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function(){
+            $('#msg_modal').html('Diagnosa Awal Berhasil');
+        })
+    </script>
 @endsection

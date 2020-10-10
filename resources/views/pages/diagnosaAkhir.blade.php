@@ -80,7 +80,7 @@
             <div class="content soft-shadow mt-4">
                 <div class="d-flex">
                     <p class="h5 p-3">Data Resep</p>
-                    <button class="ml-auto btn diagnosa px-5 m-2 mr-3" data-toggle="modal" data-target="#modal_diagnosaAkhir">Simpan</button>
+                    <button class="ml-auto btn diagnosa px-5 m-2 mr-3" data-toggle="modal" data-target="#modal_success">Simpan</button>
                 </div>
                 <hr>
                 <div class="row p-3 py-4">
@@ -187,7 +187,11 @@
             </div>
         </div>
     </div>
-
+    <script>
+        $(document).ready(function(){
+            $('#msg_modal').html('Dignosa Akhir Berhasil');
+        })
+    </script>
     @include('includes.footer')
 
 @endsection
