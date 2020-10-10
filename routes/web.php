@@ -23,7 +23,6 @@ Route::get('layout', function() {
 // Route::get('login', function() {
 //     return view('pages.login');
 // });
-
 Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
 Route::get('listPasien', 'PasienController@ListPasien')->name('perawat')->middleware('perawatRole');
 Route::get('dataPasien/{no_cm}', 'PasienController@DataPasien');
@@ -33,6 +32,7 @@ Route::get('listPasienHasilLab', 'PasienController@ListPasienHasilLab');
 Route::get('dataResep', 'DiagnosaController@DataResep');
 Route::get('diagnosaAkhir', 'DiagnosaController@DiagnosaAkhir');
 Route::get('riwayat', 'PasienController@Riwayat');
+Route::get('pilihDokter/{no_cm}', 'DiagnosaController@PilihDokter');
 Route::get('subNavbar', function() {
     return view('includes.subNavbar');
 });
@@ -50,3 +50,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('diagnosa', 'DiagnosaController@InsertDiagnosaAwal');
+Route::post('pilihDokter', 'DiagnosaController@InsertPilihDokter');
