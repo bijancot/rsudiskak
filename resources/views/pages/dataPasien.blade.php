@@ -14,9 +14,9 @@
                         Kembali
                     </span>
                 </a>
-                <a class="capsule-btn secondary" href="{{ url('dataPasien') }}">Data Pasien</a>
-                <a class="capsule-btn active" href="{{ url('diagnosaAkhir') }}">Diagnosa Akhir</a>
-                <a class="capsule-btn" href="{{ url('riwayat') }}">Riwayat</a>
+                <a class="capsule-btn active" href="{{ url('/dataPasien\/') }}{{ $data['NoCM'] }}">Data Pasien</a>
+                <a class="capsule-btn" href="{{ url('/diagnosa\/') }}{{ $data['NoCM'] }}">Diagnosa Awal</a>
+                <a class="capsule-btn" href="{{ url('/diagnosaAkhir') }}{{ $data['NoCM'] }}">Diagnosa Akhir</a>
             </div>
 
             <div class="content soft-shadow">
@@ -26,7 +26,8 @@
                 <hr>
                 <div class="row p-3 py-4">
                     <div class="col-6">
-                        <form action="{{action('DiagnosaController@DiagnosaAwal')}}">
+                        <form action="{{ action('DiagnosaController@diagnosaAwal', $data['NoCM']) }}" method="POST">
+                        {{-- <form action="{{ action('DiagnosaController@diagnosaAwal') }}" > --}}
                             @csrf
                             <div class="row">
                                 <div class="col-5">
@@ -146,7 +147,9 @@
                                 <div class="col-12 mt-auto">
                                     <label class="separator">Y</label>      <!-- KOSONGAN LUR -->
                                     
-                                    <button type="submit" class="btn btn-dark green-long m-0">Diagnosa</button>
+                                    <button type="submit" class="btn btn-dark green-long m-0">Diagnosa awal</button>
+                                    {{-- <a class="btn btn-dark green-long m-0" href="{{ action ('DiagnosaController@diagnosaAwal', $data['NoCM'])}}">Diagnosa awal</a> --}}
+
                                 </div>
                             </form>
                         </div>

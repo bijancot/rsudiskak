@@ -59,7 +59,7 @@
                                 <td>{{$data['TglMasuk']}}</td>
                             <td>
                                 <span class="label-keterangan {{$status}}">{{$data['Status Periksa']}}</span></td>
-                                <td class="d-flex flex-row"><a href="{{action('DiagnosaController@PilihDokter', $data['NoCM'])}}" class="btn btn-dark diagnosa">Dokter</a><a href="#" class="btn btn-dark batal">Batal</a></td>
+                                <td class="d-flex flex-row"><a href="{{ action ('DiagnosaController@pilihDokter', $data['NoCM'])}}" class="btn btn-dark diagnosa">Dokter</a><a href="#" class="btn btn-dark batal">Batal</a></td>
                             </tr>
                             @endforeach
                         </tbody>
