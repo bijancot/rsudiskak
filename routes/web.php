@@ -12,43 +12,49 @@
 */
 
 Route::get('/', function () {
-    //return view('welcome');
     return view('pages.login');
 });
 
-Route::get('layout', function() {
+Route::get('layout', function () {
     return view('layouts.layout');
 });
 
-
-// Route::get('login', function() {
-//     return view('pages.login');
-// });
 Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
-Route::get('listPasien', 'PasienController@ListPasien')->name('perawat')->middleware('perawatRole');
+Route::get('listPasien', 'PasienController@listPasien')->name('perawat')->middleware('perawatRole');
+Route::get('diagnosa/{no_cm}', 'DiagnosaController@diagnosaAwal')->name('dokter')->middleware('dokterRole');
+Route::get('login', function () {
+    return view('pages.login');
+});
+
+Route::get('listPasien', 'PasienController@listPasien');
 Route::get('dataPasien/{no_cm}', 'PasienController@DataPasien');
-Route::get('diagnosa', 'DiagnosaController@DiagnosaAwal')->name('dokter')->middleware('dokterRole');;
+
+Route::get('pilihDokter/{no_cm}', 'DiagnosaController@pilihDokter');
+
+Route::get('diagnosa/{no_cm}', 'DiagnosaController@diagnosaAwal');
+Route::get('diagnosaAkhir/{no_cm}', 'DiagnosaController@diagnosaAkhir');
+
 Route::get('listPasienKirimPoli', 'PasienController@ListPasienKirimPoli');
 Route::get('listPasienHasilLab', 'PasienController@ListPasienHasilLab');
+
 Route::get('dataResep', 'DiagnosaController@DataResep');
-Route::get('diagnosaAkhir', 'DiagnosaController@DiagnosaAkhir');
 Route::get('riwayat', 'PasienController@Riwayat');
-Route::get('pilihDokter/{no_cm}', 'DiagnosaController@PilihDokter');
-Route::get('subNavbar', function() {
+
+Route::get('subNavbar', function () {
     return view('includes.subNavbar');
 });
 
-Route::get('navbar', function() {
+Route::get('navbar', function () {
     return view('includes.navbar');
 });
 
-Route::get('footer', function() {
+Route::get('footer', function () {
     return view('includes.footer');
 });
 // ======= 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
 
-Route::post('diagnosa', 'DiagnosaController@InsertDiagnosaAwal');
-Route::post('pilihDokter', 'DiagnosaController@InsertPilihDokter');
+Route::post('diagnosa', 'DiagnosaController@storeDiagnosaAwal');
+Route::post('pilihDokter/{no_cm}', 'DiagnosaController@storePilihDokter');

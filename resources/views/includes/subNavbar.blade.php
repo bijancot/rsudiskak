@@ -8,5 +8,6 @@
     </a>
     <a class="capsule-btn secondary" href="{{ url('dataPasien') }}">Data Pasien</a>
     <a class="capsule-btn active" href="{{ url('diagnosaAkhir') }}">Diagnosa Akhir</a>
-    <a class="capsule-btn" href="{{ url('riwayat') }}">Riwayat</a>
+    <a class="capsule-btn" href="{{ url('riwayat') }}">Riwayat</a> 
+    
 </div>
