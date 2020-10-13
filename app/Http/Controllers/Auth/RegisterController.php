@@ -53,6 +53,7 @@ class RegisterController extends Controller
             'namadokter' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string'],
             'status' => ['required', 'string', 'max:255'],
+            'kodejabatan' => ['required', 'string', 'max:255'],
         ]);
     }
 
@@ -68,6 +69,7 @@ class RegisterController extends Controller
             'kodedokter' => $data['kodedokter'],
             'namadokter' => $data['namadokter'],
             'status' => $data['status'],
+            'kodejabatan' => $data['kodejabatan'],
             'password' => Hash::make($data['password']),
         ]);
     }

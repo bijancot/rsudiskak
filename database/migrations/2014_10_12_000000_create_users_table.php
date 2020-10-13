@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('namadokter');
             $table->string('password');
             $table->string('status');
+            $table->string('kodejabatan');
             $table->rememberToken();
             $table->timestamps();
         });

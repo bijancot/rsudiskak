@@ -21,17 +21,17 @@ class Admin
         }
         
         //admin
-        if(Auth::user()->status == "003"){
+        if(Auth::user()->kodejabatan == "3"){
             return $next($request);
         }
 
         //perawat
-        if(Auth::user()->status == "002"){
+        if(Auth::user()->kodejabatan == "2"){
             return redirect()->route('perawat');
         }
 
         //dokter
-        if(Auth::user()->status == "001"){
+        if(Auth::user()->kodejabatan == "1"){
             return redirect()->route('dokter');
         }
 

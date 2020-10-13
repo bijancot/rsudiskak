@@ -49,6 +49,19 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="kodejabatan" class="col-md-4 col-form-label text-md-right">kodejabatan</label>
+
+                            <div class="col-md-6">
+                                <input id="kodejabatan" type="text" class="form-control<?php echo e($errors->has('kodejabatan') ? ' is-invalid' : ''); ?>" name="kodejabatan" value="<?php echo e(old('kodejabatan')); ?>" required autofocus>
+
+                                <?php if($errors->has('kodejabatan')): ?>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong><?php echo e($errors->first('kodejabatan')); ?></strong>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right"><?php echo e(__('Password')); ?></label>
 
                             <div class="col-md-6">
