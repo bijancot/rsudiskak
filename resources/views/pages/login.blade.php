@@ -4,6 +4,8 @@
     <div class="content">
 
         <div class="row w-100 h-100 m-0 fullvh">
+            
+            <div class="d-block d-lg-none login-bg-sm" style="background: linear-gradient(0deg, rgba(247, 250, 248, 0.95), rgba(247, 250, 248, 0.95)), url({{asset('img/doktor.png')}})"></div>
             <div class="col-12 col-lg-5">
                 <div class="p-3 p-lg-5">
 
@@ -14,8 +16,8 @@
                         </p>
                         <form method="POST" action="{{ route('login') }}">
                         @csrf
-                            <label for="IdDokter" class="my-2">Username</label>
-                            <input type="text" name="IdDokter" placeholder="username">
+                            <label for="kodedokter" class="my-2">Username</label>
+                            <input type="text" name="kodedokter" placeholder="username">
                             
                             <label for="password" class="mb-2 mt-3">Password</label>
                             <input type="password" name="password" placeholder="password">
