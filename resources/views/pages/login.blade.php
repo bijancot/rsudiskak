@@ -14,8 +14,8 @@
                         </p>
                         <form method="POST" action="{{ route('login') }}">
                         @csrf
-                            <label for="kodedokter" class="my-2">Username</label>
-                            <input type="text" name="kodedokter" placeholder="username">
+                            <label for="KodeDokter" class="my-2">Username</label>
+                            <input type="text" name="KodeDokter" placeholder="username">
                             
                             <label for="password" class="mb-2 mt-3">Password</label>
                             <input type="password" name="password" placeholder="password">

@@ -28,7 +28,7 @@ class LoginController extends Controller
     //protected $redirectTo = '/listPasien';
 
     public function redirectTo(){
-        switch (Auth::user()->kodejabatan){
+        switch (Auth::user()->KdJabatan){
             case '1':
                 $this->redirectTo = '/diagnosa/{no_cm}';
                 return $this->redirectTo;
