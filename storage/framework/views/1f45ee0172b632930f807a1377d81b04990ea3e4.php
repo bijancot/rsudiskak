@@ -10,79 +10,53 @@
                         <?php echo csrf_field(); ?>
 
                         <div class="form-group row">
-                            <label for="KodeDokter" class="col-md-4 col-form-label text-md-right">Kode Dokter</label>
+                            <label for="IdDokter" class="col-md-4 col-form-label text-md-right">IdDokter</label>
 
                             <div class="col-md-6">
-                                <input id="KodeDokter" type="text" class="form-control<?php echo e($errors->has('KodeDokter') ? ' is-invalid' : ''); ?>" name="KodeDokter" value="<?php echo e(old('KodeDokter')); ?>" required autofocus>
+                                <input id="IdDokter" type="text" class="form-control<?php echo e($errors->has('IdDokter') ? ' is-invalid' : ''); ?>" name="IdDokter" value="<?php echo e(old('IdDokter')); ?>" required autofocus>
 
-                                <?php if($errors->has('KodeDokter')): ?>
+                                <?php if($errors->has('IdDokter')): ?>
                                     <span class="invalid-feedback" role="alert">
-                                        <strong><?php echo e($errors->first('KodeDokter')); ?></strong>
+                                        <strong><?php echo e($errors->first('IdDokter')); ?></strong>
                                     </span>
                                 <?php endif; ?>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="NamaDokter" class="col-md-4 col-form-label text-md-right">Nama Dokter</label>
+                            <label for="NamaLengkap" class="col-md-4 col-form-label text-md-right">NamaLengkap</label>
 
                             <div class="col-md-6">
-                                <input id="NamaDokter" type="text" class="form-control<?php echo e($errors->has('NamaDokter') ? ' is-invalid' : ''); ?>" name="NamaDokter" value="<?php echo e(old('NamaDokter')); ?>" required autofocus>
+                                <input id="NamaLengkap" type="text" class="form-control<?php echo e($errors->has('NamaLengkap') ? ' is-invalid' : ''); ?>" name="NamaLengkap" value="<?php echo e(old('NamaLengkap')); ?>" required autofocus>
 
-                                <?php if($errors->has('NamaDokter')): ?>
+                                <?php if($errors->has('NamaLengkap')): ?>
                                     <span class="invalid-feedback" role="alert">
-                                        <strong><?php echo e($errors->first('NamaDokter')); ?></strong>
+                                        <strong><?php echo e($errors->first('NamaLengkap')); ?></strong>
                                     </span>
                                 <?php endif; ?>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="JK" class="col-md-4 col-form-label text-md-right">JK</label>
+                            <label for="KdRuangan" class="col-md-4 col-form-label text-md-right">KdRuangan</label>
 
                             <div class="col-md-6">
-                                <input id="JK" type="text" class="form-control<?php echo e($errors->has('JK') ? ' is-invalid' : ''); ?>" name="JK" value="<?php echo e(old('JK')); ?>" required autofocus>
+                                <input id="KdRuangan" type="text" class="form-control<?php echo e($errors->has('KdRuangan') ? ' is-invalid' : ''); ?>" name="KdRuangan" value="<?php echo e(old('KdRuangan')); ?>" required autofocus>
 
-                                <?php if($errors->has('JK')): ?>
+                                <?php if($errors->has('KdRuangan')): ?>
                                     <span class="invalid-feedback" role="alert">
-                                        <strong><?php echo e($errors->first('JK')); ?></strong>
+                                        <strong><?php echo e($errors->first('KdRuangan')); ?></strong>
                                     </span>
                                 <?php endif; ?>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="Jabatan" class="col-md-4 col-form-label text-md-right">Jabatan</label>
+                            <label for="NamaRuangan" class="col-md-4 col-form-label text-md-right">NamaRuangan</label>
 
                             <div class="col-md-6">
-                                <input id="Jabatan" type="text" class="form-control<?php echo e($errors->has('Jabatan') ? ' is-invalid' : ''); ?>" name="Jabatan" value="<?php echo e(old('Jabatan')); ?>" required autofocus>
+                                <input id="NamaRuangan" type="text" class="form-control<?php echo e($errors->has('NamaRuangan') ? ' is-invalid' : ''); ?>" name="NamaRuangan" value="<?php echo e(old('NamaRuangan')); ?>" required autofocus>
 
-                                <?php if($errors->has('Jabatan')): ?>
+                                <?php if($errors->has('NamaRuangan')): ?>
                                     <span class="invalid-feedback" role="alert">
-                                        <strong><?php echo e($errors->first('Jabatan')); ?></strong>
-                                    </span>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="KdStatus" class="col-md-4 col-form-label text-md-right">KdStatus</label>
-
-                            <div class="col-md-6">
-                                <input id="KdStatus" type="text" class="form-control<?php echo e($errors->has('KdStatus') ? ' is-invalid' : ''); ?>" name="KdStatus" value="<?php echo e(old('KdStatus')); ?>" required autofocus>
-
-                                <?php if($errors->has('KdStatus')): ?>
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong><?php echo e($errors->first('KdStatus')); ?></strong>
-                                    </span>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="KdJenisPegawai" class="col-md-4 col-form-label text-md-right">KdJenisPegawai</label>
-
-                            <div class="col-md-6">
-                                <input id="KdJenisPegawai" type="text" class="form-control<?php echo e($errors->has('KdJenisPegawai') ? ' is-invalid' : ''); ?>" name="KdJenisPegawai" value="<?php echo e(old('KdJenisPegawai')); ?>" required autofocus>
-
-                                <?php if($errors->has('KdJenisPegawai')): ?>
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong><?php echo e($errors->first('KdJenisPegawai')); ?></strong>
+                                        <strong><?php echo e($errors->first('NamaRuangan')); ?></strong>
                                     </span>
                                 <?php endif; ?>
                             </div>

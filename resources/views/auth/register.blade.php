@@ -12,79 +12,53 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="KodeDokter" class="col-md-4 col-form-label text-md-right">Kode Dokter</label>
+                            <label for="IdDokter" class="col-md-4 col-form-label text-md-right">IdDokter</label>
 
                             <div class="col-md-6">
-                                <input id="KodeDokter" type="text" class="form-control{{ $errors->has('KodeDokter') ? ' is-invalid' : '' }}" name="KodeDokter" value="{{ old('KodeDokter') }}" required autofocus>
+                                <input id="IdDokter" type="text" class="form-control{{ $errors->has('IdDokter') ? ' is-invalid' : '' }}" name="IdDokter" value="{{ old('IdDokter') }}" required autofocus>
 
-                                @if ($errors->has('KodeDokter'))
+                                @if ($errors->has('IdDokter'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('KodeDokter') }}</strong>
+                                        <strong>{{ $errors->first('IdDokter') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="NamaDokter" class="col-md-4 col-form-label text-md-right">Nama Dokter</label>
+                            <label for="NamaLengkap" class="col-md-4 col-form-label text-md-right">NamaLengkap</label>
 
                             <div class="col-md-6">
-                                <input id="NamaDokter" type="text" class="form-control{{ $errors->has('NamaDokter') ? ' is-invalid' : '' }}" name="NamaDokter" value="{{ old('NamaDokter') }}" required autofocus>
+                                <input id="NamaLengkap" type="text" class="form-control{{ $errors->has('NamaLengkap') ? ' is-invalid' : '' }}" name="NamaLengkap" value="{{ old('NamaLengkap') }}" required autofocus>
 
-                                @if ($errors->has('NamaDokter'))
+                                @if ($errors->has('NamaLengkap'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('NamaDokter') }}</strong>
+                                        <strong>{{ $errors->first('NamaLengkap') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="JK" class="col-md-4 col-form-label text-md-right">JK</label>
+                            <label for="KdRuangan" class="col-md-4 col-form-label text-md-right">KdRuangan</label>
 
                             <div class="col-md-6">
-                                <input id="JK" type="text" class="form-control{{ $errors->has('JK') ? ' is-invalid' : '' }}" name="JK" value="{{ old('JK') }}" required autofocus>
+                                <input id="KdRuangan" type="text" class="form-control{{ $errors->has('KdRuangan') ? ' is-invalid' : '' }}" name="KdRuangan" value="{{ old('KdRuangan') }}" required autofocus>
 
-                                @if ($errors->has('JK'))
+                                @if ($errors->has('KdRuangan'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('JK') }}</strong>
+                                        <strong>{{ $errors->first('KdRuangan') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="Jabatan" class="col-md-4 col-form-label text-md-right">Jabatan</label>
+                            <label for="NamaRuangan" class="col-md-4 col-form-label text-md-right">NamaRuangan</label>
 
                             <div class="col-md-6">
-                                <input id="Jabatan" type="text" class="form-control{{ $errors->has('Jabatan') ? ' is-invalid' : '' }}" name="Jabatan" value="{{ old('Jabatan') }}" required autofocus>
+                                <input id="NamaRuangan" type="text" class="form-control{{ $errors->has('NamaRuangan') ? ' is-invalid' : '' }}" name="NamaRuangan" value="{{ old('NamaRuangan') }}" required autofocus>
 
-                                @if ($errors->has('Jabatan'))
+                                @if ($errors->has('NamaRuangan'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('Jabatan') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="KdStatus" class="col-md-4 col-form-label text-md-right">KdStatus</label>
-
-                            <div class="col-md-6">
-                                <input id="KdStatus" type="text" class="form-control{{ $errors->has('KdStatus') ? ' is-invalid' : '' }}" name="KdStatus" value="{{ old('KdStatus') }}" required autofocus>
-
-                                @if ($errors->has('KdStatus'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('KdStatus') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="KdJenisPegawai" class="col-md-4 col-form-label text-md-right">KdJenisPegawai</label>
-
-                            <div class="col-md-6">
-                                <input id="KdJenisPegawai" type="text" class="form-control{{ $errors->has('KdJenisPegawai') ? ' is-invalid' : '' }}" name="KdJenisPegawai" value="{{ old('KdJenisPegawai') }}" required autofocus>
-
-                                @if ($errors->has('KdJenisPegawai'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('KdJenisPegawai') }}</strong>
+                                        <strong>{{ $errors->first('NamaRuangan') }}</strong>
                                     </span>
                                 @endif
                             </div>
