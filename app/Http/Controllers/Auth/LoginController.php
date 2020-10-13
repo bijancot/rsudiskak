@@ -28,16 +28,16 @@ class LoginController extends Controller
     //protected $redirectTo = '/listPasien';
 
     public function redirectTo(){
-        switch (Auth::user()->status){
-            case '001':
-                $this->redirectTo = '/diagnosa';
+        switch (Auth::user()->KdJabatan){
+            case '1':
+                $this->redirectTo = '/diagnosa/{no_cm}';
                 return $this->redirectTo;
             break;
-            case '002':
+            case '2':
                 $this->redirectTo = '/listPasien';
                 return $this->redirectTo;
             break;
-            case '003':
+            case '3':
                 $this->redirectTo = '/admin';
                 return $this->redirectTo;
             break;

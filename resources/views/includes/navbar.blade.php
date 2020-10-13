@@ -1,19 +1,19 @@
 <nav class="navbar">
     <ul class="d-flex justify-content-center align-items-center flex-row">
-        
+
         <li class="{{ Request::is('listPasien') ? 'active' : '' }} nav-item"><a href="{{ url('listPasien') }}">Periksa</a></li>
         <li class="{{ Request::is('listPasienKirimPoli') ? 'active' : '' }} nav-item"><a href="{{ url('listPasienKirimPoli') }}">Kirim Poli Lain</a></li>
         <li class="{{ Request::is('listPasienHasilLab') ? 'active' : '' }} nav-item"><a href="{{ url('listPasienHasilLab') }}">Hasil Lab</a></li>
-        
         <li class="profile d-flex flex-row align-items-center nav-item">
-               
-            @if(Auth::user()->status =='001')         
+        
+            @if(Auth::user()->KdJabatan =='1')         
                 <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
-            @elseif (Auth::user()->status =='002')
+            @elseif (Auth::user()->KdJabatan =='2')
                 <img src="{{URL::asset('/img/p.png')}}" alt="Profile picture"/>
             @endif
-            
-            <p>{{ Auth::user()->namadokter }}</p>
+
+            <p>{{ Auth::user()->NamaLengkap }}</p>
+
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             
             </a>
@@ -21,7 +21,7 @@
                 <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                     Logout
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                <form id="logout-form"  action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>       
             </div>        
@@ -33,7 +33,9 @@
         <li class="nav-item-sm">(Nama Page)</li>
         <li class="ml-auto search nav-item-sm"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg></li>      
     </ul>
+
 </nav>
+
 <div class="side-navbar"> <!--NAVBAR KIRI MOBILE-->
     <div class="nav">
         <img class="logo" src="{{URL::asset('/img/logo-3.png')}}" alt="logo" width="266px" class="mx-auto logo">
@@ -62,5 +64,4 @@
     </div>
     <div id="blocker"></div>
 </div>
-
 
