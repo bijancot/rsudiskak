@@ -51,6 +51,19 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="kodejabatan" class="col-md-4 col-form-label text-md-right">kodejabatan</label>
+
+                            <div class="col-md-6">
+                                <input id="kodejabatan" type="text" class="form-control{{ $errors->has('kodejabatan') ? ' is-invalid' : '' }}" name="kodejabatan" value="{{ old('kodejabatan') }}" required autofocus>
+
+                                @if ($errors->has('kodejabatan'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('kodejabatan') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
