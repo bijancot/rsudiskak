@@ -49,11 +49,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'kodedokter' => ['required', 'string', 'max:255'],
-            'namadokter' => ['required', 'string', 'max:255'],
+            'KodeDokter' => ['required', 'string', 'max:255'],
+            'NamaDokter' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string'],
-            'status' => ['required', 'string', 'max:255'],
-            'kodejabatan' => ['required', 'string', 'max:255'],
+            'JK' => ['required', 'string', 'max:255'],
+            'Jabatan' => ['required', 'string', 'max:255'],
+            'KdStatus' => ['required', 'string', 'max:255'],
+            'KdJenisPegawai' => ['required', 'string', 'max:255'],
+            'KdJabatan' => ['required', 'string', 'max:255'],
         ]);
     }
 
@@ -66,10 +69,13 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'kodedokter' => $data['kodedokter'],
-            'namadokter' => $data['namadokter'],
-            'status' => $data['status'],
-            'kodejabatan' => $data['kodejabatan'],
+            'KodeDokter' => $data['KodeDokter'],
+            'NamaDokter' => $data['NamaDokter'],
+            'JK' => $data['JK'],
+            'Jabatan' => $data['Jabatan'],
+            'KdStatus' => $data['KdStatus'],
+            'KdJenisPegawai' => $data['KdJenisPegawai'],
+            'KdJabatan' => $data['KdJabatan'],
             'password' => Hash::make($data['password']),
         ]);
     }
