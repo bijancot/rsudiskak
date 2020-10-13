@@ -9,7 +9,7 @@
             @elseif (Auth::user()->KdJabatan =='2')
                 <img src="{{URL::asset('/img/p.png')}}" alt="Profile picture"/>
             @endif
-            <p>{{ Auth::user()->NamaDokter }}</p>
+            <p>{{ Auth::user()->NamaLengkap }}</p>
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             
             </a>
