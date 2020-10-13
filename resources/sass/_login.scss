@@ -1,0 +1,47 @@
+.doktor {
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    .asd {
+        background: rgba(9, 105, 52, 0.54);
+        height: 100%;
+    }
+
+    .top {
+        position: absolute;
+        top: 50px;
+        right: 60px;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: white;
+    }
+    
+    .copyright {
+        position: absolute;
+        bottom: 50px;
+        right: 50px;
+        font-weight: 400;
+        color: white;
+        line-height: 16.41px;
+    }
+}
+
+.login-bg-sm {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute;
+    
+    background-position: right !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
+}
+
