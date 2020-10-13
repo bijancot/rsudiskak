@@ -4,6 +4,8 @@
     <div class="content">
 
         <div class="row w-100 h-100 m-0 fullvh">
+            
+            <div class="d-block d-lg-none login-bg-sm" style="background: linear-gradient(0deg, rgba(247, 250, 248, 0.95), rgba(247, 250, 248, 0.95)), url({{asset('img/doktor.png')}})"></div>
             <div class="col-12 col-lg-5">
                 <div class="p-3 p-lg-5">
 

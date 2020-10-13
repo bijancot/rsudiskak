@@ -1,19 +1,17 @@
 <nav class="navbar">
     <ul class="d-flex justify-content-center align-items-center flex-row">
         
-        <li class="{{ Request::is('listPasien') ? 'active' : '' }} nav-item"><a href="{{ url('listPasien') }}">Periksa</a></li>
-        <li class="{{ Request::is('listPasienKirimPoli') ? 'active' : '' }} nav-item"><a href="{{ url('listPasienKirimPoli') }}">Kirim Poli Lain</a></li>
-        <li class="{{ Request::is('listPasienHasilLab') ? 'active' : '' }} nav-item"><a href="{{ url('listPasienHasilLab') }}">Hasil Lab</a></li>
+        <li class="{{ Request::is('logActivities') ? 'active' : '' }} nav-item"><a href="{{ url('logActivities') }}">Log Activities</a></li>
+        <li class="{{ Request::is('managementUser') ? 'active' : '' }} nav-item"><a href="{{ url('managementUser') }}">Management User</a></li>
+        <li class="{{ Request::is('historicalList') ? 'active' : '' }} nav-item"><a href="{{ url('historicalList') }}">Historical List</a></li>
+        <li class="{{ Request::is('uploadFile') ? 'active' : '' }} nav-item"><a href="{{ url('uploadFile') }}">Upload File</a></li>
         
         <li class="profile d-flex flex-row align-items-center nav-item">
-               
-            @if(Auth::user()->status =='001')         
+                     
                 <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
-            @elseif (Auth::user()->status =='002')
-                <img src="{{URL::asset('/img/p.png')}}" alt="Profile picture"/>
-            @endif
             
-            <p>{{ Auth::user()->namadokter }}</p>
+            
+            <p>ASD</p>
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             
             </a>
@@ -39,19 +37,19 @@
         <img class="logo" src="{{URL::asset('/img/logo-3.png')}}" alt="logo" width="266px" class="mx-auto logo">
         <hr>
         <div class="profile d-flex flex-row align-items-center nav-item">     
-            @if(Auth::user()->status =='001')         
+               
                 <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
-            @elseif (Auth::user()->status =='002')
-                <img src="{{URL::asset('/img/p.png')}}" alt="Profile picture"/>
-            @endif
             
-            <p>{{ Auth::user()->namadokter }}</p>
+            
+            <p>ASD</p>
        
         </div>
         <hr>
-        <a class="{{ Request::is('listPasien') ? 'active' : '' }} nav-item" href="{{ url('listPasien') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M18,19H6V17.6C6,15.6 10,14.5 12,14.5C14,14.5 18,15.6 18,17.6M12,7A3,3 0 0,1 15,10A3,3 0 0,1 12,13A3,3 0 0,1 9,10A3,3 0 0,1 12,7M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>Periksa</a>
-        <a class="{{ Request::is('listPasienKirimPoli') ? 'active' : '' }} nav-item" href="{{ url('listPasienKirimPoli') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M2,21L23,12L2,3V10L17,12L2,14V21Z" /></svg>Kirim Poli Lain</a>
-        <a class="{{ Request::is('listPasienHasilLab') ? 'active' : '' }} nav-item" href="{{ url('listPasienHasilLab') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>Hasil Lab</a>
+
+        <a class="{{ Request::is('logActivities') ? 'active' : '' }} nav-item" href="{{ url('logActivities') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M18,19H6V17.6C6,15.6 10,14.5 12,14.5C14,14.5 18,15.6 18,17.6M12,7A3,3 0 0,1 15,10A3,3 0 0,1 12,13A3,3 0 0,1 9,10A3,3 0 0,1 12,7M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>Log Activities</a>
+        <a class="{{ Request::is('managementUser') ? 'active' : '' }} nav-item" href="{{ url('managementUser') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M2,21L23,12L2,3V10L17,12L2,14V21Z" /></svg>Management User</a>
+        <a class="{{ Request::is('historicalList') ? 'active' : '' }} nav-item"  href="{{ url('historicalList') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>Historical List</a>
+        <a class="{{ Request::is('uploadFile') ? 'active' : '' }} nav-item"  href="{{ url('uploadFile') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>Upload File</a>
         <hr class="mt-auto">
         <a class="dropdown-item nav-item text-center font-weight-bold" href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
             Logout

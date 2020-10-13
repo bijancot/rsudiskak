@@ -60,7 +60,11 @@
         </div>
         <!-- end of tempat modal -->
         
+        <script type="text/javascript" src="{{ URL::asset('js/main.js') }}"></script>
+        
         <script>
+
+
             $(document).ready(function() {
                 $('#multiselect').multiselect();
             });

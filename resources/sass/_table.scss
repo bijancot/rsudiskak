@@ -1,0 +1,52 @@
+.table-container {
+    border-radius: 8px;
+    background: white;
+    color: $black;
+    // min-height: 600px;
+    margin-top: 50px;
+
+    table {
+        th {
+            color: $grey3;
+            border: none;
+        }
+
+        @media (max-width: 1067px) {
+
+            padding: 10px;
+
+            thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+
+            tr {
+                border: 1px solid $outlinegrey;
+                border-bottom: 3px solid $outlinegrey;
+                background-color: rgba(80, 80, 80, 0.05);
+                display: block;
+                margin-bottom: 2rem;
+            }
+            
+            td {
+                display: block;
+                font-size: .8em;
+                text-align: right;
+            }
+
+            td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+              }
+
+        }
+    }
+}
