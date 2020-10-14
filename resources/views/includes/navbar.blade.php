@@ -7,23 +7,21 @@
         
         <li class="profile d-flex flex-row align-items-center nav-item">
                
-            @if(Auth::user()->status =='001')         
+            @if(Auth::user()->KdJabatan =='001')         
                 <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
-            @elseif (Auth::user()->status =='002')
+            @elseif (Auth::user()->KdJabatan =='002')
                 <img src="{{URL::asset('/img/p.png')}}" alt="Profile picture"/>
             @endif
             
-            <p>{{ Auth::user()->namadokter }}</p>
+            <p>{{ Auth::user()->NamaLengkap }}</p>
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                <a class="dropdown-item" data-toggle="modal" data-target="#modal_logout">
                     Logout
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>       
+                      
             </div>        
         </li>
 
@@ -39,13 +37,13 @@
         <img class="logo" src="{{URL::asset('/img/logo-3.png')}}" alt="logo" width="266px" class="mx-auto logo">
         <hr>
         <div class="profile d-flex flex-row align-items-center nav-item">     
-            @if(Auth::user()->status =='001')         
+            @if(Auth::user()->KdJabatan =='001')         
                 <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
-            @elseif (Auth::user()->status =='002')
+            @elseif (Auth::user()->KdJabatan =='002')
                 <img src="{{URL::asset('/img/p.png')}}" alt="Profile picture"/>
             @endif
             
-            <p>{{ Auth::user()->namadokter }}</p>
+            <p>{{ Auth::user()->NamaLengkap }}</p>
        
         </div>
         <hr>
@@ -53,14 +51,33 @@
         <a class="{{ Request::is('listPasienKirimPoli') ? 'active' : '' }} nav-item" href="{{ url('listPasienKirimPoli') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M2,21L23,12L2,3V10L17,12L2,14V21Z" /></svg>Kirim Poli Lain</a>
         <a class="{{ Request::is('listPasienHasilLab') ? 'active' : '' }} nav-item" href="{{ url('listPasienHasilLab') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>Hasil Lab</a>
         <hr class="mt-auto">
-        <a class="dropdown-item nav-item text-center font-weight-bold" href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+        <a data-toggle="modal" data-target="#modal_logout" class="dropdown-item nav-item text-center font-weight-bold">
             Logout
         </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>  
+         
     </div>
     <div id="blocker"></div>
 </div>
 
-
+<!-- modal batal periksa -->
+<div class="modal fade" id="modal_logout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white text-center">Logout</h5>
+                </div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" >
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="keterangan" class="col-form-label">Apakah ingin keluar aplikasi?</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form> 
+            </div>
+        </div>
+    </div>
