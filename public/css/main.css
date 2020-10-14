@@ -139,7 +139,7 @@ nav ul li.profile img {
   background: rgba(51, 51, 51, 0.2);
   display: none;
   flex-direction: row;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
