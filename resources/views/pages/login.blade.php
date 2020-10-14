@@ -16,8 +16,8 @@
                         </p>
                         <form method="POST" action="{{ route('login') }}">
                         @csrf
-                            <label for="kodedokter" class="my-2">Username</label>
-                            <input type="text" name="kodedokter" placeholder="username">
+                            <label for="IdDokter" class="my-2">Username</label>
+                            <input type="text" name="IdDokter" placeholder="username">
                             
                             <label for="password" class="mb-2 mt-3">Password</label>
                             <input type="password" name="password" placeholder="password">
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col-lg-7 p-0 m-0 d-none d-lg-block">
-                <div class="doktor" style="background: url({{asset('img/doktor.png')}})">
+                <div class="doktor" style="background: url({{ asset('img/doktor.png') }})">
                     <div class="asd">
 
                         <p class="top">Sistem Elektronik Riwayat Pasien</p>

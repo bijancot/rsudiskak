@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+
 class LoginController extends Controller
 {
     /*
@@ -27,26 +28,26 @@ class LoginController extends Controller
      */
     //protected $redirectTo = '/listPasien';
 
-    public function redirectTo(){
-        switch (Auth::user()->KdJabatan){
+    public function redirectTo()
+    {
+        switch (Auth::user()->KdJabatan) {
             case '1':
                 $this->redirectTo = '/diagnosa/{no_cm}';
                 return $this->redirectTo;
-            break;
+                break;
             case '2':
                 $this->redirectTo = '/listPasien';
                 return $this->redirectTo;
-            break;
+                break;
             case '3':
                 $this->redirectTo = '/admin';
                 return $this->redirectTo;
-            break;
+                break;
             default:
                 $this->redirectTo = '/login';
                 return $this->redirectTo;
-            break;
+                break;
         }
-
     }
     /**
      * Create a new controller instance.
