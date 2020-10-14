@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AntrianPasien;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
@@ -11,21 +12,34 @@ class PasienController extends Controller
     {
         $this->middleware('auth');
     }
-    public function ListPasien(){
+    public function listPasien()
+    {
         //get data
         $client = new Client();
-        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/215?tglawal=2020-09-21&tglakhir='.date("Y-m-d"));
+        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/215?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
         $statCode = $res->getStatusCode();
-        $datas = $res->getBody()->getContents();
-        $datas = json_decode($datas, true);
-        $datas = $datas['response'];
+        $antriPoli = $res->getBody()->getContents();
+        $antriPoli = json_decode($antriPoli, true);
+        $antriPoli = $antriPoli['response'];
 
-        return view('pages.listPasien', compact('datas'));
+        $masukPoli = new AntrianPasien();
+        $masukPoli->collection  = "transaksi_" . date("Y-m-d");
+        $masukPoli->get();
+        $getPasienMasukPoli     = $masukPoli->get();
+
+        $datax = [
+            'datas'             => $antriPoli,
+            'masukPoli'         => $getPasienMasukPoli,
+        ];
+
+        return view('pages.listPasien', $datax);
     }
-    public function DataPasien($no_cm){
+
+    public function dataPasien($no_cm)
+    {
         //get data
         $client = new Client();
-        $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/caridatapasien/'.$no_cm);
+        $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/caridatapasien/' . $no_cm);
         $statCode = $res->getStatusCode();
         $data = $res->getBody()->getContents();
         $data = json_decode($data, true);
@@ -34,15 +48,42 @@ class PasienController extends Controller
         return view('pages.dataPasien', compact('data'));
     }
 
-    public function ListPasienKirimPoli(){
+    public function storeBatalPeriksa(Request $request, $no_pendaftaran = null)
+    {
+
+        if ($no_pendaftaran) {
+            /**
+             * Post API Batal Periksa Poliklinik
+             */
+            $client = new Client();
+            $res = $client->request('POST', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/batal', [
+                "nopendaftaran"  => $no_pendaftaran,
+                "kdruangan"      => "215",
+                "keterangan"     => $request->get('keterangan')
+            ]);
+            $statCode = $res->getStatusCode();
+            // dump($statCode);
+
+            return redirect('/listPasien');
+            //endIf
+
+        } else {
+            "Gagal Melakukan aksi";
+        }
+    }
+
+    public function ListPasienKirimPoli()
+    {
         return view('pages.listPasienKirimPoli');
     }
 
-    public function ListPasienHasilLab(){
+    public function ListPasienHasilLab()
+    {
         return view('pages.listPasienHasilLab');
     }
 
-    public function Riwayat(){
+    public function Riwayat()
+    {
         return view('pages.riwayat');
     }
 }

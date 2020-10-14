@@ -29,7 +29,6 @@
                                 <th>Umur</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Tanggal Masuk</th>
-                                <th>Keterangan</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -57,9 +56,10 @@
                                 <td>{{$data['UmurTahun']}} Th</td>
                                 <td>{{$jenkel}}</td>
                                 <td>{{$data['TglMasuk']}}</td>
-                            <td>
-                                <span class="label-keterangan {{$status}}">{{$data['Status Periksa']}}</span></td>
-                                <td class="d-flex flex-row"><a href="{{ action ('DiagnosaController@pilihDokter', $data['NoCM'])}}" class="btn btn-dark diagnosa">Dokter</a><a href="#" class="btn btn-dark batal">Batal</a></td>
+                                <td class="d-flex flex-row">
+                                    <a href="{{ action ('DiagnosaController@pilihDokter', $data['NoCM']) }}" class="btn btn-dark diagnosa">Pilih Dokter</a>
+                                    <a data-toggle="modal" data-target="#modal_batal_periksa-{{ $data['NoPendaftaran'] }}" class="btn btn-dark batal">Batal Periksa</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -81,32 +81,35 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($datas['data'] as $data)
+                            @foreach ($masukPoli as $poli)
                             @php
                                 // set style status periksa
-                                if($data['Status Periksa'] == "Menunggu"){
+                                if($poli['StatusPeriksa'] == "Menunggu"){
                                     $status = "yellow";
-                                }else if($data['Status Periksa'] == "Diperiksa"){
+                                }else if($poli['StatusPeriksa'] == "Diperiksa"){
                                     $status = "blue";
-                                }else if($data['Status Periksa'] == "Selesai"){
+                                }else if($poli['StatusPeriksa'] == "Selesai"){
                                     $status = "lime";
-                                }else if($data['Status Periksa'] == "Belum"){
+                                }else if($poli['StatusPeriksa'] == "Belum"){
                                     $status = "orange";
                                 }
                                 // set detail JK
-                                $jenkel = ($data['JK'] == "L" ? "Laki - Laki" : "Perempuan");
+                                $jenkel = ($poli['JenisKelamin'] == "L" ? "Laki - Laki" : "Perempuan");
                             @endphp
                             <tr>
-                                <td>{{$data['No. Urut']}}</td>
-                                <td>{{$data['NoPendaftaran']}}</td>
-                                <td>{{$data['NoCM']}}</td>
-                                <td>{{$data['Nama Pasien']}}</td>
-                                <td>{{$data['UmurTahun']}} Th</td>
-                                <td>{{$jenkel}}</td>
-                                <td>{{$data['TglMasuk']}}</td>
+                                <td>{{ $poli['NoUrut'] }}</td>
+                                <td>{{ $poli['NoPendaftaran'] }}</td>
+                                <td>{{ $poli['NoCM'] }}</td>
+                                <td>{{ $poli['NamaLengkap'] }}</td>
+                                <td>{{ $poli['UmurTahun'] }} Th</td>
+                                <td>{{ $jenkel }}</td>
+                                <td>{{ $poli['TglMasuk'] }}</td>
                             <td>
-                                <span class="label-keterangan {{$status}}">{{$data['Status Periksa']}}</span></td>
-                                <td class="d-flex flex-row"><a href="{{action('PasienController@DataPasien', $data['NoCM'])}}" class="btn btn-dark diagnosa">Diagnosa</a></td>
+                                <span class="label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
+                            </td>
+                                <td class="d-flex flex-row">
+                                    <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn btn-dark diagnosa">Diagnosa</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -115,6 +118,34 @@
             </div>
         </div>
     </div>
+
+    @foreach ($datas['data'] as $data)
+    <!-- modal batal periksa -->
+    <div class="modal fade" id="modal_batal_periksa-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white text-center">Batal Periksa</h5>
+                </div>
+                <form action="{{ action ('PasienController@storeBatalPeriksa', $data['NoPendaftaran'])}}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="keterangan" class="col-form-label">Keterangan :</label>
+                            <textarea type="text" class="form-control" id="keterangan" name="keterangan" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end of modal batal periksa -->
+    @endforeach
+
     <script>
         $(document).ready(function() {
             $('#tbl_antrianPoli').DataTable();
