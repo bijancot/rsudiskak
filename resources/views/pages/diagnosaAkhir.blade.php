@@ -13,9 +13,9 @@
                         Kembali
                     </span>
                 </a>
-                <a class="capsule-btn secondary" href="{{ url('/diagnosa\/') }}{{ $data['NoCM'] }}">Diagnosa Awal</a>
-                <a class="capsule-btn active" href="{{ url('/diagnosaAkhir\/') }}{{ $data['NoCM'] }}">Diagnosa Akhir</a>
-                <a class="capsule-btn " href="{{ url('/riwayat\/') }}{{ $data['NoCM'] }}">Riwayat</a>
+                <a class="capsule-btn capsule-left secondary" href="{{ url('/diagnosa\/') }}{{ $data['NoCM'] }}">Diagnosa Awal</a>
+                <a class="capsule-btn capsule-middle active" href="{{ url('/diagnosaAkhir\/') }}{{ $data['NoCM'] }}">Diagnosa Akhir</a>
+                <a class="capsule-btn capsule-right" href="{{ url('/riwayat\/') }}{{ $data['NoCM'] }}">Riwayat</a>
             </div>
             <form action="{{action('DiagnosaController@storeDiagnosaAkhir')}}" method="POST">
                 @csrf
