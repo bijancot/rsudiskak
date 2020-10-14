@@ -25,7 +25,7 @@
                     </div>
                     <hr>
                     <div class="row p-3 py-4">
-                        <div class="col-6">
+                        <div class="col-lg-6 col-12">
                             <div class="row">
                                 <div class="col-12">
                                     <label for="anamnesis">Dokter Pemeriksa</label>
@@ -66,7 +66,7 @@
                             </div>
                         </div>
     
-                        <div class="col-6">
+                        <div class="col-lg-6 col-12">
                             <div class="row">
                                 <div class="col-12">
                                     <label for="alamat">Riwayat Alergi</label>
@@ -94,7 +94,7 @@
                     </div>
                     <hr>
                     <div class="row p-3 py-4">
-                        <div class="col-6">
+                        <div class="col-lg-6 col-12">
                             <div class="row">
                                 <div class="col-12">
                                     <label for="anamnesis">No Resep</label>
@@ -135,7 +135,7 @@
                             </div>
                         </div>
     
-                        <div class="col-6">
+                        <div class="col-lg-6 col-12">
                             <div class="row">
                                 <div class="col-12">
                                     <label for="alamat">Riwayat Alergi</label>
@@ -160,7 +160,7 @@
                     </div>
                     <hr>
                     <div class="row p-3 py-4">
-                        <div class="col-6">
+                        <div class="col-lg-6 col-12">
                             <div class="row">
                                 <div class="col-12">
                                     <label for="alamat">Pemeriksaan</label>
@@ -183,7 +183,7 @@
                             </div>
                         </div>
     
-                        <div class="col-6">
+                        <div class="col-lg-6 col-12">
                             <div class="row h-100">
                                 <div class="col-12">
                                     <div class="form-group h-100">
