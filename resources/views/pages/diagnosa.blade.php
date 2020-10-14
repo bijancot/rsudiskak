@@ -42,7 +42,7 @@
                                     <label for="suhutubuh">Suhu Tubuh</label>
                                     <input type="text" name="suhutubuh" placeholder="Suhu">
                                 </div>
-                                <div class="col-lg-3 pl-0 col-10 mt-3 mt-lg-0">
+                                <div class="col-lg-3 pl-lg-0 col-10 mt-3 mt-lg-0">
                                     <label for="beratbadan">Berat Badan</label>
                                     <input type="text" name="beratbadan" placeholder="Berat">
                                 </div>
