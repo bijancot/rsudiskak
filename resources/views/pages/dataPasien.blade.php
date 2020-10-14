@@ -16,7 +16,7 @@
                 </a>
                 <a class="capsule-btn active" href="{{ url('/dataPasien\/') }}{{ $data['NoCM'] }}">Data Pasien</a>
                 <a class="capsule-btn" href="{{ url('/diagnosa\/') }}{{ $data['NoCM'] }}">Diagnosa Awal</a>
-                <a class="capsule-btn" href="{{ url('/diagnosaAkhir') }}{{ $data['NoCM'] }}">Diagnosa Akhir</a>
+                <a class="capsule-btn" href="{{ url('/diagnosaAkhir\/') }}{{ $data['NoCM'] }}">Diagnosa Akhir</a>
             </div>
 
             <div class="content soft-shadow">
@@ -26,7 +26,7 @@
                 <hr>
                 <div class="row p-3 py-4">
                     <div class="col-6">
-                        <form action="{{ action('DiagnosaController@diagnosaAwal', $data['NoCM']) }}" method="POST">
+                        <form action="" method="POST">
                         {{-- <form action="{{ action('DiagnosaController@diagnosaAwal') }}" > --}}
                             @csrf
                             <div class="row">
@@ -147,7 +147,7 @@
                                 <div class="col-12 mt-auto">
                                     <label class="separator">Y</label>      <!-- KOSONGAN LUR -->
                                     
-                                    <button type="submit" class="btn btn-dark green-long m-0">Diagnosa awal</button>
+                                    <a href="{{url('diagnosa/'.$data['NoCM'])}}" class="btn btn-dark green-long m-0">Diagnosa awal</a>
                                     {{-- <a class="btn btn-dark green-long m-0" href="{{ action ('DiagnosaController@diagnosaAwal', $data['NoCM'])}}">Diagnosa awal</a> --}}
 
                                 </div>

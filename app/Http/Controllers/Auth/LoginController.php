@@ -32,7 +32,7 @@ class LoginController extends Controller
     {
         switch (Auth::user()->KdJabatan) {
             case '1':
-                $this->redirectTo = '/diagnosa/{no_cm}';
+                $this->redirectTo = '/listPasien';
                 return $this->redirectTo;
                 break;
             case '2':
