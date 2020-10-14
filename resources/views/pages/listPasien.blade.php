@@ -96,16 +96,15 @@
                                 $jenkel = ($data['JK'] == "L" ? "Laki - Laki" : "Perempuan");
                             @endphp
                             <tr>
-                                <td>{{$data['No. Urut']}}</td>
-                                <td>{{$data['NoPendaftaran']}}</td>
-                                <td>{{$data['NoCM']}}</td>
-                                <td>{{$data['Nama Pasien']}}</td>
-                                <td>{{$data['UmurTahun']}} Th</td>
-                                <td>{{$jenkel}}</td>
-                                <td>{{$data['TglMasuk']}}</td>
-                            <td>
-                                <span class="label-keterangan {{$status}}">{{$data['Status Periksa']}}</span></td>
-                                <td class="d-flex flex-row"><a href="{{action('PasienController@DataPasien', $data['NoCM'])}}" class="btn btn-dark diagnosa">Diagnosa</a></td>
+                                <td data-label="Urutan">{{$data['No. Urut']}}</td>
+                                <td data-label="No Pendaftaran">{{$data['NoPendaftaran']}}</td>
+                                <td data-label="No Rekam Medis">{{$data['NoCM']}}</td>
+                                <td data-label="Nama Pasien">{{$data['Nama Pasien']}}</td>
+                                <td data-label="Umur">{{$data['UmurTahun']}} Th</td>
+                                <td data-label="Jenis Kelamin">{{$jenkel}}</td>
+                                <td data-label="Tanggal Masuk">{{$data['TglMasuk']}}</td>
+                                <td data-label="Keterangan"><span class="label-keterangan {{$status}}">{{$data['Status Periksa']}}</span></td>
+                                <td data-label="Action" class="d-flex flex-row p-lg-1"><a href="{{action('PasienController@DataPasien', $data['NoCM'])}}" class="btn diagnosa ml-auto">Diagnosa</a></td>
                             </tr>
                             @endforeach
                         </tbody>
