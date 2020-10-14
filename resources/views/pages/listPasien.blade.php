@@ -114,7 +114,7 @@
                                     @endphp
                                     <td data-label="Tanggal Masuk">{{ date_format($date,"d/m/Y")}}</td>
                                     <td data-label="Keterangan">
-                                        <span class="label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
+                                        <span class="ml-auto label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
                                     </td>
                                     <td data-label="Action" class="d-flex flex-row p-lg-1">
                                         <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn diagnosa ml-auto">Diagnosa</a>
@@ -133,7 +133,7 @@
                                         @endphp
                                         <td data-label="Tanggal Masuk">{{ date_format($date,"d/m/Y")}}</td>
                                         <td data-label="Keterangan">
-                                            <span class="label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
+                                            <span class="ml-auto label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
                                         </td>
                                         <td data-label="Action" class="d-flex flex-row">
                                             <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn diagnosa ml-auto">Diagnosa</a>
