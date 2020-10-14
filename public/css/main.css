@@ -266,6 +266,7 @@ nav ul li.profile img {
   margin: 0 2px;
   border: none;
   color: white;
+  white-space: nowrap;
 }
 
 .btn.diagnosa {
