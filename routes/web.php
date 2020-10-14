@@ -40,6 +40,36 @@ Route::get('listPasienHasilLab', 'PasienController@ListPasienHasilLab');
 Route::get('dataResep', 'DiagnosaController@DataResep');
 Route::get('riwayat', 'PasienController@Riwayat');
 
+// ============ TEMPLATE FRONT END
+
+Route::get('templateASD', function () {
+    return view('pages.template');
+});
+
+Route::get('logActivities', function () {
+    return view('pages.admin.logActivities');
+});
+
+Route::get('managementUser', function () {
+    return view('pages.admin.managementUser');
+});
+
+Route::get('historicalList', function () {
+    return view('pages.admin.historicalList');
+});
+
+Route::get('uploadFile', function () {
+    return view('pages.admin.uploadFile');
+});
+
+Route::get('subNavbar', function () {
+    return view('includes.admin.navbar');
+});
+
+// ============ END OF TEMPLATE FRONT END
+
+
+
 Route::get('subNavbar', function () {
     return view('includes.subNavbar');
 });
