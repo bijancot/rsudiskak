@@ -15,9 +15,9 @@
                         Kembali
                     </span>
                 </a>
-                <a class="capsule-btn secondary" href="{{ url('/dataPasien\/') }}{{ $data['NoCM'] }}">Data Pasien</a>
-                <a class="capsule-btn active" href="{{ url('/diagnosa\/') }}{{ $data['NoCM'] }}">Diagnosa Awal</a>
-                <a class="capsule-btn " href="{{ url('/diagnosaAkhir\/') }}{{ $data['NoCM'] }}">Diagnosa Akhir</a>
+                <a class="capsule-btn capsule-left secondary" href="{{ url('/dataPasien\/') }}{{ $data['NoCM'] }}">Data Pasien</a>
+                <a class="capsule-btn capsule-middle active" href="{{ url('/diagnosa\/') }}{{ $data['NoCM'] }}">Diagnosa Awal</a>
+                <a class="capsule-btn capsule-right" href="{{ url('/diagnosaAkhir\/') }}{{ $data['NoCM'] }}">Diagnosa Akhir</a>
             </div>
             
             <div class="content soft-shadow">
@@ -26,40 +26,40 @@
                 </div>
                 <hr>
                 <div class="row p-3 py-4">
-                    <div class="col-6">
+                    <div class="col-lg-6 col-12">
                         <form method="POST" action="{{ action('DiagnosaController@storeDiagnosaAwal', $data['NoCM']) }}">
                             @csrf
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-12 mt-3 mt-lg-0">
                                     <label for="anamnesis">Anamnesis</label>
                                     <input type="text" name="anamnesis" value="Sesak Napas, Muntah Darah 3x, BAB Hitam pekat">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-lg-4 col-12 mt-3 mt-lg-0">
                                     <label for="tekanandarah">Tekanan Darah</label>
                                     <input type="text" name="tekanandarah" placeholder="Tekanan">
                                 </div>
-                                <div class="col-3 pl-0">
+                                <div class="col-lg-3 pl-lg-0 col-12 mt-3 mt-lg-0">
                                     <label for="suhutubuh">Suhu Tubuh</label>
                                     <input type="text" name="suhutubuh" placeholder="Suhu">
                                 </div>
-                                <div class="col-3 pl-0">
+                                <div class="col-lg-3 pl-0 col-10 mt-3 mt-lg-0">
                                     <label for="beratbadan">Berat Badan</label>
                                     <input type="text" name="beratbadan" placeholder="Berat">
                                 </div>
-                                <div class="col-2 pl-0">
+                                <div class="col-lg-2 pl-lg-0 col-2 mt-3 mt-lg-0">
                                     <label class="separator">Y</label>
                                     <input type="text" name="beratbadan" value="Kg" disabled>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12 mt-3 mt-lg-0">
                                     <label for="pemeriksaanfisik">Pemeriksaan Fisik</label>
                                     <input type="text" name="pemeriksaanfisik" placeholder="Pemeriksaan Fisik">
                                 </div>
                             </div>
                         </div>
     
-                        <div class="col-6">
+                        <div class="col-lg-6 col-12">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-12 mt-3 mt-lg-0">
                                     <label for="alamat">Diagnosa</label>
                                     <select class="custom-select">
                                         <option selected>Diagnosa</option>
@@ -68,7 +68,7 @@
                                         <option value="3">Three</option>
                                     </select>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12 mt-3 mt-lg-0">
                                     <label for="alamat">Jenis Pelayanan</label>
                                     <select class="custom-select">
                                         <option selected>Dalam</option>
@@ -77,7 +77,7 @@
                                         <option value="3">Three</option>
                                     </select>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12 mt-3 mt-lg-0">
                                     <label for="alamat">Dokter Pemeriksa</label>
                                     <select class="custom-select">
                                         <option selected>dr. Agam Putanto sp. PD</option>
