@@ -58,7 +58,7 @@
                                 <td data-label="Jenis Kelamin">{{$jenkel}}</td>
                                 <td data-label="Tanggal Masuk">{{$data['TglMasuk']}}</td>
                                 <td data-label="Keterangan"><span class="label-keterangan ml-auto {{$status}}">{{$data['Status Periksa']}}</span></td>
-                                <td data-label="Action" class="p-lg-1"><div class="d-flex flex-row"><a href="{{ action ('DiagnosaController@pilihDokter', $data['NoCM'])}}" class="btn btn-dark diagnosa ml-auto">Dokter</a><a href="#" class="btn btn-dark batal">Batal</a></div></td>
+                                <td data-label="Action" class="p-lg-1"><div class="d-flex flex-row"><a href="{{ action ('DiagnosaController@pilihDokter', $data['NoCM'])}}" class="btn diagnosa ml-auto">Dokter</a><a href="#" class="btn batal">Batal</a></div></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -76,7 +76,7 @@
                                 <th>Jenis Kelamin</th>
                                 <th>Tanggal Masuk</th>
                                 <th>Keterangan</th>
-                                <th>Action</th>
+                                <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
