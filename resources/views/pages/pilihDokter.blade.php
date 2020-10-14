@@ -16,7 +16,7 @@
                         Kembali
                     </span>
                 </a>
-                <a class="capsule-btn active" style="border-radius: 24px 24px 24px 24px;" href="#">Pilih Dokter</a>
+                {{-- <a class="capsule-btn active" style="border-radius: 24px 24px 24px 24px;" href="#">Pilih Dokter</a> --}}
 
             </div>
             
@@ -27,7 +27,7 @@
                 <hr>
                 <div class="row p-3 py-4">
                     <div class="col-12">
-                        <form method="POST" action="{{ url('/pilihDokter\/') }}{{ $no_cm }}">
+                        <form method="POST" action="{{ action('DiagnosaController@storePilihDokter', $no_cm) }}">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
@@ -35,7 +35,7 @@
                                     <select name="dokter" class="custom-select" id="pil_dokter">
                                         <option selected>Pilih Dokter</option>
                                         @foreach ($listDokter['data'] as $item)
-                                            <option value="{{ $item['KodeDokter'] }}"> {{ $item['NamaDokter'] }} </option>
+                                            <option value="{{ $item['IdDokter'] }}"> {{ $item['NamaLengkap'] }} </option>
                                         @endforeach
                                     </select>
                                     <input type="hidden" name="no_cm" value="{{ $no_cm }}">

@@ -88,3 +88,4 @@ Route::get('home', 'HomeController@index')->name('home');
 
 Route::post('diagnosa', 'DiagnosaController@storeDiagnosaAwal');
 Route::post('pilihDokter/{no_cm}', 'DiagnosaController@storePilihDokter');
+Route::post('batalPeriksa/{no_pendaftaran}', 'PasienController@storeBatalPeriksa');
