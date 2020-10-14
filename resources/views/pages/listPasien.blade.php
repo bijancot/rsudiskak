@@ -31,7 +31,7 @@
                                 <th>Umur</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Tanggal Masuk</th>
-                                <th>Action</th>
+                                <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,10 +60,10 @@
                                 @php
                                     $date = date_create($data['TglMasuk']);
                                 @endphp
-                                <td>{{ date_format($date,"d/m/Y")}}</td>
-                                <td data-label="Action" class="d-flex flex-row">
-                                    <a href="{{ action ('DiagnosaController@pilihDokter', $data['NoCM']) }}" class="btn btn-dark diagnosa">Pilih Dokter</a>
-                                    <a data-toggle="modal" data-target="#modal_batal_periksa-{{ $data['NoPendaftaran'] }}" class="btn btn-dark batal">Batal Periksa</a>
+                                <td data-label="Tanggal Masuk">{{ date_format($date,"d/m/Y")}}</td>
+                                <td data-label="Action" class="d-flex flex-row p-lg-1">
+                                    <a href="{{ action ('DiagnosaController@pilihDokter', $data['NoCM']) }}" class="btn diagnosa ml-auto">Pilih Dokter</a>
+                                    <a data-toggle="modal" data-target="#modal_batal_periksa-{{ $data['NoPendaftaran'] }}" class="btn batal">Batal Periksa</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -82,7 +82,7 @@
                                 <th>Jenis Kelamin</th>
                                 <th>Tanggal Masuk</th>
                                 <th>Keterangan</th>
-                                <th>Action</th>
+                                <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -103,40 +103,40 @@
                                 @endphp
                             @if ($kdJabatan == "1" && $idDokter == $poli['IdDokter'])
                                 <tr>
-                                    <td>{{ $poli['NoPendaftaran'] }}</td>
-                                    <td>{{ $poli['NoCM'] }}</td>
-                                    <td>{{ $poli['NamaDokter'] }}</td>
-                                    <td>{{ $poli['NamaLengkap'] }}</td>
-                                    <td>{{ $poli['UmurTahun'] }} Th</td>
-                                    <td>{{ $jenkel }}</td>
+                                    <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
+                                    <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>
+                                    <td data-label="Dok. Pemeriksa">{{ $poli['NamaDokter'] }}</td>
+                                    <td data-label="Nama Pasien">{{ $poli['NamaLengkap'] }}</td>
+                                    <td data-label="Umur">{{ $poli['UmurTahun'] }} Th</td>
+                                    <td data-label="Jenis Kelamin">{{ $jenkel }}</td>
                                     @php
                                         $date = date_create($data['TglMasuk']);
                                     @endphp
-                                    <td>{{ date_format($date,"d/m/Y")}}</td>
-                                    <td>
+                                    <td data-label="Tanggal Masuk">{{ date_format($date,"d/m/Y")}}</td>
+                                    <td data-label="Keterangan">
                                         <span class="label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
                                     </td>
-                                    <td class="d-flex flex-row">
-                                        <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn btn-dark diagnosa">Diagnosa</a>
+                                    <td data-label="Action" class="d-flex flex-row p-lg-1">
+                                        <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn diagnosa ml-auto">Diagnosa</a>
                                     </td>
                                 </tr>
                                 @elseif($kdJabatan == "2")
                                     <tr>
-                                        <td>{{ $poli['NoPendaftaran'] }}</td>
-                                        <td>{{ $poli['NoCM'] }}</td>
-                                        <td>{{ $poli['NamaDokter'] }}</td>
-                                        <td>{{ $poli['NamaLengkap'] }}</td>
-                                        <td>{{ $poli['UmurTahun'] }} Th</td>
-                                        <td>{{ $jenkel }}</td>
+                                        <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
+                                        <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>
+                                        <td data-label="Dok. Pemeriksa">{{ $poli['NamaDokter'] }}</td>
+                                        <td data-label="Nama Pasien">{{ $poli['NamaLengkap'] }}</td>
+                                        <td data-label="Umur">{{ $poli['UmurTahun'] }} Th</td>
+                                        <td data-label="Jenis Kelamin">{{ $jenkel }}</td>
                                         @php
                                             $date = date_create($data['TglMasuk']);
                                         @endphp
-                                        <td>{{ date_format($date,"d/m/Y")}}</td>
-                                        <td>
+                                        <td data-label="Tanggal Masuk">{{ date_format($date,"d/m/Y")}}</td>
+                                        <td data-label="Keterangan">
                                             <span class="label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
                                         </td>
-                                        <td class="d-flex flex-row">
-                                            <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn btn-dark diagnosa">Diagnosa</a>
+                                        <td data-label="Action" class="d-flex flex-row">
+                                            <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn diagnosa ml-auto">Diagnosa</a>
                                         </td>
                                     </tr>
                                 
