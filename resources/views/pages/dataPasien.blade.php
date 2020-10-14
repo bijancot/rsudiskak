@@ -30,64 +30,64 @@
                         {{-- <form action="{{ action('DiagnosaController@diagnosaAwal') }}" > --}}
                             @csrf
                             <div class="row">
-                                <div class="col-lg-5 col-12">
+                                <div class="col-lg-5 col-12 mt-3 mt-lg-0">
                                     <label for="nopendaftaran">No Pendaftaran</label>
                                     <input type="text" name="nopendaftaran" value="??" disabled>
                                 </div>
-                                <div class="col-lg-7 pl-lg-0 col-12">
+                                <div class="col-lg-7 pl-lg-0 col-12 mt-3 mt-lg-0">
                                     <label for="norekammedis">No Rekam Medis</label>
                                     <input type="text" name="norekammedis" value="{{$data['NoCM']}}" disabled>
                                 </div>
                             
-                                <div class="col-lg-8 col-12">
+                                <div class="col-lg-8 col-12 mt-3 mt-lg-0">
                                     <label for="nama">Nama</label>
                                     <input type="text" name="nama" value="{{$data['NamaLengkap']}}" disabled>
                                 </div>
-                                <div class="col-lg-4 pl-lg-0 col-12">
+                                <div class="col-lg-4 pl-lg-0 col-12 mt-3 mt-lg-0">
                                     <label for="agama">Agama Pasien</label>
                                     <input type="text" name="agama" value="Islam" disabled>
                                 </div>
                             
-                                <div class="col-lg-8 col-12">
+                                <div class="col-lg-8 col-12 mt-3 mt-lg-0">
                                     <label for="tanggallahir">Tanggal Lahir</label>
                                     <input type="text" name="tanggallahir" value="{{$data['TglLahir']}}" disabled>
                                 </div>
-                                <div class="col-lg-2 pl-lg-0 col-6">
+                                <div class="col-lg-2 pl-lg-0 col-6 mt-3 mt-lg-0">
                                     <label for="umur">Umur Pasien</label>
                                     <input type="text" name="umur" value="{{$data['UmurTahun']}} Tahun" disabled>
                                 </div>
-                                <div class="col-lg-2 p-0 col-6">
+                                <div class="col-lg-2 pl-0 col-6 mt-3 mt-lg-0">
                                     <label for="jk">Jenis Kelamin</label>
                                     <input type="text" name="jk" value="{{($data['JenisKelamin']=='L'?'Laki-laki':'Perempuan')}}" disabled>
                                 </div>
                             
-                                <div class="col-12">
+                                <div class="col-12 mt-3 mt-lg-0">
                                     <label for="alamat">Alamat</label>
                                     <input type="text" name="alamat" value="{{$data['Alamat']}}" disabled>
                                 </div>
                             
-                                <div class="col-lg-4 col-6">
+                                <div class="col-lg-4 col-6 mt-3 mt-lg-0">
                                     <label for="nopendaftaran">Desa</label>
                                     <input type="text" name="nopendaftaran" value="{{$data['Kelurahan']}}" disabled>
                                 </div>
-                                <div class="col-lg-4 pl-0 col-6">
+                                <div class="col-lg-4 pl-0 col-6 mt-3 mt-lg-0">
                                     <label for="norekammedis">Kecamatan</label>
                                     <input type="text" name="norekammedis" value="{{$data['Kecamatan']}}" disabled>
                                 </div>
-                                <div class="col-lg-4 pl-lg-0 col-12">
+                                <div class="col-lg-4 pl-lg-0 col-12 mt-3 mt-lg-0">
                                     <label for="norekammedis">Kota/Kabupaten</label>
                                     <input type="text" name="norekammedis" value="{{$data['Kota']}}" disabled>
                                 </div>
                             
-                                <div class="col-lg-4 col-6">
+                                <div class="col-lg-4 col-6 mt-3 mt-lg-0">
                                     <label for="status">Status</label>
                                     <input type="text" name="status" value="Kawin" disabled>
                                 </div>
-                                <div class="col-lg-4 pl-0 col-6">
+                                <div class="col-lg-4 pl-0 col-6 mt-3 mt-lg-0">
                                     <label for="tanggungjawab">Tanggung Jawab</label>
                                     <input type="text" name="tanggungjawab" value="Istri" disabled>
                                 </div>
-                                <div class="col-lg-4 pl-lg-0 col-12">
+                                <div class="col-lg-4 pl-lg-0 col-12 mt-3 mt-lg-0">
                                     <label for="namapenanggungjawab">Nama Penangggung Jawab</label>
                                     <input type="text" name="namapenanggungjawab" value="Yelena Putri Dana" disabled>
                                 </div>
@@ -96,46 +96,46 @@
     
                         <div class="col-lg-6 col-12">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-12 mt-3 mt-lg-0">
                                     <label for="alamat">Alamat Penangggung Jawab</label>
                                     <input type="text" name="alamat" value="3891 Ranchview Dr. Richardson, California 62639" disabled>
                                 </div>
                             
-                                <div class="col-lg-4 col-6">
+                                <div class="col-lg-4 col-6 mt-3 mt-lg-0">
                                     <label for="nopendaftaran">Desa</label>
                                     <input type="text" name="nopendaftaran" value="Kunir" disabled>
                                 </div>
-                                <div class="col-lg-4 pl-0 col-6">
+                                <div class="col-lg-4 pl-0 col-6 mt-3 mt-lg-0">
                                     <label for="norekammedis">Kecamatan</label>
                                     <input type="text" name="norekammedis" value="Wonodadi" disabled>
                                 </div>
-                                <div class="col-lg-4 pl-lg-0 col-12">
+                                <div class="col-lg-4 pl-lg-0 col-12 mt-3 mt-lg-0">
                                     <label for="norekammedis">Kota/Kabupaten</label>
                                     <input type="text" name="norekammedis" value="Kab. Blitar" disabled>
                                 </div>
                             
-                                <div class="col-lg-6 col-12">
+                                <div class="col-lg-6 col-12 mt-3 mt-lg-0">
                                     <label for="caramasuk">Cara Masuk RS</label>
                                     <input type="text" name="caramasuk" value="Sendiri" disabled>
                                 </div>
-                                <div class="col-lg-6 pl-lg-0 col-12">
+                                <div class="col-lg-6 pl-lg-0 col-12 mt-3 mt-lg-0">
                                     <label for="carapenerimaan">Cara Penerimaan</label>
                                     <input type="text" name="carapenerimaan" value="Inst Kesehatan - Klinik Bunga Teratai" disabled>
                                 </div>
                             
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6 mt-3 mt-lg-0">
                                     <label for="kelas">Kelas Pelayanan</label>
                                     <input type="text" name="kelas" value="Kelas III" disabled>
                                 </div>
-                                <div class="col-lg-3 pl-0 col-6">
+                                <div class="col-lg-3 pl-0 col-6 mt-3 mt-lg-0">
                                     <label for="penjamin">Penjamin</label>
                                     <input type="text" name="penjamin" value="BPJS" disabled>
                                 </div>
-                                <div class="col-lg-4 pl-lg-0 col-6">
+                                <div class="col-lg-4 pl-lg-0 col-6 mt-3 mt-lg-0">
                                     <label for="tanggalmasuk">Tanggal Masuk</label>
                                     <input type="text" name="tanggalmasuk" value="27 Agustus 2020" disabled>
                                 </div>
-                                <div class="col-lg-2 pl-0 col-6">
+                                <div class="col-lg-2 pl-0 col-6 mt-3 mt-lg-0">
                                     <label for="jam">Jam</label>
                                     <input type="text" name="jam" value="13.02" disabled>
                                 </div>
