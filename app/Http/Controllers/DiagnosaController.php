@@ -6,6 +6,7 @@ use App\AntrianPasien;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Http\Controllers\PasienController;
+use Illuminate\Support\Facades\Auth;
 
 class DiagnosaController extends Controller
 {
@@ -34,27 +35,49 @@ class DiagnosaController extends Controller
         }
     }
 
-    public function storeDiagnosaAwal($no_cm = null)
+    public function storeDiagnosaAwal($no_cm)
     {
-        $view = new PasienController();
-        return $view->listPasien();
+        // Check isNext Diagnosa Akhir
+        if(Auth::user()->KdJabatan == "1"){
+            return redirect('diagnosaAkhir/'.$no_cm);
+        }else if(Auth::user()->KdJabatan == "2"){
+            $view = new PasienController();
+            return $view->listPasien();
+        }
     }
 
     public function diagnosaAkhir($no_cm = null)
     {
         if ($no_cm != null) {
+            //get data
+            $client = new Client();
+            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/caridatapasien/' . $no_cm);
+            $statCode = $res->getStatusCode();
+            $showPasien = $res->getBody()->getContents();
+            $showPasien = json_decode($showPasien, true);
+            $showPasien = $showPasien['response'];
+
+            // Check Klasifikasi Diagnosa
+            if(Auth::user()->KdJabatan == "1"){
+                $isDisabled = "";
+            }else if(Auth::user()->KdJabatan == "2"){
+                $isDisabled = "disabled";
+            }
 
             $data = [
-                'no_cm' => $no_cm
+                'isDisabled' => $isDisabled,
+                'data'      => $showPasien
             ];
-            dump($data);
-            // return redirect('pages.diagnosa', $data);
-            //endif
 
+            return view('pages.diagnosaAkhir', $data);
         } else {
             "No_CM tidak ada";
         }
-        return view('pages.diagnosaAkhir');
+    }
+    public function storeDiagnosaAkhir($no_cm = null)
+    {
+        $view = new PasienController();
+        return $view->listPasien();
     }
 
     public function dataResep()

@@ -20,8 +20,6 @@ Route::get('layout', function () {
 });
 
 Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
-Route::get('listPasien', 'PasienController@listPasien')->name('perawat')->middleware('perawatRole');
-Route::get('diagnosa/{no_cm}', 'DiagnosaController@diagnosaAwal')->name('dokter')->middleware('dokterRole');
 Route::get('login', function () {
     return view('pages.login');
 });
@@ -38,7 +36,7 @@ Route::get('listPasienKirimPoli', 'PasienController@ListPasienKirimPoli');
 Route::get('listPasienHasilLab', 'PasienController@ListPasienHasilLab');
 
 Route::get('dataResep', 'DiagnosaController@DataResep');
-Route::get('riwayat', 'PasienController@Riwayat');
+Route::get('riwayat/{no_cm}', 'PasienController@Riwayat');
 
 // ============ TEMPLATE FRONT END
 
@@ -86,6 +84,7 @@ Auth::routes();
 
 Route::get('home', 'HomeController@index')->name('home');
 
-Route::post('diagnosa', 'DiagnosaController@storeDiagnosaAwal');
+Route::post('diagnosa/{no_cm}', 'DiagnosaController@storeDiagnosaAwal');
+Route::post('diagnosaAkhir', 'DiagnosaController@storeDiagnosaAkhir');
 Route::post('pilihDokter/{no_cm}', 'DiagnosaController@storePilihDokter');
 Route::post('batalPeriksa/{no_pendaftaran}', 'PasienController@storeBatalPeriksa');

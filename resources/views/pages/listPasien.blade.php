@@ -14,7 +14,9 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-12 mt-4 mt-lg-0">
-                    @include('includes.tabPeriksa')
+                    @if ($kdJabatan == "2")
+                        @include('includes.tabPeriksa')
+                    @endif
                 </div>
             </div>
             <div class="table-container soft-shadow">
@@ -55,7 +57,10 @@
                                 <td data-label="Nama Pasien">{{$data['Nama Pasien']}}</td>
                                 <td data-label="Umur">{{$data['UmurTahun']}} Th</td>
                                 <td data-label="Jenis Kelamin">{{$jenkel}}</td>
-                                <td data-label="Tanggal Masuk">{{$data['TglMasuk']}}</td>
+                                @php
+                                    $date = date_create($data['TglMasuk']);
+                                @endphp
+                                <td>{{ date_format($date,"d/m/Y")}}</td>
                                 <td data-label="Action" class="d-flex flex-row">
                                     <a href="{{ action ('DiagnosaController@pilihDokter', $data['NoCM']) }}" class="btn btn-dark diagnosa">Pilih Dokter</a>
                                     <a data-toggle="modal" data-target="#modal_batal_periksa-{{ $data['NoPendaftaran'] }}" class="btn btn-dark batal">Batal Periksa</a>
@@ -69,9 +74,9 @@
                     <table id="tbl_masukPoli" class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Urutan</th>
                                 <th>No Pendaftaran</th>
                                 <th>No Rekam Medis</th>
+                                <th>Dok. Pemeriksa</th>
                                 <th>Nama Pasien</th>
                                 <th>Umur</th>
                                 <th>Jenis Kelamin</th>
@@ -95,22 +100,47 @@
                                 }
                                 // set detail JK
                                 $jenkel = ($poli['JenisKelamin'] == "L" ? "Laki - Laki" : "Perempuan");
-                            @endphp
-                            <tr>
-                                <td>{{ $poli['NoUrut'] }}</td>
-                                <td>{{ $poli['NoPendaftaran'] }}</td>
-                                <td>{{ $poli['NoCM'] }}</td>
-                                <td>{{ $poli['NamaLengkap'] }}</td>
-                                <td>{{ $poli['UmurTahun'] }} Th</td>
-                                <td>{{ $jenkel }}</td>
-                                <td>{{ $poli['TglMasuk'] }}</td>
-                            <td>
-                                <span class="label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
-                            </td>
-                                <td class="d-flex flex-row">
-                                    <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn btn-dark diagnosa">Diagnosa</a>
-                                </td>
-                            </tr>
+                                @endphp
+                            @if ($kdJabatan == "1" && $idDokter == $poli['IdDokter'])
+                                <tr>
+                                    <td>{{ $poli['NoPendaftaran'] }}</td>
+                                    <td>{{ $poli['NoCM'] }}</td>
+                                    <td>{{ $poli['NamaDokter'] }}</td>
+                                    <td>{{ $poli['NamaLengkap'] }}</td>
+                                    <td>{{ $poli['UmurTahun'] }} Th</td>
+                                    <td>{{ $jenkel }}</td>
+                                    @php
+                                        $date = date_create($data['TglMasuk']);
+                                    @endphp
+                                    <td>{{ date_format($date,"d/m/Y")}}</td>
+                                    <td>
+                                        <span class="label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
+                                    </td>
+                                    <td class="d-flex flex-row">
+                                        <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn btn-dark diagnosa">Diagnosa</a>
+                                    </td>
+                                </tr>
+                                @elseif($kdJabatan == "2")
+                                    <tr>
+                                        <td>{{ $poli['NoPendaftaran'] }}</td>
+                                        <td>{{ $poli['NoCM'] }}</td>
+                                        <td>{{ $poli['NamaDokter'] }}</td>
+                                        <td>{{ $poli['NamaLengkap'] }}</td>
+                                        <td>{{ $poli['UmurTahun'] }} Th</td>
+                                        <td>{{ $jenkel }}</td>
+                                        @php
+                                            $date = date_create($data['TglMasuk']);
+                                        @endphp
+                                        <td>{{ date_format($date,"d/m/Y")}}</td>
+                                        <td>
+                                            <span class="label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
+                                        </td>
+                                        <td class="d-flex flex-row">
+                                            <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn btn-dark diagnosa">Diagnosa</a>
+                                        </td>
+                                    </tr>
+                                
+                                @endif
                             @endforeach
                         </tbody>
                     </table>
@@ -152,8 +182,14 @@
             $('#tbl_masukPoli').DataTable();
             $('#tbl_antrianPoli_filter').hide();
             $('#tbl_masukPoli_filter').hide();
-            $('#masukPoli').hide();
-            var table = $('#tbl_antrianPoli').DataTable();
+            //Js Check isDokter / isPerawat
+            @if ($kdJabatan == "1")
+                $('#antrianPoli').hide();
+                var table = $('#tbl_masukPoli').DataTable();
+            @else
+                $('#masukPoli').hide();
+                var table = $('#tbl_antrianPoli').DataTable();
+            @endif
             FilterSearch(table);
         });
             $("#nav_antrianPoli").click(function(){

@@ -27,7 +27,7 @@
                 <hr>
                 <div class="row p-3 py-4">
                     <div class="col-6">
-                        <form method="POST" action="{{ url('DiagnosaController@storeDiagnosaAwal') }}">
+                        <form method="POST" action="{{ action('DiagnosaController@storeDiagnosaAwal', $data['NoCM']) }}">
                             @csrf
                             <div class="row">
                                 <div class="col-12">

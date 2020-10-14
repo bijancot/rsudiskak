@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AntrianPasien;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 
 class PasienController extends Controller
 {
@@ -27,8 +28,18 @@ class PasienController extends Controller
         $masukPoli->get();
         $getPasienMasukPoli     = $masukPoli->get();
 
+        if(Auth::user()->KdJabatan == "1"){
+            $kdJabatan = "1";
+            $idDokter = Auth::user()->IdDokter;
+        }else if(Auth::user()->KdJabatan == "2"){
+            $idDokter = Auth::user()->IdDokter;
+            $kdJabatan = "2";
+            
+        }
         $datax = [
-            'datas'             => $antriPoli,
+            'idDokter'          => $idDokter,
+            'kdJabatan'          => $kdJabatan,
+            'datas'          => $antriPoli,
             'masukPoli'         => $getPasienMasukPoli,
         ];
 
@@ -82,8 +93,22 @@ class PasienController extends Controller
         return view('pages.listPasienHasilLab');
     }
 
-    public function Riwayat()
+    public function Riwayat($no_cm)
     {
-        return view('pages.riwayat');
+        if ($no_cm != null) {
+            //get data
+            $client = new Client();
+            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/caridatapasien/' . $no_cm);
+            $statCode = $res->getStatusCode();
+            $showPasien = $res->getBody()->getContents();
+            $showPasien = json_decode($showPasien, true);
+            $showPasien = $showPasien['response'];
+
+            $data = ['data' => $showPasien];
+            return view('pages.riwayat', $data);
+
+        } else {
+            "No_CM tidak ada";
+        }
     }
 }
