@@ -21,6 +21,11 @@
         font-size: 14px;
         color: white;
         
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        
         &:hover {
             background: $black;
             color: white;
