@@ -285,6 +285,10 @@ nav ul li.profile img {
   height: 50px;
   font-size: 14px;
   color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }
 
 .btn.green-long:hover {
