@@ -375,6 +375,11 @@ nav ul li.profile img {
   position: absolute;
 }
 
+.collapsible .collapsible-head.inactive p svg {
+  transform: rotate(-90deg);
+  transition: ease 0.2s;
+}
+
 .collapsible .collapsible-head:hover {
   background: #F7FAF8;
 }
