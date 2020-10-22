@@ -101,9 +101,15 @@
     position: relative;
     overflow: hidden;
 
-    .collapsible-head.inactive ~ .collapsible-body {
-        transform: translateY(-99999px);
-        position: absolute;
+    .collapsible-head.inactive {
+        ~ .collapsible-body {
+            transform: translateY(-99999px);
+            position: absolute;
+        }
+        p svg {
+            transform: rotate(-90deg);
+            transition: ease 0.2s;
+        }
     }
 
     .collapsible-head:hover {
