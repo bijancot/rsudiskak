@@ -279,6 +279,11 @@ nav ul li.profile img {
   background: #EB5757;
 }
 
+.btn.secondary {
+  color: white;
+  background: #BDBDBD;
+}
+
 .btn.green-long {
   background: #009241;
   width: 100%;
@@ -288,6 +293,7 @@ nav ul li.profile img {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
@@ -353,6 +359,20 @@ nav ul li.profile img {
 .btn-tambah:hover {
   background: #009241;
   color: white;
+}
+
+.collapsible {
+  position: relative;
+  overflow: hidden;
+}
+
+.collapsible .collapsible-head.inactive ~ .collapsible-body {
+  transform: translateY(-99999px);
+  position: absolute;
+}
+
+.collapsible .collapsible-head:hover {
+  background: #F7FAF8;
 }
 
 /*!
@@ -11291,6 +11311,10 @@ select:focus {
   min-height: 100vh;
 }
 
+.text-grey {
+  color: #AEAEAE;
+}
+
 .fullvh {
   min-height: 100vh;
 }
@@ -11472,6 +11496,14 @@ select:focus {
 .content textarea.form-control {
   resize: none;
   height: 83%;
+}
+
+.content .border-round {
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
 }
 
 footer {
