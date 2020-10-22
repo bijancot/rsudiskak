@@ -14,6 +14,10 @@
         color: white;
         background: $red;
     }
+    &.secondary {
+        color: white;
+        background: $grey5;
+    }
     &.green-long {
         background: $green;
         width: 100%;
@@ -24,6 +28,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         text-align: center;
         
         &:hover {
@@ -87,4 +92,18 @@
 .btn-tambah:hover {
     background: $green;
     color: white;
+}
+
+.collapsible {
+    position: relative;
+    overflow: hidden;
+
+    .collapsible-head.inactive ~ .collapsible-body {
+        transform: translateY(-99999px);
+        position: absolute;
+    }
+
+    .collapsible-head:hover {
+        background: $greenishgrey;
+    }
 }

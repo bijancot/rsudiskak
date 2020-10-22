@@ -42,6 +42,10 @@ select:focus {
 
 }
 
+.text-grey {
+    color: $grey3;
+}
+
 .fullvh {
     min-height: 100vh;
 }
@@ -194,6 +198,14 @@ select:focus {
             resize: none;
             height: 83%;
         }
+    }
+
+    .border-round {
+        border: 1px solid $outlinegrey;
+        border-radius: 8px;
+        box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
+        -moz-box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
+        -webkit-box-shadow: 9px 10px 40px -5px rgba(0, 0, 0, 0.05);
     }
 }
 

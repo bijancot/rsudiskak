@@ -60,6 +60,14 @@ Route::get('uploadFile', function () {
     return view('pages.admin.uploadFile');
 });
 
+Route::get('pengkajianAwalPasien', function () {
+    return view('pages.pengkajianAwalPasien');
+});
+
+Route::get('pengkajianUlangPasien', function () {
+    return view('pages.pengkajianUlangPasien');
+});
+
 Route::get('subNavbar', function () {
     return view('includes.admin.navbar');
 });
