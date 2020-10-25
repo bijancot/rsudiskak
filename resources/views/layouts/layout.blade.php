@@ -34,6 +34,11 @@
                 color: #009241;
             }
         </style>
+        <script>
+            $(document).ready(function(){
+                $("#modal_login").modal('show');
+            });
+        </script>
 
     </head>
     <body>

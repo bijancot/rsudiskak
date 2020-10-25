@@ -11,18 +11,16 @@
                 <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
             
             
-            <p>ASD</p>
+            <p>{{ Auth::user()->NamaLengkap }}</p>
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                <a class="dropdown-item" data-toggle="modal" data-target="#modal_logout">
                     Logout
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>       
-            </div>        
+                      
+            </div>       
         </li>
 
         <!-- mobile view -->
@@ -60,5 +58,28 @@
     </div>
     <div id="blocker"></div>
 </div>
+<!-- modal batal periksa -->
+<div class="modal fade" id="modal_logout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white text-center">Logout</h5>
+                </div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" >
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="keterangan" class="col-form-label">Apakah ingin keluar aplikasi?</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form> 
+            </div>
+        </div>
+    </div>
+
 
 
