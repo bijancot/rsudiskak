@@ -59,8 +59,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary">Simpan</button>
-                    <button type="button" class="btn btn-dark diagnosa" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-dark diagnosa">Simpan</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 </div>
             </form>
           </div>
@@ -84,8 +84,8 @@
                     <p>Apa anda yakin ingin menghapus data <code>{{ $item->pendidikan }}</code> ?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary">Hapus</button>
-                    <button type="button" class="btn btn-dark diagnosa" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-dark diagnosa">Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 </div>
             </form>
           </div>
