@@ -38,6 +38,10 @@ Route::get('listPasienHasilLab', 'PasienController@ListPasienHasilLab');
 Route::get('dataResep', 'DiagnosaController@DataResep');
 Route::get('riwayat/{no_cm}', 'PasienController@Riwayat');
 
+Route::get('formPengkajianAwal/{no_cm}', 'FPengkajianAwalController@showRajal');
+Route::get('formPengkajianUlang/{no_cm}', 'FPengkajianUlangController@showRajal');
+
+
 // ============ TEMPLATE FRONT END
 
 Route::get('templateASD', function () {
@@ -47,6 +51,17 @@ Route::get('templateASD', function () {
 Route::get('logActivities', function () {
     return view('pages.admin.logActivities');
 });
+
+
+Route::get('m_pendidikan', 'PendidikanController@index');
+Route::get('m_pekerjaan', 'PekerjaanController@index');
+Route::get('m_agama', 'AgamaController@index');
+Route::get('m_nilaiAnut', 'NilaiAnutController@index');
+Route::get('m_statusPernikahan', 'StatusPernikahanController@index');
+Route::get('m_keluarga', 'KeluargaController@index');
+Route::get('m_tempatTinggal', 'TempatTinggalController@index');
+Route::get('m_statusPsikologi', 'StatusPsikologiController@index');
+Route::get('m_hambatanEdukasi', 'HambatanEdukasiController@index');
 
 Route::get('managementUser', function () {
     return view('pages.admin.managementUser');
@@ -61,11 +76,11 @@ Route::get('uploadFile', function () {
 });
 
 Route::get('pengkajianAwalPasien', function () {
-    return view('pages.pengkajianAwalPasien');
+    return view('pages.formPengkajian.pengkajianAwalPasien');
 });
 
 Route::get('pengkajianUlangPasien', function () {
-    return view('pages.pengkajianUlangPasien');
+    return view('pages.formPengkajian.pengkajianUlangPasien');
 });
 
 Route::get('subNavbar', function () {
@@ -73,8 +88,6 @@ Route::get('subNavbar', function () {
 });
 
 // ============ END OF TEMPLATE FRONT END
-
-
 
 Route::get('subNavbar', function () {
     return view('includes.subNavbar');
@@ -96,3 +109,33 @@ Route::post('diagnosa/{no_cm}', 'DiagnosaController@storeDiagnosaAwal');
 Route::post('diagnosaAkhir', 'DiagnosaController@storeDiagnosaAkhir');
 Route::post('pilihDokter/{no_cm}', 'DiagnosaController@storePilihDokter');
 Route::post('batalPeriksa/{no_pendaftaran}', 'PasienController@storeBatalPeriksa');
+
+/**
+ * Route post Admin
+ */
+Route::post('m_pendidikan', 'PendidikanController@store');
+Route::delete('m_pendidikan/{pendidikan}', 'PendidikanController@destroy');
+
+Route::post('m_pekerjaan', 'PekerjaanController@store');
+Route::delete('m_pekerjaan/{pekerjaan}', 'PekerjaanController@destroy');
+
+Route::post('m_agama', 'AgamaController@store');
+Route::delete('m_agama/{agama}', 'AgamaController@destroy');
+
+Route::post('m_nilaiAnut', 'NilaiAnutController@store');
+Route::delete('m_nilaiAnut/{nilaiAnut}', 'NilaiAnutController@destroy');
+
+Route::post('m_statusPernikahan', 'StatusPernikahanController@store');
+Route::delete('m_statusPernikahan/{statusPernikahan}', 'StatusPernikahanController@destroy');
+
+Route::post('m_keluarga', 'KeluargaController@store');
+Route::delete('m_keluarga/{keluarga}', 'KeluargaController@destroy');
+
+Route::post('m_tempatTinggal', 'TempatTinggalController@store');
+Route::delete('m_tempatTinggal/{tempatTinggal}', 'TempatTinggalController@destroy');
+
+Route::post('m_statusPsikologi', 'StatusPsikologiController@store');
+Route::delete('m_statusPsikologi/{statusPsikologi}', 'StatusPsikologiController@destroy');
+
+Route::post('m_hambatanEdukasi', 'HambatanEdukasiController@store');
+Route::delete('m_hambatanEdukasi/{hambatanEdukasi}', 'HambatanEdukasiController@destroy');

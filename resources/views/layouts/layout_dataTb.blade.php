@@ -10,8 +10,6 @@
         <link rel="stylesheet" href="{{ URL::asset('css/main.css') }}" />
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />
 
-        <!-- Font Material  -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
         <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
@@ -22,9 +20,6 @@
         <script type="text/javascript" src="{{ URL::asset('js/bootstrap-multiselect.js') }}"></script>
         <link rel="stylesheet" href="{{ URL::asset('css/bootstrap-multiselect.css') }}" />
         <style>
-            .dataTables_length, .dataTables_info, .dataTables_paginate{
-                padding: 20px !important;
-            }
             .page-item.active .page-link{
                 background: #009241;
                 border-color: #009241;

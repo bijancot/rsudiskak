@@ -117,7 +117,8 @@
                                         <span class="ml-auto label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
                                     </td>
                                     <td data-label="Action" class="d-flex flex-row p-lg-1">
-                                        <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn diagnosa ml-auto">Diagnosa</a>
+                                        {{-- <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn diagnosa ml-auto">Diagnosa</a> --}}
+                                        <a data-toggle="modal" data-target="#modal_pilihform_pengkajian-{{ $data['NoPendaftaran'] }}" class="btn diagnosa">Pilih Form Pengkajian</a>
                                     </td>
                                 </tr>
                                 @elseif($kdJabatan == "2")
@@ -136,7 +137,8 @@
                                             <span class="ml-auto label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
                                         </td>
                                         <td data-label="Action" class="d-flex flex-row p-lg-1">
-                                            <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn diagnosa ml-auto">Diagnosa</a>
+                                            {{-- <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn diagnosa ml-auto">Diagnosa</a> --}}
+                                            <a data-toggle="modal" data-target="#modal_pilihform_pengkajian-{{ $data['NoPendaftaran'] }}" class="btn diagnosa">Pilih Form Pengkajian</a>
                                         </td>
                                     </tr>
                                 
@@ -174,6 +176,47 @@
         </div>
     </div>
     <!-- end of modal batal periksa -->
+
+    <!-- modal Pilih Form Pengkajian -->
+    <div class="modal fade" id="modal_pilihform_pengkajian-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg ">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <p class="text-center"><h5 class="modal-title text-white">Pilih Form</h5></p>
+                </div>
+                    <div class="modal-body">
+                        <div class="card-deck">
+                            <div class="card">
+                                {{-- <img src="..." class="card-img-top" alt="..."> --}}
+                                <div class="card-body">
+                                <h5 class="card-title text-center">Form Pengkajian Awal</h5>
+                                <p class="card-text">Form untuk melakukan pengkajian awal pada pasien poli jantung.</p>
+                                    <div class="card-footer">
+                                        <a href="{{ action ('FPengkajianAwalController@showRajal', $data['NoCM']) }}" class="btn btn-dark diagnosa btn-block">Pilih</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                {{-- <img src="..." class="card-img-top" alt="..."> --}}
+                                <div class="card-body">
+                                <h5 class="card-title text-center">Form Pengkajian Ulang</h5>
+                                <p class="card-text">Form untuk melakukan pengkajian ulang pada pasien poli jantung.</p>
+                                    <div class="card-footer">
+                                        <a href="{{ action ('FPengkajianUlangController@showRajal', $data['NoCM']) }}" class="btn btn-dark diagnosa btn-block">Pilih</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div> --}}
+            </div>
+        </div>
+    </div>
+    <!-- end of modal Form Pengkajian -->
+
     @endforeach
 
     <script>
