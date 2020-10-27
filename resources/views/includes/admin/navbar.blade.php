@@ -14,6 +14,7 @@
                 <a class="dropdown-item" href="{{ url('m_tempatTinggal') }}">Tempat Tinggal</a>
                 <a class="dropdown-item" href="{{ url('m_statusPsikologi') }}">Status Psikologi</a>
                 <a class="dropdown-item" href="{{ url('m_hambatanEdukasi') }}">Hambatan Edukasi</a>
+                <a class="dropdown-item" href="{{ url('manajemen_form') }}">Manajemen Form</a>
             </div>
         </li>
         <li class="{{ Request::is('managementUser') ? 'active' : '' }} nav-item"><a href="{{ url('managementUser') }}">Management User</a></li>

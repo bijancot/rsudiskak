@@ -62,6 +62,7 @@ Route::get('m_keluarga', 'KeluargaController@index');
 Route::get('m_tempatTinggal', 'TempatTinggalController@index');
 Route::get('m_statusPsikologi', 'StatusPsikologiController@index');
 Route::get('m_hambatanEdukasi', 'HambatanEdukasiController@index');
+Route::get('manajemen_form', 'ManajemenFormController@index');
 
 Route::get('managementUser', function () {
     return view('pages.admin.managementUser');
@@ -139,3 +140,7 @@ Route::delete('m_statusPsikologi/{statusPsikologi}', 'StatusPsikologiController@
 
 Route::post('m_hambatanEdukasi', 'HambatanEdukasiController@store');
 Route::delete('m_hambatanEdukasi/{hambatanEdukasi}', 'HambatanEdukasiController@destroy');
+
+Route::post('manajemen_form', 'ManajemenFormController@store');
+Route::patch('manajemen_form/{manajemenForm}/update', 'ManajemenFormController@update');
+Route::post('manajemen_form/{manajemenForm}/delete', 'ManajemenFormController@delete');
