@@ -15,7 +15,7 @@ class PasienController extends Controller
     }
     public function listPasien()
     {
-        //get data
+        // //get data
         $client = new Client();
         $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/215?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
         $statCode = $res->getStatusCode();

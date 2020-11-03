@@ -28,6 +28,7 @@ Route::get('listPasien', 'PasienController@listPasien');
 Route::get('dataPasien/{no_cm}', 'PasienController@DataPasien');
 
 Route::get('pilihDokter/{no_cm}', 'DiagnosaController@pilihDokter');
+Route::get('pilihForm/{no_cm}/{no_pendaftaran}', 'FormPengkajianController@pilihForm');
 
 Route::get('diagnosa/{no_cm}', 'DiagnosaController@diagnosaAwal');
 Route::get('diagnosaAkhir/{no_cm}', 'DiagnosaController@diagnosaAkhir');
@@ -40,6 +41,7 @@ Route::get('riwayat/{no_cm}', 'PasienController@Riwayat');
 
 Route::get('formPengkajianAwal/{no_cm}', 'FPengkajianAwalController@showRajal');
 Route::get('formPengkajianUlang/{no_cm}', 'FPengkajianUlangController@showRajal');
+Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}', 'FormPengkajianController@formPengkajian');
 
 
 // ============ TEMPLATE FRONT END
@@ -109,7 +111,10 @@ Route::get('home', 'HomeController@index')->name('home');
 Route::post('diagnosa/{no_cm}', 'DiagnosaController@storeDiagnosaAwal');
 Route::post('diagnosaAkhir', 'DiagnosaController@storeDiagnosaAkhir');
 Route::post('pilihDokter/{no_cm}', 'DiagnosaController@storePilihDokter');
+Route::post('pilihForm/{no_cm}/{noPendaftaran}', 'FormPengkajianController@storePilihForm');
 Route::post('batalPeriksa/{no_pendaftaran}', 'PasienController@storeBatalPeriksa');
+Route::post('batalForm', 'FormPengkajianController@storeBatalForm');
+Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}', 'FormPengkajianController@storeFormPengkajian');
 
 /**
  * Route post Admin
