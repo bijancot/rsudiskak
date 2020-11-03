@@ -161,6 +161,8 @@ class FormPengkajianController extends Controller
                 ->whereNotNull('StatusPengkajian')
                 ->update(['DataPengkajian.'.$index => $req->all()]);
         }
+
+        return redirect('formPengkajian/'.$idForm.'/'.$no_cm.'/'.$noPendaftaran);
     }
     public function storeBatalForm(Request $req){
         //get data pasien bersarakan nocm
