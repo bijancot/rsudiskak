@@ -88,20 +88,22 @@
                         <tbody>
                             @foreach ($masukPoli as $poli)
                             @php
+                                $StatusPengkajian = "";
                                 // set style status periksa
-                                if($poli['StatusPeriksa'] == "Menunggu"){
-                                    $status = "yellow";
-                                }else if($poli['StatusPeriksa'] == "Diperiksa"){
-                                    $status = "blue";
-                                }else if($poli['StatusPeriksa'] == "Selesai"){
-                                    $status = "lime";
-                                }else if($poli['StatusPeriksa'] == "Belum"){
+                                if($poli['StatusPengkajian'] == "0" || $poli['StatusPengkajian'] == "1"){
+                                    $StatusPengkajian = "Belum";
                                     $status = "orange";
+                                }else if($poli['StatusPengkajian'] == "2"){
+                                    $StatusPengkajian = "Periksa";
+                                    $status = "yellow";
+                                }else if($poli['StatusPengkajian'] == "3"){
+                                    $StatusPengkajian = "Selesai";
+                                    $status = "blue";
                                 }
                                 // set detail JK
                                 $jenkel = ($poli['JenisKelamin'] == "L" ? "Laki - Laki" : "Perempuan");
                                 @endphp
-                            @if ($kdJabatan == "1" && $idDokter == $poli['IdDokter'])
+                            @if ($kdJabatan == "1" && $idDokter == $poli['IdDokter'] && $poli['StatusPengkajian'] != "0" && $poli['StatusPengkajian'] != "")
                                 <tr>
                                     <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
                                     <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>
@@ -110,18 +112,18 @@
                                     <td data-label="Umur">{{ $poli['UmurTahun'] }} Th</td>
                                     <td data-label="Jenis Kelamin">{{ $jenkel }}</td>
                                     @php
-                                        $date = date_create($data['TglMasuk']);
+                                        $date = date_create($poli['TglMasuk']);
                                     @endphp
                                     <td data-label="Tanggal Masuk">{{ date_format($date,"d/m/Y")}}</td>
                                     <td data-label="Keterangan">
-                                        <span class="ml-auto label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
+                                        <span class="ml-auto label-keterangan {{ $status }}">{{ $StatusPengkajian }}</span>
                                     </td>
                                     <td data-label="Action" class="d-flex flex-row p-lg-1">
-                                        {{-- <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn diagnosa ml-auto">Diagnosa</a> --}}
-                                        <a data-toggle="modal" data-target="#modal_pilihform_pengkajian-{{ $data['NoPendaftaran'] }}" class="btn diagnosa">Pilih Form Pengkajian</a>
+                                        <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Isi Form</a>
+                                        <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-target="#modal_batal_form" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" class="btn batal batalForm">Batal Form</a>
                                     </td>
                                 </tr>
-                                @elseif($kdJabatan == "2")
+                                @elseif($kdJabatan == "2" && $poli['StatusPengkajian'] != "")
                                     <tr>
                                         <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
                                         <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>
@@ -130,15 +132,19 @@
                                         <td data-label="Umur">{{ $poli['UmurTahun'] }} Th</td>
                                         <td data-label="Jenis Kelamin">{{ $jenkel }}</td>
                                         @php
-                                            $date = date_create($data['TglMasuk']);
+                                            $date = date_create($poli['TglMasuk']);
                                         @endphp
                                         <td data-label="Tanggal Masuk">{{ date_format($date,"d/m/Y")}}</td>
                                         <td data-label="Keterangan">
-                                            <span class="ml-auto label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
+                                            <span class="ml-auto label-keterangan {{ $status }}">{{ $StatusPengkajian }}</span>
                                         </td>
                                         <td data-label="Action" class="d-flex flex-row p-lg-1">
-                                            {{-- <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn diagnosa ml-auto">Diagnosa</a> --}}
-                                            <a data-toggle="modal" data-target="#modal_pilihform_pengkajian-{{ $data['NoPendaftaran'] }}" class="btn diagnosa">Pilih Form Pengkajian</a>
+                                            @if ($poli['StatusPengkajian'] == 0)
+                                                <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form Pengkajian</a>
+                                            @else
+                                                <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Isi Form</a>
+                                                <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm">Batal Form</a>
+                                            @endif
                                         </td>
                                     </tr>
                                 
@@ -219,6 +225,31 @@
 
     @endforeach
 
+    {{-- modal batal form --}}
+    <div class="modal fade" id="modal_batal_form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white text-center">Batal Form '<span id="mdl_title_pendaftaran"></span>' </h5>
+                </div>
+                <form action="{{ action ('FormPengkajianController@storeBatalForm', $data['NoPendaftaran'])}}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p style="text-align: center;">Apakah anda yakin batal pilih form ? </p>
+                            <input type="hidden" name="NoCM" id="mdl_NoCM">
+                            <input type="hidden" name="NoPendaftaran" id="mdl_Pendaftaran">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(document).ready(function() {
             $('#tbl_antrianPoli').DataTable();
@@ -234,6 +265,7 @@
                 var table = $('#tbl_antrianPoli').DataTable();
             @endif
             FilterSearch(table);
+
         });
             $("#nav_antrianPoli").click(function(){
                 $(this).addClass('active');
@@ -256,5 +288,15 @@
                     table.search( this.value ).draw();
                 });
             }
+            $('#tbl_masukPoli tbody').on('click', '.batalForm', function(){
+                let noCm = $(this).data('nocm');
+                let noPendaftaran = $(this).data('pendaftaran');
+                
+                $('#mdl_Pendaftaran').val(noPendaftaran);
+                $('#mdl_NoCM').val(noCm);
+                $('#mdl_title_pendaftaran').html(noCm);
+
+            })
+            
     </script>
 @endsection
