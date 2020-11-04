@@ -41,12 +41,12 @@ class FormPengkajianController extends Controller
         DB::collection('pasien_'.$no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
             ->whereNotNull('StatusPengkajian')
-            ->update(['IdFormPengkajian' => $req->get('formPengkajian'), 'StatusPengkajian' => "1"]);
+            ->update(['IdFormPengkajian' => $req->get('formPengkajian')]);
 
         DB::collection('transaksi_'.date('Y-m-d'))
             ->where('NoPendaftaran', $noPendaftaran)
             ->whereNotNull('StatusPengkajian')
-            ->update(['IdFormPengkajian' => $req->get('formPengkajian'), 'StatusPengkajian' => "1"]);
+            ->update(['IdFormPengkajian' => $req->get('formPengkajian')]);
 
         return redirect('formPengkajian/'.$req->get('formPengkajian').'/'.$no_cm.'/'.$noPendaftaran);
     }
@@ -106,11 +106,11 @@ class FormPengkajianController extends Controller
         
         //check status pengkajian
         if($subForm == "PengkajianKeperawatan_2"){
-            $statusPengkajian = "3";
-        }else if($subForm == "PengkajianKeperawatan_1" && $dataMasukPoli[0]["StatusPengkajian"] != 3){
             $statusPengkajian = "2";
+        }else if($subForm == "PengkajianKeperawatan_1" && $dataMasukPoli[0]["StatusPengkajian"] != 2){
+            $statusPengkajian = "1";
         }else{
-            $statusPengkajian = "3";
+            $statusPengkajian = "2";
         }
 
         // check status update data

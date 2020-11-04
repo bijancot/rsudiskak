@@ -90,20 +90,20 @@
                             @php
                                 $StatusPengkajian = "";
                                 // set style status periksa
-                                if($poli['StatusPengkajian'] == "0" || $poli['StatusPengkajian'] == "1"){
+                                if($poli['StatusPengkajian'] == "0"){
                                     $StatusPengkajian = "Belum";
                                     $status = "orange";
-                                }else if($poli['StatusPengkajian'] == "2"){
+                                }else if($poli['StatusPengkajian'] == "1"){
                                     $StatusPengkajian = "Periksa";
                                     $status = "yellow";
-                                }else if($poli['StatusPengkajian'] == "3"){
+                                }else if($poli['StatusPengkajian'] == "2"){
                                     $StatusPengkajian = "Selesai";
                                     $status = "blue";
                                 }
                                 // set detail JK
                                 $jenkel = ($poli['JenisKelamin'] == "L" ? "Laki - Laki" : "Perempuan");
                                 @endphp
-                            @if ($kdJabatan == "1" && $idDokter == $poli['IdDokter'] && $poli['StatusPengkajian'] != "0" && $poli['StatusPengkajian'] != "")
+                            @if ($kdJabatan == "1" && $idDokter == $poli['IdDokter'] && $poli['StatusPengkajian'] != "")
                                 <tr>
                                     <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
                                     <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>
@@ -119,8 +119,12 @@
                                         <span class="ml-auto label-keterangan {{ $status }}">{{ $StatusPengkajian }}</span>
                                     </td>
                                     <td data-label="Action" class="d-flex flex-row p-lg-1">
-                                        <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Isi Form</a>
-                                        <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-target="#modal_batal_form" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" class="btn batal batalForm">Batal Form</a>
+                                        @if ($poli['StatusPengkajian'] == 0)
+                                                <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form Pengkajian</a>
+                                            @else
+                                                <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Isi Form</a>
+                                                <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm">Batal Form</a>
+                                            @endif
                                     </td>
                                 </tr>
                                 @elseif($kdJabatan == "2" && $poli['StatusPengkajian'] != "")
