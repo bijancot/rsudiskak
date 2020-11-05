@@ -72,7 +72,7 @@
                 }
                 
             @endphp
-            <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, "PengkajianKeperawatan_1"])}}" class="needs-validation" method="POST" novalidate>
+            <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, "PengkajianKeperawatan_1", "0"])}}" class="needs-validation" method="POST" novalidate>
                 @csrf
                 <div class="content mt-3 soft-shadow collapsible">
                     <div class="p-3 collapsible-head inactive">
@@ -94,7 +94,7 @@
                                 <label for="pekerjaan">Pekerjaan</label>
                                 <select id="pekerjaan" name="PengkajianKeperawatan_1[Pekerjaan]" class="custom-select">
                                     @foreach ($pekerjaan as $item)
-                                        <option value="{{ $item->pekerjaan }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Pekerjaan']) && $dataPengkajian['PengkajianKeperawatan_1']['Pekerjaan'] == $item->pendidikan ? 'selected' : '')}}>{{ $item->pekerjaan }}</option>    
+                                        <option value="{{ $item->pekerjaan }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Pekerjaan']) && $dataPengkajian['PengkajianKeperawatan_1']['Pekerjaan'] == $item->pekerjaan ? 'selected' : '')}}>{{ $item->pekerjaan }}</option>    
                                     @endforeach
                                 </select>
                             </div>
@@ -111,7 +111,7 @@
                                 <label for="nilaiAnut">Nilai-nilai yang dianut</label>
                                 <select id="nilaiAnut" name="PengkajianKeperawatan_1[NilaiAnut]" class="custom-select">
                                     @foreach ($nilaiAnut as $item)
-                                        <option value="{{ $item->nilaiAnut }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Agama']) && $dataPengkajian['PengkajianKeperawatan_1']['Agama'] == $item->pendidikan ? 'selected' : '')}}>{{ $item->nilaiAnut }}</option>    
+                                        <option value="{{ $item->nilaiAnut }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['NilaiAnut']) && $dataPengkajian['PengkajianKeperawatan_1']['NilaiAnut'] == $item->nilaiAnut ? 'selected' : '')}}>{{ $item->nilaiAnut }}</option>    
                                     @endforeach
                                 </select>
                             </div>              
@@ -119,7 +119,7 @@
                                 <label for="statusPernikahan">Status Pernikahan</label>
                                 <select id="statusPernikahan" name="PengkajianKeperawatan_1[StatusPernikahan]" class="custom-select">
                                     @foreach ($statusPernikahan as $item)
-                                        <option value="{{ $item->statusPernikahan }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['StatusPernikahan']) && $dataPengkajian['PengkajianKeperawatan_1']['StatusPernikahan'] == $item->pendidikan ? 'selected' : '')}}>{{ $item->statusPernikahan }}</option>    
+                                        <option value="{{ $item->statusPernikahan }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['StatusPernikahan']) && $dataPengkajian['PengkajianKeperawatan_1']['StatusPernikahan'] == $item->statusPernikahan ? 'selected' : '')}}>{{ $item->statusPernikahan }}</option>    
                                     @endforeach
                                 </select>
                             </div>
@@ -127,7 +127,7 @@
                                 <label for="keluarga">Keluarga</label>
                                 <select id="keluarga" name="PengkajianKeperawatan_1[Keluarga]" class="custom-select">
                                     @foreach ($keluarga as $item)
-                                        <option value="{{ $item->keluarga }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Keluarga']) && $dataPengkajian['PengkajianKeperawatan_1']['Keluarga'] == $item->pendidikan ? 'selected' : '')}}>{{ $item->keluarga }}</option>    
+                                        <option value="{{ $item->keluarga }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Keluarga']) && $dataPengkajian['PengkajianKeperawatan_1']['Keluarga'] == $item->keluarga ? 'selected' : '')}}>{{ $item->keluarga }}</option>    
                                     @endforeach
                                 </select>
                             </div>
@@ -135,7 +135,7 @@
                                 <label for="tempatTinggal">Tempat Tinggal</label>
                                 <select id="tempatTinggal" name="PengkajianKeperawatan_1[TempatTinggal]" class="custom-select">
                                     @foreach ($tempatTinggal as $item)
-                                        <option value="{{ $item->tempatTinggal }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['TempatTinggal']) && $dataPengkajian['PengkajianKeperawatan_1']['TempatTinggal'] == $item->pendidikan ? 'selected' : '')}}>{{ $item->tempatTinggal }}</option>    
+                                        <option value="{{ $item->tempatTinggal }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['TempatTinggal']) && $dataPengkajian['PengkajianKeperawatan_1']['TempatTinggal'] == $item->tempatTinggal ? 'selected' : '')}}>{{ $item->tempatTinggal }}</option>    
                                     @endforeach
                                 </select>
                             </div>
@@ -143,7 +143,7 @@
                                 <label for="statusPsikologi">Status Psikologi</label>
                                 <select id="statusPsikologi" name="PengkajianKeperawatan_1[StatusPsikologi]" class="custom-select">
                                     @foreach ($statusPsikologi as $item)
-                                        <option value="{{ $item->statusPsikologi }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['StatusPsikologi']) && $dataPengkajian['PengkajianKeperawatan_1']['StatusPsikologi'] == $item->pendidikan ? 'selected' : '')}}>{{ $item->statusPsikologi }}</option>    
+                                        <option value="{{ $item->statusPsikologi }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['StatusPsikologi']) && $dataPengkajian['PengkajianKeperawatan_1']['StatusPsikologi'] == $item->statusPsikologi ? 'selected' : '')}}>{{ $item->statusPsikologi }}</option>    
                                     @endforeach
                                 </select>
                             </div>
@@ -151,7 +151,7 @@
                                 <label for="hambatanEdukasi">Hambatan Edukasi</label>
                                 <select id="hambatanEdukasi" name="PengkajianKeperawatan_1[HambatanEdukasi]" class="custom-select">
                                     @foreach ($hambatanEdukasi as $item)
-                                        <option value="{{ $item->hambatanEdukasi }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['HambatanEdukasi']) && $dataPengkajian['PengkajianKeperawatan_1']['HambatanEdukasi'] == $item->pendidikan ? 'selected' : '')}}>{{ $item->hambatanEdukasi }}</option>    
+                                        <option value="{{ $item->hambatanEdukasi }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['HambatanEdukasi']) && $dataPengkajian['PengkajianKeperawatan_1']['HambatanEdukasi'] == $item->hambatanEdukasi ? 'selected' : '')}}>{{ $item->hambatanEdukasi }}</option>    
                                     @endforeach
                                 </select>
                             </div>
@@ -401,7 +401,7 @@
                     </div>
                 </div>
             </form>
-            <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, 'PengkajianKeperawatan_2'])}}" class="needs-validation" method="POST" novalidate>
+            <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, 'PengkajianKeperawatan_2', '1'])}}" class="needs-validation" method="POST" novalidate>
                 @csrf
                 <div class="content mt-3 soft-shadow collapsible">
                     <div class="p-3 collapsible-head inactive">
