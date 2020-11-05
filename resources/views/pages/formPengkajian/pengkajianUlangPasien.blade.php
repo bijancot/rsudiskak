@@ -72,7 +72,7 @@
                 }
                 
             @endphp
-            <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, 'PengkajianKeperawatan_1'])}}" class="needs-validation" method="POST" novalidate>
+            <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, 'PengkajianKeperawatan_1', '0'])}}" class="needs-validation" method="POST" novalidate>
                 @csrf
                 <div class="content mt-3 soft-shadow collapsible">
                     <div class="p-3 collapsible-head inactive">
@@ -210,7 +210,7 @@
                     </div>
                 </div>
             </form>
-            <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, 'PengkajianKeperawatan_2'])}}" method="POST" class="needs-validation" novalidate>
+            <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, 'PengkajianKeperawatan_2', '1'])}}" method="POST" class="needs-validation" novalidate>
                 @csrf
                 <div class="content mt-3 soft-shadow collapsible">
                     <div class="p-3 collapsible-head inactive">

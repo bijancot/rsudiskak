@@ -114,7 +114,7 @@ Route::post('pilihDokter/{no_cm}', 'DiagnosaController@storePilihDokter');
 Route::post('pilihForm/{no_cm}/{noPendaftaran}', 'FormPengkajianController@storePilihForm');
 Route::post('batalPeriksa/{no_pendaftaran}', 'PasienController@storeBatalPeriksa');
 Route::post('batalForm', 'FormPengkajianController@storeBatalForm');
-Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}', 'FormPengkajianController@storeFormPengkajian');
+Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
 
 /**
  * Route post Admin

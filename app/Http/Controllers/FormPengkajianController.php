@@ -100,14 +100,14 @@ class FormPengkajianController extends Controller
         // return view('pages.formPengkajian.pengkajianAwalPasien', $no_cm);
     }
 
-    public function storeFormPengkajian(Request $req, $idForm, $no_cm, $noPendaftaran, $subForm){
+    public function storeFormPengkajian(Request $req, $idForm, $no_cm, $noPendaftaran, $subForm, $isLastSubForm){
         //get data pasien bersarakan nocm
         $dataMasukPoli = DB::collection('pasien_'.$no_cm)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
         
         //check status pengkajian
-        if($subForm == "PengkajianKeperawatan_2"){
+        if($isLastSubForm == "1"){
             $statusPengkajian = "2";
-        }else if($subForm == "PengkajianKeperawatan_1" && $dataMasukPoli[0]["StatusPengkajian"] != 2){
+        }else if($isLastSubForm == "0" && $dataMasukPoli[0]["StatusPengkajian"] != 2){
             $statusPengkajian = "1";
         }else{
             $statusPengkajian = "2";
