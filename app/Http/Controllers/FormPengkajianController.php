@@ -38,12 +38,15 @@ class FormPengkajianController extends Controller
     }
 
     public function storePilihForm(Request $req, $no_cm, $noPendaftaran){
+        //get data pasien bersarakan nocm
+        $dataMasukPoli = DB::collection('pasien_'.$no_cm)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
+
         DB::collection('pasien_'.$no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
             ->whereNotNull('StatusPengkajian')
             ->update(['IdFormPengkajian' => $req->get('formPengkajian')]);
 
-        DB::collection('transaksi_'.date('Y-m-d'))
+        DB::collection('transaksi_'.$dataMasukPoli[0]["TglMasukPoli"])
             ->where('NoPendaftaran', $noPendaftaran)
             ->whereNotNull('StatusPengkajian')
             ->update(['IdFormPengkajian' => $req->get('formPengkajian')]);
@@ -130,7 +133,7 @@ class FormPengkajianController extends Controller
             ->whereNotNull('StatusPengkajian')
             ->update(['StatusPengkajian' => $statusPengkajian]);
             
-        DB::collection('transaksi_'.date('Y-m-d'))
+        DB::collection('transaksi_'.$dataMasukPoli[0]['TglMasukPoli'])
             ->where('NoPendaftaran', $noPendaftaran)
             ->whereIn('StatusPengkajian', ["0", "1", "2", "3"])
             ->update(['StatusPengkajian' => $statusPengkajian]);
@@ -144,7 +147,7 @@ class FormPengkajianController extends Controller
                 ->push('DataPengkajian', $req->all(), true);
                 
             // berdasarkan tanggal
-            DB::collection('transaksi_'.date('Y-m-d'))
+            DB::collection('transaksi_'.$dataMasukPoli[0]['TglMasukPoli'])
                 ->where('NoPendaftaran', $noPendaftaran)
                 ->whereNotNull('StatusPengkajian')
                 ->push('DataPengkajian', $req->all(), true);
@@ -156,7 +159,7 @@ class FormPengkajianController extends Controller
                 ->update(['DataPengkajian.'.$index => $req->all()]);
                 
             // berdasarkan tanggal
-            DB::collection('transaksi_'.date('Y-m-d'))
+            DB::collection('transaksi_'.$dataMasukPoli[0]['TglMasukPoli'])
                 ->where('NoPedaftaran', $noPendaftaran)
                 ->whereNotNull('StatusPengkajian')
                 ->update(['DataPengkajian.'.$index => $req->all()]);
@@ -181,7 +184,7 @@ class FormPengkajianController extends Controller
         
         //insert data baru
         DB::collection('pasien_'.$req->get('NoCM'))->insertGetId($dataMasukPoli);
-        DB::collection('transaksi_'.date('Y-m-d'))->insert($dataMasukPoli);
+        DB::collection('transaksi_'.$dataMasukPoli['TglMasukPoli'])->insert($dataMasukPoli);
 
         return redirect('/listPasien');
     }

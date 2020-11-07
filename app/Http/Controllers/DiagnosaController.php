@@ -141,6 +141,7 @@ class DiagnosaController extends Controller
             $antrianPasien_noCM->NoUrut                                         = $a['No. Urut'];
             $antrianPasien_noCM->NoPendaftaran                                  = $a['NoPendaftaran'];
             $antrianPasien_noCM->TglMasuk                                       = date("Y-m-d H:i:s", strtotime($a['TglMasuk']));
+            $antrianPasien_noCM->TglMasukPoli                                   = date("Y-m-d");;
             $antrianPasien_noCM->jenisPasien                                    = $a['Jenis Pasien'];
             $antrianPasien_noCM->Ruangan                                        = $a['Ruangan'];
             $antrianPasien_noCM->KdRuangan                                      = $a['KdRuangan'];
@@ -195,6 +196,7 @@ class DiagnosaController extends Controller
             $antrianPasien_tgl->NoUrut                                              = $a['No. Urut'];
             $antrianPasien_tgl->NoPendaftaran                                       = $a['NoPendaftaran'];
             $antrianPasien_tgl->TglMasuk                                            = date("Y-m-d H:i:s", strtotime($a['TglMasuk']));
+            $antrianPasien_tgl->TglMasukPoli                                        = date("Y-m-d");
             $antrianPasien_tgl->jenisPasien                                         = $a['Jenis Pasien'];
             $antrianPasien_tgl->Ruangan                                             = $a['Ruangan'];
             $antrianPasien_tgl->KdRuangan                                           = $a['KdRuangan'];
