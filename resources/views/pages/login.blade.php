@@ -14,35 +14,28 @@
                         <p class="h2 mb-3 font-weight-bold" style="margin-top: 5rem">
                             Masuk
                         </p>
-                        <form method="POST" action="{{ route('login') }}">
+                        
+                        <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate>
                         @csrf
-                            <label for="IdDokter" class="my-2">Username</label>
-                            <input type="text" name="IdDokter"  placeholder="username" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }}" name="IdDokter" value="{{ old('IdDokter') }}">
-                                @if ($errors->has('IdDokter'))
-                                <div class="modal fade" id="modal_login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-md">
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-danger">
-                                                <h5 class="modal-title text-white text-center">Error</h5>
-                                            </div>
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" >
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <label for="keterangan" class="col-form-label" style="color:#2e3131">Username / Password Salah</label>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-dark diagnosa">Okee</button>
-                                                </div>
-                                            </form> 
-                                        </div>
-                                    </div>
+                            <div>
+                                <label for="IdDokter" class="my-2">Username</label>
+                                <input type="text" name="IdDokter"  placeholder="username" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }}" name="IdDokter" value="{{ old('IdDokter') }}" required>
+                                <div class="invalid-feedback">
+                                    Username Harus Diisi.
                                 </div>
-                                @endif
-                            <label for="password" class="mb-2 mt-3">Password</label>
-                            <input type="password" name="password" placeholder="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}">
-                               
+                            </div>    
+                            <div>
+                                <label for="password" class="mb-2 mt-3">Password</label>
+                                <input type="password" name="password" placeholder="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" required>
+                                <div class="invalid-feedback">
+                                    Password Harus Diisi.
+                                </div>
+                            </div>
+                            @if ($errors->has('IdDokter'))
+                                <div class="alert alert-danger mt-4" role="alert">
+                                    Username / Password Salah
+                                </div>
+                            @endif
                             <button type="submit" class="btn diagnosa submit-btn ml-auto mr-0 mt-4">
                                     Masuk
                             </button>
@@ -61,4 +54,23 @@
             </div>
         </div>
     </div>
+    <script>
+         (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+                }, false);
+            });
+            }, false);
+        })();
+    </script>
 @endsection
