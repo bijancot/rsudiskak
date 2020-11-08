@@ -28,19 +28,23 @@ class PasienController extends Controller
         $masukPoli->get();
         $getPasienMasukPoli     = $masukPoli->get();
 
-        if(Auth::user()->KdJabatan == "1"){
+        if (Auth::user()->KdJabatan == "1") {
             $kdJabatan = "1";
             $idDokter = Auth::user()->IdDokter;
-        }else if(Auth::user()->KdJabatan == "2"){
+        } else if (Auth::user()->KdJabatan == "2") {
             $idDokter = Auth::user()->IdDokter;
             $kdJabatan = "2";
-            
         }
+
+        $diagnosa  = new DiagnosaController();
+        $getlistDokter = $diagnosa->listDokter();
+
         $datax = [
             'idDokter'          => $idDokter,
-            'kdJabatan'          => $kdJabatan,
-            'datas'          => $antriPoli,
+            'kdJabatan'         => $kdJabatan,
+            'datas'             => $antriPoli,
             'masukPoli'         => $getPasienMasukPoli,
+            'listDokter'        => $getlistDokter,
         ];
 
         return view('pages.listPasien', $datax);
@@ -106,7 +110,6 @@ class PasienController extends Controller
 
             $data = ['data' => $showPasien];
             return view('pages.riwayat', $data);
-
         } else {
             "No_CM tidak ada";
         }

@@ -3,7 +3,36 @@
 @section('content')
 
 @include('includes.navbar')
+
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
     
+    @if (session('status'))
+
+    
+    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+        <!-- Position it -->
+        <div style="position: absolute; top: 0; right: 0;">
+      
+          <!-- Then put toasts within -->
+          <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong class="mr-auto">Data Gagal ditambahkan</strong>
+                <small>{{ date('H:i a') }}</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="toast-body">
+                {{ session('status') }}
+              </div>
+            </div>
+        </div>
+
+    @endif
+
     <div class="bg-greenishwhite">
         <div class="wrapper">
             <div class="row">
@@ -19,6 +48,7 @@
                     @endif
                 </div>
             </div>
+            
             <div class="table-container soft-shadow">
                 <div id="antrianPoli">
                     <table id="tbl_antrianPoli" class="table table-striped">
@@ -62,7 +92,8 @@
                                 @endphp
                                 <td data-label="Tanggal Masuk">{{ date_format($date,"d/m/Y")}}</td>
                                 <td data-label="Action" class="d-flex flex-row p-lg-1">
-                                    <a href="{{ action ('DiagnosaController@pilihDokter', $data['NoCM']) }}" class="btn diagnosa ml-auto">Pilih Dokter</a>
+                                    {{-- <a href="{{ action ('DiagnosaController@pilihDokter', $data['NoCM']) }}" class="btn diagnosa ml-auto">Pilih Dokter</a> --}}
+                                    <a data-toggle="modal" data-target="#modal_pilih_dokter-{{ $data['NoCM'] }}" class="btn diagnosa ml-auto">Pilih Dokter</a>
                                     <a data-toggle="modal" data-target="#modal_batal_periksa-{{ $data['NoPendaftaran'] }}" class="btn batal">Batal Periksa</a>
                                 </td>
                             </tr>
@@ -102,8 +133,8 @@
                                 }
                                 // set detail JK
                                 $jenkel = ($poli['JenisKelamin'] == "L" ? "Laki - Laki" : "Perempuan");
-                                @endphp
-                            @if ($kdJabatan == "1" && $idDokter == $poli['IdDokter'] && $poli['StatusPengkajian'] != "")
+                            @endphp
+                                @if ($kdJabatan == "1" && $idDokter == $poli['IdDokter'] && $poli['StatusPengkajian'] != "")
                                 <tr>
                                     <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
                                     <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>
@@ -162,6 +193,38 @@
     </div>
 
     @foreach ($datas['data'] as $data)
+    <!-- modal pilih dokter -->
+    <div class="modal fade" id="modal_pilih_dokter-{{ $data['NoCM'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white text-center">Pilih Dokter</h5>
+                </div>
+                <form method="POST" action="{{ action('DiagnosaController@storePilihDokter', $data['NoCM']) }}">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select name="dokter" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }} pilihDokter" id="dokter" title="Pilih salah satu..." data-live-search="true" required>
+                                @foreach ($listDokter['data'] as $item)
+                                    <option value="{{ $item['IdDokter'] }}"> {{ $item['NamaLengkap'] }} </option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">
+                                Dokter harus diisi
+                            </div>
+                            <input type="hidden" name="no_cm" value="{{ $data['NoCM'] }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end of modal pilih dokter -->
+
     <!-- modal batal periksa -->
     <div class="modal fade" id="modal_batal_periksa-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md">
@@ -255,7 +318,19 @@
     </div>
 
     <script>
+
+        // var overlay = document.getElementById("overlay");
+        // window.addEventListener('load', function () {
+        //     overlay.style.display = 'none';
+        // })
+
+        $(window).on("load", function () {
+            $(".loader-container").fadeOut(3000);
+        })
+
         $(document).ready(function() {
+
+            $('#loading').detach();
             $('#tbl_antrianPoli').DataTable();
             $('#tbl_masukPoli').DataTable();
             $('#tbl_antrianPoli_filter').hide();
@@ -269,6 +344,8 @@
                 var table = $('#tbl_antrianPoli').DataTable();
             @endif
             FilterSearch(table);
+
+            $('.pilihDokter').selectpicker();
 
         });
             $("#nav_antrianPoli").click(function(){
