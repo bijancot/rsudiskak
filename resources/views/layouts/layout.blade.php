@@ -12,11 +12,15 @@
 
         <!-- Font Material  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
         <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
         <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
         <!-- bootstrap multiselect  -->
         <script type="text/javascript" src="{{ URL::asset('js/bootstrap-multiselect.js') }}"></script>
@@ -35,6 +39,53 @@
             .page-link:hover{
                 color: #009241;
             }
+
+            .loader-container{
+                height: 100%;
+                width: 100%;
+                /* background: rgba(0, 0, 0, .8); */
+                background: rgba(0, 0, 0, .1);
+                position: fixed;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .loader {
+                width: 80px;
+                height: 80px;
+                
+                border: 5px solid;
+                color: #3498db;
+                border-radius: 100%;
+                border-top-color: transparent;
+
+                animation: spin 1.2s infinite linear;
+            }
+
+            @keyframes spin {
+                25% {
+                    color: #2ecc71;
+                } 
+                50% {
+                    color: #f1c40f;
+                } 
+                75% {
+                    color: #e74c3c;
+                } to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* #overlay{
+                height: 100%;
+                width: 100%;
+                background: rgba(0, 0, 0, .8);
+                position: fixed;
+                left: 0;
+                top: 0;
+            } */
+
         </style>
         <script>
             $(document).ready(function(){
@@ -68,6 +119,9 @@
         <!-- end of tempat modal -->
         
         <script type="text/javascript" src="{{ URL::asset('js/main.js') }}"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
         
         <script>
 

@@ -4,6 +4,10 @@
 
     @include('includes.navbar')
     
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+
     <div class="bg-greenishwhite">
         <div class="wrapper">
             <div class="search-box-box">
@@ -71,6 +75,9 @@
         </div>
     </div>
     <script>
+        $(window).on("load", function () {
+            $(".loader-container").fadeOut(3000);
+        })
         $(document).ready(function() {
             var table = $('#tbl_listPasienKirimPoli').DataTable();
             $(table).DataTable();
