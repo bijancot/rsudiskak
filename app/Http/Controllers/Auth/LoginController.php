@@ -40,7 +40,7 @@ class LoginController extends Controller
                 return $this->redirectTo;
                 break;
             case '3':
-                $this->redirectTo = '/admin';
+                $this->redirectTo = '/logActivities';
                 return $this->redirectTo;
                 break;
             default:
