@@ -18,8 +18,10 @@ Route::get('/', function () {
 Route::get('layout', function () {
     return view('layouts.layout');
 });
-
-Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
+Route::get('logActivities', function () {
+    return view('pages.admin.logActivities');
+})->middleware('adminRole')->name('admin');
+//Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
 Route::get('login', function () {
     return view('pages.login');
 });
