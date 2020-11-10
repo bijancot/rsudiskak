@@ -18,7 +18,7 @@
             </div>
         </li>
         <li class="{{ Request::is('managementUser') ? 'active' : '' }} nav-item"><a href="{{ url('managementUser') }}">Management User</a></li>
-        <li class="{{ Request::is('historicalList') ? 'active' : '' }} nav-item"><a href="{{ url('historicalList') }}">Historical List</a></li>
+        {{-- <li class="{{ Request::is('historicalList') ? 'active' : '' }} nav-item"><a href="{{ url('historicalList') }}">Historical List</a></li> --}}
         <li class="{{ Request::is('uploadFile') ? 'active' : '' }} nav-item"><a href="{{ url('uploadFile') }}">Upload File</a></li>
         
         <li class="profile d-flex flex-row align-items-center nav-item">

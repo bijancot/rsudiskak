@@ -151,7 +151,8 @@
                                     </td>
                                     <td data-label="Action" class="d-flex flex-row p-lg-1">
                                         @if ($poli['StatusPengkajian'] == 0)
-                                                <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form Pengkajian</a>
+                                                {{-- <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form Pengkajian</a> --}}
+                                                <a data-toggle="modal" data-target="#modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn diagnosa">Pilih Form Pengkajian</a>
                                             @else
                                                 <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Isi Form</a>
                                                 <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm">Batal Form</a>
@@ -175,7 +176,8 @@
                                         </td>
                                         <td data-label="Action" class="d-flex flex-row p-lg-1">
                                             @if ($poli['StatusPengkajian'] == 0)
-                                                <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form Pengkajian</a>
+                                                {{-- <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form Pengkajian</a> --}}
+                                                <a data-toggle="modal" data-target="#modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn diagnosa">Pilih Form Pengkajian</a>
                                             @else
                                                 <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Isi Form</a>
                                                 <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm">Batal Form</a>
@@ -250,7 +252,39 @@
     </div>
     <!-- end of modal batal periksa -->
 
-    <!-- modal Pilih Form Pengkajian -->
+    <!-- modal pilih form -->
+    <div class="modal fade" id="modal_pilih_form-{{ $data['NoCM'] }}-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white text-center">Pilih Form {{ $data['NoCM'] }}</h5>
+                </div>
+                <form method="POST" action="{{action('FormPengkajianController@storePilihForm', [$data['NoCM'], $data['NoPendaftaran']])}}">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select name="formPengkajian" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }} pilihForm" id="formPengkajian" title="Pilih salah satu..." data-live-search="true" required>
+                                @foreach ($listForm as $item)
+                                    <option value="{{ $item['idForm'] }}"> {{ $item['namaForm'] }} </option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">
+                                Form harus diisi
+                            </div>
+                            <input type="hidden" name="no_cm" value="{{ $data['NoCM'] }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end of modal pilih Form -->
+
+    <!-- modal Pilih Form Pengkajian (tidak dipakai) -->
     <div class="modal fade" id="modal_pilihform_pengkajian-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg ">
             <div class="modal-content">
@@ -346,6 +380,7 @@
             FilterSearch(table);
 
             $('.pilihDokter').selectpicker();
+            $('.pilihForm').selectpicker();
 
         });
             $("#nav_antrianPoli").click(function(){
