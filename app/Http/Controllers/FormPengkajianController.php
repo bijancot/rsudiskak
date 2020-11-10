@@ -37,32 +37,34 @@ class FormPengkajianController extends Controller
         }
     }
 
-    public function storePilihForm(Request $req, $no_cm, $noPendaftaran){
+    public function storePilihForm(Request $req, $no_cm, $noPendaftaran)
+    {
         //get data pasien bersarakan nocm
-        $dataMasukPoli = DB::collection('pasien_'.$no_cm)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
+        $dataMasukPoli = DB::collection('pasien_' . $no_cm)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
 
-        DB::collection('pasien_'.$no_cm)
+        DB::collection('pasien_' . $no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
             ->whereNotNull('StatusPengkajian')
             ->update(['IdFormPengkajian' => $req->get('formPengkajian')]);
 
-        DB::collection('transaksi_'.$dataMasukPoli[0]["TglMasukPoli"])
+        DB::collection('transaksi_' . $dataMasukPoli[0]["TglMasukPoli"])
             ->where('NoPendaftaran', $noPendaftaran)
             ->whereNotNull('StatusPengkajian')
             ->update(['IdFormPengkajian' => $req->get('formPengkajian')]);
 
-        return redirect('formPengkajian/'.$req->get('formPengkajian').'/'.$no_cm.'/'.$noPendaftaran);
+        return redirect('formPengkajian/' . $req->get('formPengkajian') . '/' . $no_cm . '/' . $noPendaftaran);
     }
 
-    public function formPengkajian($idForm, $NoCM, $noPendaftaran){
+    public function formPengkajian($idForm, $NoCM, $noPendaftaran)
+    {
 
         $dataForm = ManajemenForm::where('idForm', $idForm)->get();
         // return view("'".$data[0]['namaFile']."'");
         if ($NoCM && $noPendaftaran) {
             //get data pasien bersarakan nocm
-            $dataMasukPoli = DB::collection('pasien_'.$NoCM)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();    
-            if($dataMasukPoli[0]['IdFormPengkajian'] != $idForm){
-                return redirect('formPengkajian/'.$dataMasukPoli[0]['IdFormPengkajian'].'/'.$NoCM.'/'.$noPendaftaran);     
+            $dataMasukPoli = DB::collection('pasien_' . $NoCM)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
+            if ($dataMasukPoli[0]['IdFormPengkajian'] != $idForm) {
+                return redirect('formPengkajian/' . $dataMasukPoli[0]['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
             }
 
             $pendidikan         = Pendidikan::where("deleted_at", Null)->get();
@@ -74,7 +76,7 @@ class FormPengkajianController extends Controller
             $tempatTinggal      = TempatTinggal::where("deleted_at", Null)->get();
             $statusPsikologi    = StatusPsikologi::where("deleted_at", Null)->get();
             $hambatanEdukasi    = HambatanEdukasi::where("deleted_at", Null)->get();
-            $dataMasukPoli      = DB::collection('pasien_'.$NoCM)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
+            $dataMasukPoli      = DB::collection('pasien_' . $NoCM)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
 
             $data = [
                 'form_id'           => $idForm,
@@ -103,24 +105,25 @@ class FormPengkajianController extends Controller
         // return view('pages.formPengkajian.pengkajianAwalPasien', $no_cm);
     }
 
-    public function storeFormPengkajian(Request $req, $idForm, $no_cm, $noPendaftaran, $subForm, $isLastSubForm){
+    public function storeFormPengkajian(Request $req, $idForm, $no_cm, $noPendaftaran, $subForm, $isLastSubForm)
+    {
         //get data pasien bersarakan nocm
-        $dataMasukPoli = DB::collection('pasien_'.$no_cm)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
-        
+        $dataMasukPoli = DB::collection('pasien_' . $no_cm)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
+
         //check status pengkajian
-        if($isLastSubForm == "1"){
+        if ($isLastSubForm == "1") {
             $statusPengkajian = "2";
-        }else if($isLastSubForm == "0" && $dataMasukPoli[0]["StatusPengkajian"] != 2){
+        } else if ($isLastSubForm == "0" && $dataMasukPoli[0]["StatusPengkajian"] != 2) {
             $statusPengkajian = "1";
-        }else{
+        } else {
             $statusPengkajian = "2";
         }
 
         // check status update data
         $statusUpdate = 0;
         $index = 0;
-        foreach($dataMasukPoli[0]['DataPengkajian'] as $item){
-            if(!empty($item[$subForm])){
+        foreach ($dataMasukPoli[0]['DataPengkajian'] as $item) {
+            if (!empty($item[$subForm])) {
                 $statusUpdate = 1;
                 break;
             }
@@ -128,63 +131,64 @@ class FormPengkajianController extends Controller
         }
 
         // update data status pengkajian
-        DB::collection('pasien_'.$no_cm)
+        DB::collection('pasien_' . $no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
             ->whereNotNull('StatusPengkajian')
             ->update(['StatusPengkajian' => $statusPengkajian]);
-            
-        DB::collection('transaksi_'.$dataMasukPoli[0]['TglMasukPoli'])
+
+        DB::collection('transaksi_' . $dataMasukPoli[0]['TglMasukPoli'])
             ->where('NoPendaftaran', $noPendaftaran)
             ->whereIn('StatusPengkajian', ["0", "1", "2", "3"])
             ->update(['StatusPengkajian' => $statusPengkajian]);
-            
+
         // push / update data pengkajian
-        if($statusUpdate == 0){
+        if ($statusUpdate == 0) {
             // berdasarkan no cm
-            DB::collection('pasien_'.$no_cm)
+            DB::collection('pasien_' . $no_cm)
                 ->where('NoPendaftaran', $noPendaftaran)
                 ->whereNotNull('StatusPengkajian')
                 ->push('DataPengkajian', $req->all(), true);
-                
+
             // berdasarkan tanggal
-            DB::collection('transaksi_'.$dataMasukPoli[0]['TglMasukPoli'])
+            DB::collection('transaksi_' . $dataMasukPoli[0]['TglMasukPoli'])
                 ->where('NoPendaftaran', $noPendaftaran)
                 ->whereNotNull('StatusPengkajian')
                 ->push('DataPengkajian', $req->all(), true);
-        }else if($statusUpdate == 1){
+        } else if ($statusUpdate == 1) {
             // berdasarkan no cm
-            DB::collection('pasien_'.$no_cm)
+            DB::collection('pasien_' . $no_cm)
                 ->where('NoPendaftaran', $noPendaftaran)
                 ->whereNotNull('StatusPengkajian')
-                ->update(['DataPengkajian.'.$index => $req->all()]);
-                
+                ->update(['DataPengkajian.' . $index => $req->all()]);
+
             // berdasarkan tanggal
-            DB::collection('transaksi_'.$dataMasukPoli[0]['TglMasukPoli'])
-                ->where('NoPedaftaran', $noPendaftaran)
+            DB::collection('transaksi_' . $dataMasukPoli[0]['TglMasukPoli'])
+                ->where('NoPendaftaran', $noPendaftaran)
                 ->whereNotNull('StatusPengkajian')
-                ->update(['DataPengkajian.'.$index => $req->all()]);
+                ->update(['DataPengkajian.' . $index => $req->all()]);
         }
 
-        return redirect('formPengkajian/'.$idForm.'/'.$no_cm.'/'.$noPendaftaran);
+        return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran);
     }
-    public function storeBatalForm(Request $req){
+    public function storeBatalForm(Request $req)
+    {
         //get data pasien bersarakan nocm
-        $dataMasukPoli = DB::collection('pasien_'.$req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->whereNotNull('StatusPengkajian')->get();
+        $dataMasukPoli = DB::collection('pasien_' . $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->whereNotNull('StatusPengkajian')->get();
         $dataMasukPoli = $dataMasukPoli[0];
-        
+
         //edit data
-        DB::collection('pasien_'.$req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->update(['StatusPengkajian' => null]);
-        DB::collection('transaksi_'.date('Y-m-d'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->update(['StatusPengkajian' => null]);
+        DB::collection('pasien_' . $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->update(['StatusPengkajian' => null]);
+        DB::collection('transaksi_' . date('Y-m-d'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->update(['StatusPengkajian' => null]);
 
         //reset variable
         unset($dataMasukPoli['_id']);
         $dataMasukPoli['StatusPengkajian'] = "0";
         $dataMasukPoli['IdFormPengkajian'] = "";
         $dataMasukPoli['DataPengkajian'] = array();
-        
+
         //insert data baru
-        DB::collection('pasien_'.$req->get('NoCM'))->insertGetId($dataMasukPoli);
-        DB::collection('transaksi_'.$dataMasukPoli['TglMasukPoli'])->insert($dataMasukPoli);
+        DB::collection('pasien_' . $req->get('NoCM'))->insertGetId($dataMasukPoli);
+        DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])->insert($dataMasukPoli);
 
         return redirect('/listPasien');
     }
