@@ -52,9 +52,12 @@
                         <label for="penjamin">Penjamin</label>
                         <input type="text" name="penjamin" value="{{ $dataMasukPoli['jenisPasien'] }}" disabled>
                     </div>
+                        @php
+                            $date = date_create($dataMasukPoli['TglMasuk']);
+                        @endphp
                     <div class="col-lg-4 pl-lg-0 col-12 mt-3 mt-lg-0">
                         <label for="tanggalmasuk">Tanggal Masuk</label>
-                        <input type="text" name="tanggalmasuk" value="{{ date_format(date_create($dataMasukPoli['TglMasuk']),"d/m/Y H:i:s") }}" disabled>
+                        <input type="text" name="tanggalmasuk" value="{{ date_format($date,"d/m/Y")}}" disabled>
                     </div>
                 </div>   
             </div>
@@ -185,15 +188,15 @@
                                         <label for="nopendaftaran" class="pb-3">Skor Jatuh</label>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="form-check">
-                                                <input type="radio" class="form-check" id="rendah" name="PengkajianKeperawatan_1[SkorJatuh]" value="rendah" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh'] == 'rendah' ? 'checked' : '')}} required>
+                                                <input type="radio" class="form-check-input" id="rendah" name="PengkajianKeperawatan_1[SkorJatuh]" value="rendah" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh'] == 'rendah' ? 'checked' : '')}} required>
                                                 <label for="rendah">Rendah</label>
                                             </div>
                                             <div class="form-check">
-                                                <input type="radio" class="form-check" id="sedang" name="PengkajianKeperawatan_1[SkorJatuh]" value="sedang" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh'] == 'sedang' ? 'checked' : '')}} required>
+                                                <input type="radio" class="form-check-input" id="sedang" name="PengkajianKeperawatan_1[SkorJatuh]" value="sedang" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh'] == 'sedang' ? 'checked' : '')}} required>
                                                 <label for="sedang">Sedang</label>
                                             </div>
                                             <div class="form-check">
-                                                <input type="radio" class="form-check" id="tinggi" name="PengkajianKeperawatan_1[SkorJatuh]" value="tinggi" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh'] == 'tinggi' ? 'checked' : '')}} required>
+                                                <input type="radio" class="form-check-input" id="tinggi" name="PengkajianKeperawatan_1[SkorJatuh]" value="tinggi" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh'] == 'tinggi' ? 'checked' : '')}} required>
                                                 <label for="tinggi">Tinggi</label>
                                                 <div class="invalid-feedback">
                                                     Data Skor Jatuh Harus Diisi.
@@ -311,18 +314,18 @@
                                         <label for="kesanstatusgizi" class="pb-3">Kesan Status Gizi</label>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="form-check">
-                                                <input type="radio" class="form-check" id="kurang" name="PengkajianKeperawatan_2[KesanStatusGizi]" value="kurang" {{(!empty($dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi']) && $dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi'] == 'kurang' ? 'checked' : '')}} required>
+                                                <input type="radio" class="form-check-input" id="kurang" name="PengkajianKeperawatan_2[KesanStatusGizi]" value="kurang" {{(!empty($dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi']) && $dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi'] == 'kurang' ? 'checked' : '')}} required>
                                                 <label for="kurang">Gizi Kurang/Buruk</label>
                                                 <div class="invalid-feedback">
                                                     Data Kesan Status Gizi Harus Diisi.
                                                 </div>
                                             </div>
                                             <div class="form-check">
-                                                <input type="radio" class="form-check" id="cukup" name="PengkajianKeperawatan_2[KesanStatusGizi]" value="cukup" {{(!empty($dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi']) && $dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi'] == 'cukup' ? 'checked' : '')}} required>
+                                                <input type="radio" class="form-check-input" id="cukup" name="PengkajianKeperawatan_2[KesanStatusGizi]" value="cukup" {{(!empty($dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi']) && $dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi'] == 'cukup' ? 'checked' : '')}} required>
                                                 <label for="cukup">Gizi Cukup</label>
                                             </div>
                                             <div class="form-check">
-                                                <input type="radio" class="form-check" id="lebih" name="PengkajianKeperawatan_2[KesanStatusGizi]" value="lebih" {{(!empty($dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi']) && $dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi'] == 'lebih' ? 'checked' : '')}} required>
+                                                <input type="radio" class="form-check-input" id="lebih" name="PengkajianKeperawatan_2[KesanStatusGizi]" value="lebih" {{(!empty($dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi']) && $dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi'] == 'lebih' ? 'checked' : '')}} required>
                                                 <label for="lebih">Gizi Lebih</label>
                                             </div>
                                         </div>
