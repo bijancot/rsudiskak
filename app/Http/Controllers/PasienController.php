@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AntrianPasien;
+use App\ManajemenForm;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
@@ -39,12 +40,15 @@ class PasienController extends Controller
         $diagnosa  = new DiagnosaController();
         $getlistDokter = $diagnosa->listDokter();
 
+        $getForm = ManajemenForm::all();
+
         $datax = [
             'idDokter'          => $idDokter,
             'kdJabatan'         => $kdJabatan,
             'datas'             => $antriPoli,
             'masukPoli'         => $getPasienMasukPoli,
             'listDokter'        => $getlistDokter,
+            'listForm'          => $getForm,
         ];
 
         return view('pages.listPasien', $datax);
