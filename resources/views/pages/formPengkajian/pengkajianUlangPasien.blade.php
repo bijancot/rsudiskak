@@ -14,7 +14,7 @@
                         Kembali
                     </span>
                 </a>
-                <a class="capsule-btn active capsule-single ml-auto mt-3 mt-lg-0" href="#">Pengkajian Ulang Pasien Rawat Jalan</a>
+                <div class="capsule-btn active capsule-single ml-auto mt-3 mt-lg-0">Pengkajian Ulang Pasien Rawat Jalan</div>
             </div>
 
             <div class="content soft-shadow">
