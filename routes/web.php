@@ -88,6 +88,10 @@ Route::get('pengkajianUlangPasien', function () {
     return view('pages.formPengkajian.pengkajianUlangPasien');
 });
 
+Route::get('profilRingkasMedis', function () {
+    return view('pages.profilRingkasMedis');
+});
+
 Route::get('subNavbar', function () {
     return view('includes.admin.navbar');
 });
