@@ -82,7 +82,7 @@ class ManajemenUserController extends Controller
     public function getData(Request $req){
         //get data user by id
         $data = ManajemenUser::where('ID', $req->get('ID'))->get();
-        $data = $data[0];
+        $data = (!empty($data[0]) ? $data[0] : "Data Tidak Ditemukan");
 
         return response()->json($data);
     }
@@ -95,5 +95,12 @@ class ManajemenUserController extends Controller
     public function delete(Request $req){
         ManajemenUser::where('ID', $req->get('ID_hapus'))->update(['Status' => null]);
         return redirect('m_user');
+    }
+    public function ubahPassword(){
+        return view('pages.ubahPassword');
+    }
+    public function updatePassword(Request $req){
+        ManajemenUser::where('ID', $req->get('ID'))->update(['Password' => Hash::make($req->get('password'))]);
+        return response()->json($req);
     }
 }

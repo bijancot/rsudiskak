@@ -68,6 +68,7 @@ Route::get('m_statusPsikologi', 'StatusPsikologiController@index');
 Route::get('m_hambatanEdukasi', 'HambatanEdukasiController@index');
 Route::get('manajemen_form', 'ManajemenFormController@index');
 Route::get('m_user', 'ManajemenUserController@index');
+Route::get('m_user/ubahPassword', 'ManajemenUserController@ubahPassword');
 
 
 Route::get('historicalList', function () {
@@ -151,6 +152,7 @@ Route::post('m_user/update', 'ManajemenUserController@update');
 Route::post('m_user/resetPassword', 'ManajemenUserController@resetPassword');
 Route::post('m_user/delete', 'ManajemenUserController@delete');
 Route::post('m_user/getData', 'ManajemenUserController@getData');
+Route::post('m_user/ubahPassword', 'ManajemenUserController@updatePassword');
 
 Route::post('manajemen_form', 'ManajemenFormController@store');
 Route::patch('manajemen_form/{manajemenForm}/update', 'ManajemenFormController@update');

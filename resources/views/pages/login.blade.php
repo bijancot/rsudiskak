@@ -39,6 +39,9 @@
                             <button type="submit" class="btn diagnosa submit-btn ml-auto mr-0 mt-4">
                                     Masuk
                             </button>
+                            <div style="width:100%;margin-top:0.5rem;font-size:90%;">
+                                <a style="color:#009241;" href="{{url('m_user/ubahPassword')}}">Lupa Password ?</a>
+                            </div>
                         </form>
                     </div>
                 </div>
