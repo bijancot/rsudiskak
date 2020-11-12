@@ -55,6 +55,14 @@ class RegisterController extends Controller
             'KdRuangan' => ['required', 'string', 'max:255'],
             'NamaRuangan' => ['required', 'string', 'max:255'],
             'KdJabatan' => ['required', 'string', 'max:255'],
+            // 'ID' => ['required', 'string', 'max:255'],
+            // 'Nama' => ['required', 'string', 'max:255'],
+            // 'Password' => ['required', 'string'],
+            // 'KodeRuangan' => ['required', 'string', 'max:255'],
+            // 'NamaRuangan' => ['required', 'string', 'max:255'],
+            // 'Role' => ['required', 'string', 'max:255'],
+            // 'StatusLogin' => ['required', 'string', 'max:255'],
+            // 'Status' => ['required', 'string', 'max:255'],
         ]);
     }
 

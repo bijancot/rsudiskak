@@ -18,20 +18,20 @@
                         <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate>
                         @csrf
                             <div>
-                                <label for="IdDokter" class="my-2">Username</label>
-                                <input type="text" name="IdDokter"  placeholder="username" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }}" name="IdDokter" value="{{ old('IdDokter') }}" required>
+                                <label for="IdDokter" class="my-2">ID</label>
+                                <input type="text" name="IdDokter"  placeholder="id" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }}" value="{{ old('IdDokter') }}" required>
                                 <div class="invalid-feedback">
                                     Username Harus Diisi.
                                 </div>
                             </div>    
                             <div>
                                 <label for="password" class="mb-2 mt-3">Password</label>
-                                <input type="password" name="password" placeholder="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" required>
+                                <input type="password" name="password" placeholder="password" class="form-control{{ $errors->has('Password') ? ' is-invalid' : '' }}" required>
                                 <div class="invalid-feedback">
                                     Password Harus Diisi.
                                 </div>
                             </div>
-                            @if ($errors->has('IdDokter'))
+                            @if ($errors->has('ID'))
                                 <div class="alert alert-danger mt-4" role="alert">
                                     Username / Password Salah
                                 </div>

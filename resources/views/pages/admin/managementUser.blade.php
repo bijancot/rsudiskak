@@ -46,10 +46,20 @@
                             </thead>
                             <tbody>
                                 @foreach ($dataUser as $item)
+                                    @php
+                                        $role = "";
+                                        if($item['Role'] == "1"){
+                                            $role = "Dokter";
+                                        }else if($item['Role'] == "2"){
+                                            $role = "Perawat";
+                                        }else if($item['Role'] == "3"){
+                                            $role = "Admin Poli";
+                                        }
+                                    @endphp
                                     <tr>
                                         <td data-label="ID">{{$item['ID']}}</td>
                                         <td data-label="Nama">{{$item['Nama']}}</td>
-                                        <td data-label="ROle">{{$item['Role']}}</td>
+                                        <td data-label="Role">{{$role}}</td>
                                         <td data-label="KodeRuangan">{{$item['KodeRuangan']}}</td>
                                         <td data-label="NamaRuangn">{{$item['NamaRuangan']}}</td>
                                         <td data-label="Action" class="p-lg-1"><div class="d-flex flex-row"><a href="#" data-toggle="modal" data-target="#modal_reset" data-id="{{$item['ID']}}" class="btn btn-secondary reset-password ml-auto">Reset Password</a><a href="#" data-toggle="modal" data-target="#modal_ubah" data-id="{{$item['ID']}}" class="btn btn-primary ubah-data">Ubah</a><a href="#" data-toggle="modal" data-target="#modal_hapus" data-id="{{$item['ID']}}" class="btn hapus-data batal">Hapus</a></div></td>
@@ -96,9 +106,9 @@
                     <div class="form-group">
                         <label for="Role" class="col-form-label">Role :</label>
                         <select name="Role" class="form-control">
-                            <option value="Dokter">Dokter</option>
-                            <option value="Perawat">Perawat</option>
-                            <option value="Admin Poli">Admin Poli</option>
+                            <option value="1">Dokter</option>
+                            <option value="2">Perawat</option>
+                            <option value="3">Admin Poli</option>
                         </select>
                     </div>
                     <div class="form-group">

@@ -17,8 +17,13 @@ class User extends Eloquent implements Authenticatable
      *
      * @var array
      */
+
+    // protected $connection = "mongodb";
+    // protected $collection = "user";
+
     protected $fillable = [
         'IdDokter', 'NamaLengkap', 'password', 'KdRuangan', 'NamaRuangan', 'KdJabatan',
+        // 'ID', 'Nama', 'Role', 'KodeRuangan', 'StatusLogin', 'Status', 'Password', 'NamaRuangan'
     ];
 
     /**
