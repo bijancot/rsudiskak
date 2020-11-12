@@ -22,16 +22,13 @@
         <li class="{{ Request::is('uploadFile') ? 'active' : '' }} nav-item"><a href="{{ url('uploadFile') }}">Upload File</a></li>
         
         <li class="profile d-flex flex-row align-items-center nav-item">
-                     
+            <div class="profile d-flex flex-row align-items-center nav-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
-            
-            
-            <p>{{ Auth::user()->NamaLengkap }}</p>
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            
-            </a>
+                <p>{{ Auth::user()->NamaLengkap }}</p>
+                <a class="nav-link dropdown-toggle" href="#"></a>
+            </div>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" data-toggle="modal" data-target="#modal_logout">
+                <a href="" class="dropdown-item" data-toggle="modal" data-target="#modal_logout">
                     Logout
                 </a>
                       
