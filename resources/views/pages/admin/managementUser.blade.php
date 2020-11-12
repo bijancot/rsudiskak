@@ -90,6 +90,10 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="Nama" class="col-form-label">Password :</label>
+                        <input type="text" class="form-control" value="rsudiskak" disabled>
+                    </div>
+                    <div class="form-group">
                         <label for="Role" class="col-form-label">Role :</label>
                         <select name="Role" class="form-control">
                             <option value="Dokter">Dokter</option>
