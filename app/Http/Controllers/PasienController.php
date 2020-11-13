@@ -29,12 +29,12 @@ class PasienController extends Controller
         $masukPoli->get();
         $getPasienMasukPoli     = $masukPoli->get();
 
-        if (Auth::user()->KdJabatan == "1") {
-            $kdJabatan = "1";
-            $idDokter = Auth::user()->IdDokter;
-        } else if (Auth::user()->KdJabatan == "2") {
-            $idDokter = Auth::user()->IdDokter;
-            $kdJabatan = "2";
+        if (Auth::user()->Role == "1") {
+            $role = "1";
+            $ID = Auth::user()->ID;
+        } else if (Auth::user()->Role == "2") {
+            $ID = Auth::user()->ID;
+            $role = "2";
         }
 
         $diagnosa  = new DiagnosaController();
@@ -43,8 +43,8 @@ class PasienController extends Controller
         $getForm = ManajemenForm::all();
 
         $datax = [
-            'idDokter'          => $idDokter,
-            'kdJabatan'         => $kdJabatan,
+            'ID'                => $ID,
+            'role'         => $role,
             'datas'             => $antriPoli,
             'masukPoli'         => $getPasienMasukPoli,
             'listDokter'        => $getlistDokter,
