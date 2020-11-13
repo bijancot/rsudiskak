@@ -1,6 +1,6 @@
 <nav class="navbar">
     <ul class="d-flex justify-content-center align-items-center flex-row">
-        
+        <li class="nav-item" style="left: 0;position:absolute;font-weight:bold;">ADMIN POLI</li>
         <li class="{{ Request::is('logActivities') ? 'active' : '' }} nav-item"><a href="{{ url('logActivities') }}">Log Activities</a></li>
         <li class="{{ Request::is('managementForm') ? 'active' : '' }} nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Management Form</a>
@@ -24,7 +24,7 @@
         <li class="profile d-flex flex-row align-items-center nav-item">
             <div class="profile d-flex flex-row align-items-center nav-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
-                <p>{{ Auth::user()->NamaLengkap }}</p>
+                <p>{{ Auth::user()->Nama }}</p>
                 <a class="nav-link dropdown-toggle" href="#"></a>
             </div>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -77,7 +77,7 @@
                 <div class="modal-header bg-danger">
                     <h5 class="modal-title text-white text-center">Logout</h5>
                 </div>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" >
+                <form id="logout-form" action="{{ url('signOut') }}" method="POST" >
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">

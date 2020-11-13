@@ -69,6 +69,7 @@ Route::get('m_hambatanEdukasi', 'HambatanEdukasiController@index');
 Route::get('manajemen_form', 'ManajemenFormController@index');
 Route::get('m_user', 'ManajemenUserController@index');
 Route::get('m_user/ubahPassword', 'ManajemenUserController@ubahPassword');
+Route::get('m_user/lupaPassword', 'ManajemenUserController@lupaPassword');
 
 
 Route::get('historicalList', function () {
@@ -157,3 +158,8 @@ Route::post('m_user/ubahPassword', 'ManajemenUserController@updatePassword');
 Route::post('manajemen_form', 'ManajemenFormController@store');
 Route::patch('manajemen_form/{manajemenForm}/update', 'ManajemenFormController@update');
 Route::post('manajemen_form/{manajemenForm}/delete', 'ManajemenFormController@delete');
+Route::post('signOut', 'ManajemenUserController@signOut');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

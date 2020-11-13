@@ -19,7 +19,7 @@
                         @csrf
                             <div>
                                 <label for="IdDokter" class="my-2">ID</label>
-                                <input type="text" name="IdDokter"  placeholder="id" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }}" value="{{ old('IdDokter') }}" required>
+                                <input type="text" name="ID"  placeholder="id" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }}" value="{{ old('IdDokter') }}" required>
                                 <div class="invalid-feedback">
                                     Username Harus Diisi.
                                 </div>
@@ -40,7 +40,7 @@
                                     Masuk
                             </button>
                             <div style="width:100%;margin-top:0.5rem;font-size:90%;">
-                                <a style="color:#009241;" href="{{url('m_user/ubahPassword')}}">Lupa Password ?</a>
+                                <a style="color:#009241;" href="{{url('m_user/lupaPassword')}}">Lupa Password ?</a>
                             </div>
                         </form>
                     </div>

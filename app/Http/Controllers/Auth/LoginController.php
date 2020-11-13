@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -30,7 +31,9 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        switch (Auth::user()->KdJabatan) {
+        // set status login
+        User::where('ID', Auth::user()->ID)->whereNotNull('Status')->update(['StatusLogin' => '1']);
+        switch (Auth::user()->Role) {
             case '1':
                 $this->redirectTo = '/listPasien';
                 return $this->redirectTo;

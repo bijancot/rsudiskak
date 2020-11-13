@@ -59,7 +59,7 @@
                             </div>
                             <div id="btn-ubah" class="btn diagnosa submit-btn ml-auto mr-0 mt-4">Ubah</div>
                             <div style="width:100%;margin-top:0.5rem;font-size:90%;">
-                                <a style="color:#009241;" href="{{url('listPasien')}}">Kembali</a>
+                                <a style="color:#009241;" href="{{url('login')}}">Log in</a>
                             </div>
                         </form>
                     </div>

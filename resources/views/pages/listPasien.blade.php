@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-12 mt-4 mt-lg-0">
-                    @if ($kdJabatan == "2")
+                    @if ($role == "2")
                         @include('includes.tabPeriksa')
                     @endif
                 </div>
@@ -134,7 +134,7 @@
                                 // set detail JK
                                 $jenkel = ($poli['JenisKelamin'] == "L" ? "Laki - Laki" : "Perempuan");
                             @endphp
-                                @if ($kdJabatan == "1" && $idDokter == $poli['IdDokter'] && $poli['StatusPengkajian'] != "")
+                                @if ($role == "1" && $ID == $poli['ID'] && $poli['StatusPengkajian'] != "")
                                 <tr>
                                     <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
                                     <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>
@@ -159,7 +159,7 @@
                                             @endif
                                     </td>
                                 </tr>
-                                @elseif($kdJabatan == "2" && $poli['StatusPengkajian'] != "")
+                                @elseif($role == "2" && $poli['StatusPengkajian'] != "")
                                     <tr>
                                         <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
                                         <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>
@@ -370,7 +370,7 @@
             $('#tbl_antrianPoli_filter').hide();
             $('#tbl_masukPoli_filter').hide();
             //Js Check isDokter / isPerawat
-            @if ($kdJabatan == "1")
+            @if ($role == "1")
                 $('#antrianPoli').hide();
                 var table = $('#tbl_masukPoli').DataTable();
             @else

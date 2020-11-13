@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\ManajemenUser;
+use App\User;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Hash;
+use Auth;
 
 class ManajemenUserController extends Controller
 {
@@ -19,7 +21,7 @@ class ManajemenUserController extends Controller
         $kdRuangan = $kdRuangan['data'];
 
         //get all data user
-        $dataUsers = ManajemenUser::whereNotNull('Status')->get();
+        $dataUsers = User::whereNotNull('Status')->get();
         
         $data = [
             'kdRuangan' => $kdRuangan,
@@ -40,7 +42,7 @@ class ManajemenUserController extends Controller
         $kdRuangan = $kdRuangan['data'];
         
         //set password
-        $data['Password'] = Hash::make("rsudiskak");
+        $data['password'] = Hash::make("rsudiskak");
 
         //set nama ruangan
         $data['NamaRuangan'] = "";
@@ -51,7 +53,7 @@ class ManajemenUserController extends Controller
             }
         }
 
-        ManajemenUser::insert($data);
+        User::insert($data);
         return redirect('m_user');
     }
     public function update(Request $req){
@@ -76,31 +78,40 @@ class ManajemenUserController extends Controller
             }
         }
 
-        ManajemenUser::where('ID', $IDOld)->update($data);
+        User::where('ID', $IDOld)->update($data);
         return redirect('m_user');
     }
     public function getData(Request $req){
         //get data user by id
-        $data = ManajemenUser::where('ID', $req->get('ID'))->get();
+        $data = User::where('ID', $req->get('ID'))->get();
         $data = (!empty($data[0]) ? $data[0] : "Data Tidak Ditemukan");
 
         return response()->json($data);
     }
 
     public function resetPassword(Request $req){
-        $pass = Hash::make('rsudiksak');
-        ManajemenUser::where('ID', $req->get('ID_reset'))->update(['Password' => $pass]);
+        $pass = Hash::make('rsudiskak');
+        User::where('ID', $req->get('ID_reset'))->update(['password' => $pass]);
         return redirect('m_user');
     }
     public function delete(Request $req){
-        ManajemenUser::where('ID', $req->get('ID_hapus'))->update(['Status' => null]);
+        User::where('ID', $req->get('ID_hapus'))->update(['Status' => null]);
         return redirect('m_user');
     }
     public function ubahPassword(){
         return view('pages.ubahPassword');
     }
+    public function lupaPassword(){
+        return view('pages.lupaPassword');
+    }
     public function updatePassword(Request $req){
-        ManajemenUser::where('ID', $req->get('ID'))->update(['Password' => Hash::make($req->get('password'))]);
-        return response()->json($req);
+        User::where('ID', $req->get('ID'))->update(['password' => Hash::make($req->get('password'))]);
+        return response()->json('berhasil');
+    }
+    public function signOut(Request $req){
+        // set status login
+        User::where('ID', Auth::user()->ID)->whereNotNull('Status')->update(['StatusLogin' => '0']);
+        Auth::logout();
+        return redirect('/login');
     }
 }

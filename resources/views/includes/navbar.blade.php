@@ -1,16 +1,16 @@
 <nav class="navbar">
     <ul class="d-flex justify-content-center align-items-center flex-row">
-        
+        <li class="nav-item" style="left: 0;position:absolute;font-weight:bold;">{{Auth::user()->NamaRuangan}}</li>
         <li class="{{ Request::is('listPasien') ? 'active' : '' }} nav-item"><a href="{{ url('listPasien') }}">Periksa</a></li>
         <li class="profile d-flex flex-row align-items-center nav-item">
             <div class="profile d-flex flex-row align-items-center nav-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                @if(Auth::user()->KdJabatan =='001')         
+                @if(Auth::user()->Role =='001')         
                     <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
-                @elseif (Auth::user()->KdJabatan =='002')
+                @elseif (Auth::user()->Role =='002')
                     <img src="{{URL::asset('/img/p.png')}}" alt="Profile picture"/>
                 @endif
                 
-                <p>{{ Auth::user()->NamaLengkap }}</p>
+                <p>{{ Auth::user()->Nama }}</p>
                 <a class="nav-link dropdown-toggle" href="#" >
                 
                 </a>
@@ -38,13 +38,13 @@
         <img class="logo" src="{{URL::asset('/img/logo-3.png')}}" alt="logo" width="266px" class="mx-auto logo">
         <hr>
         <div class="profile d-flex flex-row align-items-center nav-item">     
-            @if(Auth::user()->KdJabatan =='001')         
+            @if(Auth::user()->Role =='001')         
                 <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
-            @elseif (Auth::user()->KdJabatan =='002')
+            @elseif (Auth::user()->Role =='002')
                 <img src="{{URL::asset('/img/p.png')}}" alt="Profile picture"/>
             @endif
             
-            <p>{{ Auth::user()->NamaLengkap }}</p>
+            <p>{{ Auth::user()->Nama }}</p>
        
         </div>
         <hr>
@@ -70,7 +70,7 @@
                 <div class="modal-header bg-danger">
                     <h5 class="modal-title text-white text-center">Logout</h5>
                 </div>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" >
+                <form id="logout-form" action="{{ url('signOut') }}" method="POST" >
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
