@@ -11,7 +11,8 @@ use Auth;
 
 class ManajemenUserController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         //get data kdruangan from api
         $client = new Client();
         $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ');
@@ -22,7 +23,7 @@ class ManajemenUserController extends Controller
 
         //get all data user
         $dataUsers = User::whereNotNull('Status')->get();
-        
+
         $data = [
             'kdRuangan' => $kdRuangan,
             'dataUser' => $dataUsers
@@ -30,7 +31,8 @@ class ManajemenUserController extends Controller
 
         return view('pages.admin.managementUser', $data);
     }
-    public function store(Request $req){
+    public function store(Request $req)
+    {
         $data = $req->all();
 
         //get data kdruangan from api
@@ -40,14 +42,14 @@ class ManajemenUserController extends Controller
         $kdRuangan = $res->getBody()->getContents();
         $kdRuangan = json_decode($kdRuangan, true);
         $kdRuangan = $kdRuangan['data'];
-        
+
         //set password
         $data['password'] = Hash::make("rsudiskak");
 
         //set nama ruangan
         $data['NamaRuangan'] = "";
-        foreach($kdRuangan as $item){
-            if($item['KdRuangan'] == $req->get('KodeRuangan')){
+        foreach ($kdRuangan as $item) {
+            if ($item['KdRuangan'] == $req->get('KodeRuangan')) {
                 $data['NamaRuangan'] = $item['NamaRuangan'];
                 break;
             }
@@ -56,7 +58,8 @@ class ManajemenUserController extends Controller
         User::insert($data);
         return redirect('m_user');
     }
-    public function update(Request $req){
+    public function update(Request $req)
+    {
         $data = $req->all();
         $IDOld = $data['IDOld'];
         unset($data['IDOld']);
@@ -68,11 +71,11 @@ class ManajemenUserController extends Controller
         $kdRuangan = $res->getBody()->getContents();
         $kdRuangan = json_decode($kdRuangan, true);
         $kdRuangan = $kdRuangan['data'];
-        
+
         //set nama ruangan
         $data['NamaRuangan'] = "";
-        foreach($kdRuangan as $item){
-            if($item['KdRuangan'] == $req->get('KodeRuangan')){
+        foreach ($kdRuangan as $item) {
+            if ($item['KdRuangan'] == $req->get('KodeRuangan')) {
                 $data['NamaRuangan'] = $item['NamaRuangan'];
                 break;
             }
@@ -81,7 +84,8 @@ class ManajemenUserController extends Controller
         User::where('ID', $IDOld)->update($data);
         return redirect('m_user');
     }
-    public function getData(Request $req){
+    public function getData(Request $req)
+    {
         //get data user by id
         $data = User::where('ID', $req->get('ID'))->get();
         $data = (!empty($data[0]) ? $data[0] : "Data Tidak Ditemukan");
@@ -89,28 +93,43 @@ class ManajemenUserController extends Controller
         return response()->json($data);
     }
 
-    public function resetPassword(Request $req){
+    public function resetPassword(Request $req)
+    {
         $pass = Hash::make('rsudiskak');
         User::where('ID', $req->get('ID_reset'))->update(['password' => $pass]);
         return redirect('m_user');
     }
-    public function delete(Request $req){
+    public function delete(Request $req)
+    {
         User::where('ID', $req->get('ID_hapus'))->update(['Status' => null]);
         return redirect('m_user');
     }
-    public function ubahPassword(){
+    public function ubahPassword()
+    {
         return view('pages.ubahPassword');
     }
-    public function lupaPassword(){
+    public function lupaPassword()
+    {
         return view('pages.lupaPassword');
     }
-    public function updatePassword(Request $req){
+    public function updatePassword(Request $req)
+    {
         User::where('ID', $req->get('ID'))->update(['password' => Hash::make($req->get('password'))]);
         return response()->json('berhasil');
     }
-    public function signOut(Request $req){
+    public function signOut(Request $req)
+    {
         // set status login
         User::where('ID', Auth::user()->ID)->whereNotNull('Status')->update(['StatusLogin' => '0']);
+        $getIDuser      = Auth::user()->ID;
+        $getNamaUser    = Auth::user()->Nama;
+        $getRole        = Auth::user()->Role;
+        $getKdRuangan   = Auth::user()->KodeRuangan;
+
+        $logging        = new LoggingController;
+        if (Auth::user()->getRole != 3) {
+            $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'Logout', 'Logout', 'Telah Logout', null, $getKdRuangan);
+        }
         Auth::logout();
         return redirect('/login');
     }

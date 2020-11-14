@@ -18,9 +18,7 @@ Route::get('/', function () {
 Route::get('layout', function () {
     return view('layouts.layout');
 });
-Route::get('logActivities', function () {
-    return view('pages.admin.logActivities');
-})->middleware('adminRole')->name('admin');
+Route::get('logActivities', 'LoggingController@index')->middleware('adminRole')->name('admin');
 //Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
 Route::get('login', function () {
     return view('pages.login');
@@ -52,9 +50,7 @@ Route::get('templateASD', function () {
     return view('pages.template');
 });
 
-Route::get('logActivities', function () {
-    return view('pages.admin.logActivities');
-});
+Route::get('logActivities', 'LoggingController@index');
 
 
 Route::get('m_pendidikan', 'PendidikanController@index');
@@ -116,9 +112,10 @@ Route::get('home', 'HomeController@index')->name('home');
 
 Route::post('diagnosa/{no_cm}', 'DiagnosaController@storeDiagnosaAwal');
 Route::post('diagnosaAkhir', 'DiagnosaController@storeDiagnosaAkhir');
-Route::post('pilihDokter/{no_cm}', 'DiagnosaController@storePilihDokter');
+Route::post('pilihDokter/{no_cm}/{no_pendaftaran}', 'DiagnosaController@storePilihDokter');
 Route::post('pilihForm/{no_cm}/{noPendaftaran}', 'FormPengkajianController@storePilihForm');
-Route::post('batalPeriksa/{no_pendaftaran}', 'PasienController@storeBatalPeriksa');
+Route::post('batalPeriksa/{no_cm}/{no_pendaftaran}', 'PasienController@storeBatalPeriksa');
+Route::post('batalMasukPoli/{no_cm}/{no_pendaftaran}', 'DiagnosaController@storeBatalMasukPoli');
 Route::post('batalForm', 'FormPengkajianController@storeBatalForm');
 Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
 

@@ -15,42 +15,88 @@
                     <thead>
                         <tr>
                             <th>Tanggal-Waktu</th>
+                            <th>Id User</th>
                             <th>User</th>
                             <th>Role</th>
                             <th>Halaman</th>
-                            <th>Old</th>
-                            <th>New</th>
-                            <th>Action</th>
+                            <th>Metode</th>
+                            <th>NoCM</th>
+                            <th>Kode Ruangan</th>
+                            <th>Keterangan</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td data-label="Tanggal-Waktu">13/09/2020 - 03:30</td>
-                            <td data-label="User">dr.Yaboi</td>
-                            <td data-label="Role">Pelayanan Dalam</td>
-                            <td data-label="Halaman">Data Pasien</td>
-                            <td data-label="Old">25 Tahun</td>
-                            <td data-label="New">30 Tahun</td>
-                            <td data-label="Action" class="p-lg-1"><a href="#" class="btn batal">UNDO</a></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Tanggal-Waktu">13/09/2020 - 03:30</td>
-                            <td data-label="User">dr.Suep</td>
-                            <td data-label="Role">Pelayanan Dalam</td>
-                            <td data-label="Halaman">Data Pasien</td>
-                            <td data-label="Old">25 Tahun</td>
-                            <td data-label="New">30 Tahun</td>
-                            <td data-label="Action" class="p-lg-1"><a href="#" class="btn batal">UNDO</a></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Tanggal-Waktu">13/09/2020 - 03:30</td>
-                            <td data-label="User">dr.Maiahii</td>
-                            <td data-label="Role">Pelayanan Dalam</td>
-                            <td data-label="Halaman">Data Pasien</td>
-                            <td data-label="Old">25 Tahun</td>
-                            <td data-label="New">30 Tahun</td>
-                            <td data-label="Action" class="p-lg-1"><a href="#" class="btn batal">UNDO</a></td>
-                        </tr>
+                        @foreach ($listLog as $item)
+                        @php
+                            $role = "";
+                                // set style status periksa
+                            if($item['role'] == "1"){
+                                $role = "Dokter";
+                            }else if($item['role'] == "2"){
+                                $role = "Perawat";
+                            }else if($item['role'] == "3"){
+                                $role = "Admin Poli";
+                            }
+
+                            $keterangan = "";
+                            if($item['fitur'] == "Login" && $item['metode'] == "LoginDokter" || $item['metode'] == "LoginPerawat"){
+                                $keterangan = $item['keterangan'];
+                            }
+                            else if($item['fitur'] == "Logout" && $item['metode'] == "Logout"){
+                                $keterangan = $item['keterangan'];
+                            }
+                            else if($item['fitur'] == "PilihDokter"){
+                                $keterangan = $item['keterangan']['IdDokter'] ." - ". $item['keterangan']['NamaDokter'] ;
+                            }
+                            else if($item['fitur'] == "BatalMasukPoli" && $item['metode'] == "batal"){
+                                $keterangan = $item['keterangan'];
+                            }
+                            else if($item['fitur'] == "BatalPeriksa"){
+                                $keterangan = "No Pendaftaran : " . $item['keterangan']['no_pendaftaran'] ." - ". $item['keterangan']['keterangan'] ;
+                            }
+                            else if($item['fitur'] == "PilihForm" && $item['metode'] == "create"){
+                                $keterangan = $item['keterangan'];
+                            }
+                            else if($item['fitur'] == "PilihForm" && $item['metode'] == "batal"){
+                                $keterangan = $item['keterangan']." Batal pilih form";
+                            }
+                            else if($item['fitur'] == "DataPengkajian" && $item['metode'] == "create"){
+                                $keterangan = $item['keterangan'];
+                            }
+                            
+                            $date = date_create($item['created_at']);
+                        @endphp
+                            <tr>
+                                <td data-label="Tanggal-Waktu">{{ date_format($date,"d/m/Y - H:m")}}</td>
+                                <td data-label="IdUser">{{ $item['id_user'] }}</td>
+                                <td data-label="User">{{ $item['nama_user'] }}</td>
+                                <td data-label="Role">{{ $role }}</td>
+                                <td data-label="Halaman">{{ $item['fitur'] }}</td>
+                                <td data-label="Metode">{{ $item['metode'] }}</td>
+                                <td data-label="NoCM">{{ $item['NoCM'] }}</td>
+                                <td data-label="KodeRuangan" width="5%">{{ $item['KdRuangan'] }}</td>
+                                <td data-label="Keterangan" width="20%">
+                                    @if ($item['fitur'] == "DataPengkajian" && $item['metode'] == "update")
+                                        @php    
+                                            $ketOld = array();
+                                            foreach ($item['keterangan']['old'] as $keyOld => $valueOld) {    
+                                                array_push($ketOld, $keyOld . " : ". $valueOld);
+                                            }
+                                            // dump($ketOld);
+                                            foreach (array_combine($ketOld, $item['keterangan']['current']) as $old => $new) {
+                                                echo $old . 
+                                                " <i class='fas fa-arrow-right'></i> "
+                                                .$new . "<br>";
+                                            }
+                                        @endphp    
+                                    @else
+                                        {{ $keterangan }}
+                                    @endif
+                                   
+                                </td>
+                            </tr>
+
+                        @endforeach
                         
                     </tbody>
                 </table>

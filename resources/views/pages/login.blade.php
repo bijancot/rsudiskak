@@ -19,7 +19,7 @@
                         @csrf
                             <div>
                                 <label for="IdDokter" class="my-2">ID</label>
-                                <input type="text" name="ID"  placeholder="id" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }}" value="{{ old('IdDokter') }}" required>
+                                <input type="text" name="ID"  placeholder="id" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }}" value="{{ old('ID') }}" required>
                                 <div class="invalid-feedback">
                                     Username Harus Diisi.
                                 </div>

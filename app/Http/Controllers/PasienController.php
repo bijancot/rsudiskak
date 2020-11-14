@@ -27,7 +27,7 @@ class PasienController extends Controller
         $masukPoli = new AntrianPasien();
         $masukPoli->collection  = "transaksi_" . date("Y-m-d");
         $masukPoli->get();
-        $getPasienMasukPoli     = $masukPoli->get();
+        $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->get();
 
         if (Auth::user()->Role == "1") {
             $role = "1";
@@ -44,7 +44,7 @@ class PasienController extends Controller
 
         $datax = [
             'ID'                => $ID,
-            'role'         => $role,
+            'role'              => $role,
             'datas'             => $antriPoli,
             'masukPoli'         => $getPasienMasukPoli,
             'listDokter'        => $getlistDokter,
@@ -67,8 +67,15 @@ class PasienController extends Controller
         return view('pages.dataPasien', compact('data'));
     }
 
-    public function storeBatalPeriksa(Request $request, $no_pendaftaran = null)
+    public function storeBatalPeriksa(Request $request, $no_cm = null, $no_pendaftaran = null)
     {
+
+        $getIDuser      = Auth::user()->ID;
+        $getNamaUser    = Auth::user()->Nama;
+        $getRole        = Auth::user()->Role;
+        $getKdRuangan   = Auth::user()->KodeRuangan;
+
+        $logging        = new LoggingController;
 
         if ($no_pendaftaran) {
             /**
@@ -82,6 +89,13 @@ class PasienController extends Controller
             ]);
             $statCode = $res->getStatusCode();
             // dump($statCode);
+
+            $batal_periksa = [
+                'no_pendaftaran' => $no_pendaftaran,
+                'keterangan'     => $request->get('keterangan'),
+            ];
+
+            $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'batal', 'BatalPeriksa', $batal_periksa, $no_cm, $getKdRuangan);
 
             return redirect('/listPasien');
             //endIf
