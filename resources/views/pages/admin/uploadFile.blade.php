@@ -14,8 +14,8 @@
                 <hr>
                 <div class="row p-3 py-4">
                     <div class="col-12">
-                        <form method="POST" action="">
-                            
+                        <form method="POST" action="{{ action('UploadFileController@store') }}" enctype="multipart/form-data">>
+                            @csrf
                             <div class="row">
                                 <div class="col-12 col-lg-6">
                                     <div class="row">
@@ -53,7 +53,7 @@
                                             <label for="submit_data">Upload File</label>
                                             <div class="file-area">
                                                 <label for="file-upload1">
-                                                    <input type="file">
+                                                    <input type="file" name="file">
                                                 </label>
                                                 <label for="file-upload1">
                                                     <input type="file">

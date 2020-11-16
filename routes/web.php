@@ -72,9 +72,7 @@ Route::get('historicalList', function () {
     return view('pages.admin.historicalList');
 });
 
-Route::get('uploadFile', function () {
-    return view('pages.admin.uploadFile');
-});
+Route::get('uploadFile', 'UploadFileController@index');
 
 Route::get('pengkajianAwalPasien', function () {
     return view('pages.formPengkajian.pengkajianAwalPasien');
@@ -160,6 +158,7 @@ Route::post('manajemen_form', 'ManajemenFormController@store');
 Route::patch('manajemen_form/{manajemenForm}/update', 'ManajemenFormController@update');
 Route::post('manajemen_form/{manajemenForm}/delete', 'ManajemenFormController@delete');
 Route::post('signOut', 'ManajemenUserController@signOut');
+Route::post('uploadFile', 'UploadFileController@store');
 
 Auth::routes();
 
