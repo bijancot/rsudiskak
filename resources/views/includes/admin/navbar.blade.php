@@ -17,11 +17,8 @@
                 <a class="dropdown-item" href="{{ url('manajemen_form') }}">Manajemen Form</a>
             </div>
         </li>
-<<<<<<< HEAD
-        <li class="{{ Request::is('managementUser') ? 'active' : '' }} nav-item"><a href="{{ url('managementUser') }}">Management User</a></li>
-=======
+
         <li class="{{ Request::is('m_user') ? 'active' : '' }} nav-item"><a href="{{ url('m_user') }}">Management User</a></li>
->>>>>>> 38b21e69fe83e5926d025e27f5757c21d8781bff
         {{-- <li class="{{ Request::is('historicalList') ? 'active' : '' }} nav-item"><a href="{{ url('historicalList') }}">Historical List</a></li> --}}
         <li class="{{ Request::is('uploadFile') ? 'active' : '' }} nav-item"><a href="{{ url('uploadFile') }}">Upload File</a></li>
         
