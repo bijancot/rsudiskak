@@ -16,8 +16,14 @@
                     </div>
                     <div class="col-lg-4 col-12 mt-4 mt-lg-0">
                         <div class="d-flex align-items-center">
+                            @if(Auth::user()->KdJabatan =='003') 
+                            <a style="visibility:hidden" id="nav_antrianPoli" class="capsule-btn capsule-left active ml-auto">Antrian Pasien</a>
+                            <a style="visibility:hidden" id="nav_masukPoli" class="capsule-btn capsule-right">Masuk Poli</a>
+                            @else
                             <a id="nav_antrianPoli" class="capsule-btn capsule-left active ml-auto">Antrian Pasien</a>
                             <a id="nav_masukPoli" class="capsule-btn capsule-right">Masuk Poli</a>
+                            @endif
+                            
                         </div>
                     </div>
                 </div>    
