@@ -28,10 +28,12 @@ class PasienController extends Controller
         $masukPoli->collection  = "transaksi_" . date("Y-m-d");
         $masukPoli->get();
         $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->get();
-
+        
         if (Auth::user()->Role == "1") {
-            $role = "1";
-            $ID = Auth::user()->ID;
+            $role             = "1";
+            $ID               = Auth::user()->ID;
+            $getKdRuangan     = Auth::user()->KodeRuangan;
+            $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->where('IdDokter', $ID)->where('KdRuangan', $getKdRuangan)->get();
         } else if (Auth::user()->Role == "2") {
             $ID = Auth::user()->ID;
             $role = "2";
