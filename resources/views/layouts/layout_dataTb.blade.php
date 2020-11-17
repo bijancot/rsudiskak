@@ -30,8 +30,7 @@
             .page-link:hover{
                 color: #009241;
             }
-<<<<<<< HEAD
-=======
+
             .isValid{
                 border-color: #009241 !important;
                 padding-right: calc(1.6em + 0.75rem) !important;
@@ -71,7 +70,6 @@
                 font-size: 80%;
                 color: #EB5757;
             }
->>>>>>> 38b21e69fe83e5926d025e27f5757c21d8781bff
         </style>
         <script>
             $(document).ready(function(){
