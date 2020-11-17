@@ -3,7 +3,33 @@
 @section('content')
 
 @include('includes.navbar')
+
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
     
+    @if (session('status'))
+    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+        <!-- Position it -->
+        <div style="position: absolute; top: 0; right: 0;">
+      
+          <!-- Then put toasts within -->
+          <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong class="mr-auto">Data Gagal ditambahkan</strong>
+                <small>{{ date('H:i a') }}</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="toast-body">
+                {{ session('status') }}
+              </div>
+            </div>
+        </div>
+    @endif
+
     <div class="bg-greenishwhite">
         <div class="wrapper">
             <div class="row">
@@ -14,11 +40,12 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-12 mt-4 mt-lg-0">
-                    @if ($kdJabatan == "2")
+                    @if ($role == "2")
                         @include('includes.tabPeriksa')
                     @endif
                 </div>
             </div>
+            
             <div class="table-container soft-shadow">
                 <div id="antrianPoli">
                     <table id="tbl_antrianPoli" class="table table-striped">
@@ -62,7 +89,8 @@
                                 @endphp
                                 <td data-label="Tanggal Masuk">{{ date_format($date,"d/m/Y")}}</td>
                                 <td data-label="Action" class="d-flex flex-row p-lg-1">
-                                    <a href="{{ action ('DiagnosaController@pilihDokter', $data['NoCM']) }}" class="btn diagnosa ml-auto">Pilih Dokter</a>
+                                    {{-- <a href="{{ action ('DiagnosaController@pilihDokter', $data['NoCM']) }}" class="btn diagnosa ml-auto">Pilih Dokter</a> --}}
+                                    <a data-toggle="modal" data-target="#modal_pilih_dokter-{{ $data['NoCM'] }}" class="btn diagnosa ml-auto">Pilih Dokter</a>
                                     <a data-toggle="modal" data-target="#modal_batal_periksa-{{ $data['NoPendaftaran'] }}" class="btn batal">Batal Periksa</a>
                                 </td>
                             </tr>
@@ -88,20 +116,22 @@
                         <tbody>
                             @foreach ($masukPoli as $poli)
                             @php
+                                $StatusPengkajian = "";
                                 // set style status periksa
-                                if($poli['StatusPeriksa'] == "Menunggu"){
-                                    $status = "yellow";
-                                }else if($poli['StatusPeriksa'] == "Diperiksa"){
-                                    $status = "blue";
-                                }else if($poli['StatusPeriksa'] == "Selesai"){
-                                    $status = "lime";
-                                }else if($poli['StatusPeriksa'] == "Belum"){
+                                if($poli['StatusPengkajian'] == "0"){
+                                    $StatusPengkajian = "Belum";
                                     $status = "orange";
+                                }else if($poli['StatusPengkajian'] == "1"){
+                                    $StatusPengkajian = "Periksa";
+                                    $status = "yellow";
+                                }else if($poli['StatusPengkajian'] == "2"){
+                                    $StatusPengkajian = "Selesai";
+                                    $status = "blue";
                                 }
                                 // set detail JK
                                 $jenkel = ($poli['JenisKelamin'] == "L" ? "Laki - Laki" : "Perempuan");
-                                @endphp
-                            @if ($kdJabatan == "1" && $idDokter == $poli['IdDokter'])
+                            @endphp
+                                @if ($role == "1" && $ID == $poli['ID'] && $poli['StatusPengkajian'] != "")
                                 <tr>
                                     <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
                                     <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>
@@ -110,17 +140,24 @@
                                     <td data-label="Umur">{{ $poli['UmurTahun'] }} Th</td>
                                     <td data-label="Jenis Kelamin">{{ $jenkel }}</td>
                                     @php
-                                        $date = date_create($data['TglMasuk']);
+                                        $date = date_create($poli['TglMasuk']);
                                     @endphp
                                     <td data-label="Tanggal Masuk">{{ date_format($date,"d/m/Y")}}</td>
                                     <td data-label="Keterangan">
-                                        <span class="ml-auto label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
+                                        <span class="ml-auto label-keterangan {{ $status }}">{{ $StatusPengkajian }}</span>
                                     </td>
                                     <td data-label="Action" class="d-flex flex-row p-lg-1">
-                                        <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn diagnosa ml-auto">Diagnosa</a>
+                                        @if ($poli['StatusPengkajian'] == 0)
+                                            {{-- <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form Pengkajian</a> --}}
+                                            <a data-toggle="modal" data-target="#modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn diagnosa">Pilih Form Pengkajian</a>
+                                        @else
+                                            <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Isi Form</a>
+                                            <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm">Batal Form</a>
+                                        @endif
+                                        <a data-toggle="modal" data-target="#modal_batal_masukPoli-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn btn-secondary">Batal Masuk Poli</a>
                                     </td>
                                 </tr>
-                                @elseif($kdJabatan == "2")
+                                @elseif($role == "2" && $poli['StatusPengkajian'] != "")
                                     <tr>
                                         <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
                                         <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>
@@ -129,14 +166,21 @@
                                         <td data-label="Umur">{{ $poli['UmurTahun'] }} Th</td>
                                         <td data-label="Jenis Kelamin">{{ $jenkel }}</td>
                                         @php
-                                            $date = date_create($data['TglMasuk']);
+                                            $date = date_create($poli['TglMasuk']);
                                         @endphp
                                         <td data-label="Tanggal Masuk">{{ date_format($date,"d/m/Y")}}</td>
                                         <td data-label="Keterangan">
-                                            <span class="ml-auto label-keterangan {{ $status }}">{{ $poli['StatusPeriksa'] }}</span>
+                                            <span class="ml-auto label-keterangan {{ $status }}">{{ $StatusPengkajian }}</span>
                                         </td>
                                         <td data-label="Action" class="d-flex flex-row p-lg-1">
-                                            <a href="{{ action('PasienController@DataPasien', $data['NoCM']) }}" class="btn diagnosa ml-auto">Diagnosa</a>
+                                            @if ($poli['StatusPengkajian'] == 0)
+                                                {{-- <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form Pengkajian</a> --}}
+                                                <a data-toggle="modal" data-target="#modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn diagnosa">Pilih Form Pengkajian</a>
+                                            @else
+                                                <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Isi Form</a>
+                                                <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm">Batal Form</a>
+                                            @endif
+                                            <a data-toggle="modal" data-target="#modal_batal_masukPoli-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn btn-secondary">Batal Masuk Poli</a>
                                         </td>
                                     </tr>
                                 
@@ -150,14 +194,46 @@
     </div>
 
     @foreach ($datas['data'] as $data)
+    <!-- modal pilih dokter -->
+    <div class="modal fade" id="modal_pilih_dokter-{{ $data['NoCM'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white text-center">Pilih Dokter <span class="badge badge-info">{{ $data['NoCM'] }}</span></h5>
+                </div>
+                <form method="POST" action="{{ action('DiagnosaController@storePilihDokter', [$data['NoCM'], $data['NoPendaftaran']]) }}">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select name="dokter" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }} pilihDokter" id="dokter" title="Pilih salah satu..." data-live-search="true" required>
+                                @foreach ($listDokter['data'] as $item)
+                                    <option value="{{ $item['IdDokter'] }}"> {{ $item['NamaLengkap'] }} </option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">
+                                Dokter harus diisi
+                            </div>
+                            <input type="hidden" name="no_cm" value="{{ $data['NoCM'] }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end of modal pilih dokter -->
+
     <!-- modal batal periksa -->
     <div class="modal fade" id="modal_batal_periksa-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header bg-danger">
-                    <h5 class="modal-title text-white text-center">Batal Periksa</h5>
+                    <h5 class="modal-title text-white text-center">Batal Periksa NoCM: <span class="badge badge-info">{{ $data['NoCM'] }}</span> </h5>
                 </div>
-                <form action="{{ action ('PasienController@storeBatalPeriksa', $data['NoPendaftaran'])}}" method="POST">
+                <form action="{{ action ('PasienController@storeBatalPeriksa', [$data['NoCM'], $data['NoPendaftaran']])}}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -174,16 +250,150 @@
         </div>
     </div>
     <!-- end of modal batal periksa -->
+
+     <!-- modal pilih form -->
+     <div class="modal fade" id="modal_pilih_form-{{ $data['NoCM'] }}-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white text-center">Pilih Form NoCM: {{ $data['NoCM'] }}</h5>
+                </div>
+                <form method="POST" action="{{action('FormPengkajianController@storePilihForm', [$data['NoCM'], $data['NoPendaftaran']])}}">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select name="formPengkajian" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }} pilihForm" id="formPengkajian" title="Pilih salah satu..." data-live-search="true" required>
+                                @foreach ($listForm as $item)
+                                    <option value="{{ $item['idForm'] }}"> {{ $item['namaForm'] }} </option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">
+                                Form harus diisi
+                            </div>
+                            <input type="hidden" name="no_cm" value="{{ $data['NoCM'] }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end of modal pilih Form -->
+
+    <!-- modal batal masuk poli -->
+    <div class="modal fade" id="modal_batal_masukPoli-{{ $data['NoCM'] }}-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white text-center">Batal Masuk Poli</h5>
+                </div>
+                <form method="POST" action="{{action('DiagnosaController@storeBatalMasukPoli', [$data['NoCM'], $data['NoPendaftaran']])}}">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="keterangan" class="col-form-label">Apa anda yakin ingin membatalkan masuk poli NoCM : <code>{{ $data['NoCM'] }}</code> ?</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end of modal batal masuk poli -->
+
+    <!-- modal Pilih Form Pengkajian (tidak dipakai) -->
+    <div class="modal fade" id="modal_pilihform_pengkajian-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg ">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <p class="text-center"><h5 class="modal-title text-white">Pilih Form</h5></p>
+                </div>
+                    <div class="modal-body">
+                        <div class="card-deck">
+                            <div class="card">
+                                {{-- <img src="..." class="card-img-top" alt="..."> --}}
+                                <div class="card-body">
+                                <h5 class="card-title text-center">Form Pengkajian Awal</h5>
+                                <p class="card-text">Form untuk melakukan pengkajian awal pada pasien poli jantung.</p>
+                                    <div class="card-footer">
+                                        <a href="{{ action ('FPengkajianAwalController@showRajal', $data['NoCM']) }}" class="btn btn-dark diagnosa btn-block">Pilih</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                {{-- <img src="..." class="card-img-top" alt="..."> --}}
+                                <div class="card-body">
+                                <h5 class="card-title text-center">Form Pengkajian Ulang</h5>
+                                <p class="card-text">Form untuk melakukan pengkajian ulang pada pasien poli jantung.</p>
+                                    <div class="card-footer">
+                                        <a href="{{ action ('FPengkajianUlangController@showRajal', $data['NoCM']) }}" class="btn btn-dark diagnosa btn-block">Pilih</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div> --}}
+            </div>
+        </div>
+    </div>
+    <!-- end of modal Form Pengkajian -->
+
     @endforeach
 
+    {{-- modal batal form --}}
+    <div class="modal fade" id="modal_batal_form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white text-center">Batal Form '<span id="mdl_title_pendaftaran"></span>' </h5>
+                </div>
+                <form action="{{ action ('FormPengkajianController@storeBatalForm', $data['NoPendaftaran'])}}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p style="text-align: center;">Apakah anda yakin batal pilih form ? </p>
+                            <input type="hidden" name="NoCM" id="mdl_NoCM">
+                            <input type="hidden" name="NoPendaftaran" id="mdl_Pendaftaran">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
+
+        // var overlay = document.getElementById("overlay");
+        // window.addEventListener('load', function () {
+        //     overlay.style.display = 'none';
+        // })
+
+        $(window).on("load", function () {
+            $(".loader-container").fadeOut(3000);
+        })
+
         $(document).ready(function() {
+
+            $('#loading').detach();
             $('#tbl_antrianPoli').DataTable();
             $('#tbl_masukPoli').DataTable();
             $('#tbl_antrianPoli_filter').hide();
             $('#tbl_masukPoli_filter').hide();
             //Js Check isDokter / isPerawat
-            @if ($kdJabatan == "1")
+            @if ($role == "1")
                 $('#antrianPoli').hide();
                 var table = $('#tbl_masukPoli').DataTable();
             @else
@@ -191,6 +401,10 @@
                 var table = $('#tbl_antrianPoli').DataTable();
             @endif
             FilterSearch(table);
+
+            $('.pilihDokter').selectpicker();
+            $('.pilihForm').selectpicker();
+
         });
             $("#nav_antrianPoli").click(function(){
                 $(this).addClass('active');
@@ -213,5 +427,15 @@
                     table.search( this.value ).draw();
                 });
             }
+            $('#tbl_masukPoli tbody').on('click', '.batalForm', function(){
+                let noCm = $(this).data('nocm');
+                let noPendaftaran = $(this).data('pendaftaran');
+                
+                $('#mdl_Pendaftaran').val(noPendaftaran);
+                $('#mdl_NoCM').val(noCm);
+                $('#mdl_title_pendaftaran').html(noCm);
+
+            })
+            
     </script>
 @endsection

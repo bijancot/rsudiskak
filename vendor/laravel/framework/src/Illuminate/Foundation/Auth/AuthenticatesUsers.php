@@ -2,6 +2,7 @@
 
 namespace Illuminate\Foundation\Auth;
 
+use App\Http\Controllers\LoggingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -78,7 +79,8 @@ trait AuthenticatesUsers
     protected function attemptLogin(Request $request)
     {
         return $this->guard()->attempt(
-            $this->credentials($request), $request->filled('remember')
+            $this->credentials($request),
+            $request->filled('remember')
         );
     }
 
@@ -106,7 +108,7 @@ trait AuthenticatesUsers
         $this->clearLoginAttempts($request);
 
         return $this->authenticated($request, $this->guard()->user())
-                ?: redirect()->intended($this->redirectPath());
+            ?: redirect()->intended($this->redirectPath());
     }
 
     /**
@@ -143,7 +145,7 @@ trait AuthenticatesUsers
      */
     public function username()
     {
-        return 'IdDokter';
+        return 'ID';
     }
 
     /**
@@ -154,6 +156,15 @@ trait AuthenticatesUsers
      */
     public function logout(Request $request)
     {
+        $getIDuser      = Auth::user()->ID;
+        $getNamaUser    = Auth::user()->Nama;
+        $getRole        = Auth::user()->Role;
+        $getKdRuangan   = Auth::user()->KodeRuangan;
+
+        $logging        = new LoggingController;
+        if (Auth::user()->getRole != "3") {
+            $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'Logout', 'Logout', 'Telah Logout', null, $getKdRuangan);
+        }
         $this->guard()->logout();
 
         $request->session()->invalidate();

@@ -13,6 +13,6 @@ class AdminController extends Controller
     }
     
     public function adminPage(){
-        return view('pages.admin.managementUser');
+        return view('pages.admin.logActivities');
     }
 }

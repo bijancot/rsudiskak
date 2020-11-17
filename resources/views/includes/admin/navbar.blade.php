@@ -1,6 +1,6 @@
 <nav class="navbar">
     <ul class="d-flex justify-content-center align-items-center flex-row">
-        
+        <li class="nav-item" style="left: 0;position:absolute;font-weight:bold;">ADMIN POLI</li>
         <li class="{{ Request::is('logActivities') ? 'active' : '' }} nav-item"><a href="{{ url('logActivities') }}">Log Activities</a></li>
         <li class="{{ Request::is('managementForm') ? 'active' : '' }} nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Management Form</a>
@@ -17,21 +17,22 @@
                 <a class="dropdown-item" href="{{ url('manajemen_form') }}">Manajemen Form</a>
             </div>
         </li>
+<<<<<<< HEAD
         <li class="{{ Request::is('managementUser') ? 'active' : '' }} nav-item"><a href="{{ url('managementUser') }}">Management User</a></li>
+=======
+        <li class="{{ Request::is('m_user') ? 'active' : '' }} nav-item"><a href="{{ url('m_user') }}">Management User</a></li>
+>>>>>>> 38b21e69fe83e5926d025e27f5757c21d8781bff
         {{-- <li class="{{ Request::is('historicalList') ? 'active' : '' }} nav-item"><a href="{{ url('historicalList') }}">Historical List</a></li> --}}
         <li class="{{ Request::is('uploadFile') ? 'active' : '' }} nav-item"><a href="{{ url('uploadFile') }}">Upload File</a></li>
         
         <li class="profile d-flex flex-row align-items-center nav-item">
-                     
+            <div class="profile d-flex flex-row align-items-center nav-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
-            
-            
-            <p>{{ Auth::user()->NamaLengkap }}</p>
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            
-            </a>
+                <p>{{ Auth::user()->Nama }}</p>
+                <a class="nav-link dropdown-toggle" href="#"></a>
+            </div>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" data-toggle="modal" data-target="#modal_logout">
+                <a href="" class="dropdown-item" data-toggle="modal" data-target="#modal_logout">
                     Logout
                 </a>
                       
@@ -80,7 +81,7 @@
                 <div class="modal-header bg-danger">
                     <h5 class="modal-title text-white text-center">Logout</h5>
                 </div>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" >
+                <form id="logout-form" action="{{ url('signOut') }}" method="POST" >
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">

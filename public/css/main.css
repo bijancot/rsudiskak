@@ -384,6 +384,33 @@ nav ul li.profile img {
   background: #F7FAF8;
 }
 
+.file-area {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border: 2px dashed #E5E5E5;
+  border-radius: 4px;
+}
+
+.file-area label {
+  color: #505050 !important;
+  font-size: inherit !important;
+  margin: 0 auto !important;
+  width: 100%;
+}
+
+.file-area input[type=file] {
+  margin: 10px 0;
+  cursor: pointer;
+  opacity: 1;
+  width: 100%;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #E5E5E5;
+}
+
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
