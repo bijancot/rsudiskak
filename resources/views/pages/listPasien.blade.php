@@ -9,8 +9,6 @@
     </div>
     
     @if (session('status'))
-
-    
     <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
         <!-- Position it -->
         <div style="position: absolute; top: 0; right: 0;">
@@ -30,7 +28,6 @@
               </div>
             </div>
         </div>
-
     @endif
 
     <div class="bg-greenishwhite">
@@ -43,7 +40,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-12 mt-4 mt-lg-0">
-                    @if ($kdJabatan == "2")
+                    @if ($role == "2")
                         @include('includes.tabPeriksa')
                     @endif
                 </div>
@@ -134,7 +131,7 @@
                                 // set detail JK
                                 $jenkel = ($poli['JenisKelamin'] == "L" ? "Laki - Laki" : "Perempuan");
                             @endphp
-                                @if ($kdJabatan == "1" && $idDokter == $poli['IdDokter'] && $poli['StatusPengkajian'] != "")
+                                @if ($role == "1" && $ID == $poli['ID'] && $poli['StatusPengkajian'] != "")
                                 <tr>
                                     <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
                                     <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>
@@ -151,15 +148,16 @@
                                     </td>
                                     <td data-label="Action" class="d-flex flex-row p-lg-1">
                                         @if ($poli['StatusPengkajian'] == 0)
-                                                {{-- <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form Pengkajian</a> --}}
-                                                <a data-toggle="modal" data-target="#modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn diagnosa">Pilih Form Pengkajian</a>
-                                            @else
-                                                <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Isi Form</a>
-                                                <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm">Batal Form</a>
-                                            @endif
+                                            {{-- <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form Pengkajian</a> --}}
+                                            <a data-toggle="modal" data-target="#modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn diagnosa">Pilih Form Pengkajian</a>
+                                        @else
+                                            <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Isi Form</a>
+                                            <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm">Batal Form</a>
+                                        @endif
+                                        <a data-toggle="modal" data-target="#modal_batal_masukPoli-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn btn-secondary">Batal Masuk Poli</a>
                                     </td>
                                 </tr>
-                                @elseif($kdJabatan == "2" && $poli['StatusPengkajian'] != "")
+                                @elseif($role == "2" && $poli['StatusPengkajian'] != "")
                                     <tr>
                                         <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
                                         <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>
@@ -182,6 +180,7 @@
                                                 <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Isi Form</a>
                                                 <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm">Batal Form</a>
                                             @endif
+                                            <a data-toggle="modal" data-target="#modal_batal_masukPoli-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn btn-secondary">Batal Masuk Poli</a>
                                         </td>
                                     </tr>
                                 
@@ -200,9 +199,9 @@
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header bg-success">
-                    <h5 class="modal-title text-white text-center">Pilih Dokter</h5>
+                    <h5 class="modal-title text-white text-center">Pilih Dokter <span class="badge badge-info">{{ $data['NoCM'] }}</span></h5>
                 </div>
-                <form method="POST" action="{{ action('DiagnosaController@storePilihDokter', $data['NoCM']) }}">
+                <form method="POST" action="{{ action('DiagnosaController@storePilihDokter', [$data['NoCM'], $data['NoPendaftaran']]) }}">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -232,9 +231,9 @@
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header bg-danger">
-                    <h5 class="modal-title text-white text-center">Batal Periksa</h5>
+                    <h5 class="modal-title text-white text-center">Batal Periksa NoCM: <span class="badge badge-info">{{ $data['NoCM'] }}</span> </h5>
                 </div>
-                <form action="{{ action ('PasienController@storeBatalPeriksa', $data['NoPendaftaran'])}}" method="POST">
+                <form action="{{ action ('PasienController@storeBatalPeriksa', [$data['NoCM'], $data['NoPendaftaran']])}}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -252,12 +251,12 @@
     </div>
     <!-- end of modal batal periksa -->
 
-    <!-- modal pilih form -->
-    <div class="modal fade" id="modal_pilih_form-{{ $data['NoCM'] }}-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <!-- modal pilih form -->
+     <div class="modal fade" id="modal_pilih_form-{{ $data['NoCM'] }}-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header bg-success">
-                    <h5 class="modal-title text-white text-center">Pilih Form {{ $data['NoCM'] }}</h5>
+                    <h5 class="modal-title text-white text-center">Pilih Form NoCM: {{ $data['NoCM'] }}</h5>
                 </div>
                 <form method="POST" action="{{action('FormPengkajianController@storePilihForm', [$data['NoCM'], $data['NoPendaftaran']])}}">
                     @csrf
@@ -283,6 +282,30 @@
         </div>
     </div>
     <!-- end of modal pilih Form -->
+
+    <!-- modal batal masuk poli -->
+    <div class="modal fade" id="modal_batal_masukPoli-{{ $data['NoCM'] }}-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white text-center">Batal Masuk Poli</h5>
+                </div>
+                <form method="POST" action="{{action('DiagnosaController@storeBatalMasukPoli', [$data['NoCM'], $data['NoPendaftaran']])}}">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="keterangan" class="col-form-label">Apa anda yakin ingin membatalkan masuk poli NoCM : <code>{{ $data['NoCM'] }}</code> ?</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end of modal batal masuk poli -->
 
     <!-- modal Pilih Form Pengkajian (tidak dipakai) -->
     <div class="modal fade" id="modal_pilihform_pengkajian-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -370,7 +393,7 @@
             $('#tbl_antrianPoli_filter').hide();
             $('#tbl_masukPoli_filter').hide();
             //Js Check isDokter / isPerawat
-            @if ($kdJabatan == "1")
+            @if ($role == "1")
                 $('#antrianPoli').hide();
                 var table = $('#tbl_masukPoli').DataTable();
             @else

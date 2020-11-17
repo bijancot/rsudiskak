@@ -40,6 +40,11 @@ class ManajemenFormController extends Controller
      */
     public function store(Request $request)
     {
+        $file = $request->file('file');
+
+        $destination = '../resources/views/pages/formPengkajian';
+        $file->move($destination,$file->getClientOriginalName());
+        
         $request->validate([
             'namaForm'      => 'required|max:255',
         ]);
@@ -47,7 +52,7 @@ class ManajemenFormController extends Controller
         ManajemenForm::create([
             'idForm'        => $request->idForm,
             'namaForm'      => $request->namaForm,
-            'namaFile'      => 'pages.admin.manajemen_form.form_dinamis' . $request->namaFile,
+            'namaFile'      => 'pages.formPengkajian.' . str_replace('.blade.php', '', $file->getClientOriginalName()),
             'updated_at'    => NULL,
             'deleted_at'    => NULL,
         ]);

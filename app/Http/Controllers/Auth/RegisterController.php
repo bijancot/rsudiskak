@@ -49,12 +49,20 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'IdDokter' => ['required', 'string', 'max:255'],
-            'NamaLengkap' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string'],
-            'KdRuangan' => ['required', 'string', 'max:255'],
+            // 'IdDokter' => ['required', 'string', 'max:255'],
+            // 'NamaLengkap' => ['required', 'string', 'max:255'],
+            // 'password' => ['required', 'string'],
+            // 'KdRuangan' => ['required', 'string', 'max:255'],
+            // 'NamaRuangan' => ['required', 'string', 'max:255'],
+            // 'KdJabatan' => ['required', 'string', 'max:255'],
+            'ID' => ['required', 'string', 'max:255'],
+            'Nama' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'max:255'],
+            'KodeRuangan' => ['required', 'string', 'max:255'],
             'NamaRuangan' => ['required', 'string', 'max:255'],
-            'KdJabatan' => ['required', 'string', 'max:255'],
+            'Role' => ['required', 'string', 'max:255'],
+            'StatusLogin' => ['required', 'string', 'max:255'],
+            'Status' => ['required', 'string', 'max:255'],
         ]);
     }
 
@@ -67,12 +75,20 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'IdDokter' => $data['IdDokter'],
-            'NamaLengkap' => $data['NamaLengkap'],
-            'KdRuangan' => $data['KdRuangan'],
+            // 'IdDokter' => $data['IdDokter'],
+            // 'NamaLengkap' => $data['NamaLengkap'],
+            // 'KdRuangan' => $data['KdRuangan'],
+            // 'NamaRuangan' => $data['NamaRuangan'],
+            // 'KdJabatan' => $data['KdJabatan'],
+            // 'password' => Hash::make($data['password']),
+            'ID' => $data['ID'],
+            'Nama' => $data['Nama'],
+            'password' => Hash::make('rsudiskak'),
+            'KodeRuangan' => $data['KodeRuangan'],
             'NamaRuangan' => $data['NamaRuangan'],
-            'KdJabatan' => $data['KdJabatan'],
-            'password' => Hash::make($data['password']),
+            'Role' => $data['Role'],
+            'StatusLogin' => $data['StatusLogin'],
+            'Status' => $data['Status'],
         ]);
     }
 }

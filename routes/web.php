@@ -18,9 +18,7 @@ Route::get('/', function () {
 Route::get('layout', function () {
     return view('layouts.layout');
 });
-Route::get('logActivities', function () {
-    return view('pages.admin.logActivities');
-})->middleware('adminRole')->name('admin');
+Route::get('logActivities', 'LoggingController@index')->middleware('adminRole')->name('admin');
 //Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
 Route::get('login', function () {
     return view('pages.login');
@@ -52,9 +50,7 @@ Route::get('templateASD', function () {
     return view('pages.template');
 });
 
-Route::get('logActivities', function () {
-    return view('pages.admin.logActivities');
-});
+Route::get('logActivities', 'LoggingController@index');
 
 
 Route::get('m_pendidikan', 'PendidikanController@index');
@@ -67,18 +63,16 @@ Route::get('m_tempatTinggal', 'TempatTinggalController@index');
 Route::get('m_statusPsikologi', 'StatusPsikologiController@index');
 Route::get('m_hambatanEdukasi', 'HambatanEdukasiController@index');
 Route::get('manajemen_form', 'ManajemenFormController@index');
+Route::get('m_user', 'ManajemenUserController@index');
+Route::get('m_user/ubahPassword', 'ManajemenUserController@ubahPassword');
+Route::get('m_user/lupaPassword', 'ManajemenUserController@lupaPassword');
 
-Route::get('managementUser', function () {
-    return view('pages.admin.managementUser');
-});
 
 Route::get('historicalList', function () {
     return view('pages.admin.historicalList');
 });
 
-Route::get('uploadFile', function () {
-    return view('pages.admin.uploadFile');
-});
+Route::get('uploadFile', 'UploadFileController@index');
 
 Route::get('pengkajianAwalPasien', function () {
     return view('pages.formPengkajian.pengkajianAwalPasien');
@@ -86,6 +80,10 @@ Route::get('pengkajianAwalPasien', function () {
 
 Route::get('pengkajianUlangPasien', function () {
     return view('pages.formPengkajian.pengkajianUlangPasien');
+});
+
+Route::get('profilRingkasMedis', function () {
+    return view('pages.formPengkajian.profilRingkasMedis');
 });
 
 Route::get('subNavbar', function () {
@@ -112,9 +110,10 @@ Route::get('home', 'HomeController@index')->name('home');
 
 Route::post('diagnosa/{no_cm}', 'DiagnosaController@storeDiagnosaAwal');
 Route::post('diagnosaAkhir', 'DiagnosaController@storeDiagnosaAkhir');
-Route::post('pilihDokter/{no_cm}', 'DiagnosaController@storePilihDokter');
+Route::post('pilihDokter/{no_cm}/{no_pendaftaran}', 'DiagnosaController@storePilihDokter');
 Route::post('pilihForm/{no_cm}/{noPendaftaran}', 'FormPengkajianController@storePilihForm');
-Route::post('batalPeriksa/{no_pendaftaran}', 'PasienController@storeBatalPeriksa');
+Route::post('batalPeriksa/{no_cm}/{no_pendaftaran}', 'PasienController@storeBatalPeriksa');
+Route::post('batalMasukPoli/{no_cm}/{no_pendaftaran}', 'DiagnosaController@storeBatalMasukPoli');
 Route::post('batalForm', 'FormPengkajianController@storeBatalForm');
 Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
 
@@ -148,6 +147,19 @@ Route::delete('m_statusPsikologi/{statusPsikologi}', 'StatusPsikologiController@
 Route::post('m_hambatanEdukasi', 'HambatanEdukasiController@store');
 Route::delete('m_hambatanEdukasi/{hambatanEdukasi}', 'HambatanEdukasiController@destroy');
 
+Route::post('m_user', 'ManajemenUserController@store');
+Route::post('m_user/update', 'ManajemenUserController@update');
+Route::post('m_user/resetPassword', 'ManajemenUserController@resetPassword');
+Route::post('m_user/delete', 'ManajemenUserController@delete');
+Route::post('m_user/getData', 'ManajemenUserController@getData');
+Route::post('m_user/ubahPassword', 'ManajemenUserController@updatePassword');
+
 Route::post('manajemen_form', 'ManajemenFormController@store');
 Route::patch('manajemen_form/{manajemenForm}/update', 'ManajemenFormController@update');
 Route::post('manajemen_form/{manajemenForm}/delete', 'ManajemenFormController@delete');
+Route::post('signOut', 'ManajemenUserController@signOut');
+Route::post('uploadFile', 'UploadFileController@store');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

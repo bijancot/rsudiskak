@@ -116,3 +116,34 @@
         background: $greenishgrey;
     }
 }
+
+.file-area {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+
+    border: 2px dashed $outlinegrey;
+    border-radius: 4px;
+
+    label {
+        color: $black !important;
+        font-size: inherit !important;
+        margin: 0 auto !important;
+
+        width: 100%;
+    }
+
+    input[type=file] {
+        margin: 10px 0;
+        cursor: pointer;
+        opacity: 1;
+        width: 100%;
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid $outlinegrey;
+
+    }
+}

@@ -1,24 +1,25 @@
 <nav class="navbar">
     <ul class="d-flex justify-content-center align-items-center flex-row">
-        
+        <li class="nav-item" style="left: 0;position:absolute;font-weight:bold;">{{Auth::user()->NamaRuangan}}</li>
         <li class="{{ Request::is('listPasien') ? 'active' : '' }} nav-item"><a href="{{ url('listPasien') }}">Periksa</a></li>
-        <li class="{{ Request::is('listPasienKirimPoli') ? 'active' : '' }} nav-item"><a href="{{ url('listPasienKirimPoli') }}">Kirim Poli Lain</a></li>
-        <li class="{{ Request::is('listPasienHasilLab') ? 'active' : '' }} nav-item"><a href="{{ url('listPasienHasilLab') }}">Hasil Lab</a></li>
-        
         <li class="profile d-flex flex-row align-items-center nav-item">
-               
-            @if(Auth::user()->KdJabatan =='001')         
-                <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
-            @elseif (Auth::user()->KdJabatan =='002')
-                <img src="{{URL::asset('/img/p.png')}}" alt="Profile picture"/>
-            @endif
-            
-            <p>{{ Auth::user()->NamaLengkap }}</p>
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            
-            </a>
+            <div class="profile d-flex flex-row align-items-center nav-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @if(Auth::user()->Role =='001')         
+                    <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
+                @elseif (Auth::user()->Role =='002')
+                    <img src="{{URL::asset('/img/p.png')}}" alt="Profile picture"/>
+                @endif
+                
+                <p>{{ Auth::user()->Nama }}</p>
+                <a class="nav-link dropdown-toggle" href="#" >
+                
+                </a>
+            </div>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" data-toggle="modal" data-target="#modal_logout">
+                <a class="dropdown-item" href="{{url('m_user/ubahPassword')}}">
+                    Ubah Password
+                </a>
+                <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal_logout">
                     Logout
                 </a>
                       
@@ -37,21 +38,24 @@
         <img class="logo" src="{{URL::asset('/img/logo-3.png')}}" alt="logo" width="266px" class="mx-auto logo">
         <hr>
         <div class="profile d-flex flex-row align-items-center nav-item">     
-            @if(Auth::user()->KdJabatan =='001')         
+            @if(Auth::user()->Role =='001')         
                 <img src="{{URL::asset('/img/d.png')}}" alt="Profile picture"/>
-            @elseif (Auth::user()->KdJabatan =='002')
+            @elseif (Auth::user()->Role =='002')
                 <img src="{{URL::asset('/img/p.png')}}" alt="Profile picture"/>
             @endif
             
-            <p>{{ Auth::user()->NamaLengkap }}</p>
+            <p>{{ Auth::user()->Nama }}</p>
        
         </div>
         <hr>
         <a class="{{ Request::is('listPasien') ? 'active' : '' }} nav-item" href="{{ url('listPasien') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M18,19H6V17.6C6,15.6 10,14.5 12,14.5C14,14.5 18,15.6 18,17.6M12,7A3,3 0 0,1 15,10A3,3 0 0,1 12,13A3,3 0 0,1 9,10A3,3 0 0,1 12,7M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>Periksa</a>
-        <a class="{{ Request::is('listPasienKirimPoli') ? 'active' : '' }} nav-item" href="{{ url('listPasienKirimPoli') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M2,21L23,12L2,3V10L17,12L2,14V21Z" /></svg>Kirim Poli Lain</a>
-        <a class="{{ Request::is('listPasienHasilLab') ? 'active' : '' }} nav-item" href="{{ url('listPasienHasilLab') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>Hasil Lab</a>
+        {{-- <a class="{{ Request::is('listPasienKirimPoli') ? 'active' : '' }} nav-item" href="{{ url('listPasienKirimPoli') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M2,21L23,12L2,3V10L17,12L2,14V21Z" /></svg>Kirim Poli Lain</a>
+        <a class="{{ Request::is('listPasienHasilLab') ? 'active' : '' }} nav-item" href="{{ url('listPasienHasilLab') }}"><svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>Hasil Lab</a> --}}
         <hr class="mt-auto">
-        <a data-toggle="modal" data-target="#modal_logout" class="dropdown-item nav-item text-center font-weight-bold">
+        <a class="dropdown-item nav-item text-center font-weight-bold" href="{{url('m_user/ubahPassword')}}">
+            Ubah Password
+        </a>
+        <a href="#" data-toggle="modal" data-target="#modal_logout" class="dropdown-item nav-item text-center font-weight-bold">
             Logout
         </a>
          
@@ -66,7 +70,7 @@
                 <div class="modal-header bg-danger">
                     <h5 class="modal-title text-white text-center">Logout</h5>
                 </div>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" >
+                <form id="logout-form" action="{{ url('signOut') }}" method="POST" >
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
