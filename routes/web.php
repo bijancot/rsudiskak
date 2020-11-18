@@ -25,6 +25,7 @@ Route::get('login', function () {
 });
 
 Route::get('listPasien', 'PasienController@listPasien');
+Route::get('listPasien/masukPoliRedirect', 'DiagnosaController@masukPoliRedirect');
 Route::get('dataPasien/{no_cm}', 'PasienController@DataPasien');
 
 Route::get('pilihDokter/{no_cm}', 'DiagnosaController@pilihDokter');

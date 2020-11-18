@@ -8,7 +8,7 @@
         <div class="wrapper">
             
             <div class="d-flex flex-column align-items-center mb-5">
-                <a href="{{url('/listPasien')}}" class="mr-auto">
+                <a href="{{url('/listPasien/masukPoliRedirect')}}" class="mr-auto">
                     <span>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 18L15.41 16.59L10.83 12L15.41 7.41L14 6L7.99997 12L14 18Z" fill="#00451F"/></svg>
                         Kembali

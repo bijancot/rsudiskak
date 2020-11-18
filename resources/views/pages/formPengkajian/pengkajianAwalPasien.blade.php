@@ -8,7 +8,7 @@
         <div class="wrapper">
             
             <div class="d-flex flex-column align-items-center mb-5">
-                <a href="{{url('/listPasien')}}" class="mr-auto">
+                <a href="{{url('/listPasien/masukPoliRedirect')}}" class="mr-auto">
                     <span>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 18L15.41 16.59L10.83 12L15.41 7.41L14 6L7.99997 12L14 18Z" fill="#00451F"/></svg>
                         Kembali
@@ -367,6 +367,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if(Auth::user()->KodeRuangan == "209")
                                     <div class="col-lg-3 col-12 mt-3">
                                         <label for="diagnosa">Status Obstetri</label>
                                         <input type="text" class="form-control" name="PengkajianKeperawatan_1[StatusObstetri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['StatusObstetri']) ? $dataPengkajian['PengkajianKeperawatan_1']['StatusObstetri'] : '')}}" required>
@@ -374,6 +375,14 @@
                                             Data Status Obstetri Harus Diisi.
                                         </div>
                                     </div>
+                                    @else
+                                    <div class="col-lg-3 col-12 mt-3">
+                                        <label for="diagnosa">Status Obstetri</label>
+                                        <input type="text" class="form-control" name="PengkajianKeperawatan_1[StatusObstetri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['StatusObstetri']) ? $dataPengkajian['PengkajianKeperawatan_1']['StatusObstetri'] : '')}}">
+                                    </div>
+                                    @endif
+
+                                    @if(Auth::user()->KodeRuangan == "209")
                                     <div class="col-lg-3 col-12 mt-3">
                                         <label for="komplikasi">HPTT</label>
                                         <input type="text" class="form-control" name="PengkajianKeperawatan_1[HPTT]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['HPTT']) ? $dataPengkajian['PengkajianKeperawatan_1']['HPTT'] : '')}}" required>
@@ -381,6 +390,13 @@
                                             Data HPTT Harus Diisi.
                                         </div>
                                     </div>
+                                    @else
+                                    <div class="col-lg-3 col-12 mt-3">
+                                        <label for="komplikasi">HPTT</label>
+                                        <input type="text" class="form-control" name="PengkajianKeperawatan_1[HPTT]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['HPTT']) ? $dataPengkajian['PengkajianKeperawatan_1']['HPTT'] : '')}}">
+                                    </div>
+                                    @endif
+
                                     <div class="col-lg-4 col-12 mt-3">
                                         <label for="komplikasi">TP</label>
                                         <input type="text" class="form-control" name="PengkajianKeperawatan_1[TP]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['TP']) ? $dataPengkajian['PengkajianKeperawatan_1']['TP'] : '')}}" required>
@@ -388,6 +404,8 @@
                                             Data TP Harus Diisi.
                                         </div>
                                     </div>
+
+                                    @if(Auth::user()->KodeRuangan == "209")
                                     <div class="col-lg-6 col-12 mt-3">
                                         <label for="komplikasi">Keterangan Obstetri/Ginekologi/Laktasi/KB</label>
                                         <input type="text" class="form-control" name="PengkajianKeperawatan_1[Ket_Obstetri_Ginekologi_Laktasi_KB]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Ket_Obstetri_Ginekologi_Laktasi_KB']) ? $dataPengkajian['PengkajianKeperawatan_1']['Ket_Obstetri_Ginekologi_Laktasi_KB'] : '')}}" required>
@@ -395,6 +413,12 @@
                                             Data Keterangan Obstetri Harus Diisi.
                                         </div>
                                     </div>
+                                    @else
+                                    <div class="col-lg-6 col-12 mt-3">
+                                        <label for="komplikasi">Keterangan Obstetri/Ginekologi/Laktasi/KB</label>
+                                        <input type="text" class="form-control" name="PengkajianKeperawatan_1[Ket_Obstetri_Ginekologi_Laktasi_KB]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Ket_Obstetri_Ginekologi_Laktasi_KB']) ? $dataPengkajian['PengkajianKeperawatan_1']['Ket_Obstetri_Ginekologi_Laktasi_KB'] : '')}}" >
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-12">
@@ -522,7 +546,20 @@
                                         </div>
                                     </div>
                                     <div class="col-12 mt-3">
-                                        <a href="#" class="btn secondary">List dirujuk/konsul ke</a>
+                                        <a href="{{url('/profilRingkasMedis')}}" class="btn secondary">List dirujuk/konsul ke</a>
+                                        @if(Auth::user()->Role == "1")
+                                        <input type="checkbox" id="verifikasi" name="verifikasi" value="verifikasi" required>
+                                        <label for="verifikasi"> Verifikasi final pasien</label><br>
+                                        <div class="invalid-feedback">
+                                            Verifikasi Harus Tercentang
+                                        </div>
+                                        @else
+                                        <input style="visibility:hidden" type="checkbox" id="verifikasi" name="verifikasi" value="verifikasi" required>
+                                        <label style="visibility:hidden" for="verifikasi"> Verifikasi final pasien</label><br>
+                                        <div class="invalid-feedback">
+                                            Verifikasi Harus Tercentang
+                                        </div>
+                                        @endif
                                     </div>
                                     <div class="col-12 mt-3">
                                         <button type="submit" class="btn green-long">Submit</button>

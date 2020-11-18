@@ -121,7 +121,7 @@ class DiagnosaController extends Controller
         $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $logging        = new LoggingController;
-
+        //return response()->json(['d' => $request->dokter]);
         if ($no_cm) {
 
             // get API antrian data pasien
@@ -164,13 +164,16 @@ class DiagnosaController extends Controller
             if ($dataMasukPoli > 0) {
                 return redirect('/listPasien')
                     ->with('status', 'Data Pasien dengan pendaftaran ' . $no_pendaftaran . ' sudah ada !');
-            } else {
+            
+                    //return response()->json(['data' => TRUE, 'msg' => 'Data Pasien dengan pendaftaran ' . $no_pendaftaran . ' sudah ada !']);
+                } else {
 
                 $request->validate([
                     'dokter'   => 'required',
                 ]);
                 if (empty($request->get('dokter'))) {
-                    // return redirect('/listPasien')->with('status', 'Tidak ada dokter yang dipilih !');
+                    //return response()->json(['data' => TRUE, 'msg' => 'Tidak ada dokter yang dipilih !']);
+                    return redirect('/listPasien')->with('status', 'Tidak ada dokter yang dipilih !');
                 } else {
 
                     $getDokter = $this->listDokter();
@@ -315,7 +318,8 @@ class DiagnosaController extends Controller
                     // save to logging
                     $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'create', 'PilihDokter', $create_data, $no_cm, $getKdRuangan);
 
-                    return redirect('/listPasien');
+                    //return response()->json(['data' => TRUE, 'msg' => 'end']);
+                    return redirect('/listPasien')->with('status','success');
                     //endElse
                 }
                 // endIf cekDokter
@@ -327,6 +331,10 @@ class DiagnosaController extends Controller
         }
     }
 
+    public function masukPoliRedirect()
+    {
+        return redirect('/listPasien')->with('status', 'success');
+    }
     public function storeBatalMasukPoli(Request $request, $no_cm, $no_pendaftaran)
     {
         $getIDuser      = Auth::user()->ID;
