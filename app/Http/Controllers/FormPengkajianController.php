@@ -43,10 +43,6 @@ class FormPengkajianController extends Controller
      */
     public function storePilihForm(Request $req, $no_cm, $noPendaftaran)
     {
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
-        $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $logging        = new LoggingController;
 
@@ -74,7 +70,7 @@ class FormPengkajianController extends Controller
 
         $create_data = $getForm[0]['namaForm'];
 
-        $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'create', 'PilihForm', $create_data, $no_cm, $getKdRuangan);
+        $logging->toLogging('create', 'PilihForm', $create_data, $no_cm);
 
         return redirect('formPengkajian/' . $req->get('formPengkajian') . '/' . $no_cm . '/' . $noPendaftaran);
     }
@@ -94,15 +90,31 @@ class FormPengkajianController extends Controller
                 return redirect('formPengkajian/' . $dataMasukPoli[0]['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
             }
 
-            $pendidikan         = Pendidikan::where("deleted_at", Null)->get();
-            $pekerjaan          = Pekerjaan::where("deleted_at", Null)->get();
-            $agama              = Agama::where("deleted_at", Null)->get();
-            $nilaiAnut          = NilaiAnut::where("deleted_at", Null)->get();
-            $statusPernikahan   = StatusPernikahan::where("deleted_at", Null)->get();
-            $keluarga           = Keluarga::where("deleted_at", Null)->get();
-            $tempatTinggal      = TempatTinggal::where("deleted_at", Null)->get();
-            $statusPsikologi    = StatusPsikologi::where("deleted_at", Null)->get();
-            $hambatanEdukasi    = HambatanEdukasi::where("deleted_at", Null)->get();
+            /**
+             * Get Data dari Collection menggunakan Eloquent ORM 
+             */
+            // $pendidikan         = Pendidikan::where("deleted_at", Null)->get();
+            // $pekerjaan          = Pekerjaan::where("deleted_at", Null)->get();
+            // $agama              = Agama::where("deleted_at", Null)->get();
+            // $nilaiAnut          = NilaiAnut::where("deleted_at", Null)->get();
+            // $statusPernikahan   = StatusPernikahan::where("deleted_at", Null)->get();
+            // $keluarga           = Keluarga::where("deleted_at", Null)->get();
+            // $tempatTinggal      = TempatTinggal::where("deleted_at", Null)->get();
+            // $statusPsikologi    = StatusPsikologi::where("deleted_at", Null)->get();
+            // $hambatanEdukasi    = HambatanEdukasi::where("deleted_at", Null)->get();
+
+            /**
+             * Get Data dari Collection menggunakan Query Builder 
+             */
+            $pendidikan         = DB::collection('pendidikan')->where("deleted_at", Null)->get();
+            $pekerjaan          = DB::collection('pekerjaan')->where("deleted_at", Null)->get();
+            $agama              = DB::collection('agama')->where("deleted_at", Null)->get();
+            $nilaiAnut          = DB::collection('nilaiAnut')->where("deleted_at", Null)->get();
+            $statusPernikahan   = DB::collection('statusPernikahan')->where("deleted_at", Null)->get();
+            $keluarga           = DB::collection('keluarga')->where("deleted_at", Null)->get();
+            $tempatTinggal      = DB::collection('tempatTinggal')->where("deleted_at", Null)->get();
+            $statusPsikologi    = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
+            $hambatanEdukasi    = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
             $dataMasukPoli      = DB::collection('pasien_' . $NoCM)->where('NoPendaftaran', $noPendaftaran)->where('deleted_at', null)->whereNotNull('StatusPengkajian')->get();
 
             $data = [
@@ -137,11 +149,6 @@ class FormPengkajianController extends Controller
      */
     public function storeFormPengkajian(Request $req, $idForm, $no_cm, $noPendaftaran, $subForm, $isLastSubForm)
     {
-
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
-        $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $logging        = new LoggingController;
 
@@ -237,7 +244,7 @@ class FormPengkajianController extends Controller
 
             // $pushData = $req->all();
             $pushData = "Buat Data Pengkajian No. Pendaftaran '" . $noPendaftaran . "' dengan mengisi data form " . $subForm;
-            $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'create', 'DataPengkajian', $pushData, $no_cm, $getKdRuangan);
+            $logging->toLogging('create', 'DataPengkajian', $pushData, $no_cm);
             //
 
         } else if ($statusUpdate == 1) {
@@ -281,7 +288,7 @@ class FormPengkajianController extends Controller
                 'old'       => $data_old,
                 'current'   => $data_cur,
             ];
-            $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'update', 'DataPengkajian', $updateData, $no_cm, $getKdRuangan);
+            $logging->toLogging('update', 'DataPengkajian', $updateData, $no_cm);
         }
 
         return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran);
@@ -292,10 +299,6 @@ class FormPengkajianController extends Controller
      */
     public function storeBatalForm(Request $req)
     {
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
-        $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $logging        = new LoggingController;
 
@@ -323,7 +326,7 @@ class FormPengkajianController extends Controller
         DB::collection('pasien_' . $req->get('NoCM'))->insertGetId($dataMasukPoli);
         DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])->insert($dataMasukPoli);
 
-        $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'batal', 'PilihForm', $req->get('NoPendaftaran'), $req->get('NoCM'), $getKdRuangan);
+        $logging->toLogging('batal', 'PilihForm', $req->get('NoPendaftaran'), $req->get('NoCM'));
 
         return redirect('/listPasien');
     }

@@ -115,11 +115,6 @@ class DiagnosaController extends Controller
     public function storePilihDokter(Request $request, $no_cm, $no_pendaftaran)
     {
 
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
-        $getKdRuangan   = Auth::user()->KodeRuangan;
-
         $logging        = new LoggingController;
 
         if ($no_cm) {
@@ -313,7 +308,7 @@ class DiagnosaController extends Controller
                     ];
 
                     // save to logging
-                    $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'create', 'PilihDokter', $create_data, $no_cm, $getKdRuangan);
+                    $logging->toLogging('create', 'PilihDokter', $create_data, $no_cm);
 
                     return redirect('/listPasien');
                     //endElse
@@ -329,10 +324,6 @@ class DiagnosaController extends Controller
 
     public function storeBatalMasukPoli(Request $request, $no_cm, $no_pendaftaran)
     {
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
-        $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $logging        = new LoggingController;
 
@@ -348,7 +339,7 @@ class DiagnosaController extends Controller
                 ->where('deleted_at', null)
                 ->update(['deleted_at' => date("Y-m-d H:i:s")]);
 
-            $logging->toLogging($getIDuser, $getNamaUser, $getRole,  'batal', 'BatalMasukPoli', 'No. Pendaftaran :' . $no_pendaftaran . ' batal masuk poli', $no_cm, $getKdRuangan);
+            $logging->toLogging('batal', 'BatalMasukPoli', 'No. Pendaftaran :' . $no_pendaftaran . ' batal masuk poli', $no_cm);
 
             return redirect('/listPasien');
             //endIf
@@ -389,7 +380,10 @@ class DiagnosaController extends Controller
     // get AntrianDataPasien
     public function antrianDataPasien()
     {
+        $getKdRuangan   = Auth::user()->KodeRuangan;
+
         $client = new Client();
+        // $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/' . $getKdRuangan . '?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
         $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/215?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
         $statCode = $res->getStatusCode();
         $datas = $res->getBody()->getContents();

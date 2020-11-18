@@ -89,7 +89,7 @@
                                 <label for="pendidikan">Pendidikan</label>
                                 <select id="pendidikan" name="PengkajianKeperawatan_1[Pendidikan]" class="custom-select">
                                     @foreach ($pendidikan as $item)
-                                        <option value="{{ $item->pendidikan }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Pendidikan']) && $dataPengkajian['PengkajianKeperawatan_1']['Pendidikan'] == $item->pendidikan ? 'selected' : '')}}>{{ $item->pendidikan }}</option>
+                                        <option value="{{ $item['Pendidikan'] }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Pendidikan']) && $dataPengkajian['PengkajianKeperawatan_1']['Pendidikan'] == $item['Pendidikan'] ? 'selected' : '')}}>{{ $item['Pendidikan'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -97,7 +97,7 @@
                                 <label for="pekerjaan">Pekerjaan</label>
                                 <select id="pekerjaan" name="PengkajianKeperawatan_1[Pekerjaan]" class="custom-select">
                                     @foreach ($pekerjaan as $item)
-                                        <option value="{{ $item->pekerjaan }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Pekerjaan']) && $dataPengkajian['PengkajianKeperawatan_1']['Pekerjaan'] == $item->pekerjaan ? 'selected' : '')}}>{{ $item->pekerjaan }}</option>    
+                                        <option value="{{ $item['Pekerjaan'] }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Pekerjaan']) && $dataPengkajian['PengkajianKeperawatan_1']['Pekerjaan'] == $item['Pekerjaan'] ? 'selected' : '')}}>{{ $item['Pekerjaan'] }}</option>    
                                     @endforeach
                                 </select>
                             </div>
@@ -106,7 +106,7 @@
                                 <label for="agama">Agama</label>
                                 <select id="agama" name="PengkajianKeperawatan_1[Agama]" class="custom-select">
                                     @foreach ($agama as $item)
-                                        <option value="{{ $item->agama }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Agama']) && $dataPengkajian['PengkajianKeperawatan_1']['Agama'] == $item->agama ? 'selected' : '')}}>{{ $item->agama }}</option>    
+                                        <option value="{{ $item['Agama'] }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Agama']) && $dataPengkajian['PengkajianKeperawatan_1']['Agama'] == $item['Agama'] ? 'selected' : '')}}>{{ $item['Agama'] }}</option>    
                                     @endforeach
                                 </select>
                             </div>
@@ -114,7 +114,7 @@
                                 <label for="nilaiAnut">Nilai-nilai yang dianut</label>
                                 <select id="nilaiAnut" name="PengkajianKeperawatan_1[NilaiAnut]" class="custom-select">
                                     @foreach ($nilaiAnut as $item)
-                                        <option value="{{ $item->nilaiAnut }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['NilaiAnut']) && $dataPengkajian['PengkajianKeperawatan_1']['NilaiAnut'] == $item->nilaiAnut ? 'selected' : '')}}>{{ $item->nilaiAnut }}</option>    
+                                        <option value="{{ $item['NilaiAnut'] }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['NilaiAnut']) && $dataPengkajian['PengkajianKeperawatan_1']['NilaiAnut'] == $item['NilaiAnut'] ? 'selected' : '')}}>{{ $item['NilaiAnut'] }}</option>    
                                     @endforeach
                                 </select>
                             </div>              
@@ -122,7 +122,7 @@
                                 <label for="statusPernikahan">Status Pernikahan</label>
                                 <select id="statusPernikahan" name="PengkajianKeperawatan_1[StatusPernikahan]" class="custom-select">
                                     @foreach ($statusPernikahan as $item)
-                                        <option value="{{ $item->statusPernikahan }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['StatusPernikahan']) && $dataPengkajian['PengkajianKeperawatan_1']['StatusPernikahan'] == $item->statusPernikahan ? 'selected' : '')}}>{{ $item->statusPernikahan }}</option>    
+                                        <option value="{{ $item['StatusPernikahan'] }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['StatusPernikahan']) && $dataPengkajian['PengkajianKeperawatan_1']['StatusPernikahan'] == $item['StatusPernikahan'] ? 'selected' : '')}}>{{ $item['StatusPernikahan'] }}</option>    
                                     @endforeach
                                 </select>
                             </div>
@@ -130,7 +130,7 @@
                                 <label for="keluarga">Keluarga</label>
                                 <select id="keluarga" name="PengkajianKeperawatan_1[Keluarga]" class="custom-select">
                                     @foreach ($keluarga as $item)
-                                        <option value="{{ $item->keluarga }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Keluarga']) && $dataPengkajian['PengkajianKeperawatan_1']['Keluarga'] == $item->keluarga ? 'selected' : '')}}>{{ $item->keluarga }}</option>    
+                                        <option value="{{ $item['Keluarga'] }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Keluarga']) && $dataPengkajian['PengkajianKeperawatan_1']['Keluarga'] == $item['Keluarga'] ? 'selected' : '')}}>{{ $item['Keluarga'] }}</option>    
                                     @endforeach
                                 </select>
                             </div>
@@ -138,7 +138,7 @@
                                 <label for="tempatTinggal">Tempat Tinggal</label>
                                 <select id="tempatTinggal" name="PengkajianKeperawatan_1[TempatTinggal]" class="custom-select">
                                     @foreach ($tempatTinggal as $item)
-                                        <option value="{{ $item->tempatTinggal }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['TempatTinggal']) && $dataPengkajian['PengkajianKeperawatan_1']['TempatTinggal'] == $item->tempatTinggal ? 'selected' : '')}}>{{ $item->tempatTinggal }}</option>    
+                                        <option value="{{ $item['TempatTinggal'] }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['TempatTinggal']) && $dataPengkajian['PengkajianKeperawatan_1']['TempatTinggal'] == $item['TempatTinggal'] ? 'selected' : '')}}>{{ $item['TempatTinggal'] }}</option>    
                                     @endforeach
                                 </select>
                             </div>
@@ -146,7 +146,7 @@
                                 <label for="statusPsikologi">Status Psikologi</label>
                                 <select id="statusPsikologi" name="PengkajianKeperawatan_1[StatusPsikologi]" class="custom-select">
                                     @foreach ($statusPsikologi as $item)
-                                        <option value="{{ $item->statusPsikologi }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['StatusPsikologi']) && $dataPengkajian['PengkajianKeperawatan_1']['StatusPsikologi'] == $item->statusPsikologi ? 'selected' : '')}}>{{ $item->statusPsikologi }}</option>    
+                                        <option value="{{ $item['StatusPsikologi'] }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['StatusPsikologi']) && $dataPengkajian['PengkajianKeperawatan_1']['StatusPsikologi'] == $item['StatusPsikologi'] ? 'selected' : '')}}>{{ $item['StatusPsikologi'] }}</option>    
                                     @endforeach
                                 </select>
                             </div>
@@ -154,7 +154,7 @@
                                 <label for="hambatanEdukasi">Hambatan Edukasi</label>
                                 <select id="hambatanEdukasi" name="PengkajianKeperawatan_1[HambatanEdukasi]" class="custom-select">
                                     @foreach ($hambatanEdukasi as $item)
-                                        <option value="{{ $item->hambatanEdukasi }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['HambatanEdukasi']) && $dataPengkajian['PengkajianKeperawatan_1']['HambatanEdukasi'] == $item->hambatanEdukasi ? 'selected' : '')}}>{{ $item->hambatanEdukasi }}</option>    
+                                        <option value="{{ $item['HambatanEdukasi'] }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['HambatanEdukasi']) && $dataPengkajian['PengkajianKeperawatan_1']['HambatanEdukasi'] == $item['HambatanEdukasi'] ? 'selected' : '')}}>{{ $item['HambatanEdukasi'] }}</option>    
                                     @endforeach
                                 </select>
                             </div>

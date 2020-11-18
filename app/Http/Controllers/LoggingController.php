@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Logging;
+use Illuminate\Support\Facades\Auth;
 
 class LoggingController extends Controller
 {
@@ -30,21 +31,26 @@ class LoggingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function toLogging($id_user = null, $nama_user = null, $role = null, $metode = null, $fitur = null, $keterangan = null, $no_cm = null, $KdRuangan = null)
+    public function toLogging($metode = null, $fitur = null, $keterangan = null, $no_cm = null)
     {
+        $getIDuser      = Auth::user()->ID;
+        $getNamaUser    = Auth::user()->Nama;
+        $getRole        = Auth::user()->Role;
+        $getKdRuangan   = Auth::user()->KodeRuangan;
+
         // store log 
-        if ($id_user != null && $metode != null) {
+        if ($getIDuser != null && $metode != null) {
 
             $log = new Logging();
             $log->collection    = "loggings_" . date("Y-m-d");
-            $log->id_user       = $id_user;
-            $log->nama_user     = $nama_user;
-            $log->role          = $role;
+            $log->id_user       = $getIDuser;
+            $log->nama_user     = $getNamaUser;
+            $log->role          = $getRole;
             $log->metode        = $metode;
             $log->fitur         = $fitur;
             $log->keterangan    = $keterangan;
             $log->NoCM          = $no_cm;
-            $log->KdRuangan     = $KdRuangan;
+            $log->KdRuangan     = $getKdRuangan;
             $log->save();
 
             // $log = Logging::create([

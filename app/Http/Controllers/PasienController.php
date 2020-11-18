@@ -16,8 +16,11 @@ class PasienController extends Controller
     }
     public function listPasien()
     {
-        // //get data
+        // get data
+        $getKdRuangan   = Auth::user()->KodeRuangan;
+
         $client = new Client();
+        // $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/' . $getKdRuangan . '?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
         $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/215?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
         $statCode = $res->getStatusCode();
         $antriPoli = $res->getBody()->getContents();
@@ -26,15 +29,23 @@ class PasienController extends Controller
 
         $masukPoli = new AntrianPasien();
         $masukPoli->collection  = "transaksi_" . date("Y-m-d");
-        $masukPoli->get();
+        // $masukPoli->get();
         $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->get();
 
+
         if (Auth::user()->Role == "1") {
-            $role = "1";
-            $ID = Auth::user()->ID;
+
+            $role             = "1";
+            $ID               = Auth::user()->ID;
+            $getKdRuangan     = Auth::user()->KodeRuangan;
+            $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->where('IdDokter', $ID)->where('KdRuangan', $getKdRuangan)->get();
+            // endIf
+
         } else if (Auth::user()->Role == "2") {
+
             $ID = Auth::user()->ID;
             $role = "2";
+            // endElseIf
         }
 
         $diagnosa  = new DiagnosaController();
@@ -70,9 +81,6 @@ class PasienController extends Controller
     public function storeBatalPeriksa(Request $request, $no_cm = null, $no_pendaftaran = null)
     {
 
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
         $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $logging        = new LoggingController;
@@ -84,7 +92,7 @@ class PasienController extends Controller
             $client = new Client();
             $res = $client->request('POST', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/batal', [
                 "nopendaftaran"  => $no_pendaftaran,
-                "kdruangan"      => "215",
+                "kdruangan"      => $getKdRuangan,
                 "keterangan"     => $request->get('keterangan')
             ]);
             $statCode = $res->getStatusCode();
@@ -95,7 +103,7 @@ class PasienController extends Controller
                 'keterangan'     => $request->get('keterangan'),
             ];
 
-            $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'batal', 'BatalPeriksa', $batal_periksa, $no_cm, $getKdRuangan);
+            $logging->toLogging('batal', 'BatalPeriksa', $batal_periksa, $no_cm);
 
             return redirect('/listPasien');
             //endIf

@@ -131,7 +131,7 @@
                                 // set detail JK
                                 $jenkel = ($poli['JenisKelamin'] == "L" ? "Laki - Laki" : "Perempuan");
                             @endphp
-                                @if ($role == "1" && $ID == $poli['ID'] && $poli['StatusPengkajian'] != "")
+                                @if ($role == "1" && $poli['StatusPengkajian'] != "")
                                 <tr>
                                     <td data-label="No Pendaftaran">{{ $poli['NoPendaftaran'] }}</td>
                                     <td data-label="No Rekam Medis">{{ $poli['NoCM'] }}</td>

@@ -62,6 +62,8 @@ Route::get('m_keluarga', 'KeluargaController@index');
 Route::get('m_tempatTinggal', 'TempatTinggalController@index');
 Route::get('m_statusPsikologi', 'StatusPsikologiController@index');
 Route::get('m_hambatanEdukasi', 'HambatanEdukasiController@index');
+Route::get('m_attribute', 'ManajemenAttributeFormController@index');
+Route::get('m_attribute/{attributeForm}', 'ManajemenAttributeFormController@show');
 Route::get('manajemen_form', 'ManajemenFormController@index');
 Route::get('m_user', 'ManajemenUserController@index');
 Route::get('m_user/ubahPassword', 'ManajemenUserController@ubahPassword');
@@ -146,6 +148,11 @@ Route::delete('m_statusPsikologi/{statusPsikologi}', 'StatusPsikologiController@
 
 Route::post('m_hambatanEdukasi', 'HambatanEdukasiController@store');
 Route::delete('m_hambatanEdukasi/{hambatanEdukasi}', 'HambatanEdukasiController@destroy');
+
+Route::post('m_attribute', 'ManajemenAttributeFormController@storeAttribute');
+Route::delete('m_attribute/{attributeForm}', 'ManajemenAttributeFormController@destroyAttribute');
+Route::post('m_showAttribute/{attributeForm}', 'ManajemenAttributeFormController@storeDetailAttribute');
+Route::delete('m_showAttribute/{attributeForm}/{detailAttributeForm}', 'ManajemenAttributeFormController@destroyDetailAttribute');
 
 Route::post('m_user', 'ManajemenUserController@store');
 Route::post('m_user/update', 'ManajemenUserController@update');
