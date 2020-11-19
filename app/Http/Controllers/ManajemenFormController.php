@@ -122,7 +122,7 @@ class ManajemenFormController extends Controller
         $destination = '../resources/views/pages/formPengkajian/';
         $typeFile = '.blade.php';
         
-        File::move($destination . $request->get('namaFile') . $typeFile, $destination.'(deleted)_'.$request->get('namaFile'). '_'. date('Ymdhis') . $typeFile);
+        File::move($destination . $request->get('namaFile') . $typeFile, $destination.'(deleted)_'. date('Ymdhis') . $request->get('namaFile') . $typeFile);
         
         ManajemenForm::where('_id', $manajemenForm->id)
             ->update([
