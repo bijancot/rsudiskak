@@ -72,7 +72,10 @@ Route::get('historicalList', function () {
     return view('pages.admin.historicalList');
 });
 
-Route::get('uploadFile', 'UploadFileController@index');
+Route::get('dokumen', 'DokumenController@index');
+Route::get('uploadFile', function(){
+    return view('pages.admin.uploadFile');
+});
 
 Route::get('pengkajianAwalPasien', function () {
     return view('pages.formPengkajian.pengkajianAwalPasien');
@@ -159,6 +162,11 @@ Route::patch('manajemen_form/{manajemenForm}/update', 'ManajemenFormController@u
 Route::post('manajemen_form/{manajemenForm}/delete', 'ManajemenFormController@delete');
 Route::post('signOut', 'ManajemenUserController@signOut');
 Route::post('uploadFile', 'UploadFileController@store');
+Route::post('dokumen', 'DokumenController@store');
+Route::post('dokumen/getData', 'DokumenController@getData');
+// Route::post('dokumen/update', 'DokumenController@update');
+Route::post('dokumen/delete', 'DokumenController@delete');
+Route::post('dokumen/download', 'DokumenController@download');
 
 Auth::routes();
 

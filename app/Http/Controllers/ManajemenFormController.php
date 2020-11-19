@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ManajemenForm;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use File;
 
 class ManajemenFormController extends Controller
 {
@@ -16,8 +17,7 @@ class ManajemenFormController extends Controller
     public function index()
     {
         $manajemenForm = ManajemenForm::where([
-            ['updated_at', '=', NULL],
-            ['deleted_at', '=', NULL],
+            ['status', '!=', NULL],
         ])->get();
         return view('pages.admin.manajemen_form.m_manajemenForm', compact('manajemenForm'));
     }
@@ -48,14 +48,13 @@ class ManajemenFormController extends Controller
         $request->validate([
             'namaForm'      => 'required|max:255',
         ]);
+        
+        // insert data
+        $data = $request->all();
+        unset($data['file']);
+        $data['namaFile'] = 'pages.formPengkajian.' . str_replace('.blade.php', '', $file->getClientOriginalName());
 
-        ManajemenForm::create([
-            'idForm'        => $request->idForm,
-            'namaForm'      => $request->namaForm,
-            'namaFile'      => 'pages.formPengkajian.' . str_replace('.blade.php', '', $file->getClientOriginalName()),
-            'updated_at'    => NULL,
-            'deleted_at'    => NULL,
-        ]);
+        ManajemenForm::insert($data);
 
         return redirect('manajemen_form');
     }
@@ -91,23 +90,22 @@ class ManajemenFormController extends Controller
      */
     public function update(Request $request, ManajemenForm $manajemenForm)
     {
+        
+        // rename file
+        $destination = '../resources/views/pages/formPengkajian/';
+        $typeFile = '.blade.php';
+        
+        File::move($destination . $request->get('namaFileOld') . $typeFile, $destination.$request->get('namaFile'). $typeFile) ;
+        
+        // update data
+        $data = $request->all();
+        $idFormOld = $request->get('idFormOld');
+        $data['namaFile'] = 'pages.formPengkajian.'.$data['namaFile'];
+        unset($data['namaFileOld']);
+        unset($data['_method']);
+        unset($data['idFormOld']);
 
-        $item = ManajemenForm::find($manajemenForm->id);
-        $item->updated_at = date("Y-m-d H:i:s");
-        $item->save();
-
-        $request->validate([
-            'idForm'        => 'required|max:255',
-            'namaForm'      => 'required|max:255',
-        ]);
-
-        ManajemenForm::create([
-            'idForm'            => $request->idForm,
-            'namaForm'          => $request->namaForm,
-            'namaFile'          => 'pages.admin.manajemen_form.form_dinamis' . $request->namaFile,
-            'updated_at'        => NULL,
-            'deleted_at'        => NULL,
-        ]);
+        ManajemenForm::where('idForm', $idFormOld)->whereNotNull('status')->update($data);
 
         return redirect('manajemen_form');
     }
@@ -118,13 +116,19 @@ class ManajemenFormController extends Controller
      * @param  \App\ManajemenForm  $manajemenForm
      * @return \Illuminate\Http\Response
      */
-    public function delete(ManajemenForm $manajemenForm)
+    public function delete(Request $request, ManajemenForm $manajemenForm)
     {
+        // rename file
+        $destination = '../resources/views/pages/formPengkajian/';
+        $typeFile = '.blade.php';
+        
+        File::move($destination . $request->get('namaFile') . $typeFile, $destination.'(deleted)_'.$request->get('namaFile'). '_'. date('Ymdhis') . $typeFile);
+        
         ManajemenForm::where('_id', $manajemenForm->id)
             ->update([
-                'deleted_at'    => date("Y-m-d H:i:s"),
+                'status'    => null,
             ]);
-
+        
         return redirect('manajemen_form');
     }
 }
