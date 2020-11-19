@@ -220,6 +220,7 @@
                         <input type="hidden" name="NoPendaftaran" id="noPendaftaran_hapus">
                         <input type="hidden" name="NoCM" id="noRekamMedis_hapus">
                         <input type="hidden" name="NamaFile" id="namaFile_hapus">
+                        <input type="hidden" name="TanggalMasuk" id="tanggalMasuk_hapus">
                         <button type="submit" class="btn btn-dark diagnosa">Hapus</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     </div>
@@ -385,6 +386,7 @@
                 data: {noPendaftaran: noPendaftaran, noCm : noCm, _token: '<?php echo csrf_token()?>'},
                 success : function(res){
                     $('#namaFile_hapus').val(res.NamaFile);
+                    $('#tanggalMasuk_hapus').val(res.TanggalMasuk);
                 }
             })
       })

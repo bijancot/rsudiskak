@@ -43,7 +43,7 @@ class DokumenController extends Controller
         $destination = 'dokumenRM/'.$req->get('NoCM');
 
         // upload data
-        $file->move($destination, $req->get('NoPendaftaran').'_'.$file->getClientOriginalName());
+        $file->move($destination, $req->get('NoPendaftaran').'_'.$req->get('TanggalMasuk').'_'.$file->getClientOriginalName());
         
         //get data kdruangan from api
         $client = new Client();
@@ -56,7 +56,7 @@ class DokumenController extends Controller
         // insert data
         $data = $req->all();
         unset($data['file']);
-        $data['NamaFile'] = $destination."/".$data['NoPendaftaran'].'_'.$file->getClientOriginalName();
+        $data['NamaFile'] = $destination."/".$data['NoPendaftaran'].'_'.$req->get('TanggalMasuk').'_'.$file->getClientOriginalName();
         
         //insert nama ruangan
         $data['NamaRuangan'] = "";
@@ -104,8 +104,8 @@ class DokumenController extends Controller
         // declare filepath
         $destination = 'dokumenRM/'.$req->get('NoCM');
         $deleteDate = date('Ymdhis');
-        $namaFileOld = $destination.'/'.$req->get('NoPendaftaran').'_'.$req->get('NamaFile').'.pdf';
-        $namaFileNew = $destination.'/(deleted)_'.$req->get('NoPendaftaran').'_'.$req->get('NamaFile').'_'. $deleteDate .'.pdf';
+        $namaFileOld = $destination.'/'.$req->get('NoPendaftaran').'_'.$req->get('TanggalMasuk').'_'.$req->get('NamaFile').'.pdf';
+        $namaFileNew = $destination.'/(deleted)_'.$req->get('NoPendaftaran').'_'.$req->get('TanggalMasuk').'_'.$req->get('NamaFile').'pdf';
 
         //move to deleted directory
         File::move($namaFileOld, $namaFileNew);
@@ -120,7 +120,7 @@ class DokumenController extends Controller
         if(!empty($data[0])){
             $data = $data[0];
             $data['PathFile'] = $data['NamaFile'];
-            $data['NamaFile'] = str_replace('dokumenRM/'.$data['NoCM'].'/'.$data['NoPendaftaran'].'_', '', $data['NamaFile']);
+            $data['NamaFile'] = str_replace('dokumenRM/'.$data['NoCM'].'/'.$data['NoPendaftaran'].'_'.$data['TanggalMasuk'].'_', '', $data['NamaFile']);
             $data['NamaFile'] = str_replace('.pdf', '', $data['NamaFile']);
         }else{
             "Data Tidak Ditemukan";
@@ -129,7 +129,6 @@ class DokumenController extends Controller
         return response()->json($data);
     }
     public function download(Request $req){
-        
         return response()->download(public_path().'/'.$req->get('PathFile'));
     }
 }
