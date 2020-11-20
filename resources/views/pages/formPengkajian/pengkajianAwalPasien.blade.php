@@ -593,7 +593,9 @@
                 $('#'+tabNotActive1).css('display', 'none');
                 $('#'+tabNotActive2).css('display', 'none');
             })
-            
+        })
+        $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
+            $('#pratinjauDokumen').attr('src', "");
         })
         
         // Example starter JavaScript for disabling form submissions if there are invalid fields

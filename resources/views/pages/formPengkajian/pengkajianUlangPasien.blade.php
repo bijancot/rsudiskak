@@ -359,20 +359,20 @@
             });
             $('#tbl_filter').show();
             $('#tbl_dokumen tbody').on('click', '.pratinjau-data', function(){
-            let noPendaftaran = $(this).data('nopendaftaran');
-            let noCm = $(this).data('nocm');
-            $('#title-pratinjau').html('No Pendaftaran '+noPendaftaran);
-            // get data
-            $.ajax({
-                    url: "{{url('/dokumen/getData')}}",
-                    method: 'post',
-                    data: {noPendaftaran: noPendaftaran, noCm : noCm, _token: '<?php echo csrf_token()?>'},
-                    success : function(res){
-                        $('#pratinjauDokumen').attr('src', res.FullPath);
-                        $('#pathFile_pratinjau').val(res.PathFile);
-                    }
-                })
-        })
+                let noPendaftaran = $(this).data('nopendaftaran');
+                let noCm = $(this).data('nocm');
+                $('#title-pratinjau').html('No Pendaftaran '+noPendaftaran);
+                // get data
+                $.ajax({
+                        url: "{{url('/dokumen/getData')}}",
+                        method: 'post',
+                        data: {noPendaftaran: noPendaftaran, noCm : noCm, _token: '<?php echo csrf_token()?>'},
+                        success : function(res){
+                            $('#pratinjauDokumen').attr('src', res.FullPath);
+                            $('#pathFile_pratinjau').val(res.PathFile);
+                        }
+                    })
+            })
             $('.btn-unduh').click(function(){
                 let noPendaftaran = $(this).data('nopendaftaran');
                 let noCm = $(this).data('nocm');
@@ -404,6 +404,9 @@
                 $('#'+tabNotActive2).css('display', 'none');
             })
             
+        })
+        $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
+            $('#pratinjauDokumen').attr('src', "");
         })
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {

@@ -265,6 +265,9 @@
             });
             $('#tbl_filter').show();
         });
+        $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
+            $('#pratinjauDokumen').attr('src', "");
+        })
         $('#btn_tambah_submit').click(function(){
             let noPendaftaran = $('#noPendaftaran').val();
             let noRekamMedis = $('#noRekamMedis').val();
