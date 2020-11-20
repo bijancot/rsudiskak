@@ -19,8 +19,10 @@
             </div>
         </li>
         <li class="{{ Request::is('m_user') ? 'active' : '' }} nav-item"><a href="{{ url('m_user') }}">Management User</a></li>
-        <li class="{{ Request::is('historicalList') ? 'active' : '' }} nav-item"><a href="{{ url('historicalList') }}">Historical List</a></li>
-        <li class="{{ Request::is('uploadFile') ? 'active' : '' }} nav-item"><a href="{{ url('uploadFile') }}">Upload File</a></li>
+
+        {{-- <li class="{{ Request::is('historicalList') ? 'active' : '' }} nav-item"><a href="{{ url('historicalList') }}">Historical List</a></li> --}}
+        <li class="{{ Request::is('dokumen') ? 'active' : '' }} nav-item"><a href="{{ url('dokumen') }}">Dokumen</a></li>
+
         
         <li class="profile d-flex flex-row align-items-center nav-item">
             <div class="profile d-flex flex-row align-items-center nav-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
