@@ -30,7 +30,7 @@
                                 <td>{{ $item['NamaLengkap'] }}</td>
                                 <td>{{ $item['TglMasukPoli'] }}</td>
                                 <td data-label="Action" class="d-flex flex-row p-lg-1">
-                                    <a href="riwayatPasien/{{ $item['NoPendaftaran'] }}" class="btn diagnosa ml-auto">Print</a>
+                                    <a href="riwayatPasien/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa ml-auto">Print</a>
                                 </td>
                             </tr>
                             @endif
