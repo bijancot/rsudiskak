@@ -104,6 +104,8 @@ class FormPengkajianController extends Controller
             $statusPsikologi    = StatusPsikologi::where("deleted_at", Null)->get();
             $hambatanEdukasi    = HambatanEdukasi::where("deleted_at", Null)->get();
             $dataMasukPoli      = DB::collection('pasien_' . $NoCM)->where('NoPendaftaran', $noPendaftaran)->where('deleted_at', null)->whereNotNull('StatusPengkajian')->get();
+            $dataRiwayat        = DB::collection('pasien_'. $NoCM)->whereNotNull('StatusPengkajian')->get();
+            $dataDokumen        = DB::collection('dokumen_'.$NoCM)->whereNotNull('Status')->get();
 
             $data = [
                 'form_id'           => $idForm,
@@ -120,7 +122,9 @@ class FormPengkajianController extends Controller
                 'idForm'            => $idForm,
                 'NoCM'              => $NoCM,
                 'noPendaftaran'     => $noPendaftaran,
-                'dataMasukPoli'     => $dataMasukPoli[0]
+                'dataMasukPoli'     => $dataMasukPoli[0],
+                'dataRiwayat'       => $dataRiwayat,
+                'dataDokumen'       => $dataDokumen
             ];
             return view($dataForm[0]['namaFile'], $data);
             //endIF

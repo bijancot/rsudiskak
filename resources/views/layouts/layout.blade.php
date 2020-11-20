@@ -158,6 +158,33 @@
                 </div>
             </div>
         </div>
+        {{-- Modal Pratinjau --}}
+        <div class="modal fade" id="modal_pratinjau" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-white">Pratinjau Data '<span id="title-pratinjau"></span>' </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="text-white" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col">
+                        <iframe id="pratinjauDokumen" src="" frameborder="0" width="100%" height="500px"></iframe>
+                    </div>
+                </div>
+                <form id="form-unduh" action="{{action('DokumenController@download')}}" method="POST">
+                    @csrf
+                    <div class="modal-footer">
+                        <input type="hidden" name="PathFile" id="pathFile_pratinjau">
+                        <button class="btn btn-dark diagnosa">Unduh</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    {{-- End Modal Pratinjau --}}
         <!-- end of tempat modal -->
         
         <script type="text/javascript" src="{{ URL::asset('js/main.js') }}"></script>

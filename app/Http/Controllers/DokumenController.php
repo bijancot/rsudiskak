@@ -119,6 +119,7 @@ class DokumenController extends Controller
         $data = DB::collection('dokumen_'.$req->get('noCm'))->where('NoPendaftaran', $req->get('noPendaftaran'))->whereNotNull('Status')->get();
         if(!empty($data[0])){
             $data = $data[0];
+            $data['FullPath'] = asset($data['NamaFile']);
             $data['PathFile'] = $data['NamaFile'];
             $data['NamaFile'] = str_replace('dokumenRM/'.$data['NoCM'].'/'.$data['NoPendaftaran'].'_'.$data['TanggalMasuk'].'_', '', $data['NamaFile']);
             $data['NamaFile'] = str_replace('.pdf', '', $data['NamaFile']);
@@ -130,5 +131,36 @@ class DokumenController extends Controller
     }
     public function download(Request $req){
         return response()->download(public_path().'/'.$req->get('PathFile'));
+    }
+
+    public function berkas($no_cm){
+        //get data kdruangan from api
+        $client = new Client();
+        $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ');
+        $statCode = $res->getStatusCode();
+        $kdRuangan = $res->getBody()->getContents();
+        $kdRuangan = json_decode($kdRuangan, true);
+        $kdRuangan = $kdRuangan['data'];
+
+        // get data dokumen
+        $dataDokumen = array();
+        $index = 0;
+        foreach(\DB::connection()->getMongoDB()->listCollections() as $collection){
+            // check collection with name dokumen_
+            $pos = strpos($collection->getName(), 'dokumen_');
+            if($pos !== false){
+                $dataDokumen[$index] = DB::collection($collection->getName())->whereNotNull('Status')->get();
+                $index++;
+            }
+        }
+        $dataDokumen = DB::collection('dokumen_'.$no_cm)->whereNotNull('Status')->get();
+        
+        $data = [
+            'kdRuangan' => $kdRuangan,
+            'dataDokumen' => $dataDokumen,
+            'no_cm' => $no_cm
+        ];
+
+        return view('pages.berkas', $data);
     }
 }

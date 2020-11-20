@@ -73,6 +73,7 @@ Route::get('historicalList', function () {
 });
 
 Route::get('dokumen', 'DokumenController@index');
+Route::get('dokumen/berkas/{no_cm}', 'DokumenController@berkas');
 Route::get('uploadFile', function(){
     return view('pages.admin.uploadFile');
 });

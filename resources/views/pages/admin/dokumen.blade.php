@@ -400,7 +400,7 @@
                 method: 'post',
                 data: {noPendaftaran: noPendaftaran, noCm : noCm, _token: '<?php echo csrf_token()?>'},
                 success : function(res){
-                    $('#pratinjauDokumen').attr('src', res.PathFile);
+                    $('#pratinjauDokumen').attr('src', res.FullPath);
                     $('#pathFile_pratinjau').val(res.PathFile);
                 }
             })
