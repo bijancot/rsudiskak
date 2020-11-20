@@ -165,7 +165,7 @@
                         </div>
                         <hr>
         
-                        <div class="collapsible-body">
+                        <!-- <div class="collapsible-body">
                             <div class="row m-3 py-3 border-round">
                                 <div class="col-lg-2 col-12 mt-3 mt-lg-0">
                                     <label for="pendidikan">Pendidikan</label>
@@ -519,7 +519,7 @@
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn green-long w-50 ml-auto mr-3">Submit</button>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
