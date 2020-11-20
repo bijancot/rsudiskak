@@ -20,11 +20,12 @@ Route::get('layout', function () {
 });
 Route::get('logActivities', 'LoggingController@index')->middleware('adminRole')->name('admin');
 //Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
-Route::get('login', function () {
-    return view('pages.login');
-});
+
+Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
+Route::get('riwayatPasien/{no_pendaftaran}','RiwayatController@printRiwayat');
 
 Route::get('listPasien', 'PasienController@listPasien');
+Route::get('listPasien/masukPoliRedirect', 'DiagnosaController@masukPoliRedirect');
 Route::get('dataPasien/{no_cm}', 'PasienController@DataPasien');
 
 Route::get('pilihDokter/{no_cm}', 'DiagnosaController@pilihDokter');
@@ -42,6 +43,10 @@ Route::get('riwayat/{no_cm}', 'PasienController@Riwayat');
 Route::get('formPengkajianAwal/{no_cm}', 'FPengkajianAwalController@showRajal');
 Route::get('formPengkajianUlang/{no_cm}', 'FPengkajianUlangController@showRajal');
 Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}', 'FormPengkajianController@formPengkajian');
+
+Route::get('historicalList', function () {
+    return view('pages.admin.historicalList');
+});
 
 
 // ============ TEMPLATE FRONT END
@@ -62,6 +67,8 @@ Route::get('m_keluarga', 'KeluargaController@index');
 Route::get('m_tempatTinggal', 'TempatTinggalController@index');
 Route::get('m_statusPsikologi', 'StatusPsikologiController@index');
 Route::get('m_hambatanEdukasi', 'HambatanEdukasiController@index');
+Route::get('m_attribute', 'ManajemenAttributeFormController@index');
+Route::get('m_attribute/{attributeForm}', 'ManajemenAttributeFormController@show');
 Route::get('manajemen_form', 'ManajemenFormController@index');
 Route::get('m_user', 'ManajemenUserController@index');
 Route::get('m_user/ubahPassword', 'ManajemenUserController@ubahPassword');
@@ -121,6 +128,8 @@ Route::post('batalMasukPoli/{no_cm}/{no_pendaftaran}', 'DiagnosaController@store
 Route::post('batalForm', 'FormPengkajianController@storeBatalForm');
 Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
 
+Route::post('formPengkajian/getICD10', 'FormPengkajianController@storeICD10');
+
 /**
  * Route post Admin
  */
@@ -150,6 +159,11 @@ Route::delete('m_statusPsikologi/{statusPsikologi}', 'StatusPsikologiController@
 
 Route::post('m_hambatanEdukasi', 'HambatanEdukasiController@store');
 Route::delete('m_hambatanEdukasi/{hambatanEdukasi}', 'HambatanEdukasiController@destroy');
+
+Route::post('m_attribute', 'ManajemenAttributeFormController@storeAttribute');
+Route::delete('m_attribute/{attributeForm}', 'ManajemenAttributeFormController@destroyAttribute');
+Route::post('m_showAttribute/{attributeForm}', 'ManajemenAttributeFormController@storeDetailAttribute');
+Route::delete('m_showAttribute/{attributeForm}/{detailAttributeForm}', 'ManajemenAttributeFormController@destroyDetailAttribute');
 
 Route::post('m_user', 'ManajemenUserController@store');
 Route::post('m_user/update', 'ManajemenUserController@update');

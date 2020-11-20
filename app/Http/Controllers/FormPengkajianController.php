@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\ManajemenForm;
+use GuzzleHttp\Client;
 use App\AntrianPasien;
 use App\Http\Controllers\DiagnosaController;
 use App\Keluarga;
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Auth;
 
 class FormPengkajianController extends Controller
 {
+
+    // tidak dipakai
     public function pilihForm($no_cm = null, $noPendaftaran = null)
     {
         if ($no_cm != null && $noPendaftaran) {
@@ -38,15 +41,51 @@ class FormPengkajianController extends Controller
         }
     }
 
+    // get API ICD 09
+    public function getICD9()
+    {
+        $client = new Client();
+        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/icd9');
+        $statCode = $res->getStatusCode();
+        $data = $res->getBody()->getContents();
+        $data = json_decode($data, true);
+        $data = $data['response'];
+
+        return $data;
+    }
+
+    // get API ICD 10
+    public function getICD10()
+    {
+        $client = new Client();
+        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/icd10');
+        $statCode = $res->getStatusCode();
+        $data = $res->getBody()->getContents();
+        $data = json_decode($data, true);
+        $data = $data['response'];
+
+        return $data;
+    }
+
+    public function storeICD10(Request $request)
+    {
+        $getICD10 = $this->getICD10();
+        foreach ($getICD10['data'] as $item) {
+            if ($item['NamaDiagnosa'] == $request->get('PengkajianKeperawatan_2[Diagnosa][]')) {
+                break;
+            }
+        }
+
+        $kodeDiagnosa = $item['kodeDiagnosa'];;
+        // dump($kodeDiagnosa);
+        return response()->json($kodeDiagnosa);
+    }
+
     /**
      * Simpan pilihan form 
      */
     public function storePilihForm(Request $req, $no_cm, $noPendaftaran)
     {
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
-        $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $logging        = new LoggingController;
 
@@ -74,7 +113,7 @@ class FormPengkajianController extends Controller
 
         $create_data = $getForm[0]['namaForm'];
 
-        $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'create', 'PilihForm', $create_data, $no_cm, $getKdRuangan);
+        $logging->toLogging('create', 'PilihForm', $create_data, $no_cm);
 
         return redirect('formPengkajian/' . $req->get('formPengkajian') . '/' . $no_cm . '/' . $noPendaftaran);
     }
@@ -86,27 +125,74 @@ class FormPengkajianController extends Controller
     {
 
         $dataForm = ManajemenForm::where('idForm', $idForm)->get();
+        $getICD10 = $this->getICD10();
+        $getICD09 = $this->getICD9();
+
         // return view("'".$data[0]['namaFile']."'");
         if ($NoCM && $noPendaftaran) {
-            //get data pasien bersarakan nocm
-            $dataMasukPoli = DB::collection('pasien_' . $NoCM)->where('NoPendaftaran', $noPendaftaran)->where('deleted_at', null)->whereNotNull('StatusPengkajian')->get();
-            if ($dataMasukPoli[0]['IdFormPengkajian'] != $idForm) {
-                return redirect('formPengkajian/' . $dataMasukPoli[0]['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
-            }
 
-            $pendidikan         = Pendidikan::where("deleted_at", Null)->get();
-            $pekerjaan          = Pekerjaan::where("deleted_at", Null)->get();
-            $agama              = Agama::where("deleted_at", Null)->get();
-            $nilaiAnut          = NilaiAnut::where("deleted_at", Null)->get();
-            $statusPernikahan   = StatusPernikahan::where("deleted_at", Null)->get();
-            $keluarga           = Keluarga::where("deleted_at", Null)->get();
-            $tempatTinggal      = TempatTinggal::where("deleted_at", Null)->get();
-            $statusPsikologi    = StatusPsikologi::where("deleted_at", Null)->get();
-            $hambatanEdukasi    = HambatanEdukasi::where("deleted_at", Null)->get();
-            $dataMasukPoli      = DB::collection('pasien_' . $NoCM)->where('NoPendaftaran', $noPendaftaran)->where('deleted_at', null)->whereNotNull('StatusPengkajian')->get();
+            // get data pasien bersarakan nocm
+            // $dataMasukPoli = DB::collection('pasien_' . $NoCM)
+            //     ->where('NoPendaftaran', $noPendaftaran)
+            //     ->where('deleted_at', null)
+            //     ->whereNotNull('StatusPengkajian')->get();
+
+            // if ($dataMasukPoli[0]['IdFormPengkajian'] != $idForm) {
+            //     return redirect('formPengkajian/' . $dataMasukPoli[0]['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
+            // }
+
+            // get data pasien bersarakan nocm yang masuk poli terakhir
+            $dataMasukPoli = DB::collection('pasien_' . $NoCM)
+                ->where('NoPendaftaran', $noPendaftaran)
+                ->where('deleted_at', null)
+                ->whereNotNull('StatusPengkajian')
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            /**
+             * Cek IdFormPengkajian jika idForm pada collection pasien masukPoli 
+             * masih kosong atau belum ada (null) atau IdForm tidak sama 
+             * maka redirect(arahkan ke halaman) FormPengkajian
+             * yang dipilih
+             */
+            if ($dataMasukPoli['IdFormPengkajian'] != $idForm) {
+                return redirect('formPengkajian/' . $dataMasukPoli['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
+            }
             $dataRiwayat        = DB::collection('pasien_'. $NoCM)->whereNotNull('StatusPengkajian')->get();
             $dataDokumen        = DB::collection('dokumen_'.$NoCM)->whereNotNull('Status')->get();
+            /**
+             * Get Data dari Collection menggunakan Eloquent ORM 
+             */
+            // $pendidikan         = Pendidikan::where("deleted_at", Null)->get();
+            // $pekerjaan          = Pekerjaan::where("deleted_at", Null)->get();
+            // $agama              = Agama::where("deleted_at", Null)->get();
+            // $nilaiAnut          = NilaiAnut::where("deleted_at", Null)->get();
+            // $statusPernikahan   = StatusPernikahan::where("deleted_at", Null)->get();
+            // $keluarga           = Keluarga::where("deleted_at", Null)->get();
+            // $tempatTinggal      = TempatTinggal::where("deleted_at", Null)->get();
+            // $statusPsikologi    = StatusPsikologi::where("deleted_at", Null)->get();
+            // $hambatanEdukasi    = HambatanEdukasi::where("deleted_at", Null)->get();
 
+            /**
+             * Get Data dari Collection menggunakan Query Builder 
+             */
+            $pendidikan         = DB::collection('pendidikan')->where("deleted_at", Null)->get();
+            $pekerjaan          = DB::collection('pekerjaan')->where("deleted_at", Null)->get();
+            $agama              = DB::collection('agama')->where("deleted_at", Null)->get();
+            $nilaiAnut          = DB::collection('nilaiAnut')->where("deleted_at", Null)->get();
+            $statusPernikahan   = DB::collection('statusPernikahan')->where("deleted_at", Null)->get();
+            $keluarga           = DB::collection('keluarga')->where("deleted_at", Null)->get();
+            $tempatTinggal      = DB::collection('tempatTinggal')->where("deleted_at", Null)->get();
+            $statusPsikologi    = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
+            $hambatanEdukasi    = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
+
+            $dataMasukPoli      = DB::collection('pasien_' . $NoCM)
+                ->where('NoPendaftaran', $noPendaftaran)
+                ->where('deleted_at', null)
+                ->whereNotNull('StatusPengkajian')
+                ->orderBy('created_at', 'desc')
+                ->first();
+          
             $data = [
                 'form_id'           => $idForm,
                 'nama_form'         => $dataForm[0]['namaForm'],
@@ -119,12 +205,14 @@ class FormPengkajianController extends Controller
                 'tempatTinggal'     => $tempatTinggal,
                 'statusPsikologi'   => $statusPsikologi,
                 'hambatanEdukasi'   => $hambatanEdukasi,
+                'getICD10'          => $getICD10,
+                'getICD09'          => $getICD09,
                 'idForm'            => $idForm,
                 'NoCM'              => $NoCM,
                 'noPendaftaran'     => $noPendaftaran,
-                'dataMasukPoli'     => $dataMasukPoli[0],
                 'dataRiwayat'       => $dataRiwayat,
-                'dataDokumen'       => $dataDokumen
+                'dataDokumen'       => $dataDokumen,
+                'dataMasukPoli'     => $dataMasukPoli
             ];
             return view($dataForm[0]['namaFile'], $data);
             //endIF
@@ -141,11 +229,6 @@ class FormPengkajianController extends Controller
      */
     public function storeFormPengkajian(Request $req, $idForm, $no_cm, $noPendaftaran, $subForm, $isLastSubForm)
     {
-
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
-        $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $logging        = new LoggingController;
 
@@ -241,7 +324,7 @@ class FormPengkajianController extends Controller
 
             // $pushData = $req->all();
             $pushData = "Buat Data Pengkajian No. Pendaftaran '" . $noPendaftaran . "' dengan mengisi data form " . $subForm;
-            $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'create', 'DataPengkajian', $pushData, $no_cm, $getKdRuangan);
+            $logging->toLogging('create', 'DataPengkajian', $pushData, $no_cm);
             //
 
         } else if ($statusUpdate == 1) {
@@ -285,7 +368,7 @@ class FormPengkajianController extends Controller
                 'old'       => $data_old,
                 'current'   => $data_cur,
             ];
-            $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'update', 'DataPengkajian', $updateData, $no_cm, $getKdRuangan);
+            $logging->toLogging('update', 'DataPengkajian', $updateData, $no_cm);
         }
 
         return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran);
@@ -296,10 +379,6 @@ class FormPengkajianController extends Controller
      */
     public function storeBatalForm(Request $req)
     {
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
-        $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $logging        = new LoggingController;
 
@@ -327,7 +406,7 @@ class FormPengkajianController extends Controller
         DB::collection('pasien_' . $req->get('NoCM'))->insertGetId($dataMasukPoli);
         DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])->insert($dataMasukPoli);
 
-        $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'batal', 'PilihForm', $req->get('NoPendaftaran'), $req->get('NoCM'), $getKdRuangan);
+        $logging->toLogging('batal', 'PilihForm', $req->get('NoPendaftaran'), $req->get('NoCM'));
 
         return redirect('/listPasien');
     }

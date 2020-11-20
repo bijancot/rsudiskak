@@ -115,13 +115,8 @@ class DiagnosaController extends Controller
     public function storePilihDokter(Request $request, $no_cm, $no_pendaftaran)
     {
 
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
-        $getKdRuangan   = Auth::user()->KodeRuangan;
-
         $logging        = new LoggingController;
-
+        //return response()->json(['d' => $request->dokter]);
         if ($no_cm) {
 
             // get API antrian data pasien
@@ -164,13 +159,16 @@ class DiagnosaController extends Controller
             if ($dataMasukPoli > 0) {
                 return redirect('/listPasien')
                     ->with('status', 'Data Pasien dengan pendaftaran ' . $no_pendaftaran . ' sudah ada !');
-            } else {
+            
+                    //return response()->json(['data' => TRUE, 'msg' => 'Data Pasien dengan pendaftaran ' . $no_pendaftaran . ' sudah ada !']);
+                } else {
 
                 $request->validate([
                     'dokter'   => 'required',
                 ]);
                 if (empty($request->get('dokter'))) {
-                    // return redirect('/listPasien')->with('status', 'Tidak ada dokter yang dipilih !');
+                    //return response()->json(['data' => TRUE, 'msg' => 'Tidak ada dokter yang dipilih !']);
+                    return redirect('/listPasien')->with('status', 'Tidak ada dokter yang dipilih !');
                 } else {
 
                     $getDokter = $this->listDokter();
@@ -313,9 +311,10 @@ class DiagnosaController extends Controller
                     ];
 
                     // save to logging
-                    $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'create', 'PilihDokter', $create_data, $no_cm, $getKdRuangan);
+                    $logging->toLogging('create', 'PilihDokter', $create_data, $no_cm);
 
-                    return redirect('/listPasien');
+                    //return response()->json(['data' => TRUE, 'msg' => 'end']);
+                    return redirect('/listPasien')->with('status','success');
                     //endElse
                 }
                 // endIf cekDokter
@@ -327,12 +326,12 @@ class DiagnosaController extends Controller
         }
     }
 
+    public function masukPoliRedirect()
+    {
+        return redirect('/listPasien')->with('status', 'success');
+    }
     public function storeBatalMasukPoli(Request $request, $no_cm, $no_pendaftaran)
     {
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
-        $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $logging        = new LoggingController;
 
@@ -348,7 +347,7 @@ class DiagnosaController extends Controller
                 ->where('deleted_at', null)
                 ->update(['deleted_at' => date("Y-m-d H:i:s")]);
 
-            $logging->toLogging($getIDuser, $getNamaUser, $getRole,  'batal', 'BatalMasukPoli', 'No. Pendaftaran :' . $no_pendaftaran . ' batal masuk poli', $no_cm, $getKdRuangan);
+            $logging->toLogging('batal', 'BatalMasukPoli', 'No. Pendaftaran :' . $no_pendaftaran . ' batal masuk poli', $no_cm);
 
             return redirect('/listPasien');
             //endIf
@@ -389,7 +388,10 @@ class DiagnosaController extends Controller
     // get AntrianDataPasien
     public function antrianDataPasien()
     {
+        $getKdRuangan   = Auth::user()->KodeRuangan;
+
         $client = new Client();
+        // $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/' . $getKdRuangan . '?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
         $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/215?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
         $statCode = $res->getStatusCode();
         $datas = $res->getBody()->getContents();

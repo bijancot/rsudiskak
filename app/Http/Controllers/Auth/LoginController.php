@@ -35,21 +35,16 @@ class LoginController extends Controller
         // set status login
         User::where('ID', Auth::user()->ID)->whereNotNull('Status')->update(['StatusLogin' => '1']);
 
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
-        $getKdRuangan   = Auth::user()->KodeRuangan;
-
         $logging        = new LoggingController;
 
         switch (Auth::user()->Role) {
             case '1':
-                $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'Login', 'LoginDokter', 'Telah Login', null, $getKdRuangan);
+                $logging->toLogging('Login', 'Login', 'Telah Login', null);
                 $this->redirectTo = '/listPasien';
                 return $this->redirectTo;
                 break;
             case '2':
-                $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'Login', 'LoginPerawat', 'Telah Login', null, $getKdRuangan);
+                $logging->toLogging('Login', 'Login', 'Telah Login', null);
                 $this->redirectTo = '/listPasien';
                 return $this->redirectTo;
                 break;

@@ -9,25 +9,29 @@
     </div>
     
     @if (session('status'))
+
     <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
-        <!-- Position it -->
-        <div style="position: absolute; top: 0; right: 0;">
-      
-          <!-- Then put toasts within -->
-          <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-              <div class="toast-header">
-                <i class="fas fa-exclamation-triangle"></i>
-                <strong class="mr-auto">Data Gagal ditambahkan</strong>
-                <small>{{ date('H:i a') }}</small>
-                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="toast-body">
-                {{ session('status') }}
-              </div>
-            </div>
-        </div>
+                <!-- Position it -->
+                <div style="position: absolute; top: 0; right: 0;">
+        @if (session('status') != 'success')
+            
+            
+                <!-- Then put toasts within -->
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong class="mr-auto">Data Gagal ditambahkan</strong>
+                        <small>{{ date('H:i a') }}</small>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        {{ session('status') }}
+                    </div>
+                    </div>
+                </div>
+        @endif
     @endif
 
     <div class="bg-greenishwhite">
@@ -195,17 +199,17 @@
 
     @foreach ($datas['data'] as $data)
     <!-- modal pilih dokter -->
-    <div class="modal fade" id="modal_pilih_dokter-{{ $data['NoCM'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade modal_pilih_dokter-{{ $data['NoCM'] }}" id="modal_pilih_dokter-{{ $data['NoCM'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header bg-success">
                     <h5 class="modal-title text-white text-center">Pilih Dokter <span class="badge badge-info">{{ $data['NoCM'] }}</span></h5>
                 </div>
-                <form method="POST" action="{{ action('DiagnosaController@storePilihDokter', [$data['NoCM'], $data['NoPendaftaran']]) }}">
+                <form method="POST" class="myform-{{ $data['NoCM'] }}" action="{{ action('DiagnosaController@storePilihDokter', [$data['NoCM'], $data['NoPendaftaran']]) }}">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <select name="dokter" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }} pilihDokter" id="dokter" title="Pilih salah satu..." data-live-search="true" required>
+                            <select name="dokter" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }} pilihDokter " id="dokter" title="Pilih salah satu..." data-live-search="true" required>
                                 @foreach ($listDokter['data'] as $item)
                                     <option value="{{ $item['IdDokter'] }}"> {{ $item['NamaLengkap'] }} </option>
                                 @endforeach
@@ -218,14 +222,30 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                        <button type="submit" class=" btn btn-dark diagnosa">Ya</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- end of modal pilih dokter -->
-
+    <!--<script>
+        $('.modal_pilih_dokter-{{ $data['NoCM'] }}').on("click", ".add_dokter", function() {
+            $.ajax({
+                    url 	        : "{{ action('DiagnosaController@storePilihDokter', [$data['NoCM'], $data['NoPendaftaran']]) }}",
+                    type            : "POST",
+                    dataType        : 'json',
+                    encode          : true,
+                    data            : $('.myform-{{ $data['NoCM'] }}').serialize(),
+                    success: function(data) {
+                            $('.modal_pilih_dokter-{{ $data['NoCM'] }}').modal('toggle');
+                            $("#nav_masukPoli").addClass('active');$("#nav_antrianPoli").removeClass('active');
+                            $('#antrianPoli').hide();
+                            $('#masukPoli').show();
+                    }
+                });
+        });
+    </script>-->
     <!-- modal batal periksa -->
     <div class="modal fade" id="modal_batal_periksa-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md">
@@ -373,7 +393,6 @@
             </div>
         </div>
     </div>
-
     <script>
 
         // var overlay = document.getElementById("overlay");
@@ -405,6 +424,15 @@
             $('.pilihDokter').selectpicker();
             $('.pilihForm').selectpicker();
 
+            @if (session('status'))
+
+            @if (session('status') == 'success')
+                $("#nav_masukPoli").addClass('active');$("#nav_antrianPoli").removeClass('active');
+                            $('#antrianPoli').hide();
+                            $('#masukPoli').show();
+                            
+                @endif
+            @endif
         });
             $("#nav_antrianPoli").click(function(){
                 $(this).addClass('active');
@@ -436,6 +464,8 @@
                 $('#mdl_title_pendaftaran').html(noCm);
 
             })
+
+            
             
     </script>
 @endsection

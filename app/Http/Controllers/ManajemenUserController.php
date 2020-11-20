@@ -121,14 +121,10 @@ class ManajemenUserController extends Controller
     {
         // set status login
         User::where('ID', Auth::user()->ID)->whereNotNull('Status')->update(['StatusLogin' => '0']);
-        $getIDuser      = Auth::user()->ID;
-        $getNamaUser    = Auth::user()->Nama;
-        $getRole        = Auth::user()->Role;
-        $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $logging        = new LoggingController;
         if (Auth::user()->getRole != 3) {
-            $logging->toLogging($getIDuser, $getNamaUser, $getRole, 'Logout', 'Logout', 'Telah Logout', null, $getKdRuangan);
+            $logging->toLogging('Logout', 'Logout', 'Telah Logout', null);
         }
         Auth::logout();
         return redirect('/login');

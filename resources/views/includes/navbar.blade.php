@@ -2,6 +2,7 @@
     <ul class="d-flex justify-content-center align-items-center flex-row">
         <li class="nav-item" style="left: 0;position:absolute;font-weight:bold;">{{Auth::user()->NamaRuangan}}</li>
         <li class="{{ Request::is('listPasien') ? 'active' : '' }} nav-item"><a href="{{ url('listPasien') }}">Periksa</a></li>
+        <li class="{{ Request::is('riwayatPasien') ? 'active' : '' }} nav-item"><a href="{{ url('riwayatPasien') }}">Riwayat</a></li>
         <li class="profile d-flex flex-row align-items-center nav-item">
             <div class="profile d-flex flex-row align-items-center nav-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @if(Auth::user()->Role =='001')         

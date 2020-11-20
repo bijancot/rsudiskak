@@ -5,7 +5,7 @@
         <li class="{{ Request::is('managementForm') ? 'active' : '' }} nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Management Form</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ url('m_pendidikan') }}">Pendidikan</a>
+                {{-- <a class="dropdown-item" href="{{ url('m_pendidikan') }}">Pendidikan</a>
                 <a class="dropdown-item" href="{{ url('m_pekerjaan') }}">Pekerjaan</a>
                 <a class="dropdown-item" href="{{ url('m_agama') }}">Agama</a>
                 <a class="dropdown-item" href="{{ url('m_nilaiAnut') }}">Nilai - nilai yang dianut</a>
@@ -13,13 +13,16 @@
                 <a class="dropdown-item" href="{{ url('m_keluarga') }}">Keluarga</a>
                 <a class="dropdown-item" href="{{ url('m_tempatTinggal') }}">Tempat Tinggal</a>
                 <a class="dropdown-item" href="{{ url('m_statusPsikologi') }}">Status Psikologi</a>
-                <a class="dropdown-item" href="{{ url('m_hambatanEdukasi') }}">Hambatan Edukasi</a>
-                <a class="dropdown-item" href="{{ url('manajemen_form') }}">Manajemen Form</a>
+                <a class="dropdown-item" href="{{ url('m_hambatanEdukasi') }}">Hambatan Edukasi</a> --}}
+                <a class="dropdown-item" href="{{ url('m_attribute') }}">Manajemen Attribute Form</a>
+                <a class="dropdown-item" href="{{ url('manajemen_form') }}">Manajemen Master Form</a>
             </div>
         </li>
         <li class="{{ Request::is('m_user') ? 'active' : '' }} nav-item"><a href="{{ url('m_user') }}">Management User</a></li>
+
         {{-- <li class="{{ Request::is('historicalList') ? 'active' : '' }} nav-item"><a href="{{ url('historicalList') }}">Historical List</a></li> --}}
         <li class="{{ Request::is('dokumen') ? 'active' : '' }} nav-item"><a href="{{ url('dokumen') }}">Dokumen</a></li>
+
         
         <li class="profile d-flex flex-row align-items-center nav-item">
             <div class="profile d-flex flex-row align-items-center nav-item" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
