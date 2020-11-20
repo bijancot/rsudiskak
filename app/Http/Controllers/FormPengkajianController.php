@@ -70,13 +70,20 @@ class FormPengkajianController extends Controller
     public function storeICD10(Request $request)
     {
         $getICD10 = $this->getICD10();
-        foreach ($getICD10['data'] as $item) {
-            if ($item['NamaDiagnosa'] == $request->get('PengkajianKeperawatan_2[Diagnosa][]')) {
+        $jmlICD10 = collect($getICD10['data'])->count();
+        for ($d = 0; $d < $jmlICD10; $d++) {
+            if ($getICD10['data'][$d]['NamaDiagnosa'] == $request->get('PengkajianKeperawatan_2[Diagnosa][]')) {
                 break;
             }
         }
+        $kodeDiagnosa = $getICD10['data'][$d]['kodeDiagnosa'];
+        // foreach ($getICD10['data'] as $item) {
+        //     if ($item['NamaDiagnosa'] == $request->get('PengkajianKeperawatan_2[Diagnosa][]')) {
+        //         break;
+        //     }
+        // }
 
-        $kodeDiagnosa = $item['kodeDiagnosa'];;
+        // $kodeDiagnosa = $item['kodeDiagnosa'];
         // dump($kodeDiagnosa);
         return response()->json($kodeDiagnosa);
     }

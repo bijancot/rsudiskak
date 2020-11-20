@@ -462,7 +462,7 @@
                                         {{-- <select type="text" multiple data-actions-box="true" data-width="100%" title="Pilih diagnosa..." data-live-search="true" class="selectpicker pilihDiagnosa" name="PengkajianKeperawatan_2[Diagnosa][]" required> --}}
                                         <select type="text" multiple="multiple" class="form-control pilihDiagnosa" name="PengkajianKeperawatan_2[Diagnosa][]" id="pilihDiagnosa" required>
                                             @foreach ($getICD10['data'] as $item) 
-                                                <option value="{{ $item['NamaDiagnosa'] }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_2']['NamaDiagnosa']) && $dataPengkajian['PengkajianKeperawatan_2']['NamaDiagnosa'] == $item['NamaDiagnosa'] ? 'selected' : '')}}>{{ $item['NamaDiagnosa'] }}</option>
+                                                <option value="{{ $item['NamaDiagnosa'] }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_2']['NamaDiagnosa']) && $dataPengkajian['PengkajianKeperawatan_2']['NamaDiagnosa'] == $item['NamaDiagnosa'] ? 'selected' : '')}}>{{ $item['kodeDiagnosa'] }} - {{ $item['NamaDiagnosa'] }}</option>
                                             @endforeach
                                         </select>
                                         <div class="invalid-feedback">
@@ -598,7 +598,7 @@
                     success : function (data) {
                         console.log("Success");
                         console.log(data);
-                        alert(data);
+                        // alert(data);
                     },
                     error   : function() {
                         console.error();
