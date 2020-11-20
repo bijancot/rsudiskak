@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\ManajemenForm;
+use GuzzleHttp\Client;
 use App\AntrianPasien;
 use App\Http\Controllers\DiagnosaController;
 use App\Keluarga;
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Auth;
 
 class FormPengkajianController extends Controller
 {
+
+    // tidak dipakai
     public function pilihForm($no_cm = null, $noPendaftaran = null)
     {
         if ($no_cm != null && $noPendaftaran) {
@@ -36,6 +39,46 @@ class FormPengkajianController extends Controller
         } else {
             "No_CM tidak ada";
         }
+    }
+
+    // get API ICD 09
+    public function getICD9()
+    {
+        $client = new Client();
+        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/icd9');
+        $statCode = $res->getStatusCode();
+        $data = $res->getBody()->getContents();
+        $data = json_decode($data, true);
+        $data = $data['response'];
+
+        return $data;
+    }
+
+    // get API ICD 10
+    public function getICD10()
+    {
+        $client = new Client();
+        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/icd10');
+        $statCode = $res->getStatusCode();
+        $data = $res->getBody()->getContents();
+        $data = json_decode($data, true);
+        $data = $data['response'];
+
+        return $data;
+    }
+
+    public function storeICD10(Request $request)
+    {
+        $getICD10 = $this->getICD10();
+        foreach ($getICD10['data'] as $item) {
+            if ($item['NamaDiagnosa'] == $request->get('PengkajianKeperawatan_2[Diagnosa][]')) {
+                break;
+            }
+        }
+
+        $kodeDiagnosa = $item['kodeDiagnosa'];;
+        // dump($kodeDiagnosa);
+        return response()->json($kodeDiagnosa);
     }
 
     /**
@@ -82,12 +125,38 @@ class FormPengkajianController extends Controller
     {
 
         $dataForm = ManajemenForm::where('idForm', $idForm)->get();
+        $getICD10 = $this->getICD10();
+        $getICD09 = $this->getICD9();
+
         // return view("'".$data[0]['namaFile']."'");
         if ($NoCM && $noPendaftaran) {
-            //get data pasien bersarakan nocm
-            $dataMasukPoli = DB::collection('pasien_' . $NoCM)->where('NoPendaftaran', $noPendaftaran)->where('deleted_at', null)->whereNotNull('StatusPengkajian')->get();
-            if ($dataMasukPoli[0]['IdFormPengkajian'] != $idForm) {
-                return redirect('formPengkajian/' . $dataMasukPoli[0]['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
+
+            // get data pasien bersarakan nocm
+            // $dataMasukPoli = DB::collection('pasien_' . $NoCM)
+            //     ->where('NoPendaftaran', $noPendaftaran)
+            //     ->where('deleted_at', null)
+            //     ->whereNotNull('StatusPengkajian')->get();
+
+            // if ($dataMasukPoli[0]['IdFormPengkajian'] != $idForm) {
+            //     return redirect('formPengkajian/' . $dataMasukPoli[0]['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
+            // }
+
+            // get data pasien bersarakan nocm yang masuk poli terakhir
+            $dataMasukPoli = DB::collection('pasien_' . $NoCM)
+                ->where('NoPendaftaran', $noPendaftaran)
+                ->where('deleted_at', null)
+                ->whereNotNull('StatusPengkajian')
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            /**
+             * Cek IdFormPengkajian jika idForm pada collection pasien masukPoli 
+             * masih kosong atau belum ada (null) atau IdForm tidak sama 
+             * maka redirect(arahkan ke halaman) FormPengkajian
+             * yang dipilih
+             */
+            if ($dataMasukPoli['IdFormPengkajian'] != $idForm) {
+                return redirect('formPengkajian/' . $dataMasukPoli['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
             }
 
             /**
@@ -115,7 +184,13 @@ class FormPengkajianController extends Controller
             $tempatTinggal      = DB::collection('tempatTinggal')->where("deleted_at", Null)->get();
             $statusPsikologi    = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
             $hambatanEdukasi    = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
-            $dataMasukPoli      = DB::collection('pasien_' . $NoCM)->where('NoPendaftaran', $noPendaftaran)->where('deleted_at', null)->whereNotNull('StatusPengkajian')->get();
+
+            $dataMasukPoli      = DB::collection('pasien_' . $NoCM)
+                ->where('NoPendaftaran', $noPendaftaran)
+                ->where('deleted_at', null)
+                ->whereNotNull('StatusPengkajian')
+                ->orderBy('created_at', 'desc')
+                ->first();
 
             $data = [
                 'form_id'           => $idForm,
@@ -129,10 +204,13 @@ class FormPengkajianController extends Controller
                 'tempatTinggal'     => $tempatTinggal,
                 'statusPsikologi'   => $statusPsikologi,
                 'hambatanEdukasi'   => $hambatanEdukasi,
+                'getICD10'          => $getICD10,
+                'getICD09'          => $getICD09,
                 'idForm'            => $idForm,
                 'NoCM'              => $NoCM,
                 'noPendaftaran'     => $noPendaftaran,
-                'dataMasukPoli'     => $dataMasukPoli[0]
+                'dataMasukPoli'     => $dataMasukPoli
+                // 'dataMasukPoli'     => $dataMasukPoli[0]
             ];
             return view($dataForm[0]['namaFile'], $data);
             //endIF

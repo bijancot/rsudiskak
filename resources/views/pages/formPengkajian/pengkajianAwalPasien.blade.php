@@ -459,14 +459,19 @@
                                     </div>
                                     <div class="col-12 mt-3">
                                         <label for="diagnosa">Diagnosa (A)</label>
-                                        <input type="text" class="form-control" name="PengkajianKeperawatan_2[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_2']['Diagnosa']) ? $dataPengkajian['PengkajianKeperawatan_2']['Diagnosa'] : '')}}" required>
+                                        {{-- <select type="text" multiple data-actions-box="true" data-width="100%" title="Pilih diagnosa..." data-live-search="true" class="selectpicker pilihDiagnosa" name="PengkajianKeperawatan_2[Diagnosa][]" required> --}}
+                                        <select type="text" multiple="multiple" class="form-control pilihDiagnosa" name="PengkajianKeperawatan_2[Diagnosa][]" id="pilihDiagnosa" required>
+                                            @foreach ($getICD10['data'] as $item) 
+                                                <option value="{{ $item['NamaDiagnosa'] }}" {{(!empty($dataPengkajian['PengkajianKeperawatan_2']['NamaDiagnosa']) && $dataPengkajian['PengkajianKeperawatan_2']['NamaDiagnosa'] == $item['NamaDiagnosa'] ? 'selected' : '')}}>{{ $item['NamaDiagnosa'] }}</option>
+                                            @endforeach
+                                        </select>
                                         <div class="invalid-feedback">
                                             Data Diagnosa Harus Diisi.
                                         </div>
                                     </div>
                                     <div class="col-12 mt-3">
-                                        <label for="kodeICD">Kode ICD 10</label>
-                                        <select class="custom-select" name="PengkajianKeperawatan_2[KodeICD10]" id="kodeICD">
+                                        <label for="kodeICD10">Kode ICD 10</label>
+                                        <select class="custom-select" name="PengkajianKeperawatan_2[KodeICD10]" id="kodeICD10">
                                             <option selected>-</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
@@ -574,6 +579,35 @@
         </div>
     </div>
     <script>
+
+        $(document).ready(function() {
+            // $('.pilihDiagnosa').selectpicker();
+            $('.pilihDiagnosa').select2();
+
+            $('#pilihDiagnosa').on('change', function () {
+                // console.log("its change");
+                
+                let diagnosa = $(this).val();
+                // console.log(diagnosa);
+
+                $.ajax({
+
+                    type    : 'post',
+                    url     : "{{ url('formPengkajian/getICD10') }}",
+                    data    : { NamaDiagnosa: diagnosa , _token: '<?php echo csrf_token()?>' },
+                    success : function (data) {
+                        console.log("Success");
+                        console.log(data);
+                        alert(data);
+                    },
+                    error   : function() {
+                        console.error();
+                    }
+
+                });
+            });
+        });
+
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
             'use strict';
@@ -591,7 +625,10 @@
                 }, false);
             });
             }, false);
+
+            
         })();
+
         function onlyNumberKey(evt) { 
           
           // Only ASCII charactar in that range allowed 
@@ -599,6 +636,6 @@
           if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) 
               return false; 
           return true; 
-      } 
+        } 
         </script>
 @endsection

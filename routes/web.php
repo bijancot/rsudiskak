@@ -120,6 +120,8 @@ Route::post('batalMasukPoli/{no_cm}/{no_pendaftaran}', 'DiagnosaController@store
 Route::post('batalForm', 'FormPengkajianController@storeBatalForm');
 Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
 
+Route::post('formPengkajian/getICD10', 'FormPengkajianController@storeICD10');
+
 /**
  * Route post Admin
  */
