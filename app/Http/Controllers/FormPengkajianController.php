@@ -165,7 +165,8 @@ class FormPengkajianController extends Controller
             if ($dataMasukPoli['IdFormPengkajian'] != $idForm) {
                 return redirect('formPengkajian/' . $dataMasukPoli['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
             }
-
+            $dataRiwayat        = DB::collection('pasien_'. $NoCM)->whereNotNull('StatusPengkajian')->get();
+            $dataDokumen        = DB::collection('dokumen_'.$NoCM)->whereNotNull('Status')->get();
             /**
              * Get Data dari Collection menggunakan Eloquent ORM 
              */
@@ -198,7 +199,7 @@ class FormPengkajianController extends Controller
                 ->whereNotNull('StatusPengkajian')
                 ->orderBy('created_at', 'desc')
                 ->first();
-
+          
             $data = [
                 'form_id'           => $idForm,
                 'nama_form'         => $dataForm[0]['namaForm'],
@@ -216,8 +217,9 @@ class FormPengkajianController extends Controller
                 'idForm'            => $idForm,
                 'NoCM'              => $NoCM,
                 'noPendaftaran'     => $noPendaftaran,
+                'dataRiwayat'       => $dataRiwayat,
+                'dataDokumen'       => $dataDokumen,
                 'dataMasukPoli'     => $dataMasukPoli
-                // 'dataMasukPoli'     => $dataMasukPoli[0]
             ];
             return view($dataForm[0]['namaFile'], $data);
             //endIF

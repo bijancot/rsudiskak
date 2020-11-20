@@ -62,14 +62,14 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="idForm" class="col-form-label">Id Form :</label>
-                        <input type="text" class="form-control" id="idFormTambah" name="idForm">
+                        <input type="text" class="form-control frm-input" id="idFormTambah" name="idForm">
                         <div class="idFormTambah-isInvalid invalid-feedback">
                             Id Form Harus Diisi.
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="namaForm" class="col-form-label">Nama Form :</label>
-                        <input type="text" class="form-control" id="namaFormTambah" name="namaForm">
+                        <input type="text" class="form-control frm-input" id="namaFormTambah" name="namaForm">
                         <div class="namaFormTambah-isInvalid invalid-feedback">
                             Nama Form Harus Diisi.
                         </div>
@@ -92,6 +92,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <input type="hidden" name="status" value="1">
                     <div id="btn_tambah_submit" class="btn btn-dark diagnosa">Simpan</div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 </div>
@@ -119,6 +120,7 @@
                         <div class="form-group">
                             <label for="idForm" class="col-form-label">Id Form :</label>
                             <input type="text" class="form-control" id="idForm" name="idForm" value="{{ $item->idForm }}">
+                            <input type="hidden" class="form-control" name="idFormOld" value="{{ $item->idForm }}">
                         </div>
                         <div class="form-group">
                             <label for="namaForm" class="col-form-label">Nama Form :</label>
@@ -129,7 +131,11 @@
                         </div>
                         <div class="form-group">
                             <label for="namaFile" class="col-form-label">Nama File :</label>
-                            <input type="text" class="form-control" id="namaFile" name="namaFile" value="{{ $item->namaFile }}">
+                            @php
+                                $namaFile = str_replace('pages.formPengkajian.', '', $item->namaFile);
+                            @endphp
+                            <input type="text" class="form-control" id="namaFile" name="namaFile" value="{{ $namaFile }}">
+                            <input type="hidden" class="form-control" name="namaFileOld" value="{{ $namaFile }}">
                         </div>
                         
                     </div>
@@ -159,6 +165,10 @@
                         <p>Apa anda yakin ingin menghapus data <code>{{ $item->namaForm }}</code> ?</p>
                     </div>
                     <div class="modal-footer">
+                        @php
+                            $namaFile = str_replace('pages.formPengkajian.', '', $item->namaFile);
+                        @endphp
+                        <input type="hidden" name="namaFile" value="{{$namaFile}}">
                         <button type="submit" class="btn btn-dark diagnosa">Hapus</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     </div>
@@ -211,26 +221,16 @@
             }
 
         })
-        $('#idFormTambah').keyup(function(){
+        $('.frm-input').keyup(function(){
+            let id = $(this).attr('id');
             if($(this).val() == ""){
                 $(this).removeClass('isInValid')
                 $(this).removeClass('isValid')
-                $('.idFormTambah-isInvalid').css('display', 'none')
+                $('.'+id+'-isInvalid').css('display', 'none')
             }else{
                 $(this).removeClass('isInValid')
                 $(this).addClass('isValid')
-                $('.idFormTambah-isInvalid').css('display', 'none')
-            }
-        })
-        $('#namaFormTambah').keyup(function(){
-            if($(this).val() == ""){
-                $(this).removeClass('isInValid')
-                $(this).removeClass('isValid')
-                $('.namaFormTambah-isInvalid').css('display', 'none')
-            }else{
-                $(this).removeClass('isInValid')
-                $(this).addClass('isValid')
-                $('.namaFormTambah-isInvalid').css('display', 'none')
+                $('.'+id+'-isInvalid').css('display', 'none')
             }
         })
         $('#fileTambah').change(function(){

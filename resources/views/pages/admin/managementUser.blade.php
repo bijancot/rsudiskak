@@ -141,7 +141,7 @@
                 <span class="text-white" aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ action('ManajemenUserController@update')}}" method="POST" class="needs-validation" novalidate>
+            <form id="form-ubah" action="{{ action('ManajemenUserController@update')}}" method="POST" class="needs-validation" novalidate>
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -237,6 +237,7 @@
             });
             $('#tbl_user_filter').hide();
         });
+        
         (function() {
             'use strict';
             window.addEventListener('load', function() {
@@ -269,6 +270,9 @@
                     $('#KodeRuangan').val(res.KodeRuangan);
                 }
             })
+        })
+        $(document).on('hidden.bs.modal','#modal_ubah', function () {
+            $('#form-ubah').reset()
         })
         $('#tbl_user tbody').on('click', '.reset-password', function(){
             let ID = $(this).data('id');
