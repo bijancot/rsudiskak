@@ -33,10 +33,12 @@ final class Versions
      * @internal
      */
     const VERSIONS          = array (
+  'barryvdh/laravel-dompdf' => 'v0.8.7@30310e0a675462bf2aa9d448c8dcbf57fbcc517d',
   'composer/package-versions-deprecated' => '1.11.99@c8c9aa8a14cc3d3bec86d0a8c3fa52ea79936855',
   'dnoegel/php-xdg-base-dir' => 'v0.1.1@8f8a6e48c5ecb0f991c2fdcf5f154a47d85f9ffd',
   'doctrine/inflector' => '1.4.3@4650c8b30c753a76bf44fb2ed00117d6f367490c',
   'doctrine/lexer' => '1.2.1@e864bbf5904cb8f5bb334f99209b48018522f042',
+  'dompdf/dompdf' => 'v0.8.6@db91d81866c69a42dad1d2926f61515a1e3f42c5',
   'dragonmantank/cron-expression' => 'v2.3.0@72b6fbf76adb3cf5bc0db68559b33d41219aba27',
   'egulias/email-validator' => '2.1.22@68e418ec08fbfc6f58f6fd2eea70ca8efc8cc7d5',
   'erusev/parsedown' => '1.7.4@cb17b6477dfff935958ba01325f2e8a2bfa6dab3',
@@ -64,6 +66,8 @@ final class Versions
   'nikic/php-parser' => 'v4.10.2@658f1be311a230e0907f5dfe0213742aff0596de',
   'opis/closure' => '3.5.7@4531e53afe2fc660403e76fb7644e95998bff7bf',
   'paragonie/random_compat' => 'v9.99.99@84b4dfb120c6f9b4ff7b3685f9b8f1aa365a0c95',
+  'phenx/php-font-lib' => '0.5.2@ca6ad461f032145fff5971b5985e5af9e7fa88d8',
+  'phenx/php-svg-lib' => 'v0.3.3@5fa61b65e612ce1ae15f69b3d223cb14ecc60e32',
   'php-http/guzzle6-adapter' => 'v1.1.1@a56941f9dc6110409cfcddc91546ee97039277ab',
   'php-http/httplug' => 'v1.1.0@1c6381726c18579c4ca2ef1ec1498fdae8bdf018',
   'php-http/promise' => '1.1.0@4c4c1f9b7289a2ec57cde7f1e9762a5789506f88',
@@ -75,6 +79,7 @@ final class Versions
   'psy/psysh' => 'v0.9.12@90da7f37568aee36b116a030c5f99c915267edd4',
   'ralouphie/getallheaders' => '3.0.3@120b605dfeb996808c31b6477290a714d356e822',
   'ramsey/uuid' => '3.9.3@7e1633a6964b48589b142d60542f9ed31bd37a92',
+  'sabberworm/php-css-parser' => '8.3.1@d217848e1396ef962fb1997cf3e2421acba7f796',
   'swiftmailer/swiftmailer' => 'v6.2.3@149cfdf118b169f7840bbe3ef0d4bc795d1780c9',
   'symfony/console' => 'v4.4.14@90933b39c7b312fc3ceaa1ddeac7eb48cb953124',
   'symfony/css-selector' => 'v5.1.6@e544e24472d4c97b2d11ade7caacd446727c6bf9',
@@ -138,7 +143,7 @@ final class Versions
   'sebastian/version' => '2.0.1@99732be0ddb3361e16ad77b68ba41efc8e979019',
   'theseer/tokenizer' => '1.2.0@75a63c33a8577608444246075ea0af0d052e452a',
   'webmozart/assert' => '1.9.1@bafc69caeb4d49c39fd0779086c03a3738cbb389',
-  'laravel/laravel' => 'dev-ilham_GetAPI@a42b338bc49af6dc4a1ac6e744002dd0d781c9a4',
+  'laravel/laravel' => 'No version set (parsed as 1.0.0)@',
 );
 
     private function __construct()

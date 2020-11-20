@@ -20,9 +20,9 @@ Route::get('layout', function () {
 });
 Route::get('logActivities', 'LoggingController@index')->middleware('adminRole')->name('admin');
 //Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
-Route::get('login', function () {
-    return view('pages.login');
-});
+
+Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
+Route::get('riwayatPasien/{no_pendaftaran}','RiwayatController@printRiwayat');
 
 Route::get('listPasien', 'PasienController@listPasien');
 Route::get('listPasien/masukPoliRedirect', 'DiagnosaController@masukPoliRedirect');
@@ -43,6 +43,10 @@ Route::get('riwayat/{no_cm}', 'PasienController@Riwayat');
 Route::get('formPengkajianAwal/{no_cm}', 'FPengkajianAwalController@showRajal');
 Route::get('formPengkajianUlang/{no_cm}', 'FPengkajianUlangController@showRajal');
 Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}', 'FormPengkajianController@formPengkajian');
+
+Route::get('historicalList', function () {
+    return view('pages.admin.historicalList');
+});
 
 
 // ============ TEMPLATE FRONT END
