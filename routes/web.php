@@ -22,9 +22,9 @@ Route::get('logActivities', 'LoggingController@index')->middleware('adminRole')-
 //Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
 
 Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
-Route::get('riwayatPasienAwal/{no_pendaftaran}','RiwayatController@printRiwayatAwal');
-Route::get('riwayatPasienUlang/{no_pendaftaran}','RiwayatController@printRiwayatUlang');
-Route::get('profilRingkas/{no_pendaftaran}','RiwayatController@printProfilRingkas');
+Route::get('riwayatPasienAwal/{no_pendaftaran}', 'RiwayatController@printRiwayatAwal');
+Route::get('riwayatPasienUlang/{no_pendaftaran}', 'RiwayatController@printRiwayatUlang');
+Route::get('profilRingkas/{no_pendaftaran}', 'RiwayatController@printProfilRingkas');
 
 Route::get('listPasien', 'PasienController@listPasien');
 Route::get('listPasien/masukPoliRedirect', 'DiagnosaController@masukPoliRedirect');
@@ -77,13 +77,15 @@ Route::get('m_user/ubahPassword', 'ManajemenUserController@ubahPassword');
 Route::get('m_user/lupaPassword', 'ManajemenUserController@lupaPassword');
 
 
+Route::get('m_ICD10', 'ICD10Controller@index');
+
 Route::get('historicalList', function () {
     return view('pages.admin.historicalList');
 });
 
 Route::get('dokumen', 'DokumenController@index');
 Route::get('dokumen/berkas/{no_cm}', 'DokumenController@berkas');
-Route::get('uploadFile', function(){
+Route::get('uploadFile', function () {
     return view('pages.admin.uploadFile');
 });
 
@@ -130,6 +132,7 @@ Route::post('batalMasukPoli/{no_cm}/{no_pendaftaran}', 'DiagnosaController@store
 Route::post('batalForm', 'FormPengkajianController@storeBatalForm');
 Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
 
+Route::post('m_ICD10', 'ICD10Controller@store');
 Route::post('formPengkajian/getICD10', 'FormPengkajianController@storeICD10');
 
 /**
