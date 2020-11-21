@@ -210,8 +210,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <select name="dokter" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }} pilihDokter " id="dokter" title="Pilih salah satu..." data-live-search="true" required>
-                                @foreach ($listDokter['data'] as $item)
+                                {{-- @foreach ($listDokter['data'] as $item)
                                     <option value="{{ $item['IdDokter'] }}"> {{ $item['NamaLengkap'] }} </option>
+                                @endforeach --}}
+                                @foreach ($listDokter as $item)
+                                    <option value="{{ $item['ID'] }}"> {{ $item['Nama'] }} </option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">

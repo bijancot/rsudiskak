@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\AntrianPasien;
 use App\ManajemenForm;
+use App\User;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+// use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 
 class PasienController extends Controller
@@ -48,8 +50,13 @@ class PasienController extends Controller
             // endElseIf
         }
 
-        $diagnosa  = new DiagnosaController();
-        $getlistDokter = $diagnosa->listDokter();
+        // $diagnosa  = new DiagnosaController();
+        // $getlistDokter = $diagnosa->listDokter();
+
+        $getlistDokter = User::where([
+            ['Role', '=', '1'],
+            ['KodeRuangan', '=', $getKdRuangan],
+        ])->orderBy('Nama', 'asc')->get();
 
         $getForm = ManajemenForm::all();
 
