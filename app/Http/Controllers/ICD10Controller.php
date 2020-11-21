@@ -81,16 +81,16 @@ class ICD10Controller extends Controller
         // }
         // ICD10::create($item['data']);
         // 681
-        for ($pages = 681; $pages <= 707; $pages++) {
+        // for ($pages = 681; $pages <= 707; $pages++) {
 
-            $item = $this->getICD10($pages);
+        //     $item = $this->getICD10($pages);
 
-            foreach ($item['data'] as $row) {
-                ICD10::create($row);
-            }
-            // dump($item['data']);
+        //     foreach ($item['data'] as $row) {
+        //         ICD10::create($row);
+        //     }
+        //     // dump($item['data']);
 
-        }
+        // }
 
         return redirect('m_ICD10');
     }
