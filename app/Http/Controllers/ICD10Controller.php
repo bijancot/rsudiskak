@@ -37,7 +37,6 @@ class ICD10Controller extends Controller
         //     dump($getData['data']);
         // }
 
-        $iCD10 = [];
         // for ($pages = 1; $pages <= 2; $pages++) {
 
         //     $item = $this->getICD10($pages);
@@ -49,9 +48,12 @@ class ICD10Controller extends Controller
 
         // }
         // dump($iCD10);
-        $iCD10 = ICD10::all();
-        dump($iCD10);
-        // return view('pages.admin.listICD10', compact($iCD10));
+        $iCD10  = ICD10::all();
+        $data   = [
+            'iCD10' => $iCD10
+        ];
+        // dump($iCD10);
+        return view('pages.admin.listICD10', $data);
     }
 
     /**

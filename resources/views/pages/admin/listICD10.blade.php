@@ -26,18 +26,18 @@
                         </thead>
                         <tbody>
 
-                            {{-- @foreach ($iCD10 as $item)
+                            @foreach ($iCD10 as $item)
                             <tr>
                                 <td data-label="No">{{ $loop->iteration }}</td>
                                 <td data-label="KdDiagnosa">{{ $item->KdDiagnosa }}</td>
                                 <td data-label="NoDTD">{{ $item->NoDTD }}</td>
                                 <td data-label="NamaDiagnosa">{{ $item['NamaDiagnosa'] }}</td>
                                 <td data-label="kodeDiagnosa">{{ $item['kodeDiagnosa'] }}</td>
-                                <td data-label="Action" class="p-lg-1">
+                                {{-- <td data-label="Action" class="p-lg-1">
                                     <a data-toggle="modal" data-target="#modal_hapus-{{ $item->id }}" class="btn batal">Hapus</a>
-                                </td>
+                                </td> --}}
                             </tr>
-                            @endforeach --}}
+                            @endforeach
 
                         </tbody>
                     </table>
