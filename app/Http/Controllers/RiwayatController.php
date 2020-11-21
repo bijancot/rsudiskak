@@ -24,18 +24,49 @@ class RiwayatController extends Controller
         ];
         return view('pages.riwayatPasien', $data);
     }
-    public function printRiwayat($no_pendaftaran)
+    public function printRiwayatAwal($no_pendaftaran)
     {
         $riwayat = new Riwayat();
         $riwayat->collection    = "transaksi_" . date("Y-m-d");
-        $listriwayat            = $riwayat->where('NoPendaftaran',$no_pendaftaran)->get();
+        $listriwayat            = $riwayat->where('NoPendaftaran',$no_pendaftaran)->where('IdFormPengkajian','1')->get();
         $data = [
             'listRiwayat' => $listriwayat
         ];
         //return view('pages.print.listRiwayat_print', $data);
-        $pdf = PDF::loadview('pages.print.listRiwayat_print',$data);
+        $pdf = PDF::loadview('pages.print.listRiwayatAwal_print',$data);
+        $pdf->setPaper('legal', 'potrait');
+        return $pdf->stream("listRiwayatAwal_$no_pendaftaran.pdf", array("Attachment" => false));
         
-        return $pdf->stream("listRiwayat_$no_pendaftaran.pdf", array("Attachment" => false));
+    }
+    public function printRiwayatUlang($no_pendaftaran)
+    {
+        $riwayat = new Riwayat();
+        $riwayat->collection    = "transaksi_" . date("Y-m-d");
+        $listriwayat            = $riwayat->where('NoPendaftaran',$no_pendaftaran)->where('IdFormPengkajian','2')->get();
+        $data = [
+            'listRiwayat' => $listriwayat
+        ];
+        // return $no_pendaftaran;
+        //return view('pages.print.listRiwayat_print', $data);
+        $pdf = PDF::loadview('pages.print.listRiwayatUlang_print',$data);
+        $pdf->setPaper('legal', 'potrait');
+        return $pdf->stream("listRiwayatUlang_$no_pendaftaran.pdf", array("Attachment" => false));
+        
+    }
+
+    public function printProfilRingkas($no_pendaftaran)
+    {
+        $riwayat = new Riwayat();
+        $riwayat->collection    = "transaksi_" . date("Y-m-d");
+        $listriwayat            = $riwayat->where('NoPendaftaran',$no_pendaftaran)->where('IdFormPengkajian','2')->get();
+        $data = [
+            'listRiwayat' => $listriwayat
+        ];
+        // return $no_pendaftaran;
+        //return view('pages.print.listRiwayat_print', $data);
+        $pdf = PDF::loadview('pages.print.profilRingkas_print',$data);
+        $pdf->setPaper('legal', 'potrait');
+        return $pdf->stream("profilRingkas_$no_pendaftaran.pdf", array("Attachment" => false));
         
     }
 }
