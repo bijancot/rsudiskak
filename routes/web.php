@@ -22,7 +22,9 @@ Route::get('logActivities', 'LoggingController@index')->middleware('adminRole')-
 //Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
 
 Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
-Route::get('riwayatPasien/{no_pendaftaran}','RiwayatController@printRiwayat');
+Route::get('riwayatPasienAwal/{no_pendaftaran}','RiwayatController@printRiwayatAwal');
+Route::get('riwayatPasienUlang/{no_pendaftaran}','RiwayatController@printRiwayatUlang');
+Route::get('profilRingkas/{no_pendaftaran}','RiwayatController@printProfilRingkas');
 
 Route::get('listPasien', 'PasienController@listPasien');
 Route::get('listPasien/masukPoliRedirect', 'DiagnosaController@masukPoliRedirect');

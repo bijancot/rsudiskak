@@ -30,7 +30,12 @@
                                 <td>{{ $item['NamaLengkap'] }}</td>
                                 <td>{{ $item['TglMasukPoli'] }}</td>
                                 <td data-label="Action" class="d-flex flex-row p-lg-1">
-                                    <a href="riwayatPasien/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa ml-auto">Print</a>
+                                    @if($item['IdFormPengkajian']=="1")
+                                        <a href="riwayatPasienAwal/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa ml-auto">Print</a>
+                                    @elseif($item['IdFormPengkajian']=="2")
+                                        <a href="riwayatPasienUlang/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa ml-auto">Print</a>
+                                    @endif    
+                                    <a href="profilRingkas/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa ml-auto">Profil Ringkas</a>
                                 </td>
                             </tr>
                             @endif
