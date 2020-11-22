@@ -251,54 +251,11 @@ class FormPengkajianController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
 
-        /**
-         * check status pengkajian jika
-         * 0 belum terisi, 
-         * 1 periksa, 
-         * 2 selesai, 
-         * null batal 
-         */
-
-        /**
-         * Jika SubForm terakhir telah diisi, maka statusPengkajian berubah menjadi 2 (selesai)
-         */
-        if ($isLastSubForm == "1") {
-            $statusPengkajian = "2";
-        }
-        /**
-         * Jika SubForm masih belum diisi secara lengkap (masih 1 subForm yang terisi) 
-         * dan StatusPengkajian bukan bernilai 2 (belum selesai) 
-         * maka StatusPengkajian bernilai 1 (periksa)
-         */
-        else if ($isLastSubForm == "0" && $dataMasukPoli["StatusPengkajian"] != 2) {
-            $statusPengkajian = "1";
-        } else {
-            $statusPengkajian = "2";
-        }
-
-        // check status update data
-        /**
-         * Jika statusUpdate = 0, maka data akan dipush atau tambah 
-         * Jika statusUpdate = 1, maka data akan diupdate
-         * $index untuk mengetahui subForm saat ini
-         */
-        $statusUpdate = 0;
-        $index = 0;
-
-        /**
-         * Get DataPengkajian sesuai Data Pasien Masuk Poli
-         * dan lakukan cek subFrom telah terisi atau belum
-         * $subForm berisi PengkajianKeperawatan_1
-         * atau PengkajianKeperawatan_2
-         */
-        foreach ($dataMasukPoli['DataPengkajian'] as $item) {
-
-            if (!empty($item[$subForm])) {
-                $statusUpdate = 1;
-                break;
-            }
-            $index++;
-        }
+        // declare data update & status pengkajian
+        $dataUpdate = $req->all();
+        $statusPengkajian = $dataUpdate['StatusPengkajian'];
+        unset($dataUpdate['_token']);
+        unset($dataUpdate['StatusPengkajian']);
 
         // update data status pengkajian
         DB::collection('pasien_' . $no_cm)
@@ -313,70 +270,148 @@ class FormPengkajianController extends Controller
             ->whereIn('StatusPengkajian', ["0", "1", "2", "3"])
             ->update(['StatusPengkajian' => $statusPengkajian]);
 
-        // push / update data pengkajian
-        if ($statusUpdate == 0) {
-            // berdasarkan no cm
-            DB::collection('pasien_' . $no_cm)
-                ->where('NoPendaftaran', $noPendaftaran)
-                ->where('deleted_at', null)
-                ->whereNotNull('StatusPengkajian')
-                ->push('DataPengkajian', $req->all(), true);
+        // update data pengkajian
+        // berdasarkan no cm
+        DB::collection('pasien_' . $no_cm)
+            ->where('NoPendaftaran', $noPendaftaran)
+            ->where('deleted_at', null)
+            ->whereNotNull('StatusPengkajian')
+            ->update(['DataPengkajian' => $dataUpdate]);
 
-            // berdasarkan tanggal
-            DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
-                ->where('NoPendaftaran', $noPendaftaran)
-                ->where('deleted_at', null)
-                ->whereNotNull('StatusPengkajian')
-                ->push('DataPengkajian', $req->all(), true);
+        // berdasarkan tanggal
+        DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
+            ->where('NoPendaftaran', $noPendaftaran)
+            ->where('deleted_at', null)
+            ->whereNotNull('StatusPengkajian')
+            ->update(['DataPengkajian' => $dataUpdate]);
 
-            // $pushData = $req->all();
-            $pushData = "Buat Data Pengkajian No. Pendaftaran '" . $noPendaftaran . "' dengan mengisi data form " . $subForm;
-            $logging->toLogging('create', 'DataPengkajian', $pushData, $no_cm);
-            //
+        /**
+         * check status pengkajian jika
+         * 0 belum terisi, 
+         * 1 periksa, 
+         * 2 selesai, 
+         * null batal 
+         */
 
-        } else if ($statusUpdate == 1) {
+        /**
+         * Jika SubForm terakhir telah diisi, maka statusPengkajian berubah menjadi 2 (selesai)
+         */
+        // if ($isLastSubForm == "1") {
+        //     $statusPengkajian = "2";
+        // }
+        // /**
+        //  * Jika SubForm masih belum diisi secara lengkap (masih 1 subForm yang terisi) 
+        //  * dan StatusPengkajian bukan bernilai 2 (belum selesai) 
+        //  * maka StatusPengkajian bernilai 1 (periksa)
+        //  */
+        // else if ($isLastSubForm == "0" && $dataMasukPoli["StatusPengkajian"] != 2) {
+        //     $statusPengkajian = "1";
+        // } else {
+        //     $statusPengkajian = "2";
+        // }
 
-            // get DataPengkajian lama sesuai dengan subForm yang ditentukan
-            $old = $dataMasukPoli['DataPengkajian'][$index][$subForm];
+        // check status update data
+        /**
+         * Jika statusUpdate = 0, maka data akan dipush atau tambah 
+         * Jika statusUpdate = 1, maka data akan diupdate
+         * $index untuk mengetahui subForm saat ini
+         */
 
-            // berdasarkan no cm
-            DB::collection('pasien_' . $no_cm)
-                ->where('NoPendaftaran', $noPendaftaran)
-                ->where('deleted_at', null)
-                ->whereNotNull('StatusPengkajian')
-                ->update(['DataPengkajian.' . $index => $req->all()]);
+        // $statusUpdate = 0;
+        // $index = 0;
 
-            // berdasarkan tanggal
-            DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
-                ->where('NoPendaftaran', $noPendaftaran)
-                ->where('deleted_at', null)
-                ->whereNotNull('StatusPengkajian')
-                ->update(['DataPengkajian.' . $index => $req->all()]);
+        /**
+         * Get DataPengkajian sesuai Data Pasien Masuk Poli
+         * dan lakukan cek subFrom telah terisi atau belum
+         * $subForm berisi PengkajianKeperawatan_1
+         * atau PengkajianKeperawatan_2
+         */
+        // foreach ($dataMasukPoli['DataPengkajian'] as $item) {
 
-            /**
-             * Get dataMasukPoli baru
-             */
-            $dataMasukPoli = DB::collection('pasien_' . $no_cm)
-                ->where('NoPendaftaran', $noPendaftaran)
-                ->where('deleted_at', null)
-                ->whereNotNull('StatusPengkajian')
-                ->orderBy('created_at', 'desc')
-                ->first();
-            // get DataPengkajian baru sesuai dengan subForm yang ditentukan
-            $new = $dataMasukPoli['DataPengkajian'][$index][$subForm];
+        //     if (!empty($item[$subForm])) {
+        //         $statusUpdate = 1;
+        //         break;
+        //     }
+        //     $index++;
+        // }
 
-            /**
-             * $data_old untuk mencari perbedaan atau perubahan data lama 
-             * $data_cur untuk mencari perbedaan atau perubahan data baru 
-             */
-            $data_old = array_diff_assoc($old, $new);
-            $data_cur = array_diff_assoc($new, $old);
-            $updateData = [
-                'old'       => $data_old,
-                'current'   => $data_cur,
-            ];
-            $logging->toLogging('update', 'DataPengkajian', $updateData, $no_cm);
-        }
+        // // update data status pengkajian
+        // DB::collection('pasien_' . $no_cm)
+        //     ->where('NoPendaftaran', $noPendaftaran)
+        //     ->where('deleted_at', null)
+        //     ->whereNotNull('StatusPengkajian')
+        //     ->update(['StatusPengkajian' => $statusPengkajian]);
+
+        // DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
+        //     ->where('NoPendaftaran', $noPendaftaran)
+        //     ->where('deleted_at', null)
+        //     ->whereIn('StatusPengkajian', ["0", "1", "2", "3"])
+        //     ->update(['StatusPengkajian' => $statusPengkajian]);
+
+        // // push / update data pengkajian
+        // if ($statusUpdate == 0) {
+        //     // berdasarkan no cm
+        //     DB::collection('pasien_' . $no_cm)
+        //         ->where('NoPendaftaran', $noPendaftaran)
+        //         ->where('deleted_at', null)
+        //         ->whereNotNull('StatusPengkajian')
+        //         ->push('DataPengkajian', $req->all(), true);
+
+        //     // berdasarkan tanggal
+        //     DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
+        //         ->where('NoPendaftaran', $noPendaftaran)
+        //         ->where('deleted_at', null)
+        //         ->whereNotNull('StatusPengkajian')
+        //         ->push('DataPengkajian', $req->all(), true);
+
+        //     // $pushData = $req->all();
+        //     $pushData = "Buat Data Pengkajian No. Pendaftaran '" . $noPendaftaran . "' dengan mengisi data form " . $subForm;
+        //     $logging->toLogging('create', 'DataPengkajian', $pushData, $no_cm);
+        //     //
+
+        // } else if ($statusUpdate == 1) {
+
+        //     // get DataPengkajian lama sesuai dengan subForm yang ditentukan
+        //     $old = $dataMasukPoli['DataPengkajian'][$index][$subForm];
+
+        //     // berdasarkan no cm
+        //     DB::collection('pasien_' . $no_cm)
+        //         ->where('NoPendaftaran', $noPendaftaran)
+        //         ->where('deleted_at', null)
+        //         ->whereNotNull('StatusPengkajian')
+        //         ->update(['DataPengkajian.' . $index => $req->all()]);
+
+        //     // berdasarkan tanggal
+        //     DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
+        //         ->where('NoPendaftaran', $noPendaftaran)
+        //         ->where('deleted_at', null)
+        //         ->whereNotNull('StatusPengkajian')
+        //         ->update(['DataPengkajian.' . $index => $req->all()]);
+
+        //     /**
+        //      * Get dataMasukPoli baru
+        //      */
+        //     $dataMasukPoli = DB::collection('pasien_' . $no_cm)
+        //         ->where('NoPendaftaran', $noPendaftaran)
+        //         ->where('deleted_at', null)
+        //         ->whereNotNull('StatusPengkajian')
+        //         ->orderBy('created_at', 'desc')
+        //         ->first();
+        //     // get DataPengkajian baru sesuai dengan subForm yang ditentukan
+        //     $new = $dataMasukPoli['DataPengkajian'][$index][$subForm];
+
+        //     /**
+        //      * $data_old untuk mencari perbedaan atau perubahan data lama 
+        //      * $data_cur untuk mencari perbedaan atau perubahan data baru 
+        //      */
+        //     $data_old = array_diff_assoc($old, $new);
+        //     $data_cur = array_diff_assoc($new, $old);
+        //     $updateData = [
+        //         'old'       => $data_old,
+        //         'current'   => $data_cur,
+        //     ];
+        //     $logging->toLogging('update', 'DataPengkajian', $updateData, $no_cm);
+        // }
 
         return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran);
     }
