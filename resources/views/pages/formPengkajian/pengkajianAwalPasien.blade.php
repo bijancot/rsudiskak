@@ -21,7 +21,7 @@
             </div>
             <div class="content soft-shadow">
                 <div class="p-3">
-                    <p class="h4">Data Pasien</p>
+                    <p class="h4">Data Pasien<a href="/profilRingkas/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}" target="_blank" class="btn btn-primary print_button" id="print_button">Print</a></p>
                 </div>
                 <hr>
                 <div class="row p-3 py-4">
@@ -412,9 +412,9 @@
                                         </div>
                                         @endif
                                     </div>
-                                    {{-- <div class="col-12">
+                                    <div class="col-12">
                                         <button type="submit" class="btn green-long w-50 ml-auto mr-3">Submit</button>
-                                    </div> --}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -448,15 +448,15 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="diagnosa">Diagnosa (A) <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            {{-- <input type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}" > --}}
                                             <select type="text" multiple="multiple" class="form-control pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
                                                 @foreach ($getICD10 as $item)  
                                                     <option value="{{ $item['kodeDiagnosa'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['NamaDiagnosa']) && $dataPengkajian['PengkajianMedis']['NamaDiagnosa'] == $item['NamaDiagnosa'] ? 'selected' : '')}}>{{ $item['kodeDiagnosa'] }} - {{ $item['NamaDiagnosa'] }}</option>
                                                 @endforeach                                    
                                             </select>
-                                            {{-- <input type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Diagnosa Harus Diisi.
-                                            </div> --}}
+                                            </div>
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="kodeICD">Kode ICD 10</label>
@@ -558,11 +558,6 @@
                             </div>         
                         </div>
                     </div>
-                    <div class="content soft-shadow mt-3">
-                        <div class="col-12">
-                            <button type="submit" class="btn green-long w-50 ml-auto mr-3">Submit</button>
-                        </div>
-                    </div>
                 </form>
             </div>
             @include('includes.tabSectionPengkajian')
@@ -572,6 +567,7 @@
         $(document).ready(function(){
             // set hide field required
             $('.lbl-isRequired').hide();
+            $(".print_button").hide();
             $('#verifikasi').prop('checked', false);
             $('.inpt-isRequired').prop('required', false);
             
@@ -595,7 +591,7 @@
                         $('#pathFile_pratinjau').val(res.PathFile);
                     }
                 })
-        })
+            })
             $('.btn-unduh').click(function(){
                 let noPendaftaran = $(this).data('nopendaftaran');
                 let noCm = $(this).data('nocm');
@@ -625,7 +621,17 @@
                 $('#'+tabActive).css('display', 'block');
                 $('#'+tabNotActive1).css('display', 'none');
                 $('#'+tabNotActive2).css('display', 'none');
+                
             })
+            $("#tab_section-riwayat").on("click", function(){
+                    $(".print_button").show();
+                });
+                $("#tab_section-form").on("click", function(){
+                    $(".print_button").hide();
+                });
+                $("#tab_section-berkas").on("click", function(){
+                    $(".print_button").hide();
+                });
         })
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");
@@ -645,7 +651,7 @@
 
                     type    : 'post',
                     url     : "{{ url('formPengkajian/getICD10') }}",
-                    data    : { NamaDiagnosa: diagnosa , _token: '<?php echo csrf_token()?>' },
+                    data    : { kodeDiagnosa: diagnosa , _token: '<?php echo csrf_token()?>' },
                     success : function (data) {
                         console.log("Success");
                         console.log(data);

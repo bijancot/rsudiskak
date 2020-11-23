@@ -14,6 +14,9 @@
 //$record2 = json_decode(json_encode($listRiwayat));
 
 ?>
+@php
+    $dataPengkajian = $dataMasukPoli['DataPengkajian'];
+@endphp
     <table class="table table-bordered">
         <tr>
             <td style="text-align:center" colspan=2>
@@ -26,14 +29,17 @@
                 </div>             
             </td>
             <td colspan=3>
-                <p style="font-size:11px">Nama Pasien : -</p>
-                <p style="font-size:11px">Jenis Kelamin : -</p>
-                <p style="font-size:11px">Ruang/Kelas : -</p>
+                <p style="font-size:11px">Nama Pasien : {{ $dataMasukPoli['NamaLengkap']}}</p>
+                <p style="font-size:11px">Jenis Kelamin : {{$dataMasukPoli['JenisKelamin']}}</p>
+                <p style="font-size:11px">Ruang/Kelas : {{$dataMasukPoli['Kelas']}}</p>
             </td>
             <td colspan=3>
-                <p style="font-size:11px">No. RM : -</p>
-                <p style="font-size:11px">Tgl Lahir : -</p>
-                <p style="font-size:11px">Tgl Masuk : -</p>
+                @php
+                    $date = date_create($dataMasukPoli['TglMasuk']);
+                @endphp
+                <p style="font-size:11px">No. RM : {{ $dataMasukPoli['NoCM'] }}</p>
+                <p style="font-size:11px">Tgl Lahir : {{ $dataMasukPoli['UmurTahun'] }}</p>
+                <p style="font-size:11px">Tgl Masuk : {{ date_format($date,"d/m/Y")}}</p>
             </td>
         </tr>
         <tr>
@@ -41,12 +47,19 @@
         </tr>
         <tr>
             <td colspan=8>
-                Alamat : -<br>
-                Agama : -<br>
-                Suku : -<br>
-                Pekerjaan : -<br>
-                Status Perkawinan : -<br>
-                Riwayat Alergi : -<br>
+                Alamat : {{ $dataMasukPoli['Alamat'] }}<br>
+                @if($dataMasukPoli['IdFormPengkajian']=="1")
+                    Agama : {{ $dataPengkajian['PengkajianKeperawatan']['Agama'] }}<br>
+                    Pekerjaan : {{ $dataPengkajian['PengkajianKeperawatan']['Pekerjaan'] }}<br>
+                    Status Perkawinan : {{ $dataPengkajian['PengkajianKeperawatan']['StatusPernikahan'] }}<br>
+                    Riwayat Alergi : {{ $dataPengkajian['PengkajianKeperawatan']['Alergi'] }}<br>
+                @elseif($dataMasukPoli['IdFormPengkajian']=="2")
+                    Agama : - <br>
+                    Pekerjaan : - <br>
+                    Status Perkawinan : - <br>
+                    Riwayat Alergi : -<br>
+                @endif
+                    
             </td>
         </tr>
     </table>
@@ -60,15 +73,29 @@
             <th style="text-align:center">Riwayat Rawat Inap/ Prosedur Operasi</th>
             <th style="text-align:center">Nama & TTD Petugas Kesehatan</th>
         </tr>
+        
+        <?php $i = 1; ?>
+        @foreach ($dataRiwayat as $item)
+        @php
+            $no=0;
+            $date = date_create($item['TglMasukPoli']);
+        @endphp
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><?php echo $no++;?></td>
+            <td>{{date_format($date, 'd/m/Y - h:i')}}</td>
+            <td>{{$item['Ruangan']}}</td>
+            <td>CAD, HF</td>
+            <td>-</td>
+            <td>-</td>
+            <td>
+            @if ($item['StatusPengkajian'] == '2')
+                OK
+            @else
+                -
+            @endif
+            </td>
         </tr>
+        @endforeach
     </table>
 </body>
 </html>

@@ -21,7 +21,7 @@
 
             <div class="content soft-shadow">
                 <div class="p-3">
-                    <p class="h4">Data Pasien</p>
+                    <p class="h4">Data Pasien <a href="/profilRingkas/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}" target="_blank" class="btn btn-primary print_button" id="print_button">Print</a></p>
                 </div>
                 <hr>
                 <div class="row p-3 py-4">
@@ -234,7 +234,12 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="diagnosa">Diagnosa (A) <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}">
+                                            {{-- <input type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}"> --}}
+                                            <select type="text" multiple="multiple" class="form-control pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
+                                                @foreach ($getICD10 as $item)  
+                                                    <option value="{{ $item['kodeDiagnosa'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['NamaDiagnosa']) && $dataPengkajian['PengkajianMedis']['NamaDiagnosa'] == $item['NamaDiagnosa'] ? 'selected' : '')}}>{{ $item['kodeDiagnosa'] }} - {{ $item['NamaDiagnosa'] }}</option>
+                                                @endforeach                                    
+                                            </select>
                                             <div class="invalid-feedback">
                                                 Data Diagnosa Harus Diisi.
                                             </div>
@@ -349,6 +354,16 @@
         $(document).ready(function(){
             // set hide field required
             $('.lbl-isRequired').hide();
+            $('.print_button').hide();
+            $("#tab_section-riwayat").on("click", function(){
+                    $(".print_button").show();
+                });
+                $("#tab_section-form").on("click", function(){
+                    $(".print_button").hide();
+                });
+                $("#tab_section-berkas").on("click", function(){
+                    $(".print_button").hide();
+                });
             $('#verifikasi').prop('checked', false);
             $('.inpt-isRequired').prop('required', false);
 
@@ -402,6 +417,7 @@
                 $('#'+tabActive).css('display', 'block');
                 $('#'+tabNotActive1).css('display', 'none');
                 $('#'+tabNotActive2).css('display', 'none');
+                
             })
             
         })
