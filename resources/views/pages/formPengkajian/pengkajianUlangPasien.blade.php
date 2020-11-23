@@ -7,7 +7,7 @@
     <div class="bg-greenishwhite">
         <div class="wrapper">
        
-            <div class="d-flex flex-column align-items-center mb-5">
+            <div class="d-flex align-items-center mb-5">
                 <a href="{{url('/listPasien/masukPoliRedirect')}}" class="mr-auto">
                     <span>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 18L15.41 16.59L10.83 12L15.41 7.41L14 6L7.99997 12L14 18Z" fill="#00451F"/></svg>
@@ -66,19 +66,9 @@
             <div id="section-form">
                 @php
                     // set subform data
-                    $subForm = ['PengkajianKeperawatan_1', 'PengkajianKeperawatan_2'];
-                    $dataPengkajian = [];
-                    foreach ($dataMasukPoli['DataPengkajian'] as $item) {
-                        foreach ($subForm as $item2) {
-                            if(!empty($item[$item2])){
-                                $dataPengkajian[$item2] = $item[$item2];
-                                break;
-                            }
-                        }
-                    }
-                    
+                    $dataPengkajian = $dataMasukPoli['DataPengkajian'];
                 @endphp
-                <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, $subForm[0], '0'])}}" class="needs-validation" method="POST" novalidate>
+                <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, 'tes', '0'])}}" class="needs-validation" method="POST" novalidate>
                     @csrf
                     <div class="content mt-3 soft-shadow collapsible">
                         <div class="p-3 collapsible-head inactive">
@@ -215,9 +205,6 @@
                             </div>
                         </div>
                     </div>
-                </form>
-                <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, $subForm[1], '1'])}}" method="POST" class="needs-validation" novalidate>
-                    @csrf
                     <div class="content mt-3 soft-shadow collapsible">
                         <div class="p-3 collapsible-head inactive">
                             <p class="h6">II. Pengkajian Keperawatan <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
@@ -337,6 +324,7 @@
                                             <a href="#" class="btn secondary">List dirujuk/konsul ke</a>
                                         </div>
                                         <div class="col-12 mt-3">
+                                            <input type="hidden" name="StatusPengkajian" value="1">
                                             <button type="submit" class="btn green-long">Submit</button>
                                         </div>
                                     </div>

@@ -230,15 +230,16 @@ class FormPengkajianController extends Controller
         }
         // return view('pages.formPengkajian.pengkajianAwalPasien', $no_cm);
     }
-
+    
     /**
      * Simpan Form Pengkajian
      */
     public function storeFormPengkajian(Request $req, $idForm, $no_cm, $noPendaftaran, $subForm, $isLastSubForm)
     {
-
+        
         $logging        = new LoggingController;
-
+        
+        
         //get data pasien bersarakan nocm
         // $dataMasukPoli = DB::collection('pasien_' . $no_cm)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
         // $dataMasukPoli = $dataMasukPoli[0];
@@ -284,6 +285,9 @@ class FormPengkajianController extends Controller
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->update(['DataPengkajian' => $dataUpdate]);
+        
+
+        return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran);
 
         /**
          * check status pengkajian jika
@@ -412,8 +416,6 @@ class FormPengkajianController extends Controller
         //     ];
         //     $logging->toLogging('update', 'DataPengkajian', $updateData, $no_cm);
         // }
-
-        return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran);
     }
 
     /**
