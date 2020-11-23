@@ -412,9 +412,9 @@
                                         </div>
                                         @endif
                                     </div>
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <button type="submit" class="btn green-long w-50 ml-auto mr-3">Submit</button>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -448,10 +448,15 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="diagnosa">Diagnosa (A) <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}" >
+                                            <select type="text" multiple="multiple" class="form-control pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
+                                                @foreach ($getICD10 as $item)  
+                                                    <option value="{{ $item['kodeDiagnosa'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['NamaDiagnosa']) && $dataPengkajian['PengkajianMedis']['NamaDiagnosa'] == $item['NamaDiagnosa'] ? 'selected' : '')}}>{{ $item['kodeDiagnosa'] }} - {{ $item['NamaDiagnosa'] }}</option>
+                                                @endforeach                                    
+                                            </select>
+                                            {{-- <input type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Diagnosa Harus Diisi.
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="kodeICD">Kode ICD 10</label>
@@ -551,6 +556,11 @@
                                 </div>
         
                             </div>         
+                        </div>
+                    </div>
+                    <div class="content soft-shadow mt-3">
+                        <div class="col-12">
+                            <button type="submit" class="btn green-long w-50 ml-auto mr-3">Submit</button>
                         </div>
                     </div>
                 </form>

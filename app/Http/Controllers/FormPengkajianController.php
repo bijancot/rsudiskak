@@ -17,6 +17,7 @@ use App\StatusPsikologi;
 use App\TempatTinggal;
 use App\Agama;
 use App\HambatanEdukasi;
+use App\ICD10;
 use Illuminate\Support\Facades\Auth;
 
 class FormPengkajianController extends Controller
@@ -132,8 +133,8 @@ class FormPengkajianController extends Controller
     {
 
         $dataForm = ManajemenForm::where('idForm', $idForm)->get();
-        $getICD10 = $this->getICD10();
         $getICD09 = $this->getICD9();
+        $getICD10 = ICD10::all();
 
         // return view("'".$data[0]['namaFile']."'");
         if ($NoCM && $noPendaftaran) {
@@ -165,8 +166,8 @@ class FormPengkajianController extends Controller
             if ($dataMasukPoli['IdFormPengkajian'] != $idForm) {
                 return redirect('formPengkajian/' . $dataMasukPoli['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
             }
-            $dataRiwayat        = DB::collection('pasien_'. $NoCM)->whereNotNull('StatusPengkajian')->get();
-            $dataDokumen        = DB::collection('dokumen_'.$NoCM)->whereNotNull('Status')->get();
+            $dataRiwayat        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->get();
+            $dataDokumen        = DB::collection('dokumen_' . $NoCM)->whereNotNull('Status')->get();
             /**
              * Get Data dari Collection menggunakan Eloquent ORM 
              */
@@ -199,7 +200,7 @@ class FormPengkajianController extends Controller
                 ->whereNotNull('StatusPengkajian')
                 ->orderBy('created_at', 'desc')
                 ->first();
-          
+
             $data = [
                 'form_id'           => $idForm,
                 'nama_form'         => $dataForm[0]['namaForm'],
@@ -230,16 +231,16 @@ class FormPengkajianController extends Controller
         }
         // return view('pages.formPengkajian.pengkajianAwalPasien', $no_cm);
     }
-    
+
     /**
      * Simpan Form Pengkajian
      */
     public function storeFormPengkajian(Request $req, $idForm, $no_cm, $noPendaftaran, $subForm, $isLastSubForm)
     {
-        
+
         $logging        = new LoggingController;
-        
-        
+
+
         //get data pasien bersarakan nocm
         // $dataMasukPoli = DB::collection('pasien_' . $no_cm)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
         // $dataMasukPoli = $dataMasukPoli[0];
@@ -285,8 +286,8 @@ class FormPengkajianController extends Controller
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->update(['DataPengkajian' => $dataUpdate]);
-        
-        
+
+
         return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran);
 
         /**
