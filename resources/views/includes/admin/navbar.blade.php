@@ -20,7 +20,7 @@
         </li>
         <li class="{{ Request::is('m_user') ? 'active' : '' }} nav-item"><a href="{{ url('m_user') }}">Management User</a></li>
 
-        {{-- <li class="{{ Request::is('historicalList') ? 'active' : '' }} nav-item"><a href="{{ url('historicalList') }}">Historical List</a></li> --}}
+        <li class="{{ Request::is('historicalList') ? 'active' : '' }} nav-item"><a href="{{ url('historicalList') }}">Historical List</a></li>
         <li class="{{ Request::is('dokumen') ? 'active' : '' }} nav-item"><a href="{{ url('dokumen') }}">Dokumen</a></li>
 
         

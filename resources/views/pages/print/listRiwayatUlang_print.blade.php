@@ -11,7 +11,13 @@
 <body>
 <?php
 
-//$record2 = json_decode(json_encode($listRiwayat));
+$record2 = json_decode(json_encode($listRiwayat));
+$inputTglLahir = $record2[0]->TglLahir; 
+$inputJamMasukPoli = $record2[0]->TglMasuk;
+$inputTanggalMasukPoli = $record2[0]->TglMasukPoli;
+$JamMasuk = strtotime($inputJamMasukPoli);
+$TglMasuk = strtotime($inputTanggalMasukPoli);
+$TglLahir = strtotime($inputTglLahir); 
 
 ?>
     <table class="table table-bordered">
@@ -26,14 +32,14 @@
                 </div>             
             </td>
             <td colspan=3>
-                <p style="font-size:11px">Nama Pasien : -</p>
-                <p style="font-size:11px">Jenis Kelamin : -</p>
-                <p style="font-size:11px">Ruang/Kelas : -</p>
+            <p style="font-size:10px">Nama Pasien : <?php echo $record2[0]->NamaLengkap; ?></p>
+                <p style="font-size:10px">Jenis Kelamin : <?php echo $record2[0]->JenisKelamin; ?></p>
+                <p style="font-size:10px">Ruang/Kelas : <?php echo $record2[0]->Ruangan; ?></p>
             </td>
             <td colspan=3>
-                <p style="font-size:11px">No. RM : -</p>
-                <p style="font-size:11px">Tgl Lahir : -</p>
-                <p style="font-size:11px">Tgl Masuk : -</p>
+                <p style="font-size:10px">No. RM : <?php echo $record2[0]->NoCM; ?></p>
+                <p style="font-size:10px">Tgl Lahir : <?php echo date('Y-m-d', $TglLahir); ?> / <?php echo $record2[0]->Umur; ?></p>
+                <p style="font-size:10px">Tgl Masuk : <?php echo $record2[0]->TglMasukPoli; ?> Jam: <?php echo date('H:i', $JamMasuk); ?></p>
             </td>
         </tr>
         <tr>
@@ -41,20 +47,24 @@
         </tr>
         <tr>
             <td colspan=6><b>I. Pengkajian Keperawatan</b></td>
-            <td colspan=2>Jam: -------</td>
+            <td colspan=2>Jam: <?php echo date('H:i', $JamMasuk); ?></td>
         </tr>
         <tr>
             <td colspan=3>
-                1. Tekanan darah : -<br>
-                2. Frekuensi nadi : -<br>
-                3. Suhu : -<br>
-                4. Frekuensi nafas : -<br>
+                1. Tekanan darah : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->TekananDarah?> mmHg<br>
+                2. Frekuensi nadi : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNadi?> x/menit<br>
+                3. Suhu : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->Suhu?> C<br>
+                4. Frekuensi nafas : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNafas?> x/menit<br>
             </td>
             <td colspan=3>
-                1. Berat badan : -<br>
-                2. Tinggi badan : -<br>
-                3. Skor nyeri : -<br>
-                4. Skor jatuh : -<br>
+                1. Berat badan : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->BeratBadan?><br>
+                2. Tinggi badan : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->TinggiBadan?><br>
+                3. Skor Nyeri : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->SkorNyeri?><br>
+                4. Skala resiko jatuh : <br>
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNafas=="Rendah" ? 'checked' : '');?>>Rendah &nbsp;
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNafas=="Sedang" ? 'checked' : '');?>>Sedang &nbsp;
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNafas=="Sedang" ? 'checked' : '');?>>Tinggi &nbsp;
+                <br>
             </td>
             <td style="text-align:center" colspan=2>
                 Perawat / Terapis<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
@@ -67,31 +77,31 @@
         <tr>
             <td rowspan="4" colspan="6">
                 Amnesis (S) : <br>
-                -
+                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Anamnesis?>
                 <br><br>
                 Pemeriksaan Fisik (O) : <br>
-               -
+                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Anamnesis?>
                 
             </td>
             <td>
                 Rencana dan Terapi(P)<br>
-                -
+                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->RencanaDanTerapi?>
             </td>
             <td>
                 Kode ICD 9 CM<br>
-                -
+                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->KodeICD10?>
             </td>
         </tr>
         <tr>
             <td colspan=2>
                 Edukasi :<br>
-                -
+                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Edukasi?>
             </td>
         </tr>
         <tr>
             <td colspan=2>
                 Penyakit menular : <br>
-                -
+                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->PenyakitMenular?>
             </td>
         </tr>
         <tr>
@@ -102,15 +112,18 @@
         </tr>
         <tr>
             <td colspan=3>
-                Diagnosa : <br>    
-                Komplikasi : <br>
-                Komorbid : 
+                Diagnosa : <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Diagnosa?><br>    
+                Komplikasi : <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Komplikasi?><br>
+                Komorbid : <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Komorbid?>
             </td>
             <td colspan=3>
-                Kode ICD 10 CM : <br>
+                Kode ICD 10 CM : <br><?php echo $record2[0]->DataPengkajian->PengkajianMedis->KodeICD10?><br>
             </td>
             <td colspan=2>
                 Kesan Status Gizi : <br>
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianMedis->KesanStatusGizi=="kurang" ? 'checked' : '');?>>Gizi Kurang / Buruk &nbsp;<br>
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianMedis->KesanStatusGizi=="cukup" ? 'checked' : '');?>>Gizi Cukup &nbsp;<br>
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianMedis->KesanStatusGizi=="lebih" ? 'checked' : '');?>>Gizi Lebih &nbsp;<br>
             </td>
         </tr>
         <tr>
@@ -118,7 +131,7 @@
             <td colspan=2 style="text-align:center">Telah Dikode</td>
             <td colspan=2 style="text-align:center">Legalisasi Severity</td>
             <td colspan=2 rowspan=3 style="text-align:center">
-                Tulungagung, -- -- -- Jam : -- -- --<br>
+                Tulungagung, <?php echo date('d F Y', $TglMasuk)?><br>
                 Dokter<br>
             </td>
         </tr>
@@ -130,15 +143,15 @@
             <td style="text-align:center" colspan=2>Komite Medis</td>
         </tr>
         <tr>
-            <td>&nbsp;<br>&nbsp;<br></td>
+            <td style="text-align:center"><?php echo date('Y/m/d', $TglMasuk)?>&nbsp;<br>&nbsp;<br></td>
             <td><br></td>
-            <td><br></td>
+            <td style="text-align:center"><?php echo date('Y/m/d', $TglMasuk)?><br></td>
             <td><br></td>
             <td colspan=2><br></td>
         </tr>
         <tr>
             <td colspan=6></td>
-            <td style="text-align:center" colspan=2>Nama Dokter</td>
+            <td style="text-align:center" colspan=2><?php echo $record2[0]->NamaDokter; ?></td>
         </tr>
     </table>
 </body>

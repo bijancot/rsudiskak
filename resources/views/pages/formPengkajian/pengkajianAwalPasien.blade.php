@@ -21,7 +21,7 @@
             </div>
             <div class="content soft-shadow">
                 <div class="p-3">
-                    <p class="h4">Data Pasien</p>
+                    <p class="h4">Data Pasien<a href="/profilRingkas/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}" target="_blank" class="btn btn-primary print_button" id="print_button">Print</a></p>
                 </div>
                 <hr>
                 <div class="row p-3 py-4">
@@ -562,6 +562,7 @@
         $(document).ready(function(){
             // set hide field required
             $('.lbl-isRequired').hide();
+            $(".print_button").hide();
             $('#verifikasi').prop('checked', false);
             $('.inpt-isRequired').prop('required', false);
             
@@ -615,7 +616,17 @@
                 $('#'+tabActive).css('display', 'block');
                 $('#'+tabNotActive1).css('display', 'none');
                 $('#'+tabNotActive2).css('display', 'none');
+                
             })
+            $("#tab_section-riwayat").on("click", function(){
+                    $(".print_button").show();
+                });
+                $("#tab_section-form").on("click", function(){
+                    $(".print_button").hide();
+                });
+                $("#tab_section-berkas").on("click", function(){
+                    $(".print_button").hide();
+                });
         })
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");

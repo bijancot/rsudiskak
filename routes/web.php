@@ -24,7 +24,9 @@ Route::get('logActivities', 'LoggingController@index')->middleware('adminRole')-
 Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
 Route::get('riwayatPasienAwal/{no_pendaftaran}','RiwayatController@printRiwayatAwal');
 Route::get('riwayatPasienUlang/{no_pendaftaran}','RiwayatController@printRiwayatUlang');
-Route::get('profilRingkas/{no_pendaftaran}','RiwayatController@printProfilRingkas');
+Route::get('profilRingkas/{idForm}/{no_cm}/{noPendaftaran}','RiwayatController@printProfilRingkas');
+Route::get('historicalList', 'RiwayatController@historicalList');
+
 
 Route::get('listPasien', 'PasienController@listPasien');
 Route::get('listPasien/masukPoliRedirect', 'DiagnosaController@masukPoliRedirect');
@@ -45,10 +47,6 @@ Route::get('riwayat/{no_cm}', 'PasienController@Riwayat');
 Route::get('formPengkajianAwal/{no_cm}', 'FPengkajianAwalController@showRajal');
 Route::get('formPengkajianUlang/{no_cm}', 'FPengkajianUlangController@showRajal');
 Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}', 'FormPengkajianController@formPengkajian');
-
-Route::get('historicalList', function () {
-    return view('pages.admin.historicalList');
-});
 
 
 // ============ TEMPLATE FRONT END
@@ -77,9 +75,9 @@ Route::get('m_user/ubahPassword', 'ManajemenUserController@ubahPassword');
 Route::get('m_user/lupaPassword', 'ManajemenUserController@lupaPassword');
 
 
-Route::get('historicalList', function () {
-    return view('pages.admin.historicalList');
-});
+// Route::get('historicalList', function () {
+//     return view('pages.admin.historicalList');
+// });
 
 Route::get('dokumen', 'DokumenController@index');
 Route::get('dokumen/berkas/{no_cm}', 'DokumenController@berkas');
