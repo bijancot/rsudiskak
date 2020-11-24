@@ -14,57 +14,32 @@
                 <table id="tbl_listPasienKirimPoli" class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Urutan</th>
                             <th>No Pendaftaran</th>
                             <th>No Rekam Medis</th>
                             <th>Nama Pasien</th>
-                            <th>Umur Pasien</th>
-                            <th>Jenis Kelamin</th>
                             <th>Tanggal Masuk</th>
-                            <th>Masuk Poli</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>001</td>
-                            <td>234232</td>
-                            <td>11930222</td>
-                            <td>Jacob Jones Harianto</td>
-                            <td>25 Th</td>
-                            <td>Laki-Laki</td>
-                            <td>27/08/2020 - 13.02</td>
-                            <td><a href=""><span class="label-keterangan lime">Poli Syaraf</span></a></td>
-                        </tr>
-                        <tr>
-                            <td>001</td>
-                            <td>234232</td>
-                            <td>11930222</td>
-                            <td>Jacob Jones Harianto</td>
-                            <td>25 Th</td>
-                            <td>Laki-Laki</td>
-                            <td>27/08/2020 - 13.02</td>
-                            <td><a href=""><span class="label-keterangan orange">Poli Mata</span></a></td>
-                        </tr>
-                        <tr>
-                            <td>001</td>
-                            <td>234232</td>
-                            <td>11930222</td>
-                            <td>Jacob Jones Harianto</td>
-                            <td>25 Th</td>
-                            <td>Laki-Laki</td>
-                            <td>27/08/2020 - 13.02</td>
-                            <td><a href=""><span class="label-keterangan yellow">Poli Paru</span></a></td>
-                        </tr>
-                        <tr>
-                            <td>001</td>
-                            <td>234232</td>
-                            <td>11930222</td>
-                            <td>Jacob Jones Harianto</td>
-                            <td>25 Th</td>
-                            <td>Laki-Laki</td>
-                            <td>27/08/2020 - 13.02</td>
-                            <td><a href=""><span class="label-keterangan blue">Poli Roli</span></a></td>
-                        </tr>
+                        @foreach ($listRiwayat as $item)
+                            @if($item['StatusPengkajian']=="2")
+                            <tr>
+                                <td>{{ $item['NoPendaftaran'] }}</td>
+                                <td>{{ $item['NoCM'] }}</td>
+                                <td>{{ $item['NamaLengkap'] }}</td>
+                                <td>{{ $item['TglMasukPoli'] }}</td>
+                                <td data-label="Action" class="d-flex flex-row p-lg-1">
+                                    @if($item['IdFormPengkajian']=="1")
+                                        <a href="riwayatPasienAwal/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa">Print</a>
+                                    @elseif($item['IdFormPengkajian']=="2")
+                                        <a href="riwayatPasienUlang/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa">Print</a>
+                                    @endif    
+                                    <!-- <a href="profilRingkas/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa ml-auto">Profil Ringkas</a> -->
+                                </td>
+                            </tr>
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>

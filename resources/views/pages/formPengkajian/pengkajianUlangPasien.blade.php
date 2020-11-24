@@ -7,7 +7,7 @@
     <div class="bg-greenishwhite">
         <div class="wrapper">
        
-            <div class="d-flex flex-column align-items-center mb-5">
+            <div class="d-flex align-items-center mb-5">
                 <a href="{{url('/listPasien/masukPoliRedirect')}}" class="mr-auto">
                     <span>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 18L15.41 16.59L10.83 12L15.41 7.41L14 6L7.99997 12L14 18Z" fill="#00451F"/></svg>
@@ -21,7 +21,7 @@
 
             <div class="content soft-shadow">
                 <div class="p-3">
-                    <p class="h4">Data Pasien</p>
+                    <p class="h4">Data Pasien <a href="/profilRingkas/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}" target="_blank" class="btn btn-primary print_button" id="print_button">Print</a></p>
                 </div>
                 <hr>
                 <div class="row p-3 py-4">
@@ -66,19 +66,9 @@
             <div id="section-form">
                 @php
                     // set subform data
-                    $subForm = ['PengkajianKeperawatan_1', 'PengkajianKeperawatan_2'];
-                    $dataPengkajian = [];
-                    foreach ($dataMasukPoli['DataPengkajian'] as $item) {
-                        foreach ($subForm as $item2) {
-                            if(!empty($item[$item2])){
-                                $dataPengkajian[$item2] = $item[$item2];
-                                break;
-                            }
-                        }
-                    }
-                    
+                    $dataPengkajian = $dataMasukPoli['DataPengkajian'];
                 @endphp
-                <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, $subForm[0], '0'])}}" class="needs-validation" method="POST" novalidate>
+                <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, 'tes', '0'])}}" class="needs-validation" method="POST" novalidate>
                     @csrf
                     <div class="content mt-3 soft-shadow collapsible">
                         <div class="p-3 collapsible-head inactive">
@@ -98,8 +88,8 @@
                                         </div>
             
                                         <div class="col-8 mt-3 mt-lg-0">
-                                            <label for="nopendaftaran">Tekanan Darah</label>
-                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan_1[TekananDarah]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['TekananDarah']) ? $dataPengkajian['PengkajianKeperawatan_1']['TekananDarah'] : '')}}" required>
+                                            <label for="nopendaftaran">Tekanan Darah <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Tekanan Darah Harus Diisi.
                                             </div>
@@ -110,8 +100,8 @@
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Frekuensi Nadi</label>
-                                            <input class="form-control" type="number" onkeypress="return onlyNumberKey(event)" name="PengkajianKeperawatan_1[FrekuensiNadi]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['FrekuensiNadi']) ? $dataPengkajian['PengkajianKeperawatan_1']['FrekuensiNadi'] : '')}}" required>
+                                            <label for="nopendaftaran">Frekuensi Nadi <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input class="form-control inpt-isRequired" type="number" onkeypress="return onlyNumberKey(event)" name="PengkajianKeperawatan[FrekuensiNadi]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['FrekuensiNadi']) ? $dataPengkajian['PengkajianKeperawatan']['FrekuensiNadi'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Frekuensi Nadi Harus Diisi.
                                             </div>
@@ -122,8 +112,8 @@
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Suhu</label>
-                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan_1[Suhu]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['Suhu']) ? $dataPengkajian['PengkajianKeperawatan_1']['Suhu'] : '')}}" required>
+                                            <label for="nopendaftaran">Suhu <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[Suhu]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['Suhu']) ? $dataPengkajian['PengkajianKeperawatan']['Suhu'] : '')}}">
                                             <div class="invalid-feedback">
                                                 Data Suhu Harus Diisi.
                                             </div>
@@ -134,8 +124,8 @@
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Frekuensi Nafas</label>
-                                            <input class="form-control" type="number" onkeypress="return onlyNumberKey(event)" name="PengkajianKeperawatan_1[FrekuensiNafas]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['FrekuensiNafas']) ? $dataPengkajian['PengkajianKeperawatan_1']['FrekuensiNafas'] : '')}}" required>
+                                            <label for="nopendaftaran">Frekuensi Nafas <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input class="form-control inpt-isRequired" type="number" onkeypress="return onlyNumberKey(event)" name="PengkajianKeperawatan[FrekuensiNafas]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['FrekuensiNafas']) ? $dataPengkajian['PengkajianKeperawatan']['FrekuensiNafas'] : '')}}">
                                             <div class="invalid-feedback">
                                                 Data Frekuensi Nafas Harus Diisi.
                                             </div>
@@ -157,7 +147,7 @@
             
                                         <div class="col-8 mt-3 mt-lg-0">
                                             <label for="nopendaftaran">Berat Badan</label>
-                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan_1[BeratBadan]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['BeratBadan']) ? $dataPengkajian['PengkajianKeperawatan_1']['BeratBadan'] : '')}}" required>
+                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[BeratBadan]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['BeratBadan']) ? $dataPengkajian['PengkajianKeperawatan']['BeratBadan'] : '')}}">
                                             <div class="invalid-feedback">
                                                 Data Berat Badan Harus Diisi.
                                             </div>
@@ -169,7 +159,7 @@
             
                                         <div class="col-8 mt-3">
                                             <label for="nopendaftaran">Tinggi Badan</label>
-                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan_1[TinggiBadan]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['TinggiBadan']) ? $dataPengkajian['PengkajianKeperawatan_1']['TinggiBadan'] : '')}}" required>
+                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[TinggiBadan]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TinggiBadan']) ? $dataPengkajian['PengkajianKeperawatan']['TinggiBadan'] : '')}}">
                                             <div class="invalid-feedback">
                                                 Data Tinggi Badan Harus Diisi.
                                             </div>
@@ -181,7 +171,7 @@
         
                                         <div class="col-8 mt-3">
                                             <label for="nopendaftaran">Skor Nyeri</label>
-                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan_1[SkorNyeri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_1']['SkorNyeri']) ? $dataPengkajian['PengkajianKeperawatan_1']['SkorNyeri'] : '')}}" required>
+                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[SkorNyeri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['SkorNyeri']) ? $dataPengkajian['PengkajianKeperawatan']['SkorNyeri'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Skor Nyeri Harus Diisi.
                                             </div>
@@ -191,15 +181,15 @@
                                             <label for="nopendaftaran" class="pb-3">Skor Jatuh</label>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="form-check">
-                                                    <input type="radio" class="form-check-input" id="rendah" name="PengkajianKeperawatan_1[SkorJatuh]" value="rendah" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh'] == 'rendah' ? 'checked' : '')}} required>
+                                                    <input type="radio" class="form-check-input" id="rendah" name="PengkajianKeperawatan[SkorJatuh]" value="rendah" {{(!empty($dataPengkajian['PengkajianKeperawatan']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan']['SkorJatuh'] == 'rendah' ? 'checked' : '')}} >
                                                     <label for="rendah">Rendah</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input type="radio" class="form-check-input" id="sedang" name="PengkajianKeperawatan_1[SkorJatuh]" value="sedang" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh'] == 'sedang' ? 'checked' : '')}} required>
+                                                    <input type="radio" class="form-check-input" id="sedang" name="PengkajianKeperawatan[SkorJatuh]" value="sedang" {{(!empty($dataPengkajian['PengkajianKeperawatan']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan']['SkorJatuh'] == 'sedang' ? 'checked' : '')}} >
                                                     <label for="sedang">Sedang</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input type="radio" class="form-check-input" id="tinggi" name="PengkajianKeperawatan_1[SkorJatuh]" value="tinggi" {{(!empty($dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan_1']['SkorJatuh'] == 'tinggi' ? 'checked' : '')}} required>
+                                                    <input type="radio" class="form-check-input" id="tinggi" name="PengkajianKeperawatan[SkorJatuh]" value="tinggi" {{(!empty($dataPengkajian['PengkajianKeperawatan']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan']['SkorJatuh'] == 'tinggi' ? 'checked' : '')}} >
                                                     <label for="tinggi">Tinggi</label>
                                                     <div class="invalid-feedback">
                                                         Data Skor Jatuh Harus Diisi.
@@ -215,12 +205,9 @@
                             </div>
                         </div>
                     </div>
-                </form>
-                <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, $subForm[1], '1'])}}" method="POST" class="needs-validation" novalidate>
-                    @csrf
                     <div class="content mt-3 soft-shadow collapsible">
                         <div class="p-3 collapsible-head inactive">
-                            <p class="h6">II. Pengkajian Keperawatan <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
+                            <p class="h6">II. Pengkajian Medis <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
                         </div>
                         <hr>
                         <div class="collapsible-body">
@@ -229,8 +216,8 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group h-100">
-                                                <label for="anamnesis">Anamesis (S)</label>
-                                                <textarea class="form-control" name="PengkajianKeperawatan_2[Anamnesis]" id="Anamnesis" required>{{(!empty($dataPengkajian['PengkajianKeperawatan_2']['Anamnesis']) ? $dataPengkajian['PengkajianKeperawatan_2']['Anamnesis'] : '')}}</textarea>
+                                                <label for="anamnesis">Anamesis (S) <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <textarea class="form-control inpt-isRequired" name="PengkajianMedis[Anamnesis]" id="Anamnesis">{{(!empty($dataPengkajian['PengkajianMedis']['Anamnesis']) ? $dataPengkajian['PengkajianMedis']['Anamnesis'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Anamnesis Harus Diisi.
                                                 </div>
@@ -238,39 +225,44 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <div class="form-group h-100">
-                                                <label for="pemeriksaanFisik">Pemeriksaan Fisik (O)</label>
-                                                <textarea class="form-control" class="form-control" name="PengkajianKeperawatan_2[PemeriksaanFisik]" id="PemeriksaanFisik" required>{{(!empty($dataPengkajian['PengkajianKeperawatan_2']['PemeriksaanFisik']) ? $dataPengkajian['PengkajianKeperawatan_2']['PemeriksaanFisik'] : '')}}</textarea>
+                                                <label for="pemeriksaanFisik">Pemeriksaan Fisik (O) <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <textarea class="form-control inpt-isRequired" class="form-control" name="PengkajianMedis[PemeriksaanFisik]" id="PemeriksaanFisik" >{{(!empty($dataPengkajian['PengkajianMedis']['PemeriksaanFisik']) ? $dataPengkajian['PengkajianMedis']['PemeriksaanFisik'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Pemeriksaan Fisik Harus Diisi.
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <label for="diagnosa">Diagnosa (A)</label>
-                                            <input type="text" class="form-control" name="PengkajianKeperawatan_2[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_2']['Diagnosa']) ? $dataPengkajian['PengkajianKeperawatan_2']['Diagnosa'] : '')}}" required>
+                                            <label for="diagnosa">Diagnosa (A) <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            {{-- <input type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}"> --}}
+                                            <select type="text" multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
+                                                @foreach ($getICD10 as $item)  
+                                                    <option value="{{ $item['kodeDiagnosa'] }}:{{ $item['NamaDiagnosa'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['NamaDiagnosa']) && $dataPengkajian['PengkajianMedis']['NamaDiagnosa'] == $item['NamaDiagnosa'] ? 'selected' : '')}}>{{ $item['kodeDiagnosa'] }} - {{ $item['NamaDiagnosa'] }}</option>
+                                                @endforeach                                    
+                                            </select>
                                             <div class="invalid-feedback">
                                                 Data Diagnosa Harus Diisi.
                                             </div>
                                         </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="kodeICD">Kode ICD 10</label>
-                                            <select class="custom-select" name="PengkajianKeperawatan_2[KodeICD10]" id="kodeICD">
+                                        {{-- <div class="col-12 mt-3">
+                                            <label for="kodeICD10">Kode ICD 10</label>
+                                            <select class="custom-select" name="PengkajianMedis[KodeICD10]" id="kodeICD10">
                                                 <option selected>-</option>
                                                 <option value="1">One</option>
                                                 <option value="2">Two</option>
                                                 <option value="3">Three</option>
                                             </select>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 mt-3">
                                             <label for="komplikasi">Komplikasi</label>
-                                            <input class="form-control" type="text" name="PengkajianKeperawatan_2[Komplikasi]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_2']['Komplikasi']) ? $dataPengkajian['PengkajianKeperawatan_2']['Komplikasi'] : '')}}" required>
+                                            <input class="form-control" type="text" name="PengkajianMedis[Komplikasi]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Komplikasi']) ? $dataPengkajian['PengkajianMedis']['Komplikasi'] : '')}}">
                                             <div class="invalid-feedback">
                                                 Data Komplikasi Harus Diisi.
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="komorbid">Komorbid</label>
-                                            <input type="text" class="form-control" name="PengkajianKeperawatan_2[Komorbid]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_2']['Komorbid']) ? $dataPengkajian['PengkajianKeperawatan_2']['Komorbid'] : '')}}" required>
+                                            <input type="text" class="form-control" name="PengkajianMedis[Komorbid]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Komorbid']) ? $dataPengkajian['PengkajianMedis']['Komorbid'] : '')}}">
                                             <div class="invalid-feedback">
                                                 Data Komorbid Harus Diisi.
                                             </div>
@@ -281,26 +273,26 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group h-100">
-                                                <label for="rencanadanterapi">Rencana dan Terapi (P)</label>
-                                                <textarea class="form-control" name="PengkajianKeperawatan_2[RencanaDanTerapi]" id="rencanadanterapi" required>{{(!empty($dataPengkajian['PengkajianKeperawatan_2']['RencanaDanTerapi']) ? $dataPengkajian['PengkajianKeperawatan_2']['RencanaDanTerapi'] : '')}}</textarea>
+                                                <label for="rencanadanterapi">Rencana dan Terapi (P) <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <textarea class="form-control inpt-isRequired" name="PengkajianMedis[RencanaDanTerapi]" id="rencanadanterapi">{{(!empty($dataPengkajian['PengkajianMedis']['RencanaDanTerapi']) ? $dataPengkajian['PengkajianMedis']['RencanaDanTerapi'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Rencana dan Terapi Harus Diisi.
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <label for="kodeICD">Kode ICD 9</label>
-                                            <select class="custom-select" name="PengkajianKeperawatan_2[KodeICD9]" id="kodeICD">
-                                                <option selected>-</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                            <label for="kodeICD09">Kode ICD 9</label>
+                                                <select class="custom-select" name="PengkajianMedis[KodeICD9]" id="kodeICD09">
+                                                    @foreach ($getICD09 as $item)  
+                                                        <option value="{{ $item['KodeDiagnosaT'] }}:{{ $item['DiagnosaTindakan'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['DiagnosaTindakan']) && $dataPengkajian['PengkajianMedis']['DiagnosaTindakan'] == $item['DiagnosaTindakan'] ? 'selected' : '')}}>{{ $item['KodeDiagnosaT'] }} - {{ $item['DiagnosaTindakan'] }}</option>
+                                                    @endforeach   
+                                                </select>
                                             </select>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group h-100">
-                                                <label for="edukasi">Edukasi</label>
-                                                <textarea class="form-control" name="PengkajianKeperawatan_2[Edukasi]" id="edukasi" required>{{(!empty($dataPengkajian['PengkajianKeperawatan_2']['Edukasi']) ? $dataPengkajian['PengkajianKeperawatan_2']['Edukasi'] : '')}}</textarea>
+                                                <label for="edukasi">Edukasi <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <textarea class="form-control inpt-isRequired" name="PengkajianMedis[Edukasi]" id="edukasi">{{(!empty($dataPengkajian['PengkajianMedis']['Edukasi']) ? $dataPengkajian['PengkajianMedis']['Edukasi'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Ediukasi Harus Diisi.
                                                 </div>
@@ -308,7 +300,7 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="penyakitmenular">Penyakit Menular</label>
-                                            <input type="text" class="form-control" name="PengkajianKeperawatan_2[PenyakitMenular]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan_2']['PenyakitMenular']) ? $dataPengkajian['PengkajianKeperawatan_2']['PenyakitMenular'] : '')}}" required>
+                                            <input type="text" class="form-control" name="PengkajianMedis[PenyakitMenular]" value="{{(!empty($dataPengkajian['PengkajianMedis']['PenyakitMenular']) ? $dataPengkajian['PengkajianMedis']['PenyakitMenular'] : '')}}">
                                             <div class="invalid-feedback">
                                                 Data Penyakit Menular Harus Diisi.
                                             </div>
@@ -317,27 +309,35 @@
                                             <label for="kesanstatusgizi" class="pb-3">Kesan Status Gizi</label>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="form-check">
-                                                    <input type="radio" class="form-check-input" id="kurang" name="PengkajianKeperawatan_2[KesanStatusGizi]" value="kurang" {{(!empty($dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi']) && $dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi'] == 'kurang' ? 'checked' : '')}} required>
+                                                    <input type="radio" class="form-check-input" id="kurang" name="PengkajianMedis[KesanStatusGizi]" value="kurang" {{(!empty($dataPengkajian['PengkajianMedis']['KesanStatusGizi']) && $dataPengkajian['PengkajianMedis']['KesanStatusGizi'] == 'kurang' ? 'checked' : '')}} >
                                                     <label for="kurang">Gizi Kurang/Buruk</label>
                                                     <div class="invalid-feedback">
                                                         Data Kesan Status Gizi Harus Diisi.
                                                     </div>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input type="radio" class="form-check-input" id="cukup" name="PengkajianKeperawatan_2[KesanStatusGizi]" value="cukup" {{(!empty($dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi']) && $dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi'] == 'cukup' ? 'checked' : '')}} required>
+                                                    <input type="radio" class="form-check-input" id="cukup" name="PengkajianMedis[KesanStatusGizi]" value="cukup" {{(!empty($dataPengkajian['PengkajianMedis']['KesanStatusGizi']) && $dataPengkajian['PengkajianMedis']['KesanStatusGizi'] == 'cukup' ? 'checked' : '')}}>
                                                     <label for="cukup">Gizi Cukup</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input type="radio" class="form-check-input" id="lebih" name="PengkajianKeperawatan_2[KesanStatusGizi]" value="lebih" {{(!empty($dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi']) && $dataPengkajian['PengkajianKeperawatan_2']['KesanStatusGizi'] == 'lebih' ? 'checked' : '')}} required>
+                                                    <input type="radio" class="form-check-input" id="lebih" name="PengkajianMedis[KesanStatusGizi]" value="lebih" {{(!empty($dataPengkajian['PengkajianMedis']['KesanStatusGizi']) && $dataPengkajian['PengkajianMedis']['KesanStatusGizi'] == 'lebih' ? 'checked' : '')}}>
                                                     <label for="lebih">Gizi Lebih</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <a href="#" class="btn secondary">List dirujuk/konsul ke</a>
+                                            <a href="#" id="profilRingkas" class="btn secondary">List dirujuk/konsul ke</a>
+                                            @if(Auth::user()->Role == "1")
+                                            <input type="checkbox" id="verifikasi" name="verifikasi" value="verifikasi" >
+                                            <label for="verifikasi"> Verifikasi final pasien</label><br>
+                                            <div class="invalid-feedback">
+                                                Verifikasi Harus Tercentang
+                                            </div>
+                                            @endif
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <button type="submit" class="btn green-long">Submit</button>
+                                            <input type="hidden" id="statusPengkajian" name="StatusPengkajian" value="1">
+                                            {{-- <button type="submit" class="btn green-long">Submit</button> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -352,6 +352,13 @@
     </div>
     <script>
         $(document).ready(function(){
+            // set hide field required
+            $('.lbl-isRequired').hide();
+            $('.print_button').hide();
+           
+            $('#verifikasi').prop('checked', false);
+            $('.inpt-isRequired').prop('required', false);
+
             var table = $('#tbl_dokumen').DataTable();
             $(table).DataTable();
             $('#cstm_search').on( 'keyup', function () {
@@ -402,12 +409,61 @@
                 $('#'+tabActive).css('display', 'block');
                 $('#'+tabNotActive1).css('display', 'none');
                 $('#'+tabNotActive2).css('display', 'none');
+                
             })
-            
+
+            $("#tab_section-riwayat").on("click", function(){
+                    $(".print_button").show();
+            });
+            $("#tab_section-form").on("click", function(){
+                $(".print_button").hide();
+            });
+            $("#tab_section-berkas").on("click", function(){
+                $(".print_button").hide();
+            });
+
+            $("#profilRingkas").on("click", function(){
+                $('#tab_section-form').removeClass('active');
+                $('#tab_section-riwayat').addClass('active');
+                $(".print_button").show();    
+                $('#section-riwayat').css('display', 'block');
+                $('#section-berkas').css('display', 'none');
+                $('#section-form').css('display', 'none');
+                
+            });    
         })
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");
         })
+
+        $(document).ready(function() {
+            // $('.pilihDiagnosa').selectpicker();
+            $('.pilihDiagnosa').select2();
+
+            $('#pilihDiagnosa').on('change', function () {
+                // console.log("its change");
+                
+                let diagnosa = $(this).val();
+                // console.log(diagnosa);
+
+                $.ajax({
+
+                    type    : 'post',
+                    url     : "{{ url('formPengkajian/getICD10') }}",
+                    data    : { NamaDiagnosa: diagnosa , _token: '<?php echo csrf_token()?>' },
+                    success : function (data) {
+                        console.log("Success");
+                        console.log(data);
+                        // alert(data);
+                    },
+                    error   : function() {
+                        console.error();
+                    }
+
+                });
+            });
+        });
+
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
             'use strict';
@@ -434,5 +490,16 @@
               return false; 
           return true; 
       } 
+        $('#verifikasi').change(function(){
+            if($(this).prop('checked') == true){
+                $('.lbl-isRequired').show();
+                $('.inpt-isRequired').prop('required', true);
+                $('#statusPengkajian').val('2');
+            }else{
+                $('.lbl-isRequired').hide();
+                $('.inpt-isRequired').prop('required', false);
+                $('#statusPengkajian').val('1');
+            }
+        })
         </script>
 @endsection

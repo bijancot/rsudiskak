@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AntrianPasien;
 use App\ManajemenForm;
+use App\User;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Http\Controllers\PasienController;
@@ -114,6 +115,7 @@ class DiagnosaController extends Controller
 
     public function storePilihDokter(Request $request, $no_cm, $no_pendaftaran)
     {
+        $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $logging        = new LoggingController;
         //return response()->json(['d' => $request->dokter]);
@@ -121,6 +123,7 @@ class DiagnosaController extends Controller
 
             // get API antrian data pasien
             $getAntrian = $this->antrianDataPasien();
+            // dump($getAntrian);
             $jmlAntrian = collect($getAntrian['data'])->count();
             for ($x = 0; $x < $jmlAntrian; $x++) {
 
@@ -148,6 +151,7 @@ class DiagnosaController extends Controller
                 ->where('NoCM', $no_cm)
                 ->where('NoPendaftaran', $no_pendaftaran)
                 ->where('deleted_at', null)
+                ->where('TglMasukPoli', date('Y-m-d'))
                 ->whereNotNull('StatusPengkajian')
                 ->orderBy('created_at', 'desc')
                 ->count();
@@ -159,9 +163,9 @@ class DiagnosaController extends Controller
             if ($dataMasukPoli > 0) {
                 return redirect('/listPasien')
                     ->with('status', 'Data Pasien dengan pendaftaran ' . $no_pendaftaran . ' sudah ada !');
-            
-                    //return response()->json(['data' => TRUE, 'msg' => 'Data Pasien dengan pendaftaran ' . $no_pendaftaran . ' sudah ada !']);
-                } else {
+
+                //return response()->json(['data' => TRUE, 'msg' => 'Data Pasien dengan pendaftaran ' . $no_pendaftaran . ' sudah ada !']);
+            } else {
 
                 $request->validate([
                     'dokter'   => 'required',
@@ -171,15 +175,25 @@ class DiagnosaController extends Controller
                     return redirect('/listPasien')->with('status', 'Tidak ada dokter yang dipilih !');
                 } else {
 
-                    $getDokter = $this->listDokter();
-                    $jmlDokter = collect($getDokter['data'])->count();
-                    for ($d = 0; $d < $jmlDokter; $d++) {
-                        if ($getDokter['data'][$d]['IdDokter'] == $request->get('dokter')) {
+                    // $getDokter = $this->listDokter();
+                    // $jmlDokter = collect($getDokter['data'])->count();
+                    // for ($d = 0; $d < $jmlDokter; $d++) {
+                    //     if ($getDokter['data'][$d]['IdDokter'] == $request->get('dokter')) {
 
-                            break;
-                        }
+                    //         break;
+                    //     }
+                    // }
+                    // $NamaDokter = $getDokter['data'][$d]['NamaLengkap'];
+
+                    $getDokter = User::where([
+                        ['Role', '=', '1'],
+                        ['KodeRuangan', '=', $getKdRuangan],
+                        ['ID', '=', $request->get('dokter')],
+                    ])->orderBy('Nama', 'asc')->get();
+
+                    foreach ($getDokter as $item) {
+                        $NamaDokter = $item['Nama'];
                     }
-                    $NamaDokter = $getDokter['data'][$d]['NamaLengkap'];
 
                     /**
                      * Simpan data Pasien berdasarkan NoCM
@@ -231,7 +245,7 @@ class DiagnosaController extends Controller
                     $antrianPasien_noCM->RTRW                                           = $getDataPasien['RTRW'];
                     $antrianPasien_noCM->StatusPengkajian                               = "0";
                     $antrianPasien_noCM->IdFormPengkajian                               = "";
-                    $antrianPasien_noCM->DataPengkajian                                 = array();
+                    $antrianPasien_noCM->DataPengkajian                                 = "";
                     $antrianPasien_noCM->updated_at                                     = null;
                     $antrianPasien_noCM->deleted_at                                     = null;
                     $antrianPasien_noCM->save();
@@ -286,7 +300,7 @@ class DiagnosaController extends Controller
                     $antrianPasien_tgl->RTRW                                                = $getDataPasien['RTRW'];
                     $antrianPasien_tgl->StatusPengkajian                                    = "0";
                     $antrianPasien_tgl->IdFormPengkajian                                    = "";
-                    $antrianPasien_tgl->DataPengkajian                                      = array();
+                    $antrianPasien_tgl->DataPengkajian                                      = "";
                     $antrianPasien_tgl->updated_at                                          = null;
                     $antrianPasien_tgl->deleted_at                                          = null;
                     $antrianPasien_tgl->save();
@@ -314,7 +328,7 @@ class DiagnosaController extends Controller
                     $logging->toLogging('create', 'PilihDokter', $create_data, $no_cm);
 
                     //return response()->json(['data' => TRUE, 'msg' => 'end']);
-                    return redirect('/listPasien')->with('status','success');
+                    return redirect('/listPasien')->with('status', 'success');
                     //endElse
                 }
                 // endIf cekDokter
@@ -339,10 +353,11 @@ class DiagnosaController extends Controller
 
             DB::collection('pasien_' . $no_cm)
                 ->where('NoPendaftaran', $no_pendaftaran)
+                ->where('TglMasukPoli', $request->get('TglMasukPoli'))
                 ->where('deleted_at', null)
                 ->update(['deleted_at' => date("Y-m-d H:i:s")]);
 
-            DB::collection('transaksi_' . date('Y-m-d'))
+            DB::collection('transaksi_' . $request->get('TglMasukPoli'))
                 ->where('NoPendaftaran', $no_pendaftaran)
                 ->where('deleted_at', null)
                 ->update(['deleted_at' => date("Y-m-d H:i:s")]);
@@ -361,8 +376,11 @@ class DiagnosaController extends Controller
     public function listDokter()
     {
         //get data
+
+        $getKdRuangan   = Auth::user()->KodeRuangan;
+
         $client = new Client();
-        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/listdokter/kdruangan/215');
+        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/listdokter/kdruangan/' . $getKdRuangan);
         $statCode = $res->getStatusCode();
         $datas = $res->getBody()->getContents();
         $datas = json_decode($datas, true);
@@ -391,8 +409,10 @@ class DiagnosaController extends Controller
         $getKdRuangan   = Auth::user()->KodeRuangan;
 
         $client = new Client();
-        // $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/' . $getKdRuangan . '?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
-        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/215?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
+        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/' . $getKdRuangan . '?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
+        // $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/215?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
+        // $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/' . $getKdRuangan);
+        // $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/215');
         $statCode = $res->getStatusCode();
         $datas = $res->getBody()->getContents();
         $datas = json_decode($datas, true);
