@@ -8,6 +8,7 @@ use App\Riwayat;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 use App\ManajemenForm;
+use Illuminate\Support\Facades\DB;
 
 class RiwayatController extends Controller
 {
@@ -63,7 +64,7 @@ class RiwayatController extends Controller
         return $pdf->stream("listRiwayatUlang_$no_pendaftaran.pdf", array("Attachment" => false));
     }
 
-    public function printProfilRingkas($idForm, $NoCM, $noPendaftaran)
+    public function printProfilRingkas($idForm, $NoCM, $noPendaftaran, $tglMasukPoli)
     {
         $dataForm = ManajemenForm::where('idForm', $idForm)->get();
 
@@ -72,6 +73,7 @@ class RiwayatController extends Controller
 
             $dataMasukPoli = DB::collection('pasien_' . $NoCM)
                 ->where('NoPendaftaran', $noPendaftaran)
+                ->where('TglMasukPoli', $tglMasukPoli)
                 ->where('deleted_at', null)
                 ->whereNotNull('StatusPengkajian')
                 ->orderBy('created_at', 'desc')
@@ -99,12 +101,12 @@ class RiwayatController extends Controller
             $statusPsikologi    = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
             $hambatanEdukasi    = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
 
-            $dataMasukPoli      = DB::collection('pasien_' . $NoCM)
-                ->where('NoPendaftaran', $noPendaftaran)
-                ->where('deleted_at', null)
-                ->whereNotNull('StatusPengkajian')
-                ->orderBy('created_at', 'desc')
-                ->first();
+            // $dataMasukPoli      = DB::collection('pasien_' . $NoCM)
+            //     ->where('NoPendaftaran', $noPendaftaran)
+            //     ->where('deleted_at', null)
+            //     ->whereNotNull('StatusPengkajian')
+            //     ->orderBy('created_at', 'desc')
+            //     ->first();
 
             $data = [
                 'form_id'           => $idForm,
@@ -125,6 +127,8 @@ class RiwayatController extends Controller
                 'dataDokumen'       => $dataDokumen,
                 'dataMasukPoli'     => $dataMasukPoli
             ];
+            // dump($dataMasukPoli['DataPengkajian']);
+            // dump($dataMasukPoli);
             $pdf = PDF::loadview('pages.print.profilRingkas_print', $data);
             $pdf->setPaper('legal', 'potrait');
             return $pdf->stream("profilRingkas_$noPendaftaran.pdf", array("Attachment" => false));

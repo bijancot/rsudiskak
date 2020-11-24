@@ -289,6 +289,8 @@ class FormPengkajianController extends Controller
         // }
         // $NamaDiagnosa = ICD10::where('kodeDiagnosa', $ICD10);
 
+        // dump($dataUpdate);
+
         $statusPengkajian = $dataUpdate['StatusPengkajian'];
         unset($dataUpdate['_token']);
         unset($dataUpdate['StatusPengkajian']);
@@ -297,6 +299,7 @@ class FormPengkajianController extends Controller
         // update data status pengkajian
         DB::collection('pasien_' . $no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
+            ->where('TglMasukPoli', $tglMasukPoli)
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->update(['StatusPengkajian' => $statusPengkajian]);
@@ -311,6 +314,7 @@ class FormPengkajianController extends Controller
         // berdasarkan no cm
         DB::collection('pasien_' . $no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
+            ->where('TglMasukPoli', $tglMasukPoli)
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->update(['DataPengkajian' => $dataUpdate]);

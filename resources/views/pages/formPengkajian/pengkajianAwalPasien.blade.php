@@ -21,7 +21,7 @@
             </div>
             <div class="content soft-shadow">
                 <div class="p-3">
-                    <p class="h4">Data Pasien<a href="/profilRingkas/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}" target="_blank" class="btn btn-primary print_button" id="print_button">Print</a></p>
+                    <p class="h4">Data Pasien<a href="/profilRingkas/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}/{{$dataMasukPoli['TglMasukPoli']}}" target="_blank" class="btn btn-primary print_button" id="print_button">Print</a></p>
                 </div>
                 <hr>
                 <div class="row p-3 py-4">
@@ -540,7 +540,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <a href="{{url('/profilRingkasMedis')}}" class="btn secondary">List dirujuk/konsul ke</a>
+                                            <a href="{{url('/profilRingkasMedis')}}" id="profilRingkas" class="btn secondary">List dirujuk/konsul ke</a>
                                             @if(Auth::user()->Role == "1")
                                             <input type="checkbox" id="verifikasi" name="verifikasi" value="verifikasi" >
                                             <label for="verifikasi"> Verifikasi final pasien</label><br>
@@ -625,15 +625,25 @@
                 $('#'+tabNotActive2).css('display', 'none');
                 
             })
+
             $("#tab_section-riwayat").on("click", function(){
-                    $(".print_button").show();
-                });
-                $("#tab_section-form").on("click", function(){
-                    $(".print_button").hide();
-                });
-                $("#tab_section-berkas").on("click", function(){
-                    $(".print_button").hide();
-                });
+                $(".print_button").show();
+            });
+            $("#tab_section-form").on("click", function(){
+                $(".print_button").hide();
+            });
+            $("#tab_section-berkas").on("click", function(){
+                $(".print_button").hide();
+            });
+
+            $("#profilRingkas").on("click", function(){
+                $('#tab_section-form').removeClass('active');
+                $('#tab_section-riwayat').addClass('active');
+                $(".print_button").show();    
+                $('#section-riwayat').css('display', 'block');
+                $('#section-berkas').css('display', 'none');
+                $('#section-form').css('display', 'none');
+            });    
         })
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");

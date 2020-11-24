@@ -25,7 +25,7 @@ Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
 Route::get('riwayatPasienAwal/{no_pendaftaran}', 'RiwayatController@printRiwayatAwal');
 Route::get('riwayatPasienUlang/{no_pendaftaran}', 'RiwayatController@printRiwayatUlang');
 Route::get('profilRingkas/{no_pendaftaran}', 'RiwayatController@printProfilRingkas');
-Route::get('profilRingkas/{idForm}/{no_cm}/{noPendaftaran}', 'RiwayatController@printProfilRingkas');
+Route::get('profilRingkas/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'RiwayatController@printProfilRingkas');
 Route::get('historicalList', 'RiwayatController@historicalList');
 
 

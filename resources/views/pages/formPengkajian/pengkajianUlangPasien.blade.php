@@ -326,7 +326,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <a href="#" class="btn secondary">List dirujuk/konsul ke</a>
+                                            <a href="#" id="profilRingkas" class="btn secondary">List dirujuk/konsul ke</a>
                                             @if(Auth::user()->Role == "1")
                                             <input type="checkbox" id="verifikasi" name="verifikasi" value="verifikasi" >
                                             <label for="verifikasi"> Verifikasi final pasien</label><br>
@@ -355,15 +355,7 @@
             // set hide field required
             $('.lbl-isRequired').hide();
             $('.print_button').hide();
-            $("#tab_section-riwayat").on("click", function(){
-                    $(".print_button").show();
-                });
-                $("#tab_section-form").on("click", function(){
-                    $(".print_button").hide();
-                });
-                $("#tab_section-berkas").on("click", function(){
-                    $(".print_button").hide();
-                });
+           
             $('#verifikasi').prop('checked', false);
             $('.inpt-isRequired').prop('required', false);
 
@@ -419,7 +411,26 @@
                 $('#'+tabNotActive2).css('display', 'none');
                 
             })
-            
+
+            $("#tab_section-riwayat").on("click", function(){
+                    $(".print_button").show();
+            });
+            $("#tab_section-form").on("click", function(){
+                $(".print_button").hide();
+            });
+            $("#tab_section-berkas").on("click", function(){
+                $(".print_button").hide();
+            });
+
+            $("#profilRingkas").on("click", function(){
+                $('#tab_section-form').removeClass('active');
+                $('#tab_section-riwayat').addClass('active');
+                $(".print_button").show();    
+                $('#section-riwayat').css('display', 'block');
+                $('#section-berkas').css('display', 'none');
+                $('#section-form').css('display', 'none');
+                
+            });    
         })
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");

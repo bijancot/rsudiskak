@@ -63,9 +63,9 @@ $TglLahir = strtotime($inputTglLahir);
                 4. Frekuensi nafas : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNafas?> x/menit<br>
                 5. Skor Nyeri : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->SkorNyeri?><br>
                 6. Skala resiko jatuh : <br>
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNafas=="Rendah" ? 'checked' : '');?>>Rendah &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNafas=="Sedang" ? 'checked' : '');?>>Sedang &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNafas=="Sedang" ? 'checked' : '');?>>Tinggi &nbsp;
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkalaJatuh=="Sedang" ? 'checked' : '');?>>Sedang &nbsp;
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkalaJatuh=="Tinggi" ? 'checked' : '');?>>Tinggi &nbsp;
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkalaJatuh=="Rendah" ? 'checked' : '');?>>Rendah &nbsp;
                 <br>
             </td>
             <td colspan=2>
@@ -163,7 +163,7 @@ $TglLahir = strtotime($inputTglLahir);
             </td>
             <td>
                 Kode ICD 9 CM<br>
-                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->KodeICD10?>
+                <?php //echo $record2[0]->DataPengkajian->PengkajianMedis->KodeICD10?>
             </td>
         </tr>
         <tr>
@@ -186,12 +186,12 @@ $TglLahir = strtotime($inputTglLahir);
         </tr>
         <tr>
             <td colspan=3>
-                Diagnosa : <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Diagnosa?><br>    
+                Diagnosa : <?php //echo $record2[0]->DataPengkajian->PengkajianMedis->Diagnosa?><br>    
                 Komplikasi : <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Komplikasi?><br>
                 Komorbid : <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Komorbid?>
             </td>
             <td colspan=3>
-                Kode ICD 10 CM : <br><?php echo $record2[0]->DataPengkajian->PengkajianMedis->KodeICD10?><br>
+                Kode ICD 10 CM : <br><?php //echo $record2[0]->DataPengkajian->PengkajianMedis->KodeICD10?><br>
             </td>
             <td colspan=2>
                 Kesan Status Gizi : <br>
