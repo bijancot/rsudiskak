@@ -25,9 +25,9 @@ Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
 Route::get('riwayatPasienAwal/{no_pendaftaran}', 'RiwayatController@printRiwayatAwal');
 Route::get('riwayatPasienUlang/{no_pendaftaran}', 'RiwayatController@printRiwayatUlang');
 Route::get('profilRingkas/{no_pendaftaran}', 'RiwayatController@printProfilRingkas');
+
 Route::get('profilRingkas/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'RiwayatController@printProfilRingkas');
 Route::get('historicalList', 'RiwayatController@historicalList');
-
 
 Route::get('listPasien', 'PasienController@listPasien');
 Route::get('listPasien/masukPoliRedirect', 'DiagnosaController@masukPoliRedirect');
@@ -77,7 +77,6 @@ Route::get('m_user/lupaPassword', 'ManajemenUserController@lupaPassword');
 
 Route::get('m_ICD09', 'ICD09Controller@index');
 Route::get('m_ICD10', 'ICD10Controller@index');
-
 
 Route::get('dokumen', 'DokumenController@index');
 Route::get('dokumen/berkas/{no_cm}', 'DokumenController@berkas');
