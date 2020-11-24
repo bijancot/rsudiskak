@@ -67,7 +67,8 @@
                 @php
                     $dataPengkajian = $dataMasukPoli['DataPengkajian'];
                 @endphp
-                <form id="form-pengkajian" action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, "tes", "0"])}}" class="needs-validation" method="POST" novalidate>
+                {{-- <form id="form-pengkajian" action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, "tes", "0"])}}" class="needs-validation" method="POST" novalidate> --}}
+                <form id="form-pengkajian" action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, $tglMasukPoli])}}" class="needs-validation" method="POST" novalidate>
                     @csrf
                     <div class="content mt-3 soft-shadow collapsible">
                         <div class="p-3 collapsible-head inactive">
@@ -412,9 +413,9 @@
                                         </div>
                                         @endif
                                     </div>
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <button type="submit" class="btn green-long w-50 ml-auto mr-3">Submit</button>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -449,24 +450,24 @@
                                         <div class="col-12 mt-3">
                                             <label for="diagnosa">Diagnosa (A) <span class="lbl-isRequired" style="color:red;">*</span></label>
                                             {{-- <input type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}" > --}}
-                                            <select type="text" multiple="multiple" class="form-control pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
+                                            <select multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
                                                 @foreach ($getICD10 as $item)  
-                                                    <option value="{{ $item['kodeDiagnosa'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['NamaDiagnosa']) && $dataPengkajian['PengkajianMedis']['NamaDiagnosa'] == $item['NamaDiagnosa'] ? 'selected' : '')}}>{{ $item['kodeDiagnosa'] }} - {{ $item['NamaDiagnosa'] }}</option>
+                                                    <option value="{{ $item['kodeDiagnosa'] }}:{{ $item['NamaDiagnosa'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['NamaDiagnosa']) && $dataPengkajian['PengkajianMedis']['NamaDiagnosa'] == $item['NamaDiagnosa'] ? 'selected' : '')}}>{{ $item['kodeDiagnosa'] }} - {{ $item['NamaDiagnosa'] }}</option>
                                                 @endforeach                                    
                                             </select>
                                             <div class="invalid-feedback">
                                                 Data Diagnosa Harus Diisi.
                                             </div>
                                         </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="kodeICD">Kode ICD 10</label>
-                                            <select class="custom-select" name="PengkajianMedis[KodeICD10]" id="kodeICD">
+                                        {{-- <div class="col-12 mt-3">
+                                            <label for="kodeICD10">Kode ICD 10</label>
+                                            <select class="custom-select" name="PengkajianMedis[KodeICD10]" id="kodeICD10">
                                                 <option selected>-</option>
                                                 <option value="1">One</option>
                                                 <option value="2">Two</option>
                                                 <option value="3">Three</option>
                                             </select>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 mt-3">
                                             <label for="komplikasi">Komplikasi</label>
                                             <input type="text" class="form-control" name="PengkajianMedis[Komplikasi]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Komplikasi']) ? $dataPengkajian['PengkajianMedis']['Komplikasi'] : '')}}" >
@@ -495,12 +496,11 @@
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <label for="kodeICD">Kode ICD 9</label>
-                                            <select class="custom-select" name="PengkajianMedis[KodeICD9]" id="kodeICD">
-                                                <option selected>-</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                            <label for="kodeICD09">Kode ICD 9</label>
+                                            <select multiple="multiple" class="form-control pilihDiagnosaTindakan" name="PengkajianMedis[KodeICD9][]" id="kodeICD09">
+                                                @foreach ($getICD09 as $item)  
+                                                    <option value="{{ $item['KodeDiagnosaT'] }}:{{ $item['DiagnosaTindakan'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['DiagnosaTindakan']) && $dataPengkajian['PengkajianMedis']['DiagnosaTindakan'] == $item['DiagnosaTindakan'] ? 'selected' : '')}}>{{ $item['KodeDiagnosaT'] }} - {{ $item['DiagnosaTindakan'] }}</option>
+                                                @endforeach   
                                             </select>
                                         </div>
                                         <div class="col-12">
@@ -554,7 +554,9 @@
                                         </div>
                                     </div>
                                 </div>
-        
+                                <div class="col-12">
+                                    <button type="submit" class="btn green-long w-50 ml-auto mr-3">Submit</button>
+                                </div>
                             </div>         
                         </div>
                     </div>
@@ -640,6 +642,7 @@
         $(document).ready(function() {
             // $('.pilihDiagnosa').selectpicker();
             $('.pilihDiagnosa').select2();
+            $('.pilihDiagnosaTindakan').select2();
 
             $('#pilihDiagnosa').on('change', function () {
                 // console.log("its change");

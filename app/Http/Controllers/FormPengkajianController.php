@@ -18,6 +18,7 @@ use App\TempatTinggal;
 use App\Agama;
 use App\HambatanEdukasi;
 use App\ICD10;
+use App\ICD09;
 use Illuminate\Support\Facades\Auth;
 
 class FormPengkajianController extends Controller
@@ -100,6 +101,7 @@ class FormPengkajianController extends Controller
         //get data pasien bersarakan nocm
         $dataMasukPoli = DB::collection('pasien_' . $no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
+            ->where('TglMasukPoli', $req->get('tglMasukPoli'))
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->orderBy('created_at', 'desc')
@@ -107,6 +109,7 @@ class FormPengkajianController extends Controller
 
         DB::collection('pasien_' . $no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
+            ->where('TglMasukPoli', $dataMasukPoli["TglMasukPoli"])
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->update(['IdFormPengkajian' => $req->get('formPengkajian')]);
@@ -123,17 +126,17 @@ class FormPengkajianController extends Controller
 
         $logging->toLogging('create', 'PilihForm', $create_data, $no_cm);
 
-        return redirect('formPengkajian/' . $req->get('formPengkajian') . '/' . $no_cm . '/' . $noPendaftaran);
+        return redirect('formPengkajian/' . $req->get('formPengkajian') . '/' . $no_cm . '/' . $noPendaftaran . '/' . $dataMasukPoli['TglMasukPoli']);
     }
 
     /**
      * Tampil Halaman Form Pengkajian Dinamis
      */
-    public function formPengkajian($idForm, $NoCM, $noPendaftaran)
+    public function formPengkajian($idForm, $NoCM, $noPendaftaran, $tglMasukPoli)
     {
 
         $dataForm = ManajemenForm::where('idForm', $idForm)->get();
-        $getICD09 = $this->getICD9();
+        $getICD09 = ICD09::all();
         $getICD10 = ICD10::all();
 
         // return view("'".$data[0]['namaFile']."'");
@@ -152,10 +155,13 @@ class FormPengkajianController extends Controller
             // get data pasien bersarakan nocm yang masuk poli terakhir
             $dataMasukPoli = DB::collection('pasien_' . $NoCM)
                 ->where('NoPendaftaran', $noPendaftaran)
+                ->where('TglMasukPoli', $tglMasukPoli)
                 ->where('deleted_at', null)
                 ->whereNotNull('StatusPengkajian')
                 ->orderBy('created_at', 'desc')
                 ->first();
+
+            // dump($dataMasukPoli);
 
             /**
              * Cek IdFormPengkajian jika idForm pada collection pasien masukPoli 
@@ -164,7 +170,7 @@ class FormPengkajianController extends Controller
              * yang dipilih
              */
             if ($dataMasukPoli['IdFormPengkajian'] != $idForm) {
-                return redirect('formPengkajian/' . $dataMasukPoli['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
+                return redirect('formPengkajian/' . $dataMasukPoli['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran . '/' . $tglMasukPoli);
             }
             $dataRiwayat        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->get();
             $dataDokumen        = DB::collection('dokumen_' . $NoCM)->whereNotNull('Status')->get();
@@ -194,12 +200,13 @@ class FormPengkajianController extends Controller
             $statusPsikologi    = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
             $hambatanEdukasi    = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
 
-            $dataMasukPoli      = DB::collection('pasien_' . $NoCM)
-                ->where('NoPendaftaran', $noPendaftaran)
-                ->where('deleted_at', null)
-                ->whereNotNull('StatusPengkajian')
-                ->orderBy('created_at', 'desc')
-                ->first();
+            // $dataMasukPoli      = DB::collection('pasien_' . $NoCM)
+            //     ->where('NoPendaftaran', $noPendaftaran)
+            //     ->where('TglMasukPoli', $tglMasukPoli)
+            //     ->where('deleted_at', null)
+            //     ->whereNotNull('StatusPengkajian')
+            //     ->orderBy('created_at', 'desc')
+            //     ->first();
 
             $data = [
                 'form_id'           => $idForm,
@@ -213,11 +220,12 @@ class FormPengkajianController extends Controller
                 'tempatTinggal'     => $tempatTinggal,
                 'statusPsikologi'   => $statusPsikologi,
                 'hambatanEdukasi'   => $hambatanEdukasi,
-                'getICD10'          => $getICD10,
                 'getICD09'          => $getICD09,
+                'getICD10'          => $getICD10,
                 'idForm'            => $idForm,
                 'NoCM'              => $NoCM,
                 'noPendaftaran'     => $noPendaftaran,
+                'tglMasukPoli'      => $tglMasukPoli,
                 'dataRiwayat'       => $dataRiwayat,
                 'dataDokumen'       => $dataDokumen,
                 'dataMasukPoli'     => $dataMasukPoli
@@ -235,11 +243,10 @@ class FormPengkajianController extends Controller
     /**
      * Simpan Form Pengkajian
      */
-    public function storeFormPengkajian(Request $req, $idForm, $no_cm, $noPendaftaran, $subForm, $isLastSubForm)
+    public function storeFormPengkajian(Request $req, $idForm, $no_cm, $noPendaftaran, $tglMasukPoli)
     {
 
         $logging        = new LoggingController;
-
 
         //get data pasien bersarakan nocm
         // $dataMasukPoli = DB::collection('pasien_' . $no_cm)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
@@ -248,16 +255,44 @@ class FormPengkajianController extends Controller
         //get data pasien berdasarkan noPendaftaran dan tanggal terakhir data diinputkan
         $dataMasukPoli = DB::collection('pasien_' . $no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
+            ->where('TglMasukPoli', $tglMasukPoli)
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->orderBy('created_at', 'desc')
             ->first();
 
         // declare data update & status pengkajian
+
         $dataUpdate = $req->all();
+        // dump($dataUpdate);
+        $diagnosa = $dataUpdate['PengkajianMedis']['Diagnosa'];
+        $kodeICD9 = $dataUpdate['PengkajianMedis']['KodeICD9'];
+        // dump($diagnosa);
+        // dump($kodeICD9);
+
+        // $ICD10 = implode(";", $diagnosa);
+        // $ICD09 = implode(";", $kodeICD9);
+        // dump($ICD10);
+        // dump($ICD09);
+
+        // $NamaDiagnosa = explode(":", $ICD10);
+        // dump($NamaDiagnosa);
+        // $DiagnosaTindakan = explode(":", $ICD09);
+        // dump($DiagnosaTindakan);
+
+
+        // foreach ($diagnosa as $item) {
+        //     // $NamaDiagnosa = DB::collection('ICD10')->where('kodeDiagnosa', $item)->get();
+        //     // $NamaDiagnosa = ICD10::where('kodeDiagnosa', $item)->get();
+        //     // dump($NamaDiagnosa);
+        //     $NamaDiagnosa = $this->getNamaICD10($item, count($diagnosa), 0);
+        // }
+        // $NamaDiagnosa = ICD10::where('kodeDiagnosa', $ICD10);
+
         $statusPengkajian = $dataUpdate['StatusPengkajian'];
         unset($dataUpdate['_token']);
         unset($dataUpdate['StatusPengkajian']);
+
 
         // update data status pengkajian
         DB::collection('pasien_' . $no_cm)
@@ -288,7 +323,7 @@ class FormPengkajianController extends Controller
             ->update(['DataPengkajian' => $dataUpdate]);
 
 
-        return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran);
+        return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
 
         /**
          * check status pengkajian jika

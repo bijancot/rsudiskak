@@ -47,7 +47,7 @@ Route::get('riwayat/{no_cm}', 'PasienController@Riwayat');
 
 Route::get('formPengkajianAwal/{no_cm}', 'FPengkajianAwalController@showRajal');
 Route::get('formPengkajianUlang/{no_cm}', 'FPengkajianUlangController@showRajal');
-Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}', 'FormPengkajianController@formPengkajian');
+Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@formPengkajian');
 
 
 // ============ TEMPLATE FRONT END
@@ -74,6 +74,9 @@ Route::get('manajemen_form', 'ManajemenFormController@index');
 Route::get('m_user', 'ManajemenUserController@index');
 Route::get('m_user/ubahPassword', 'ManajemenUserController@ubahPassword');
 Route::get('m_user/lupaPassword', 'ManajemenUserController@lupaPassword');
+
+Route::get('m_ICD09', 'ICD09Controller@index');
+Route::get('m_ICD10', 'ICD10Controller@index');
 
 
 Route::get('dokumen', 'DokumenController@index');
@@ -123,9 +126,13 @@ Route::post('pilihForm/{no_cm}/{noPendaftaran}', 'FormPengkajianController@store
 Route::post('batalPeriksa/{no_cm}/{no_pendaftaran}', 'PasienController@storeBatalPeriksa');
 Route::post('batalMasukPoli/{no_cm}/{no_pendaftaran}', 'DiagnosaController@storeBatalMasukPoli');
 Route::post('batalForm', 'FormPengkajianController@storeBatalForm');
-Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
+Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@storeFormPengkajian');
+// Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
 
+Route::post('m_ICD09', 'ICD09Controller@store');
+Route::post('m_ICD10', 'ICD10Controller@store');
 Route::post('formPengkajian/getICD10', 'FormPengkajianController@storeICD10');
+Route::post('formPengkajian/getICD09', 'FormPengkajianController@storeICD09');
 
 /**
  * Route post Admin
