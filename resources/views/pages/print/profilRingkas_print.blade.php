@@ -81,7 +81,7 @@
             $date = date_create($item['TglMasukPoli']);
         @endphp
         <tr>
-            <td><?php echo $no++;?></td>
+            <td>{{ $loop->iteration }}</td>
             <td>{{date_format($date, 'd/m/Y - h:i')}}</td>
             <td>{{$item['Ruangan']}}</td>
             <td>CAD, HF</td>

@@ -63,9 +63,9 @@ $TglLahir = strtotime($inputTglLahir);
                 4. Frekuensi nafas : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNafas?> x/menit<br>
                 5. Skor Nyeri : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->SkorNyeri?><br>
                 6. Skala resiko jatuh : <br>
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkalaJatuh=="Sedang" ? 'checked' : '');?>>Sedang &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkalaJatuh=="Tinggi" ? 'checked' : '');?>>Tinggi &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkalaJatuh=="Rendah" ? 'checked' : '');?>>Rendah &nbsp;
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkorJatuh=="Sedang" ? 'checked' : '');?>>Sedang &nbsp;
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkorJatuh=="Tinggi" ? 'checked' : '');?>>Tinggi &nbsp;
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkorJatuh=="Rendah" ? 'checked' : '');?>>Rendah &nbsp;
                 <br>
             </td>
             <td colspan=2>

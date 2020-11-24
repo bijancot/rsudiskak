@@ -44,7 +44,7 @@ class RiwayatController extends Controller
         $data = [
             'listRiwayat' => $listriwayat
         ];
-        //return view('pages.print.listRiwayat_print', $data);
+        // return view('pages.print.listRiwayatAwal_print', $data);
         $pdf = PDF::loadview('pages.print.listRiwayatAwal_print', $data);
         $pdf->setPaper('legal', 'potrait');
         return $pdf->stream("listRiwayatAwal_$no_pendaftaran.pdf", array("Attachment" => false));
