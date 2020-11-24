@@ -101,7 +101,7 @@ class FormPengkajianController extends Controller
         //get data pasien bersarakan nocm
         $dataMasukPoli = DB::collection('pasien_' . $no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
-            ->where('TglMasukPoli', $req->get('tglMasukPoli'))
+            ->where('TglMasukPoli', $req->get('TglMasukPoli'))
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->orderBy('created_at', 'desc')
@@ -471,14 +471,15 @@ class FormPengkajianController extends Controller
         // $dataMasukPoli = $dataMasukPoli[0];
         $dataMasukPoli = DB::collection('pasien_' . $req->get('NoCM'))
             ->where('NoPendaftaran', $req->get('NoPendaftaran'))
+            ->where('TglMasukPoli', $req->get('TglMasukPoli'))
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->orderBy('created_at', 'desc')
             ->first();
 
         //edit data
-        DB::collection('pasien_' . $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('deleted_at', null)->update(['StatusPengkajian' => null]);
-        DB::collection('transaksi_' . date('Y-m-d'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('deleted_at', null)->update(['StatusPengkajian' => null]);
+        DB::collection('pasien_' . $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('TglMasukPoli', $req->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => null]);
+        DB::collection('transaksi_' . date('Y-m-d'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('TglMasukPoli', $req->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => null]);
 
         //reset variable
         unset($dataMasukPoli['_id']);

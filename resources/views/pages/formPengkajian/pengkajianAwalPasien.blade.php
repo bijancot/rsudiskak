@@ -540,7 +540,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <a href="{{url('/profilRingkasMedis')}}" id="profilRingkas" class="btn secondary">List dirujuk/konsul ke</a>
+                                            <a href="#" id="profilRingkas" class="btn secondary">List dirujuk/konsul ke</a>
                                             @if(Auth::user()->Role == "1")
                                             <input type="checkbox" id="verifikasi" name="verifikasi" value="verifikasi" >
                                             <label for="verifikasi"> Verifikasi final pasien</label><br>

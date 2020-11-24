@@ -353,10 +353,11 @@ class DiagnosaController extends Controller
 
             DB::collection('pasien_' . $no_cm)
                 ->where('NoPendaftaran', $no_pendaftaran)
+                ->where('TglMasukPoli', $request->get('TglMasukPoli'))
                 ->where('deleted_at', null)
                 ->update(['deleted_at' => date("Y-m-d H:i:s")]);
 
-            DB::collection('transaksi_' . date('Y-m-d'))
+            DB::collection('transaksi_' . $request->get('TglMasukPoli'))
                 ->where('NoPendaftaran', $no_pendaftaran)
                 ->where('deleted_at', null)
                 ->update(['deleted_at' => date("Y-m-d H:i:s")]);

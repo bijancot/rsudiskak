@@ -295,7 +295,7 @@
                             <div class="invalid-feedback">
                                 Form harus diisi
                             </div>
-                            <input type="hidden" name="tglMasukPoli" value="{{ $poli['TglMasukPoli'] }}">
+                            <input type="hidden" name="TglMasukPoli" value="{{ $poli['TglMasukPoli'] }}">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -320,6 +320,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="keterangan" class="col-form-label">Apa anda yakin ingin membatalkan masuk poli NoCM : <code>{{ $poli['NoCM'] }}</code> ?</label>
+                            <input type="hidden" name="TglMasukPoli" id="TglMasukPoli" value="{{ $poli['TglMasukPoli'] }}">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -346,6 +347,7 @@
                             <p style="text-align: center;">Apakah anda yakin batal pilih form ? </p>
                             <input type="hidden" name="NoCM" id="mdl_NoCM">
                             <input type="hidden" name="NoPendaftaran" id="mdl_Pendaftaran">
+                            <input type="hidden" name="TglMasukPoli" id="TglMasukPoli" value="{{ $poli['TglMasukPoli'] }}">
                         </div>
                     </div>
                     <div class="modal-footer">
