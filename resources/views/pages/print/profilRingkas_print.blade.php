@@ -112,7 +112,7 @@
             <td>-</td>
             <td style="text-align:center">
             @if ($item['StatusPengkajian'] == '2')
-                <img src="https://images.vexels.com/media/users/3/157932/isolated/preview/951a617272553f49e75548e212ed947f-curved-check-mark-icon-by-vexels.png" width=30px;>
+                <img src="https://bgskr-project.my.id/img/centang.png" width=30px;>
             @else
                 -
             @endif
