@@ -21,14 +21,22 @@ class DokumenController extends Controller
         // get data dokumen
         $dataDokumen = array();
         $index = 0;
-        foreach(\DB::connection()->getMongoDB()->listCollections() as $collection){
-            // check collection with name dokumen_
-            $pos = strpos($collection->getName(), 'dokumen_');
-            if($pos !== false){
-                $dataDokumen[$index] = DB::collection($collection->getName())->whereNotNull('Status')->get();
-                $index++;
-            }
+        $listDokumen = DB::collection('listDokumen')->get();
+        foreach($listDokumen as $item){
+            $dataDokumen[$index] = DB::collection('dokumen_'.$item['NoCM'])->whereNotNull('Status')->get();
+            $index++;
         }
+
+        // $dataDokumen = array();
+        // $index = 0;
+        // foreach(\DB::connection()->getMongoDB()->listCollections() as $collection){
+        //     // check collection with name dokumen_
+        //     $pos = strpos($collection->getName(), 'dokumen_');
+        //     if($pos !== false){
+        //         $dataDokumen[$index] = DB::collection($collection->getName())->whereNotNull('Status')->get();
+        //         $index++;
+        //     }
+        // }
         
         $data = [
             'kdRuangan' => $kdRuangan,
@@ -53,8 +61,18 @@ class DokumenController extends Controller
         $kdRuangan = json_decode($kdRuangan, true);
         $kdRuangan = $kdRuangan['data'];
 
-        // insert data
+        // register nocm into listDokumen
         $data = $req->all();
+        unset($data['_token']);
+
+        $statusData = DB::collection('listDokumen')->where('NoCM', $data['NoCM'])->get();
+
+        if(empty($statusData[0])){
+            DB::collection('listDokumen')->insert(['NoCM' => $data['NoCM'], 'NamaLengkap' => $data['NamaLengkap']]);
+        }
+
+
+        // insert data into db dokumen_
         unset($data['file']);
         $data['NamaFile'] = $destination."/".$data['NoPendaftaran'].'_'.$req->get('TanggalMasuk').'_'.$file->getClientOriginalName();
         
@@ -66,7 +84,7 @@ class DokumenController extends Controller
                 break;
             }
         }
-        
+
         DB::collection('dokumen_'.$data['NoCM'])->insert($data);
         
         return redirect('dokumen');
