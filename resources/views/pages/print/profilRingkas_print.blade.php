@@ -6,6 +6,28 @@
         body{
             font-size:10px;
         }
+        input[type=checkbox]:before { 
+            font-family: DejaVu Sans; 
+            font-size: 12px;
+        }
+        input[type=checkbox] { 
+            display: inline; 
+        }
+        table{
+            width:100%;
+        }
+        table,
+        th,
+        td {
+        border: 0.5px solid #d2d7d3;
+        }
+
+        table th,
+        table td {
+            vertical-align: top;
+            padding: 5px;
+        /* Apply cell padding */
+        }
     </style>
 </head>
 <body>
@@ -17,10 +39,10 @@
 @php
     $dataPengkajian = $dataMasukPoli['DataPengkajian'];
 @endphp
-    <table class="table table-bordered">
+    <table>
         <tr>
             <td style="text-align:center" colspan=2>
-                <img src="https://news.rsudtulungagung.com/wp-content/uploads/2019/03/Logo-Iskak-Transparant.png" width="40px" height="40px"><br>
+                <img src="https://bgskr-project.my.id/img/logo.png" width="40px" height="40px"><br>
                 RSUD Dr.Iskak<br>
                 <div style="font-size:7px;">
                 Jl. Dr. Wahidin Sudiro Husodo Tulungagung 66224<br>
@@ -63,7 +85,8 @@
             </td>
         </tr>
     </table>
-    <table class="table table-bordered">
+    <br>
+    <table>
         <tr>
             <th style="text-align:center">No</th>
             <th style="text-align:center">Tanggal Berkunjung</th>
@@ -87,9 +110,9 @@
             <td>CAD, HF</td>
             <td>-</td>
             <td>-</td>
-            <td>
+            <td style="text-align:center">
             @if ($item['StatusPengkajian'] == '2')
-                OK
+                <img src="https://images.vexels.com/media/users/3/157932/isolated/preview/951a617272553f49e75548e212ed947f-curved-check-mark-icon-by-vexels.png" width=30px;>
             @else
                 -
             @endif

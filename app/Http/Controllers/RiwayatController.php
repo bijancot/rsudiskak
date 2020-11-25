@@ -41,8 +41,23 @@ class RiwayatController extends Controller
         $riwayat = new Riwayat();
         $riwayat->collection    = "transaksi_" . date("Y-m-d");
         $listriwayat            = $riwayat->where('NoPendaftaran', $no_pendaftaran)->where('IdFormPengkajian', '1')->get();
+        $pekerjaan              = DB::collection('pekerjaan')->where("deleted_at", Null)->get();
+        $agama                  = DB::collection('agama')->where("deleted_at", Null)->get();
+        $statusPernikahan       = DB::collection('statusPernikahan')->where("deleted_at", Null)->get();
+        $keluarga               = DB::collection('keluarga')->where("deleted_at", Null)->get();
+        $tempatTinggal          = DB::collection('tempatTinggal')->where("deleted_at", Null)->get();
+        $statusPsikologi        = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
+        $hambatanEdukasi        = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
+
         $data = [
-            'listRiwayat' => $listriwayat
+            'listRiwayat' => $listriwayat,
+            'pekerjaan'         => $pekerjaan,
+            'agama'             => $agama,
+            'statusPernikahan'  => $statusPernikahan,
+            'keluarga'          => $keluarga,
+            'tempatTinggal'     => $tempatTinggal,
+            'statusPsikologi'   => $statusPsikologi,
+            'hambatanEdukasi'   => $hambatanEdukasi
         ];
         // return view('pages.print.listRiwayatAwal_print', $data);
         $pdf = PDF::loadview('pages.print.listRiwayatAwal_print', $data);
@@ -54,8 +69,10 @@ class RiwayatController extends Controller
         $riwayat = new Riwayat();
         $riwayat->collection    = "transaksi_" . date("Y-m-d");
         $listriwayat            = $riwayat->where('NoPendaftaran', $no_pendaftaran)->where('IdFormPengkajian', '2')->get();
+
         $data = [
-            'listRiwayat' => $listriwayat
+            'listRiwayat'       => $listriwayat,
+            
         ];
         // return $no_pendaftaran;
         //return view('pages.print.listRiwayat_print', $data);

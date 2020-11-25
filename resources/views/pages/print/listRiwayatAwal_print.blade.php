@@ -4,7 +4,29 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         body{
-            font-size:9px;
+            font-size:10px;
+        }
+        input[type=checkbox]:before { 
+            font-family: DejaVu Sans; 
+            font-size: 12px;
+        }
+        input[type=checkbox] { 
+            display: inline; 
+        }
+        table{
+            width:100%;
+        }
+        table,
+        th,
+        td {
+        border: 0.5px solid #d2d7d3;
+        }
+
+        table th,
+        table td {
+            vertical-align: top;
+            padding: 5px;
+        /* Apply cell padding */
         }
     </style>
 </head>
@@ -20,10 +42,10 @@ $TglMasuk = strtotime($inputTanggalMasukPoli);
 $TglLahir = strtotime($inputTglLahir); 
 
 ?>
-    <table class="table table-bordered">
+    <table>
         <tr>
             <td style="text-align:center" colspan=2>
-                <img src="https://news.rsudtulungagung.com/wp-content/uploads/2019/03/Logo-Iskak-Transparant.png" width="40px" height="40px"><br>
+                <img src="https://bgskr-project.my.id/img/logo.png" width="40px" height="40px"><br>
                 RSUD Dr.Iskak<br>
                 <div style="font-size:7px;">
                 Jl. Dr. Wahidin Sudiro Husodo Tulungagung 66224<br>
@@ -63,9 +85,9 @@ $TglLahir = strtotime($inputTglLahir);
                 4. Frekuensi nafas : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNafas?> x/menit<br>
                 5. Skor Nyeri : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->SkorNyeri?><br>
                 6. Skala resiko jatuh : <br>
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkorJatuh=="Sedang" ? 'checked' : '');?>>Sedang &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkorJatuh=="Tinggi" ? 'checked' : '');?>>Tinggi &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkorJatuh=="Rendah" ? 'checked' : '');?>>Rendah &nbsp;
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkorJatuh=="sedang" ? 'checked' : '');?>> Sedang &nbsp;
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkorJatuh=="tinggi" ? 'checked' : '');?>> Tinggi &nbsp;
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkorJatuh=="rendah" ? 'checked' : '');?>> Rendah &nbsp;
                 <br>
             </td>
             <td colspan=2>
@@ -80,8 +102,8 @@ $TglLahir = strtotime($inputTglLahir);
                 1. Alat bantu : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->AlatBantu?><br>
                 2. Protesa : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->Prothesa?><br>
                 3. ADL : <br>
-                <input type="checkbox"  <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->ADL=="mandiri" ? 'checked' : '');?>>Mandiri &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->ADL=="dibantu" ? 'checked' : '');?>>Dibantu &nbsp;
+                <input type="checkbox"  <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->ADL=="mandiri" ? 'checked' : '');?>> Mandiri &nbsp;
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->ADL=="dibantu" ? 'checked' : '');?>> Dibantu &nbsp;
                 
             </td>
             <td style="text-align:center" colspan=2>
@@ -94,39 +116,36 @@ $TglLahir = strtotime($inputTglLahir);
                 Pendidikan : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->Pendidikan?><br>
                 Pekerjaan : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->Pekerjaan?><br>
                 Agama kepercayaan : 
-                <input type="checkbox"  <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->Agama=="Islam" ? 'checked' : '');?>>Islam &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->Agama=="Katholik" ? 'checked' : '');?>>Katholik &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->Agama=="Kristen" ? 'checked' : '');?>>Kristen &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->Agama=="Hindu" ? 'checked' : '');?>>Hindu &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->Agama=="Budha" ? 'checked' : '');?>>Budha &nbsp;
+                @foreach ($agama as $item)
+                    <input type="checkbox" {{ $record2[0]->DataPengkajian->PengkajianKeperawatan->Agama == $item['Agama'] ? 'checked' : ''}};> {{ $item['Agama'] }} &nbsp;
+                @endforeach
                 
                 <br>
                 Nilai-nilai yang dianut : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->NilaiAnut?><br>
                 Status pernikahan :
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->StatusPernikahan=="Menikah" ? 'checked' : '');?>>Menikah &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->StatusPernikahan=="Belum menikah" ? 'checked' : '');?>>Belum Menikah &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->StatusPernikahan=="Janda/duda" ? 'checked' : '');?>>Janda/duda &nbsp;<br>
-                
+                @foreach ($statusPernikahan as $item)
+                    <input type="checkbox" {{ $record2[0]->DataPengkajian->PengkajianKeperawatan->StatusPernikahan == $item['StatusPernikahan'] ? 'checked' : ''}};> {{ $item['StatusPernikahan'] }} &nbsp;
+                @endforeach
+                <br>
                 Keluarga : 
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->Keluarga=="Tinggal sendiri" ? 'checked' : '');?>>Tinggal Sendiri &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->Keluarga=="Tinggal serumah" ? 'checked' : '');?>>Tinggal Serumah &nbsp;<br>
-                
+                @foreach ($keluarga as $item)
+                    <input type="checkbox" {{ $record2[0]->DataPengkajian->PengkajianKeperawatan->Keluarga == $item['Keluarga'] ? 'checked' : ''}};> {{ $item['Keluarga'] }} &nbsp;
+                @endforeach
+                <br>
                 Tempat tinggal :
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->TempatTinggal=="Rumah" ? 'checked' : '');?>>Rumah &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->TempatTinggal=="Panti Asuhan" ? 'checked' : '');?>>Panti Asuhan &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->TempatTinggal=="Lainnya" ? 'checked' : '');?>>Lainnya &nbsp;<br>
-                 
+                @foreach ($tempatTinggal as $item)
+                    <input type="checkbox" {{ $record2[0]->DataPengkajian->PengkajianKeperawatan->TempatTinggal == $item['TempatTinggal'] ? 'checked' : ''}};> {{ $item['TempatTinggal'] }} &nbsp;
+                @endforeach
+                <br>
                 Status piskologis : 
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->StatusPsikologi=="Depresi" ? 'checked' : '');?>>Depresi &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->StatusPsikologi=="Takut" ? 'checked' : '');?>>Takut &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->StatusPsikologi=="Agresif" ? 'checked' : '');?>>Agresif &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->StatusPsikologi=="Melukai diri sendiri" ? 'checked' : '');?>>Melukai diri sendiri &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->StatusPsikologi=="Tidak ada gejala" ? 'checked' : '');?>>Tidak ada gejala &nbsp;<br>
-                 
+                @foreach ($statusPsikologi as $item)
+                    <input type="checkbox" {{ $record2[0]->DataPengkajian->PengkajianKeperawatan->StatusPsikologi == $item['StatusPsikologi'] ? 'checked' : ''}};> {{ $item['StatusPsikologi'] }} &nbsp;
+                @endforeach
+                <br>
                 Hambatan edukasi : 
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->HambatanEdukasi=="Bahasa" ? 'checked' : '');?>>Bahasa &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->HambatanEdukasi=="Cacat/Fisik/Kognitif (Gangguan Penglihatan/Pendengaran Lain)" || $record2[0]->DataPengkajian->PengkajianKeperawatan->HambatanEdukasi=="Gangguan Pendengaran" ? 'checked' : '');?>>Cacat/Fisik/Kognitif (Gangguan Penglihatan/Pendengaran Lain) &nbsp;<br>
-                
+                @foreach ($hambatanEdukasi as $item)
+                    <input type="checkbox" {{ $record2[0]->DataPengkajian->PengkajianKeperawatan->HambatanEdukasi == $item['HambatanEdukasi'] ? 'checked' : ''}};> {{ $item['HambatanEdukasi'] }} &nbsp;
+                @endforeach
             </td>
         </tr>
         <tr>
@@ -154,8 +173,9 @@ $TglLahir = strtotime($inputTglLahir);
                 <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Anamnesis?>
                 <br><br>
                 Pemeriksaan Fisik (O) : <br>
-                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Anamnesis?>
-                
+                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->PemeriksaanFisik?>
+                <br>&nbsp;<br>
+                <img src="https://cdn.pixabay.com/photo/2017/01/31/08/20/anatomical-2023188_960_720.png" width="50px">
             </td>
             <td>
                 Rencana dan Terapi(P)<br>
@@ -195,9 +215,9 @@ $TglLahir = strtotime($inputTglLahir);
             </td>
             <td colspan=2>
                 Kesan Status Gizi : <br>
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianMedis->KesanStatusGizi=="kurang" ? 'checked' : '');?>>Gizi Kurang / Buruk &nbsp;<br>
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianMedis->KesanStatusGizi=="cukup" ? 'checked' : '');?>>Gizi Cukup &nbsp;<br>
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianMedis->KesanStatusGizi=="lebih" ? 'checked' : '');?>>Gizi Lebih &nbsp;<br>
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianMedis->KesanStatusGizi=="kurang" ? 'checked' : '');?>> Gizi Kurang / Buruk &nbsp;<br>
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianMedis->KesanStatusGizi=="cukup" ? 'checked' : '');?>> Gizi Cukup &nbsp;<br>
+                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianMedis->KesanStatusGizi=="lebih" ? 'checked' : '');?>> Gizi Lebih &nbsp;<br>
             </td>
         </tr>
         <tr>
@@ -217,14 +237,13 @@ $TglLahir = strtotime($inputTglLahir);
             <td style="text-align:center" colspan=2>Komite Medis</td>
         </tr>
         <tr>
-            <td style="text-align:center"><?php echo date('Y/m/d', $TglMasuk)?>&nbsp;<br>&nbsp;<br></td>
-            <td><br></td>
-            <td style="text-align:center"><?php echo date('Y/m/d', $TglMasuk)?><br></td>
-            <td><br></td>
-            <td colspan=2><br></td>
+            <td rowspan="2" style="text-align:center"><?php echo date('Y/m/d', $TglMasuk)?>&nbsp;<br>&nbsp;<br></td>
+            <td rowspan="2"><br></td>
+            <td rowspan="2" style="text-align:center"><?php echo date('Y/m/d', $TglMasuk)?><br></td>
+            <td rowspan="2"><br></td>
+            <td rowspan="2" colspan=2><br></td>
         </tr>
         <tr>
-            <td colspan=6></td>
             <td style="text-align:center" colspan=2><?php echo $record2[0]->NamaDokter; ?></td>
         </tr>
     </table>

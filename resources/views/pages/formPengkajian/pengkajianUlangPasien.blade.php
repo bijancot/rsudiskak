@@ -21,7 +21,7 @@
 
             <div class="content soft-shadow">
                 <div class="p-3">
-                    <p class="h4">Data Pasien <a href="/profilRingkas/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}" target="_blank" class="btn btn-primary print_button" id="print_button">Print</a></p>
+                    <p class="h4">Data Pasien <a href="/profilRingkas/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}/{{$dataMasukPoli['TglMasukPoli']}}" target="_blank" class="btn btn-primary print_button" id="print_button">Print</a></p>
                 </div>
                 <hr>
                 <div class="row p-3 py-4">
@@ -68,7 +68,7 @@
                     // set subform data
                     $dataPengkajian = $dataMasukPoli['DataPengkajian'];
                 @endphp
-                <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, 'tes', '0'])}}" class="needs-validation" method="POST" novalidate>
+                <form action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, $tglMasukPoli])}}" class="needs-validation" method="POST" novalidate>
                     @csrf
                     <div class="content mt-3 soft-shadow collapsible">
                         <div class="p-3 collapsible-head inactive">
