@@ -108,7 +108,8 @@ $TglLahir = strtotime($inputTglLahir);
             </td>
             <td style="text-align:center" colspan=2>
                 <br><br><br><br><br>
-                -------------
+                {{-- ------------- --}}
+                {{ $record[0]->NamaPerawat }}
             </td>
         </tr>
         <tr>

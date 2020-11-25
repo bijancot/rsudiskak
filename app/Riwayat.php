@@ -12,6 +12,13 @@ class Riwayat extends Eloquent
 
     // protected $guarded = [];
     protected $fillable = [
-        'NoCM','NoUrut','NoPendaftaran','TglMasuk','TglMasukPoli','jenisPasien','Ruangan','KdRuangan','KdSubInstalasi','StatusPasien','KdKelas','Kelas','StatusPeriksa','IdPenjamin','IdDokter','NamaDokter','KdInstalasi','KodeReservasi','Status','NoIdentitas','TglDaftarMembership','Title','NamaLengkap','TempatLahir','TglLahir','JenisKelamin','Alamat','Telepon','NamaIbu','Umur','UmurTahun','UmurBulan','UmurHari','Kelurahan','Kecamatan','Kota','NoCmTemp','NoCmOld','NamaAyah','NoKK','NamaSuamiIstri','Propinsi','RTRW','StatusPengkajian','IdFormPengkajian','DataPengkajian'
+        'NoCM', 'NoUrut', 'NoPendaftaran', 'TglMasuk', 'TglMasukPoli', 'jenisPasien', 'Ruangan', 'KdRuangan', 'KdSubInstalasi',
+        'StatusPasien', 'KdKelas', 'Kelas', 'StatusPeriksa', 'IdPenjamin', 'IdDokter', 'NamaDokter',
+        'KdInstalasi', 'KodeReservasi', 'Status', 'NoIdentitas', 'TglDaftarMembership',
+        'Title', 'NamaLengkap', 'TempatLahir', 'TglLahir', 'JenisKelamin', 'Alamat',
+        'Telepon', 'NamaIbu', 'Umur', 'UmurTahun', 'UmurBulan', 'UmurHari',
+        'Kelurahan', 'Kecamatan', 'Kota', 'NoCmTemp', 'NoCmOld',
+        'NamaAyah', 'NoKK', 'NamaSuamiIstri', 'Propinsi', 'RTRW',
+        'StatusPengkajian', 'IdFormPengkajian', 'DataPengkajian'
     ];
 }

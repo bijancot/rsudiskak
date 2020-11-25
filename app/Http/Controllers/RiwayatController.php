@@ -18,9 +18,10 @@ class RiwayatController extends Controller
     }
     public function riwayatPasien()
     {
+        date_default_timezone_set('Asia/Jakarta');
         $riwayat = new Riwayat();
         $riwayat->collection    = "transaksi_" . date("Y-m-d");
-        $listriwayat                = $riwayat->get();
+        $listriwayat            = $riwayat->get();
         $data = [
             'listRiwayat' => $listriwayat
         ];
@@ -28,9 +29,10 @@ class RiwayatController extends Controller
     }
     public function historicalList()
     {
+        date_default_timezone_set('Asia/Jakarta');
         $riwayat = new Riwayat();
         $riwayat->collection    = "transaksi_" . date("Y-m-d");
-        $listriwayat                = $riwayat->get();
+        $listriwayat            = $riwayat->get();
         $data = [
             'listRiwayat' => $listriwayat
         ];
@@ -38,6 +40,7 @@ class RiwayatController extends Controller
     }
     public function printRiwayatAwal($no_pendaftaran)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $riwayat = new Riwayat();
         $riwayat->collection    = "transaksi_" . date("Y-m-d");
         $listriwayat            = $riwayat->where('NoPendaftaran', $no_pendaftaran)->where('IdFormPengkajian', '1')->get();
@@ -50,7 +53,7 @@ class RiwayatController extends Controller
         $hambatanEdukasi        = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
 
         $data = [
-            'listRiwayat' => $listriwayat,
+            'listRiwayat'       => $listriwayat,
             'pekerjaan'         => $pekerjaan,
             'agama'             => $agama,
             'statusPernikahan'  => $statusPernikahan,
@@ -66,16 +69,18 @@ class RiwayatController extends Controller
     }
     public function printRiwayatUlang($no_pendaftaran)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $riwayat = new Riwayat();
         $riwayat->collection    = "transaksi_" . date("Y-m-d");
         $listriwayat            = $riwayat->where('NoPendaftaran', $no_pendaftaran)->where('IdFormPengkajian', '2')->get();
 
         $data = [
             'listRiwayat'       => $listriwayat,
-            
+
         ];
         // return $no_pendaftaran;
-        //return view('pages.print.listRiwayat_print', $data);
+        // return view('pages.print.listRiwayat_print', $data);
+        // return view('pages.print.listRiwayatUlang_print', $data);
         $pdf = PDF::loadview('pages.print.listRiwayatUlang_print', $data);
         $pdf->setPaper('legal', 'potrait');
         return $pdf->stream("listRiwayatUlang_$no_pendaftaran.pdf", array("Attachment" => false));
@@ -83,8 +88,8 @@ class RiwayatController extends Controller
 
     public function printProfilRingkas($idForm, $NoCM, $noPendaftaran, $tglMasukPoli)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $dataForm = ManajemenForm::where('idForm', $idForm)->get();
-
         // return view("'".$data[0]['namaFile']."'");
         if ($NoCM && $noPendaftaran) {
 

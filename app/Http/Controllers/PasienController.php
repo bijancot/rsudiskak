@@ -21,6 +21,8 @@ class PasienController extends Controller
         // get data
         $getKdRuangan   = Auth::user()->KodeRuangan;
 
+        date_default_timezone_set('Asia/Jakarta');
+
         $client = new Client();
         $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/' . $getKdRuangan . '?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
         // $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/215?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));

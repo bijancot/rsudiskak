@@ -452,7 +452,11 @@
                                             {{-- <input type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}" > --}}
                                             <select multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
                                                 @foreach ($getICD10 as $item)  
-                                                    <option value="{{ $item['kodeDiagnosa'] }}:{{ $item['NamaDiagnosa'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['NamaDiagnosa']) && $dataPengkajian['PengkajianMedis']['NamaDiagnosa'] == $item['NamaDiagnosa'] ? 'selected' : '')}}>{{ $item['kodeDiagnosa'] }} - {{ $item['NamaDiagnosa'] }}</option>
+                                                    <option value="{{ $item['kodeDiagnosa'] }}:{{ $item['NamaDiagnosa'] }}" >
+                                                    {{-- {{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) && $dataPengkajian['PengkajianMedis']['Diagnosa'] == $item['Diagnosa'] ? 'selected' : '')}}> --}}
+                                                        {{-- {{( !empty($dataPengkajian['PengkajianMedis']['Diagnosa']) || $dataPengkajian['PengkajianMedis']['Diagnosa'] != "-" ? 'selected' : '')}}> --}}
+                                                        {{ $item['kodeDiagnosa'] }} - {{ $item['NamaDiagnosa'] }}
+                                                    </option>
                                                 @endforeach                                    
                                             </select>
                                             <div class="invalid-feedback">
@@ -498,9 +502,9 @@
                                         <div class="col-12 mt-3">
                                             <label for="kodeICD09">Kode ICD 9</label>
                                             <select multiple="multiple" class="form-control pilihDiagnosaTindakan" name="PengkajianMedis[KodeICD9][]" id="kodeICD09">
-                                                @foreach ($getICD09 as $item)  
+                                                {{-- @foreach ($getICD09 as $item)  
                                                     <option value="{{ $item['KodeDiagnosaT'] }}:{{ $item['DiagnosaTindakan'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['DiagnosaTindakan']) && $dataPengkajian['PengkajianMedis']['DiagnosaTindakan'] == $item['DiagnosaTindakan'] ? 'selected' : '')}}>{{ $item['KodeDiagnosaT'] }} - {{ $item['DiagnosaTindakan'] }}</option>
-                                                @endforeach   
+                                                @endforeach    --}}
                                             </select>
                                         </div>
                                         <div class="col-12">

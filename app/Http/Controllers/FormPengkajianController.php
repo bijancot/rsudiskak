@@ -97,6 +97,7 @@ class FormPengkajianController extends Controller
     {
 
         $logging        = new LoggingController;
+        date_default_timezone_set('Asia/Jakarta');
 
         //get data pasien bersarakan nocm
         $dataMasukPoli = DB::collection('pasien_' . $no_cm)
@@ -109,12 +110,12 @@ class FormPengkajianController extends Controller
 
         DB::collection('pasien_' . $no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
-            ->where('TglMasukPoli', $dataMasukPoli["TglMasukPoli"])
+            ->where('TglMasukPoli', $dataMasukPoli['TglMasukPoli'])
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->update(['IdFormPengkajian' => $req->get('formPengkajian')]);
 
-        DB::collection('transaksi_' . $dataMasukPoli["TglMasukPoli"])
+        DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
             ->where('NoPendaftaran', $noPendaftaran)
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
@@ -169,9 +170,9 @@ class FormPengkajianController extends Controller
              * maka redirect(arahkan ke halaman) FormPengkajian
              * yang dipilih
              */
-            if ($dataMasukPoli['IdFormPengkajian'] != $idForm) {
-                return redirect('formPengkajian/' . $dataMasukPoli['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran . '/' . $tglMasukPoli);
-            }
+            // if ($dataMasukPoli['IdFormPengkajian'] != $idForm) {
+            //     return redirect('formPengkajian/' . $dataMasukPoli['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran . '/' . $tglMasukPoli);
+            // }
             $dataRiwayat        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->get();
             $dataDokumen        = DB::collection('dokumen_' . $NoCM)->whereNotNull('Status')->get();
             /**
@@ -247,6 +248,7 @@ class FormPengkajianController extends Controller
     {
 
         $logging        = new LoggingController;
+        date_default_timezone_set('Asia/Jakarta');
 
         //get data pasien bersarakan nocm
         // $dataMasukPoli = DB::collection('pasien_' . $no_cm)->where('NoPendaftaran', $noPendaftaran)->whereNotNull('StatusPengkajian')->get();
@@ -261,15 +263,33 @@ class FormPengkajianController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
 
-        // declare data update & status pengkajian
-
+        // declare data update
         $dataUpdate = $req->all();
+        // $dataUpdate['PengkajianMedis']['Diagnosa'];
+        // $pengkajianDiagnosa = $req->get("PengkajianMedis['Diagnosa'][]");
+        // if (!empty($pengkajianDiagnosa) && $pengkajianDiagnosa != "-") {
+        //     $dataUpdate['PengkajianMedis']['Diagnosa'];
+        // } else {
+        //     $dataUpdate['PengkajianMedis']['Diagnosa'] = "-";
+        // }
+        // if ($req->get("PengkajianMedis['Diagnosa'][]")) {
+        //     $dataUpdate['PengkajianMedis']['KodeICD9'];
+        // } else {
+        //     $dataUpdate['PengkajianMedis']['KodeICD9'] = "-";
+        // }
         // dump($dataUpdate);
-        $diagnosa = $dataUpdate['PengkajianMedis']['Diagnosa'];
-        $kodeICD9 = $dataUpdate['PengkajianMedis']['KodeICD9'];
+        // dump($dataUpdate['PengkajianMedis']['Diagnosa']);
+        // dump($pengkajianDiagnosa);
+        // dump($dataUpdate['PengkajianMedis']['KodeICD9']);
+
+        /**
+         * Testing ICD10 & ICD09
+         */
+        //-------------------------------------------------------------------------------------//
+        // $diagnosa = $dataUpdate['PengkajianMedis']['Diagnosa'];
+        // $kodeICD9 = $dataUpdate['PengkajianMedis']['KodeICD9'];
         // dump($diagnosa);
         // dump($kodeICD9);
-
         // $ICD10 = implode(";", $diagnosa);
         // $ICD09 = implode(";", $kodeICD9);
         // dump($ICD10);
@@ -290,11 +310,12 @@ class FormPengkajianController extends Controller
         // $NamaDiagnosa = ICD10::where('kodeDiagnosa', $ICD10);
 
         // dump($dataUpdate);
+        //---------------------------------------------------------------------------------------//
 
+        // declare status pengkajian
         $statusPengkajian = $dataUpdate['StatusPengkajian'];
         unset($dataUpdate['_token']);
         unset($dataUpdate['StatusPengkajian']);
-
 
         // update data status pengkajian
         DB::collection('pasien_' . $no_cm)
@@ -329,6 +350,11 @@ class FormPengkajianController extends Controller
 
         return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
 
+
+        /**
+         *  Deprecated
+         */
+        //------------------------------------------------------------------------------------//
         /**
          * check status pengkajian jika
          * 0 belum terisi, 
@@ -456,6 +482,7 @@ class FormPengkajianController extends Controller
         //     ];
         //     $logging->toLogging('update', 'DataPengkajian', $updateData, $no_cm);
         // }
+        // -------------------------------------------------------------------------------------//
     }
 
     /**
@@ -463,6 +490,8 @@ class FormPengkajianController extends Controller
      */
     public function storeBatalForm(Request $req)
     {
+
+        date_default_timezone_set('Asia/Jakarta');
 
         $logging        = new LoggingController;
 
