@@ -4,10 +4,11 @@
 
 @include('includes.navbar')
 
+
     <div class="loader-container">
         <div class="loader"></div>
     </div>
-    
+
     @if (session('status'))
 
     <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
@@ -398,8 +399,28 @@
                             $('#antrianPoli').hide();
                             $('#masukPoli').show();
                             
+                    $.toast({
+                        title: 'Sukses!',
+                        subtitle: '3 detik yang lalu',
+                        content: 'Berhasil Menambahkan Pasien Masuk Poli.',
+                        type: 'info',
+                        delay: 3000,
+                    });
                 @endif
             @endif
+            
+            @if(session('statusBatalMasukPoli'))
+                @if(session('statusBatalMasukPoli') == 'success')
+                    $.toast({
+                        title: 'Sukses!',
+                        subtitle: '3 detik yang lalu',
+                        content: 'Berhasil Membatalkan Pasien Masuk Poli.',
+                        type: 'info',
+                        delay: 3000,
+                    });
+                @endif
+            @endif
+
         });
             $("#nav_antrianPoli").click(function(){
                 $(this).addClass('active');

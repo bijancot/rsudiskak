@@ -113,35 +113,47 @@
                     <span class="text-white" aria-hidden="true">&times;</span>
                 </button>
                 </div>
-                <form action="{{ action ( 'ManajemenFormController@update', $item->id )}}" method="POST">
+                <form id="form-{{$item->idForm}}_edit" action="{{ action ( 'ManajemenFormController@update', $item->id )}}" method="POST" enctype="multipart/form-data">
                     @method('patch')
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="idForm" class="col-form-label">Id Form :</label>
-                            <input type="text" class="form-control" id="idForm" name="idForm" value="{{ $item->idForm }}">
+                            <input type="text" class="form-control frm-input_edit" id="idForm-{{$item->idForm}}_edit" name="idForm" value="{{ $item->idForm }}">
                             <input type="hidden" class="form-control" name="idFormOld" value="{{ $item->idForm }}">
+                            <div class="idForm-{{$item->idForm}}_edit-isInvalid invalid-feedback">
+                                Id Form Harus Diisi.
+                            </div>
                         </div>
+                        
                         <div class="form-group">
                             <label for="namaForm" class="col-form-label">Nama Form :</label>
-                            <input type="text" class="form-control" id="namaForm" name="namaForm" value="{{ $item->namaForm }}">
-                            <div class="namaForm-isInvalid invalid-feedback">
+                            <input type="text" class="form-control frm-input_edit" id="namaForm-{{$item->idForm}}_edit" name="namaForm" value="{{ $item->namaForm }}">
+                            <div class="namaForm-{{$item->idForm}}_edit-isInvalid invalid-feedback">
                                 Nama Form Harus Diisi.
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="namaFile" class="col-form-label">Nama File :</label>
-                            @php
-                                $namaFile = str_replace('pages.formPengkajian.', '', $item->namaFile);
-                            @endphp
-                            <input type="text" class="form-control" id="namaFile" name="namaFile" value="{{ $namaFile }}">
-                            <input type="hidden" class="form-control" name="namaFileOld" value="{{ $namaFile }}">
+                            <label for="namaFile" class="col-form-label">Upload File (.blade.php) :</label>
+                            <div>
+                                <label for="file-upload1">
+                                    <input id="file-{{$item->idForm}}_edit"  type="file" name="file">
+                                </label>
+                            </div>
+                            <div class="fileEdit-isInvalid invalid-feedback">
+                                Upload File Harus Diisi.
+                            </div>
                         </div>
-                        
+                        <div class="form-group">
+                            <div id="fileExtension-{{$item->idForm}}_edit-isInvalid" class="alert alert-danger mt-4" role="alert" style="display: none;">
+                                Format file upload tidak sesuai
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-secondary">Ubah</button>
-                        <button type="button" class="btn btn-dark diagnosa" data-dismiss="modal">Batal</button>
+                        <input  type="hidden" name="namaFileOld" value="{{$item->namaFile}}">
+                        <div data-idform="{{$item->idForm}}" class="btn btn-dark diagnosa btn_edit_submit">Ubah</div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     </div>
                 </form>
             </div>
@@ -193,9 +205,8 @@
             let namaFormTambah = $('#namaFormTambah').val();
             let fileVal = $('#fileTambah').val();
             let file = $('#fileTambah');
-            // set var file fileExtension
-            let fileExtension = file[0].files[0].name;
-            let fileArray = fileExtension.split('.');
+            
+            
             
             if(idFormTambah == ""){
                 $('#idFormTambah').addClass('isInValid')
@@ -211,16 +222,64 @@
                 $('.fileTambah-isInvalid').css('display', 'block');
             }
             
-            if(fileArray[fileArray.length - 1] != "php" || fileArray[fileArray.length - 2] != "blade"){
-                $('#fileExtension-isInvalid').css('display', 'block');
-            }else{
-                $('#fileExtension-isInvalid').css('display', 'none');
-                if(idFormTambah != "" && namaFormTambah != "" && fileVal != ""){
-                    $('#form-tambah').submit();
+            // set var file fileExtension
+            if(fileVal != ""){
+                let fileExtension = file[0].files[0].name;
+                let fileArray = fileExtension.split('.');
+                
+                // check extension
+                if(fileArray[fileArray.length - 1] != "php" || fileArray[fileArray.length - 2] != "blade"){
+                    $('#fileExtension-isInvalid').css('display', 'block');
+                }else{
+                    $('#fileExtension-isInvalid').css('display', 'none');
+                    if(idFormTambah != "" && namaFormTambah != "" && fileVal != ""){
+                        $('#form-tambah').submit();
+                    }
                 }
             }
 
         })
+
+        $('.btn_edit_submit').click(function(){
+            let id = $(this).data('idform')
+            let idFormEdit = $('#idForm-'+id+'_edit').val();
+            let namaFormEdit = $('#namaForm-'+id+'_edit').val();
+            let fileVal = $('#file-'+id+'_edit').val();
+            let file = $('#file-'+id+'_edit');
+            let statusExtension = '1';
+            
+            if(idFormEdit == ""){
+                $('#idForm-'+id+'_edit').addClass('isInValid')
+                $('.idForm-'+id+'_edit-isInvalid').css('display', 'block');
+            }
+            
+            if(namaFormEdit == ""){
+                $('#namaForm-'+id+'_edit').addClass('isInValid')
+                $('.namaForm-'+id+'_edit-isInvalid').css('display', 'block');
+            }
+            
+            // set var file fileExtension
+            if(fileVal != ""){
+
+                let fileExtension = file[0].files[0].name;
+                let fileArray = fileExtension.split('.');
+                
+                // check extension
+                if(fileArray[fileArray.length - 1] != "php" || fileArray[fileArray.length - 2] != "blade"){
+                    $('#fileExtension-'+id+'_edit-isInvalid').css('display', 'block');
+                    statusExtension = '0'
+                }else{
+                    $('#fileExtension-'+id+'_edit-isInvalid').css('display', 'none');
+                    statusExtension = '1'
+                }
+            }
+
+            if(idFormEdit != "" && namaFormEdit != "" && statusExtension == "1"){
+                $('#form-'+id+'_edit').submit();
+            }
+
+        })
+
         $('.frm-input').keyup(function(){
             let id = $(this).attr('id');
             if($(this).val() == ""){
@@ -233,6 +292,20 @@
                 $('.'+id+'-isInvalid').css('display', 'none')
             }
         })
+
+        $('.frm-input_edit').keyup(function(){
+            let id = $(this).attr('id');
+            if($(this).val() == ""){
+                $(this).removeClass('isInValid')
+                $(this).removeClass('isValid')
+                $('.'+id+'-isInvalid').css('display', 'none')
+            }else{
+                $(this).removeClass('isInValid')
+                $(this).addClass('isValid')
+                $('.'+id+'-isInvalid').css('display', 'none')
+            }
+        })
+        
         $('#fileTambah').change(function(){
             if($(this).val() != ""){
                 $('.fileTambah-isInvalid').css('display', 'none')

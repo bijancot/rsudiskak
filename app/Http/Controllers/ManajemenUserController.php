@@ -15,17 +15,20 @@ class ManajemenUserController extends Controller
     {
         //get data kdruangan from api
         $client = new Client();
-        $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ');
-        $statCode = $res->getStatusCode();
-        $kdRuangan = $res->getBody()->getContents();
-        $kdRuangan = json_decode($kdRuangan, true);
-        $kdRuangan = $kdRuangan['data'];
+        for($i = 1; $i <=2; $i++){
+            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page='.$i);
+            $statCode = $res->getStatusCode();
+            $kdRuangan = $res->getBody()->getContents();
+            $kdRuangan = json_decode($kdRuangan, true);
+
+            $resKdRuangan[$i-1] = $kdRuangan['data'];
+        }
 
         //get all data user
         $dataUsers = User::whereNotNull('Status')->get();
 
         $data = [
-            'kdRuangan' => $kdRuangan,
+            'kdRuangan' => $resKdRuangan,
             'dataUser' => $dataUsers
         ];
 
@@ -37,21 +40,26 @@ class ManajemenUserController extends Controller
 
         //get data kdruangan from api
         $client = new Client();
-        $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ');
-        $statCode = $res->getStatusCode();
-        $kdRuangan = $res->getBody()->getContents();
-        $kdRuangan = json_decode($kdRuangan, true);
-        $kdRuangan = $kdRuangan['data'];
+        for($i = 1; $i <=2; $i++){
+            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page='.$i);
+            $statCode = $res->getStatusCode();
+            $kdRuangan = $res->getBody()->getContents();
+            $kdRuangan = json_decode($kdRuangan, true);
+
+            $resKdRuangan[$i-1] = $kdRuangan['data'];
+        }
 
         //set password
         $data['password'] = Hash::make("rsudiskak");
 
-        //set nama ruangan
+        //insert nama ruangan
         $data['NamaRuangan'] = "";
-        foreach ($kdRuangan as $item) {
-            if ($item['KdRuangan'] == $req->get('KodeRuangan')) {
-                $data['NamaRuangan'] = $item['NamaRuangan'];
-                break;
+        foreach ($resKdRuangan as $index) {
+            foreach($index as $item){
+                if ($item['KdRuangan'] == $req->get('KodeRuangan')) {
+                    $data['NamaRuangan'] = $item['NamaRuangan'];
+                    break;
+                }
             }
         }
 
@@ -66,18 +74,23 @@ class ManajemenUserController extends Controller
 
         //get data kdruangan from api
         $client = new Client();
-        $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ');
-        $statCode = $res->getStatusCode();
-        $kdRuangan = $res->getBody()->getContents();
-        $kdRuangan = json_decode($kdRuangan, true);
-        $kdRuangan = $kdRuangan['data'];
+        for($i = 1; $i <=2; $i++){
+            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page='.$i);
+            $statCode = $res->getStatusCode();
+            $kdRuangan = $res->getBody()->getContents();
+            $kdRuangan = json_decode($kdRuangan, true);
+
+            $resKdRuangan[$i-1] = $kdRuangan['data'];
+        }
 
         //set nama ruangan
         $data['NamaRuangan'] = "";
-        foreach ($kdRuangan as $item) {
-            if ($item['KdRuangan'] == $req->get('KodeRuangan')) {
-                $data['NamaRuangan'] = $item['NamaRuangan'];
-                break;
+        foreach ($resKdRuangan as $index) {
+            foreach($index as $item){
+                if ($item['KdRuangan'] == $req->get('KodeRuangan')) {
+                    $data['NamaRuangan'] = $item['NamaRuangan'];
+                    break;
+                }
             }
         }
 

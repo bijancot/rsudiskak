@@ -12,11 +12,14 @@ class DokumenController extends Controller
     public function index(){
         //get data kdruangan from api
         $client = new Client();
-        $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ');
-        $statCode = $res->getStatusCode();
-        $kdRuangan = $res->getBody()->getContents();
-        $kdRuangan = json_decode($kdRuangan, true);
-        $kdRuangan = $kdRuangan['data'];
+        for($i = 1; $i <=2; $i++){
+            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page='.$i);
+            $statCode = $res->getStatusCode();
+            $kdRuangan = $res->getBody()->getContents();
+            $kdRuangan = json_decode($kdRuangan, true);
+
+            $resKdRuangan[$i-1] = $kdRuangan['data'];
+        }
 
         // get data dokumen
         $dataDokumen = array();
@@ -39,7 +42,7 @@ class DokumenController extends Controller
         // }
         
         $data = [
-            'kdRuangan' => $kdRuangan,
+            'kdRuangan' => $resKdRuangan,
             'dataDokumen' => $dataDokumen
         ];
 
@@ -55,11 +58,14 @@ class DokumenController extends Controller
         
         //get data kdruangan from api
         $client = new Client();
-        $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ');
-        $statCode = $res->getStatusCode();
-        $kdRuangan = $res->getBody()->getContents();
-        $kdRuangan = json_decode($kdRuangan, true);
-        $kdRuangan = $kdRuangan['data'];
+        for($i = 1; $i <=2; $i++){
+            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page='.$i);
+            $statCode = $res->getStatusCode();
+            $kdRuangan = $res->getBody()->getContents();
+            $kdRuangan = json_decode($kdRuangan, true);
+
+            $resKdRuangan[$i-1] = $kdRuangan['data'];
+        }
 
         // register nocm into listDokumen
         $data = $req->all();
@@ -78,10 +84,12 @@ class DokumenController extends Controller
         
         //insert nama ruangan
         $data['NamaRuangan'] = "";
-        foreach ($kdRuangan as $item) {
-            if ($item['KdRuangan'] == $req->get('KodeRuangan')) {
-                $data['NamaRuangan'] = $item['NamaRuangan'];
-                break;
+        foreach ($resKdRuangan as $index) {
+            foreach($index as $item){
+                if ($item['KdRuangan'] == $req->get('KodeRuangan')) {
+                    $data['NamaRuangan'] = $item['NamaRuangan'];
+                    break;
+                }
             }
         }
 

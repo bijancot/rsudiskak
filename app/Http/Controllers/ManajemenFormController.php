@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ManajemenForm;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 use App\Http\Controllers\Controller;
 use File;
 
@@ -18,8 +19,13 @@ class ManajemenFormController extends Controller
     {
         $manajemenForm = ManajemenForm::where([
             ['status', '!=', NULL],
-        ])->get();
-        return view('pages.admin.manajemen_form.m_manajemenForm', compact('manajemenForm'));
+            ])->get();
+            
+        $data = [
+            'manajemenForm' => $manajemenForm
+        ];
+        
+        return view('pages.admin.manajemen_form.m_manajemenForm', $data);
     }
 
     /**
@@ -52,6 +58,7 @@ class ManajemenFormController extends Controller
         // insert data
         $data = $request->all();
         unset($data['file']);
+        unset($data['_token']);
         $data['namaFile'] = 'pages.formPengkajian.' . str_replace('.blade.php', '', $file->getClientOriginalName());
 
         ManajemenForm::insert($data);
@@ -91,18 +98,33 @@ class ManajemenFormController extends Controller
     public function update(Request $request, ManajemenForm $manajemenForm)
     {
         
-        // rename file
-        $destination = '../resources/views/pages/formPengkajian/';
-        $typeFile = '.blade.php';
-        
-        File::move($destination . $request->get('namaFileOld') . $typeFile, $destination.$request->get('namaFile'). $typeFile) ;
-        
-        // update data
         $data = $request->all();
+
+        if(!empty($request->file('file'))){
+            
+            // rename file old to edited
+            $typeFile = '.blade.php';
+            $destinationOld = '../resources/views/' . str_replace('.', '/', $request->get('namaFileOld')) . $typeFile;
+            $destinationNew = '../resources/views/pages/formPengkajian/(edited)_' . date('Ymdhis') . '_' . str_replace('pages.formPengkajian.', '', $request->get('namaFileOld')) . $typeFile;
+            
+            File::move($destinationOld, $destinationNew) ;
+
+            // upload file
+            $file = $request->file('file');
+            $destination = '../resources/views/pages/formPengkajian';
+
+            $file->move($destination,$file->getClientOriginalName());
+
+            // set new path namefile
+            $data['namaFile'] = 'pages.formPengkajian.' . str_replace('.blade.php', '', $file->getClientOriginalName());
+            unset($data['file']);
+
+        }
+        // update data
         $idFormOld = $request->get('idFormOld');
-        $data['namaFile'] = 'pages.formPengkajian.'.$data['namaFile'];
         unset($data['namaFileOld']);
         unset($data['_method']);
+        unset($data['_token']);
         unset($data['idFormOld']);
 
         ManajemenForm::where('idForm', $idFormOld)->whereNotNull('status')->update($data);
