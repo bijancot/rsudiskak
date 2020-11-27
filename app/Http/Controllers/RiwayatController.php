@@ -21,18 +21,98 @@ class RiwayatController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         $riwayat = new Riwayat();
         $riwayat->collection    = "transaksi_" . date("Y-m-d");
-        $listriwayat            = $riwayat->get();
+        $listriwayat            = $riwayat->whereNotNull('StatusPengkajian')->where('StatusPengkajian', '2')->get();
         $data = [
             'listRiwayat' => $listriwayat
         ];
         return view('pages.riwayatPasien', $data);
     }
+    // public function riwayatPasienAjax(Request $req)
+    // {
+    //     $search = $req->search['value'];
+    //     date_default_timezone_set('Asia/Jakarta');
+    //     $riwayat = new Riwayat();
+    //     $riwayat->collection    = "transaksi_" . date("Y-m-d");
+    //     $listriwayat            = $riwayat->whereNotNull('StatusPengkajian')->where('StatusPengkajian', '2')->get();
+    //     if ($search)
+    //     {
+    //         $listriwayat            = $riwayat->whereNotNull('StatusPengkajian')->where('StatusPengkajian', '2')
+    //         ->where('StatusPengkajian', '2')->get();
+    //     }
+    //     $html = [];
+    //     $action = "";
+    //     foreach($listriwayat as $data){
+    //         if($data['IdFormPengkajian']=="1"){
+    //             $action = "<a href='riwayatPasienAwal/".$data['NoPendaftaran']."' target='_blank' class='btn diagnosa'>Print</a>";
+    //         }elseif($data['IdFormPengkajian']=="2"){
+    //             $action = "<a href='riwayatPasienUlang/".$data['NoPendaftaran']."' target='_blank' class='btn diagnosa'>Print</a>";
+    //         }
+    //         array_push($html,
+    //             array(
+    //             $data['NoPendaftaran'],
+    //             $data['NoCM'],
+    //             $data['NamaLengkap'],
+    //             $data['TglMasukPoli'],
+    //             $action
+    //             )
+    //         );
+            
+    //     }
+    //     $DW = count($html);
+    //     $datar = [
+    //         "draw"            => isset ( $request['draw'] ) ?
+	// 			intval( $request['draw'] ) :
+    //             0,
+    //             "recordsTotal"    => intval( $DW ),
+    //             "recordsFiltered" => intval( $DW ),
+                
+    //         'data' => $html
+    //     ];
+        
+    //     return response()->json($datar);
+    // }
+
+    public function getData(Request $req)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $riwayat = new Riwayat();
+        $riwayat->collection    = "transaksi_" . $req->get('date');
+        $listriwayat            = $riwayat->whereNotNull('StatusPengkajian')->where('StatusPengkajian', '2')->get();
+        $html = "";
+        $action = "";
+        foreach($listriwayat as $data){
+            if($data['IdFormPengkajian']=="1"){
+                $action = "<a href='riwayatPasienAwal/".$data['NoPendaftaran']."' target='_blank' class='btn diagnosa'>Print</a>";
+            }elseif($data['IdFormPengkajian']=="2"){
+                $action = "<a href='riwayatPasienUlang/".$data['NoPendaftaran']."' target='_blank' class='btn diagnosa'>Print</a>";
+            }
+            $html .= "
+            
+            <tr>
+                <td> ".$data['NoPendaftaran']."</td>
+                <td> ".$data['NoCM']."</td>
+                <td> ".$data['NamaLengkap']."</td>
+                <td> ".$data['TglMasukPoli']."</td>
+                <td data-label='Action' class='d-flex flex-row p-lg-1'>
+                ".$action."
+                </td>
+            </tr>";
+            
+        } 
+
+        $data = [
+            'html' => $html
+        ];
+        
+        return response()->json($data);
+    }
+
     public function historicalList()
     {
         date_default_timezone_set('Asia/Jakarta');
         $riwayat = new Riwayat();
         $riwayat->collection    = "transaksi_" . date("Y-m-d");
-        $listriwayat            = $riwayat->get();
+        $listriwayat            = $riwayat->whereNotNull('StatusPengkajian')->where('StatusPengkajian', '2')->get();
         $data = [
             'listRiwayat' => $listriwayat
         ];
@@ -43,7 +123,7 @@ class RiwayatController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         $riwayat = new Riwayat();
         $riwayat->collection    = "transaksi_" . date("Y-m-d");
-        $listriwayat            = $riwayat->where('NoPendaftaran', $no_pendaftaran)->where('IdFormPengkajian', '1')->get();
+        $listriwayat            = $riwayat->where('NoPendaftaran', $no_pendaftaran)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian', '1')->get();
         $pekerjaan              = DB::collection('pekerjaan')->where("deleted_at", Null)->get();
         $agama                  = DB::collection('agama')->where("deleted_at", Null)->get();
         $statusPernikahan       = DB::collection('statusPernikahan')->where("deleted_at", Null)->get();
@@ -72,7 +152,7 @@ class RiwayatController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         $riwayat = new Riwayat();
         $riwayat->collection    = "transaksi_" . date("Y-m-d");
-        $listriwayat            = $riwayat->where('NoPendaftaran', $no_pendaftaran)->where('IdFormPengkajian', '2')->get();
+        $listriwayat            = $riwayat->where('NoPendaftaran', $no_pendaftaran)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian', '2')->get();
 
         $data = [
             'listRiwayat'       => $listriwayat,

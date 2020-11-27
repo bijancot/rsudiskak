@@ -32,7 +32,7 @@
         <script type="text/javascript" src="{{ URL::asset('js/bootstrap-multiselect.js') }}"></script>
         <link rel="stylesheet" href="{{ URL::asset('css/bootstrap-multiselect.css') }}" />
         <style>
-            .dataTables_length, .dataTables_info, .dataTables_paginate{
+            .dataTables_length, .dataTables_info, .dataTables_paginate, .dataTables_filter {
                 padding: 20px !important;
             }
             .page-item.active .page-link{

@@ -35,8 +35,8 @@
 
 $record2 = json_decode(json_encode($listRiwayat));
 $inputTglLahir = $record2[0]->TglLahir; 
-$inputJamMasukPoli = $record2[0]->TglMasuk;
-$inputTanggalMasukPoli = $record2[0]->TglMasukPoli;
+$inputJamMasukPoli = $record2[0]->TglWaktuMasukPoli;
+$inputTanggalMasukPoli = $record2[0]->TglWaktuMasukPoli;
 $JamMasuk = strtotime($inputJamMasukPoli);
 $TglMasuk = strtotime($inputTanggalMasukPoli);
 $TglLahir = strtotime($inputTglLahir); 
@@ -60,8 +60,8 @@ $TglLahir = strtotime($inputTglLahir);
             </td>
             <td colspan=3>
                 <p style="font-size:10px">No. RM : <?php echo $record2[0]->NoCM; ?></p>
-                <p style="font-size:10px">Tgl Lahir : <?php echo date('Y-m-d', $TglLahir); ?> / <?php echo $record2[0]->Umur; ?></p>
-                <p style="font-size:10px">Tgl Masuk : <?php echo $record2[0]->TglMasukPoli; ?> Jam: <?php echo date('H:i', $JamMasuk); ?></p>
+                <p style="font-size:10px">Tgl Lahir : <?php echo date('d F Y', $TglLahir); ?> / <?php echo $record2[0]->Umur; ?></p>
+                <p style="font-size:10px">Tgl Masuk : <?php echo date('d F Y', $TglMasuk); ?> Jam: <?php echo date('H:i', $JamMasuk); ?></p>
             </td>
         </tr>
         <tr>
@@ -109,7 +109,7 @@ $TglLahir = strtotime($inputTglLahir);
             <td style="text-align:center" colspan=2>
                 <br><br><br><br><br>
                 {{-- ------------- --}}
-                {{ $record[0]->NamaPerawat }}
+                {{ $record2[0]->NamaPerawat }}
             </td>
         </tr>
         <tr>
@@ -238,9 +238,9 @@ $TglLahir = strtotime($inputTglLahir);
             <td style="text-align:center" colspan=2>Komite Medis</td>
         </tr>
         <tr>
-            <td rowspan="2" style="text-align:center"><?php echo date('Y/m/d', $TglMasuk)?>&nbsp;<br>&nbsp;<br></td>
+            <td rowspan="2" style="text-align:center"><?php echo date('d F Y', $TglMasuk)?>&nbsp;<br>&nbsp;<br></td>
             <td rowspan="2"><br></td>
-            <td rowspan="2" style="text-align:center"><?php echo date('Y/m/d', $TglMasuk)?><br></td>
+            <td rowspan="2" style="text-align:center"><?php echo date('d F Y', $TglMasuk)?><br></td>
             <td rowspan="2"><br></td>
             <td rowspan="2" colspan=2><br></td>
         </tr>

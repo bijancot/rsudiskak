@@ -70,12 +70,12 @@
         <tr>
             <td colspan=8>
                 Alamat : {{ $dataMasukPoli['Alamat'] }}<br>
-                @if($dataMasukPoli['IdFormPengkajian']=="1")
+                @if(isset($dataPengkajian['PengkajianKeperawatan']['Agama']) || isset($dataPengkajian['PengkajianKeperawatan']['Pekerjaan'] ))
                     Agama : {{ $dataPengkajian['PengkajianKeperawatan']['Agama'] }}<br>
                     Pekerjaan : {{ $dataPengkajian['PengkajianKeperawatan']['Pekerjaan'] }}<br>
                     Status Perkawinan : {{ $dataPengkajian['PengkajianKeperawatan']['StatusPernikahan'] }}<br>
                     Riwayat Alergi : {{ $dataPengkajian['PengkajianKeperawatan']['Alergi'] }}<br>
-                @elseif($dataMasukPoli['IdFormPengkajian']=="2")
+                @else
                     Agama : - <br>
                     Pekerjaan : - <br>
                     Status Perkawinan : - <br>
