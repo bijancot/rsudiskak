@@ -88,8 +88,8 @@
                                         </div>
             
                                         <div class="col-8 mt-3 mt-lg-0">
-                                            <label for="nopendaftaran">Tekanan Darah <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah'] : '')}}" >
+                                            <label for="tekananDarah">Tekanan Darah <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Tekanan Darah Harus Diisi.
                                             </div>
@@ -101,7 +101,7 @@
             
                                         <div class="col-8 mt-3">
                                             <label for="nopendaftaran">Frekuensi Nadi <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input class="form-control inpt-isRequired" type="number" onkeypress="return onlyNumberKey(event)" name="PengkajianKeperawatan[FrekuensiNadi]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['FrekuensiNadi']) ? $dataPengkajian['PengkajianKeperawatan']['FrekuensiNadi'] : '')}}" >
+                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[FrekuensiNadi]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['FrekuensiNadi']) ? $dataPengkajian['PengkajianKeperawatan']['FrekuensiNadi'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Frekuensi Nadi Harus Diisi.
                                             </div>
@@ -113,7 +113,7 @@
             
                                         <div class="col-8 mt-3">
                                             <label for="nopendaftaran">Suhu <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[Suhu]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['Suhu']) ? $dataPengkajian['PengkajianKeperawatan']['Suhu'] : '')}}">
+                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[Suhu]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['Suhu']) ? $dataPengkajian['PengkajianKeperawatan']['Suhu'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Suhu Harus Diisi.
                                             </div>
@@ -125,11 +125,11 @@
             
                                         <div class="col-8 mt-3">
                                             <label for="nopendaftaran">Frekuensi Nafas <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input class="form-control inpt-isRequired" type="number" onkeypress="return onlyNumberKey(event)" name="PengkajianKeperawatan[FrekuensiNafas]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['FrekuensiNafas']) ? $dataPengkajian['PengkajianKeperawatan']['FrekuensiNafas'] : '')}}">
+                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[FrekuensiNafas]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['FrekuensiNafas']) ? $dataPengkajian['PengkajianKeperawatan']['FrekuensiNafas'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Frekuensi Nafas Harus Diisi.
                                             </div>
-                                        </div>
+                                        </div>  
                                         <div class="pl-0 col-4 mt-3">
                                             <label for="norekammedis"></label>
                                             <input type="text" name="" value="x/menit" disabled>
@@ -146,8 +146,8 @@
                                         </div>
             
                                         <div class="col-8 mt-3 mt-lg-0">
-                                            <label for="nopendaftaran">Berat Badan</label>
-                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[BeratBadan]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['BeratBadan']) ? $dataPengkajian['PengkajianKeperawatan']['BeratBadan'] : '')}}">
+                                            <label for="nopendaftaran">Berat Badan <span>*</span></label>
+                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[BeratBadan]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['BeratBadan']) ? $dataPengkajian['PengkajianKeperawatan']['BeratBadan'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Berat Badan Harus Diisi.
                                             </div>
@@ -158,8 +158,8 @@
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Tinggi Badan</label>
-                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[TinggiBadan]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TinggiBadan']) ? $dataPengkajian['PengkajianKeperawatan']['TinggiBadan'] : '')}}">
+                                            <label for="nopendaftaran">Tinggi Badan <span>*</span></label>
+                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[TinggiBadan]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TinggiBadan']) ? $dataPengkajian['PengkajianKeperawatan']['TinggiBadan'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Tinggi Badan Harus Diisi.
                                             </div>
@@ -171,7 +171,7 @@
         
                                         <div class="col-8 mt-3">
                                             <label for="nopendaftaran">Skor Nyeri</label>
-                                            <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[SkorNyeri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['SkorNyeri']) ? $dataPengkajian['PengkajianKeperawatan']['SkorNyeri'] : '')}}" >
+                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[SkorNyeri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['SkorNyeri']) ? $dataPengkajian['PengkajianKeperawatan']['SkorNyeri'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Skor Nyeri Harus Diisi.
                                             </div>
@@ -180,6 +180,10 @@
                                         <div class="col-12 mt-3 pr-5">
                                             <label for="nopendaftaran" class="pb-3">Skor Jatuh</label>
                                             <div class="d-flex justify-content-between align-items-center">
+                                                <div class="form-check" hidden>
+                                                    <input type="radio" class="form-check-input" id="skorJatuh_isNull" class="form" name="PengkajianKeperawatan[SkorJatuh]" value="-" {{(empty($dataPengkajian['PengkajianKeperawatan']['SkorJatuh']) || $dataPengkajian['PengkajianKeperawatan']['SkorJatuh'] == '-' ? 'checked' : '')}} >
+                                                    <label for="rendah">-</label>
+                                                </div>
                                                 <div class="form-check">
                                                     <input type="radio" class="form-check-input" id="rendah" name="PengkajianKeperawatan[SkorJatuh]" value="rendah" {{(!empty($dataPengkajian['PengkajianKeperawatan']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan']['SkorJatuh'] == 'rendah' ? 'checked' : '')}} >
                                                     <label for="rendah">Rendah</label>
@@ -199,9 +203,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <button type="submit" class="btn green-long w-50 ml-auto mr-3"> Submit</button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -236,9 +240,13 @@
                                             <label for="diagnosa">Diagnosa (A) <span class="lbl-isRequired" style="color:red;">*</span></label>
                                             {{-- <input type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}"> --}}
                                             <select type="text" multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
-                                                @foreach ($getICD10 as $item)  
-                                                    <option value="{{ $item['kodeDiagnosa'] }}:{{ $item['NamaDiagnosa'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['NamaDiagnosa']) && $dataPengkajian['PengkajianMedis']['NamaDiagnosa'] == $item['NamaDiagnosa'] ? 'selected' : '')}}>{{ $item['kodeDiagnosa'] }} - {{ $item['NamaDiagnosa'] }}</option>
-                                                @endforeach                                    
+                                                @if ( !empty($diagnosa['KodeDiagnosa']) && !empty($diagnosa['NamaDiagnosa']) ) 
+                                                    @for ($item = 0; $item < count($ICD10T); $item++ )
+                                                        <option value="{{ $ICD10V[$item] }}" selected >{{$ICD10T[$item]}}</option>
+                                                    @endfor
+                                                @else
+                                                    
+                                                @endif                             
                                             </select>
                                             <div class="invalid-feedback">
                                                 Data Diagnosa Harus Diisi.
@@ -282,11 +290,14 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="kodeICD09">Kode ICD 9</label>
-                                                <select class="custom-select" name="PengkajianMedis[KodeICD9]" id="kodeICD09">
-                                                    @foreach ($getICD09 as $item)  
-                                                        <option value="{{ $item['KodeDiagnosaT'] }}:{{ $item['DiagnosaTindakan'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['DiagnosaTindakan']) && $dataPengkajian['PengkajianMedis']['DiagnosaTindakan'] == $item['DiagnosaTindakan'] ? 'selected' : '')}}>{{ $item['KodeDiagnosaT'] }} - {{ $item['DiagnosaTindakan'] }}</option>
-                                                    @endforeach   
-                                                </select>
+                                            <select multiple="multiple" class="form-control pilihDiagnosaTindakan" name="PengkajianMedis[KodeICD9][]" id="kodeICD09">
+                                                @if ( !empty($diagnosaT['KodeDiagnosaT']) && !empty($diagnosaT['DiagnosaTindakan']) ) 
+                                                    @for ($item = 0; $item < count($ICD09T); $item++ )
+                                                        <option value="{{ $ICD09V[$item] }}" selected >{{$ICD09T[$item]}}</option>
+                                                    @endfor
+                                                @else
+                                                    
+                                                @endif
                                             </select>
                                         </div>
                                         <div class="col-12">
@@ -308,6 +319,10 @@
                                         <div class="col-12 mt-3 pr-5">
                                             <label for="kesanstatusgizi" class="pb-3">Kesan Status Gizi</label>
                                             <div class="d-flex justify-content-between align-items-center">
+                                                <div class="form-check" hidden>
+                                                    <input type="radio" class="form-check-input" id="kesanStatusGizi" name="PengkajianMedis[KesanStatusGizi]" value="-" {{(empty($dataPengkajian['PengkajianMedis']['KesanStatusGizi']) || $dataPengkajian['PengkajianMedis']['KesanStatusGizi'] == '-' ? 'checked' : '')}} >
+                                                    <label for="cukup">-</label>
+                                                </div>
                                                 <div class="form-check">
                                                     <input type="radio" class="form-check-input" id="kurang" name="PengkajianMedis[KesanStatusGizi]" value="kurang" {{(!empty($dataPengkajian['PengkajianMedis']['KesanStatusGizi']) && $dataPengkajian['PengkajianMedis']['KesanStatusGizi'] == 'kurang' ? 'checked' : '')}} >
                                                     <label for="kurang">Gizi Kurang/Buruk</label>
@@ -341,7 +356,9 @@
                                         </div>
                                     </div>
                                 </div>
-        
+                                <div class="col-12">
+                                    <button type="submit" class="btn green-long w-50 ml-auto mr-3"> Submit</button>
+                                </div>
                             </div>         
                         </div>
                     </div>
@@ -351,7 +368,9 @@
         </div>
     </div>
     <script>
+
         $(document).ready(function(){
+
             // set hide field required
             $('.lbl-isRequired').hide();
             $('.print_button').hide();
@@ -438,29 +457,68 @@
 
         $(document).ready(function() {
             // $('.pilihDiagnosa').selectpicker();
-            $('.pilihDiagnosa').select2();
-
-            $('#pilihDiagnosa').on('change', function () {
-                // console.log("its change");
+            $('.pilihDiagnosa').select2({
                 
-                let diagnosa = $(this).val();
+                placeholder: 'Cari...',
                 // console.log(diagnosa);
 
-                $.ajax({
+                ajax :{
 
-                    type    : 'post',
+                    type    : 'get',
                     url     : "{{ url('formPengkajian/getICD10') }}",
-                    data    : { NamaDiagnosa: diagnosa , _token: '<?php echo csrf_token()?>' },
-                    success : function (data) {
-                        console.log("Success");
-                        console.log(data);
-                        // alert(data);
-                    },
-                    error   : function() {
-                        console.error();
-                    }
+                    dataType: 'json',
+                    delay   : 250,
+                    data    : function (params) {
+                        var queryParameters = {
+                        q: params.term
+                        }
 
-                });
+                        return queryParameters;
+                    },
+                    processResults: function (data) {
+                        // console.log(data);
+                        return {
+                            results:  $.map(data, function (item) {
+                                return {
+                                    text: item.kodeDiagnosa +" - "+ item.NamaDiagnosa,
+                                    id: item.kodeDiagnosa +":"+ item.NamaDiagnosa
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                    
+                }
+            });
+            $('.pilihDiagnosaTindakan').select2({
+                placeholder: 'Cari...',
+                ajax :{
+
+                    type    : 'get',
+                    url     : "{{ url('formPengkajian/getICD09') }}",
+                    dataType: 'json',
+                    delay   : 250,
+                    data    : function (params) {
+                        var queryParameters = {
+                        q: params.term
+                        }
+
+                        return queryParameters;
+                    },
+                    processResults: function (data) {
+                        // console.log(data);
+                        return {
+                            results:  $.map(data, function (item) {
+                                return {
+                                    text: item.KodeDiagnosaT +" - "+ item.DiagnosaTindakan,
+                                    id: item.KodeDiagnosaT +":"+ item.DiagnosaTindakan
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                    
+                }
             });
         });
 
@@ -470,26 +528,28 @@
             window.addEventListener('load', function() {
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-                }, false);
-            });
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                    }, false);
+                });
             }, false);
         })();
+
         function onlyNumberKey(evt) { 
           
-          // Only ASCII charactar in that range allowed 
-          var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
-          if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) 
-              return false; 
-          return true; 
-      } 
+            // Only ASCII charactar in that range allowed 
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) && ASCIICode != 45) 
+                return false; 
+            return true; 
+        } 
+
         $('#verifikasi').change(function(){
             if($(this).prop('checked') == true){
                 $('.lbl-isRequired').show();
@@ -501,5 +561,34 @@
                 $('#statusPengkajian').val('1');
             }
         })
+
+        $('#form-pengkajian').submit(function () {
+            let statusPengkajian = $('#statusPengkajian').val()
+            let dataForm = $(this).serializeArray()
+
+            if(statusPengkajian == '2'){
+                
+                $("form :input").each(function(index, elm){
+                    if(elm.name != ''){
+                        if(elm.type == 'text'){
+                            if($('input[name="'+elm.name+'"]').attr('required') != 'required'){
+                                $('input[name="'+elm.name+'"]').val("-")
+                            }
+                        }else if(elm.type == 'textarea'){
+                            if($('textarea[name="'+elm.name+'"]').attr("required") != 'required'){
+                                $('textarea[name="'+elm.name+'"]').html("-")
+                            }
+                        }else if(elm.type == 'select-one'){
+                            if($('select[name="'+elm.name+'"]').attr("required") != 'required'){
+                                $('select[name="'+elm.name+'"]').val("-")
+                            }
+                        }
+                    }
+                });
+            }
+            console.log(dataForm)
+            return true;
+        });
+        
         </script>
 @endsection

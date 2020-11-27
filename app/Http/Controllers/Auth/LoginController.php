@@ -39,22 +39,37 @@ class LoginController extends Controller
 
         switch (Auth::user()->Role) {
             case '1':
+
                 $logging->toLogging('Login', 'Login', 'Telah Login', null);
                 $this->redirectTo = '/listPasien';
                 return $this->redirectTo;
                 break;
+
             case '2':
+
+                // $kue09 = Cookie::get('ICD9');
+
+                // if (empty($kue09)) {
+                //     $this->redirectTo = '/setCookiesICD09';
+                //     return $this->redirectTo;
+                //     break;
+                // }
+
                 $logging->toLogging('Login', 'Login', 'Telah Login', null);
                 $this->redirectTo = '/listPasien';
                 return $this->redirectTo;
                 break;
+
+
             case '3':
+
                 $this->redirectTo = '/logActivities';
                 return $this->redirectTo;
                 break;
+
             default:
-                $this->redirectTo = '/login';
-                return $this->redirectTo;
+                // $this->redirectTo = '/login';
+                // return $this->redirectTo;
                 break;
         }
     }

@@ -6,20 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\ManajemenForm;
 use GuzzleHttp\Client;
-use App\AntrianPasien;
-use App\Http\Controllers\DiagnosaController;
-use App\Keluarga;
-use App\NilaiAnut;
-use App\Pekerjaan;
-use App\Pendidikan;
-use App\StatusPernikahan;
-use App\StatusPsikologi;
-use App\TempatTinggal;
-use App\Agama;
-use App\HambatanEdukasi;
 use App\ICD10;
 use App\ICD09;
-use Illuminate\Support\Facades\Auth;
 
 class FormPengkajianController extends Controller
 {
@@ -43,51 +31,28 @@ class FormPengkajianController extends Controller
         }
     }
 
-    // get API ICD 09
-    public function getICD9()
+    // get ICD 09
+    public function getICD09(Request $request)
     {
-        $client = new Client();
-        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/icd9');
-        $statCode = $res->getStatusCode();
-        $data = $res->getBody()->getContents();
-        $data = json_decode($data, true);
-        $data = $data['response'];
-
-        return $data;
-    }
-
-    // get API ICD 10
-    public function getICD10()
-    {
-        $client = new Client();
-        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/icd10');
-        $statCode = $res->getStatusCode();
-        $data = $res->getBody()->getContents();
-        $data = json_decode($data, true);
-        $data = $data['response'];
-
-        return $data;
-    }
-
-    public function storeICD10(Request $request)
-    {
-        $getICD10 = $this->getICD10();
-        $jmlICD10 = collect($getICD10['data'])->count();
-        for ($d = 0; $d < $jmlICD10; $d++) {
-            if ($getICD10['data'][$d]['NamaDiagnosa'] == $request->get('PengkajianKeperawatan_2[Diagnosa][]')) {
-                break;
-            }
+        if ($request->has('q')) {
+            $cari = $request->q;
+            $data = DB::collection('ICD09')->select('KodeDiagnosaT', 'DiagnosaTindakan')
+                ->where('DiagnosaTindakan', 'LIKE', "%$cari%")
+                ->get();
+            return response()->json($data);
         }
-        $kodeDiagnosa = $getICD10['data'][$d]['kodeDiagnosa'];
-        // foreach ($getICD10['data'] as $item) {
-        //     if ($item['NamaDiagnosa'] == $request->get('PengkajianKeperawatan_2[Diagnosa][]')) {
-        //         break;
-        //     }
-        // }
+    }
 
-        // $kodeDiagnosa = $item['kodeDiagnosa'];
-        // dump($kodeDiagnosa);
-        return response()->json($kodeDiagnosa);
+    // get ICD 10
+    public function getICD10(Request $request)
+    {
+        if ($request->has('q')) {
+            $cari = $request->q;
+            $data = DB::collection('ICD10')->select('kodeDiagnosa', 'NamaDiagnosa')
+                ->where('NamaDiagnosa', 'LIKE', "%$cari%")
+                ->get();
+            return response()->json($data);
+        }
     }
 
     /**
@@ -137,8 +102,6 @@ class FormPengkajianController extends Controller
     {
 
         $dataForm = ManajemenForm::where('idForm', $idForm)->get();
-        $getICD09 = ICD09::all();
-        $getICD10 = ICD10::all();
 
         // return view("'".$data[0]['namaFile']."'");
         if ($NoCM && $noPendaftaran) {
@@ -201,6 +164,55 @@ class FormPengkajianController extends Controller
             $statusPsikologi    = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
             $hambatanEdukasi    = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
 
+            $diagnosa           = [
+                'KodeDiagnosa'  => Null,
+                'NamaDiagnosa'  => Null,
+            ];
+
+            $diagnosaT          = [
+                'KodeDiagnosaT   ' => Null,
+                'DiagnosaTindakan' => Null,
+            ];
+
+            $ICD10T    = [];
+            $ICD10V    = [];
+            $ICD09T    = [];
+            $ICD09V    = [];
+
+            if (!empty($dataMasukPoli['DataPengkajian'])) {
+
+                if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+
+                    $diagnosa       = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa'];
+                    $pecahKode10    = explode(";", $diagnosa['KodeDiagnosa']);
+                    $pecahNama10    = explode(";", $diagnosa['NamaDiagnosa']);
+                    // dump($pecahKode10);
+                    // dump($pecahNama10);
+
+                    for ($item = 0; $item < count($pecahKode10); $item++) {
+                        array_push($ICD10T, $pecahKode10[$item] . " - " . $pecahNama10[$item]);
+                        array_push($ICD10V, $pecahKode10[$item] . ":" . $pecahNama10[$item]);
+                    }
+                    // dump($ICD10T);
+                    // dump($ICD10V);
+                }
+
+                if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+
+                    $diagnosaT      = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9'];
+                    $pecahKode09    = explode(";", $diagnosaT['KodeDiagnosaT']);
+                    $pecahNama09    = explode(";", $diagnosaT['DiagnosaTindakan']);
+                    // dump($pecahKode09);
+                    // dump($pecahNama09);
+
+                    for ($item = 0; $item < count($pecahKode09); $item++) {
+                        array_push($ICD09T, $pecahKode09[$item] . " - " . $pecahNama09[$item]);
+                        array_push($ICD09V, $pecahKode09[$item] . ":" . $pecahNama09[$item]);
+                    }
+                    // dump($ICD09T);
+                    // dump($ICD09V);
+                }
+            }
             // $dataMasukPoli      = DB::collection('pasien_' . $NoCM)
             //     ->where('NoPendaftaran', $noPendaftaran)
             //     ->where('TglMasukPoli', $tglMasukPoli)
@@ -221,14 +233,18 @@ class FormPengkajianController extends Controller
                 'tempatTinggal'     => $tempatTinggal,
                 'statusPsikologi'   => $statusPsikologi,
                 'hambatanEdukasi'   => $hambatanEdukasi,
-                'getICD09'          => $getICD09,
-                'getICD10'          => $getICD10,
                 'idForm'            => $idForm,
                 'NoCM'              => $NoCM,
                 'noPendaftaran'     => $noPendaftaran,
                 'tglMasukPoli'      => $tglMasukPoli,
                 'dataRiwayat'       => $dataRiwayat,
                 'dataDokumen'       => $dataDokumen,
+                'diagnosa'          => $diagnosa,
+                'diagnosaT'         => $diagnosaT,
+                'ICD10T'            => $ICD10T,
+                'ICD10V'            => $ICD10V,
+                'ICD09T'            => $ICD09T,
+                'ICD09V'            => $ICD09V,
                 'dataMasukPoli'     => $dataMasukPoli
             ];
             return view($dataForm[0]['namaFile'], $data);
@@ -265,52 +281,66 @@ class FormPengkajianController extends Controller
 
         // declare data update
         $dataUpdate = $req->all();
-        // $dataUpdate['PengkajianMedis']['Diagnosa'];
-        // $pengkajianDiagnosa = $req->get("PengkajianMedis['Diagnosa'][]");
-        // if (!empty($pengkajianDiagnosa) && $pengkajianDiagnosa != "-") {
-        //     $dataUpdate['PengkajianMedis']['Diagnosa'];
-        // } else {
-        //     $dataUpdate['PengkajianMedis']['Diagnosa'] = "-";
-        // }
-        // if ($req->get("PengkajianMedis['Diagnosa'][]")) {
-        //     $dataUpdate['PengkajianMedis']['KodeICD9'];
-        // } else {
-        //     $dataUpdate['PengkajianMedis']['KodeICD9'] = "-";
-        // }
         // dump($dataUpdate);
-        // dump($dataUpdate['PengkajianMedis']['Diagnosa']);
-        // dump($pengkajianDiagnosa);
-        // dump($dataUpdate['PengkajianMedis']['KodeICD9']);
 
-        /**
-         * Testing ICD10 & ICD09
-         */
-        //-------------------------------------------------------------------------------------//
-        // $diagnosa = $dataUpdate['PengkajianMedis']['Diagnosa'];
-        // $kodeICD9 = $dataUpdate['PengkajianMedis']['KodeICD9'];
-        // dump($diagnosa);
-        // dump($kodeICD9);
-        // $ICD10 = implode(";", $diagnosa);
-        // $ICD09 = implode(";", $kodeICD9);
-        // dump($ICD10);
-        // dump($ICD09);
+        if (array_key_exists('Diagnosa', $dataUpdate['PengkajianMedis'])) {
+            // Jika diagnosa terisi
+            $ICD10      = $dataUpdate['PengkajianMedis']['Diagnosa'];
+            $kode10     = [];
+            $nama10     = [];
+            // dump($ICD10);
 
-        // $NamaDiagnosa = explode(":", $ICD10);
-        // dump($NamaDiagnosa);
-        // $DiagnosaTindakan = explode(":", $ICD09);
-        // dump($DiagnosaTindakan);
+            for ($item = 0; $item < count($ICD10); $item++) {
+
+                $pemisahan[$item] = explode(":", $ICD10[$item]);
+
+                array_push($kode10, $pemisahan[$item][0]);
+                array_push($nama10, $pemisahan[$item][1]);
+                // dump($kode10);
+                // dump($nama10);
+            }
+
+            $Jkode10 = implode(";", $kode10);
+            $Jnama10 = implode(";", $nama10);
+
+            $diagnosa = [
+                'KodeDiagnosa' => $Jkode10,
+                'NamaDiagnosa' => $Jnama10,
+            ];
 
 
-        // foreach ($diagnosa as $item) {
-        //     // $NamaDiagnosa = DB::collection('ICD10')->where('kodeDiagnosa', $item)->get();
-        //     // $NamaDiagnosa = ICD10::where('kodeDiagnosa', $item)->get();
-        //     // dump($NamaDiagnosa);
-        //     $NamaDiagnosa = $this->getNamaICD10($item, count($diagnosa), 0);
-        // }
-        // $NamaDiagnosa = ICD10::where('kodeDiagnosa', $ICD10);
+            $dataUpdate['PengkajianMedis']['Diagnosa'] = $diagnosa;
+            // dump($dataUpdate['PengkajianMedis']['Diagnosa']);
+        }
 
-        // dump($dataUpdate);
-        //---------------------------------------------------------------------------------------//
+        if (array_key_exists('KodeICD9', $dataUpdate['PengkajianMedis'])) {
+            // Jika KodeICD9 terisi
+            $ICD09      = $dataUpdate['PengkajianMedis']['KodeICD9'];
+            $kode9      = [];
+            $nama9       = [];
+
+            for ($item = 0; $item < count($ICD09); $item++) {
+
+                $pemisahan[$item] = explode(":", $ICD09[$item]);
+
+                array_push($kode9, $pemisahan[$item][0]);
+                array_push($nama9, $pemisahan[$item][1]);
+                // dump($kode9);
+                // dump($nama9);
+
+            }
+
+            $Jkode9 = implode(";", $kode9);
+            $Jnama9 = implode(";", $nama9);
+
+            $diagnosaT = [
+                'KodeDiagnosaT'     => $Jkode9,
+                'DiagnosaTindakan'  => $Jnama9,
+            ];
+
+            $dataUpdate['PengkajianMedis']['KodeICD9'] = $diagnosaT;
+            // dump($dataUpdate['PengkajianMedis']['KodeICD9']);
+        }
 
         // declare status pengkajian
         $statusPengkajian = $dataUpdate['StatusPengkajian'];
@@ -328,7 +358,7 @@ class FormPengkajianController extends Controller
         DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
             ->where('NoPendaftaran', $noPendaftaran)
             ->where('deleted_at', null)
-            ->whereIn('StatusPengkajian', ["0", "1", "2", "3"])
+            ->whereIn('StatusPengkajian', ["0", "1", "2"])
             ->update(['StatusPengkajian' => $statusPengkajian]);
 
         // update data pengkajian
@@ -350,6 +380,22 @@ class FormPengkajianController extends Controller
 
         return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
 
+        // $dataUpdate['PengkajianMedis']['Diagnosa'];
+        // $pengkajianDiagnosa = $req->get("PengkajianMedis['Diagnosa'][]");
+        // if (!empty($pengkajianDiagnosa) && $pengkajianDiagnosa != "-") {
+        //     $dataUpdate['PengkajianMedis']['Diagnosa'];
+        // } else {
+        //     $dataUpdate['PengkajianMedis']['Diagnosa'] = "-";
+        // }
+        // if ($req->get("PengkajianMedis['Diagnosa'][]")) {
+        //     $dataUpdate['PengkajianMedis']['KodeICD9'];
+        // } else {
+        //     $dataUpdate['PengkajianMedis']['KodeICD9'] = "-";
+        // }
+        // dump($dataUpdate);
+        // dump($dataUpdate['PengkajianMedis']['Diagnosa']);
+        // dump($pengkajianDiagnosa);
+        // dump($dataUpdate['PengkajianMedis']['KodeICD9']);
 
         /**
          *  Deprecated

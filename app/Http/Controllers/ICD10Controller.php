@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
+
 class ICD10Controller extends Controller
 {
 
-    public function getICD10($page = null)
+    public function getAPIICD10($page = null)
     {
 
         $client = new Client();
@@ -23,6 +26,27 @@ class ICD10Controller extends Controller
         return $data;
     }
 
+    public function setICD10()
+    {
+        $cookieTime = 1;
+        $response   = new Response('Hello');
+        $data       = [
+            'kodeDiagnosa' => "A0019",
+            'NamaDiagnosa' => "Somad"
+        ];
+        // $json = serialize($data);
+        $json = json_encode($data);
+        // $response = Cookie::queue('nama_kue', $json, $cookieTime);
+        $response->withCookie(cookie('ICD10',  $json, $cookieTime));
+        return $response;
+    }
+
+    public function getICD10(Request $request)
+    {
+        $value = $request->cookie('ICD10');
+        return $value;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +55,7 @@ class ICD10Controller extends Controller
     public function index()
     {
         // for ($i = 1; $i <= 100; $i++) {
-        //     $getData = $this->getICD10($i);
+        //     $getData = $this->getAPIICD10($i);
 
         //     dump($getData['current_page']);
         //     dump($getData['data']);
@@ -39,7 +63,7 @@ class ICD10Controller extends Controller
 
         // for ($pages = 1; $pages <= 2; $pages++) {
 
-        //     $item = $this->getICD10($pages);
+        //     $item = $this->getAPIICD10($pages);
 
         //     foreach ($item['data'] as $row) {
         //         dump($row);
@@ -57,16 +81,6 @@ class ICD10Controller extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -75,7 +89,7 @@ class ICD10Controller extends Controller
     public function store(Request $request)
     {
         // for ($i = 1; $i <= 2; $i++) {
-        //     $item = $this->getICD10($i);
+        //     $item = $this->getAPIICD10($i);
         //     // array_merge($iCD10, $item['data']);
         //     // dump($item['data']);
         // }
@@ -83,7 +97,7 @@ class ICD10Controller extends Controller
         // 681
         // for ($pages = 681; $pages <= 707; $pages++) {
 
-        //     $item = $this->getICD10($pages);
+        //     $item = $this->getAPIICD10($pages);
 
         //     foreach ($item['data'] as $row) {
         //         ICD10::create($row);
@@ -93,50 +107,5 @@ class ICD10Controller extends Controller
         // }
 
         return redirect('m_ICD10');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ICD10  $iCD10
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ICD10 $iCD10)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ICD10  $iCD10
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ICD10 $iCD10)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ICD10  $iCD10
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ICD10 $iCD10)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ICD10  $iCD10
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ICD10 $iCD10)
-    {
-        //
     }
 }

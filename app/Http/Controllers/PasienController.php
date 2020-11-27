@@ -36,7 +36,7 @@ class PasienController extends Controller
         $masukPoli = new AntrianPasien();
         $masukPoli->collection  = "transaksi_" . date("Y-m-d");
         // $masukPoli->get();
-        $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->get();
+        $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->where('KdRuangan', $getKdRuangan)->get();
 
 
         if (Auth::user()->Role == "1") {

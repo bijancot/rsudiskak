@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
+
 class ICD09Controller extends Controller
 {
 
-    public function getICD09($page = null)
+    public function getAPIICD09($page = null)
     {
 
         $client = new Client();
@@ -22,6 +25,39 @@ class ICD09Controller extends Controller
 
         return $data;
     }
+
+    public function setICD09()
+    {
+        // $cookieTime = 1;
+
+        // $data = ICD09::all();
+        // dump($data);
+        // foreach ($data as $item) {
+        //     // $item['KodeDiagnosaT'];
+        //     dump($item['KodeDiagnosaT']);
+        // }
+        // $data       = [
+        //     'kodeDiagnosa' => "A0009",
+        //     'NamaDiagnosa' => "Salo"
+        // ];
+        // $json = serialize($data);
+        // $json = json_encode($data);
+        // dump($json);
+        // $response->withCookie(cookie('ICD9',  $json, $cookieTime));
+        // dump($response);
+        // return response(redirect('/listPasien'))->cookie(
+        //     'ICD9',
+        //     $json,
+        //     $cookieTime
+        // );
+    }
+
+    public function getICD09(Request $request)
+    {
+        $value = $request->cookie('ICD9');
+        return $value;
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -39,16 +75,6 @@ class ICD09Controller extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -56,62 +82,17 @@ class ICD09Controller extends Controller
      */
     public function store(Request $request)
     {
-        for ($pages = 151; $pages <= 192; $pages++) {
+        // for ($pages = 151; $pages <= 192; $pages++) {
 
-            $item = $this->getICD09($pages);
+        //     $item = $this->getAPIICD09($pages);
 
-            foreach ($item['data'] as $row) {
-                ICD09::create($row);
-            }
-            // dump($item['data']);
+        //     foreach ($item['data'] as $row) {
+        //         ICD09::create($row);
+        //     }
+        //     // dump($item['data']);
 
-        }
+        // }
 
         return redirect('m_ICD09');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ICD09  $iCD09
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ICD09 $iCD09)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ICD09  $iCD09
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ICD09 $iCD09)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ICD09  $iCD09
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ICD09 $iCD09)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ICD09  $iCD09
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ICD09 $iCD09)
-    {
-        //
     }
 }
