@@ -49,6 +49,14 @@ Route::get('formPengkajianAwal/{no_cm}', 'FPengkajianAwalController@showRajal');
 Route::get('formPengkajianUlang/{no_cm}', 'FPengkajianUlangController@showRajal');
 Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@formPengkajian');
 
+// Route::get('getCookiesICD09', 'ICD09Controller@getICD09');
+// Route::get('setCookiesICD09', 'ICD09Controller@setICD09');
+// Route::get('getCookiesICD10', 'ICD10Controller@getICD10');
+// Route::get('setCookiesICD10', 'ICD10Controller@setICD10');
+
+Route::get('formPengkajian/getICD09', 'FormPengkajianController@getICD09');
+Route::get('formPengkajian/getICD10', 'FormPengkajianController@getICD10');
+
 
 // ============ TEMPLATE FRONT END
 
@@ -130,8 +138,8 @@ Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'F
 
 Route::post('m_ICD09', 'ICD09Controller@store');
 Route::post('m_ICD10', 'ICD10Controller@store');
-Route::post('formPengkajian/getICD10', 'FormPengkajianController@storeICD10');
-Route::post('formPengkajian/getICD09', 'FormPengkajianController@storeICD09');
+// Route::post('formPengkajian/getICD10', 'FormPengkajianController@storeICD10');
+// Route::post('formPengkajian/getICD09', 'FormPengkajianController@storeICD09');
 
 /**
  * Route post Admin

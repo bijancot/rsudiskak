@@ -450,14 +450,8 @@
                                         <div class="col-12 mt-3">
                                             <label for="diagnosa">Diagnosa (A) <span class="lbl-isRequired" style="color:red;">*</span></label>
                                             {{-- <input type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}" > --}}
-                                            <select multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
-                                                @foreach ($getICD10 as $item)  
-                                                    <option value="{{ $item['kodeDiagnosa'] }}:{{ $item['NamaDiagnosa'] }}" >
-                                                    {{-- {{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) && $dataPengkajian['PengkajianMedis']['Diagnosa'] == $item['Diagnosa'] ? 'selected' : '')}}> --}}
-                                                        {{-- {{( !empty($dataPengkajian['PengkajianMedis']['Diagnosa']) || $dataPengkajian['PengkajianMedis']['Diagnosa'] != "-" ? 'selected' : '')}}> --}}
-                                                        {{ $item['kodeDiagnosa'] }} - {{ $item['NamaDiagnosa'] }}
-                                                    </option>
-                                                @endforeach                                    
+                                            <select class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" multiple="multiple"  id="pilihDiagnosa" required>
+                                               
                                             </select>
                                             <div class="invalid-feedback">
                                                 Data Diagnosa Harus Diisi.
@@ -501,10 +495,7 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="kodeICD09">Kode ICD 9</label>
-                                            <select multiple="multiple" class="form-control pilihDiagnosaTindakan" name="PengkajianMedis[KodeICD9][]" id="kodeICD09">
-                                                {{-- @foreach ($getICD09 as $item)  
-                                                    <option value="{{ $item['KodeDiagnosaT'] }}:{{ $item['DiagnosaTindakan'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['DiagnosaTindakan']) && $dataPengkajian['PengkajianMedis']['DiagnosaTindakan'] == $item['DiagnosaTindakan'] ? 'selected' : '')}}>{{ $item['KodeDiagnosaT'] }} - {{ $item['DiagnosaTindakan'] }}</option>
-                                                @endforeach    --}}
+                                            <select class="form-control pilihDiagnosaTindakan" name="PengkajianMedis[KodeICD9][]" id="kodeICD09">
                                             </select>
                                         </div>
                                         <div class="col-12">
@@ -655,31 +646,92 @@
 
         $(document).ready(function() {
             // $('.pilihDiagnosa').selectpicker();
-            $('.pilihDiagnosa').select2();
-            $('.pilihDiagnosaTindakan').select2();
-
-            $('#pilihDiagnosa').on('change', function () {
-                // console.log("its change");
+            $('.pilihDiagnosa').select2({
                 
-                let diagnosa = $(this).val();
+                placeholder: 'Cari...',
                 // console.log(diagnosa);
 
-                $.ajax({
+                ajax :{
 
-                    type    : 'post',
+                    type    : 'get',
                     url     : "{{ url('formPengkajian/getICD10') }}",
-                    data    : { kodeDiagnosa: diagnosa , _token: '<?php echo csrf_token()?>' },
-                    success : function (data) {
-                        console.log("Success");
-                        console.log(data);
-                        // alert(data);
-                    },
-                    error   : function() {
-                        console.error();
-                    }
+                    dataType: 'json',
+                    delay   : 250,
+                    data    : function (params) {
+                        var queryParameters = {
+                        q: params.term
+                        }
 
-                });
+                        return queryParameters;
+                    },
+                    processResults: function (data) {
+                        // console.log(data);
+                        return {
+                            results:  $.map(data, function (item) {
+                                return {
+                                    text: item.kodeDiagnosa +" - "+ item.NamaDiagnosa,
+                                    id: item.kodeDiagnosa +":"+ item.NamaDiagnosa
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                    
+                }
             });
+            $('.pilihDiagnosaTindakan').select2({
+                placeholder: 'Cari...',
+                ajax :{
+
+                    type    : 'get',
+                    url     : "{{ url('formPengkajian/getICD09') }}",
+                    dataType: 'json',
+                    delay   : 250,
+                    data    : function (params) {
+                        var queryParameters = {
+                        q: params.term
+                        }
+
+                        return queryParameters;
+                    },
+                    processResults: function (data) {
+                        // console.log(data);
+                        return {
+                            results:  $.map(data, function (item) {
+                                return {
+                                    text: item.KodeDiagnosaT +" - "+ item.DiagnosaTindakan,
+                                    id: item.KodeDiagnosaT +":"+ item.DiagnosaTindakan
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                    
+                }
+            });
+
+            // $('#pilihDiagnosa').on('change', function () {
+            //     // console.log("its change");
+                
+            //     let diagnosa = $(this).val();
+            //     // console.log(diagnosa);
+
+            //     $.ajax({
+
+            //         type    : 'post',
+            //         url     : "{{ url('formPengkajian/getICD10') }}",
+            //         data    : { kodeDiagnosa: diagnosa , _token: '<?php echo csrf_token()?>' },
+            //         success : function (data) {
+            //             console.log("Success");
+            //             console.log(data);
+            //             // alert(data);
+            //         },
+            //         error   : function() {
+            //             console.error();
+            //         }
+
+            //     });
+            // });
         });
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {

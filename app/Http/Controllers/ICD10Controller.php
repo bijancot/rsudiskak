@@ -7,10 +7,34 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
+
 class ICD10Controller extends Controller
 {
 
-    public function getICD10($page = null)
+    public function setICD10()
+    {
+        $cookieTime = 1;
+        $response   = new Response('Hello');
+        $data       = [
+            'kodeDiagnosa' => "A0019",
+            'NamaDiagnosa' => "Somad"
+        ];
+        // $json = serialize($data);
+        $json = json_encode($data);
+        // $response = Cookie::queue('nama_kue', $json, $cookieTime);
+        $response->withCookie(cookie('ICD10',  $json, $cookieTime));
+        return $response;
+    }
+
+    public function getICD10(Request $request)
+    {
+        $value = $request->cookie('ICD10');
+        return $value;
+    }
+
+    public function getAPIICD10($page = null)
     {
 
         $client = new Client();
@@ -39,7 +63,7 @@ class ICD10Controller extends Controller
 
         // for ($pages = 1; $pages <= 2; $pages++) {
 
-        //     $item = $this->getICD10($pages);
+        //     $item = $this->getAPIICD10($pages);
 
         //     foreach ($item['data'] as $row) {
         //         dump($row);
@@ -75,7 +99,7 @@ class ICD10Controller extends Controller
     public function store(Request $request)
     {
         // for ($i = 1; $i <= 2; $i++) {
-        //     $item = $this->getICD10($i);
+        //     $item = $this->getAPIICD10($i);
         //     // array_merge($iCD10, $item['data']);
         //     // dump($item['data']);
         // }
@@ -83,7 +107,7 @@ class ICD10Controller extends Controller
         // 681
         // for ($pages = 681; $pages <= 707; $pages++) {
 
-        //     $item = $this->getICD10($pages);
+        //     $item = $this->getAPIICD10($pages);
 
         //     foreach ($item['data'] as $row) {
         //         ICD10::create($row);

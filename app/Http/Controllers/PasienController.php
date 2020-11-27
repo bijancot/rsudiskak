@@ -7,8 +7,8 @@ use App\ManajemenForm;
 use App\User;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-// use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class PasienController extends Controller
 {
@@ -16,8 +16,14 @@ class PasienController extends Controller
     {
         $this->middleware('auth');
     }
-    public function listPasien()
+
+    public function listPasien(Request $request)
     {
+
+        $ICD09          = new ICD09Controller;
+        $value = $ICD09->getICD09($request);
+        // dump($value);
+
         // get data
         $getKdRuangan   = Auth::user()->KodeRuangan;
 
@@ -36,7 +42,7 @@ class PasienController extends Controller
         $masukPoli = new AntrianPasien();
         $masukPoli->collection  = "transaksi_" . date("Y-m-d");
         // $masukPoli->get();
-        $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->get();
+        $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->where('KdRuangan', $getKdRuangan)->get();
 
 
         if (Auth::user()->Role == "1") {

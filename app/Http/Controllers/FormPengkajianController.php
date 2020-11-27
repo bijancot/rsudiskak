@@ -43,51 +43,28 @@ class FormPengkajianController extends Controller
         }
     }
 
-    // get API ICD 09
-    public function getICD9()
+    // get ICD 09
+    public function getICD09(Request $request)
     {
-        $client = new Client();
-        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/icd9');
-        $statCode = $res->getStatusCode();
-        $data = $res->getBody()->getContents();
-        $data = json_decode($data, true);
-        $data = $data['response'];
-
-        return $data;
-    }
-
-    // get API ICD 10
-    public function getICD10()
-    {
-        $client = new Client();
-        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/icd10');
-        $statCode = $res->getStatusCode();
-        $data = $res->getBody()->getContents();
-        $data = json_decode($data, true);
-        $data = $data['response'];
-
-        return $data;
-    }
-
-    public function storeICD10(Request $request)
-    {
-        $getICD10 = $this->getICD10();
-        $jmlICD10 = collect($getICD10['data'])->count();
-        for ($d = 0; $d < $jmlICD10; $d++) {
-            if ($getICD10['data'][$d]['NamaDiagnosa'] == $request->get('PengkajianKeperawatan_2[Diagnosa][]')) {
-                break;
-            }
+        if ($request->has('q')) {
+            $cari = $request->q;
+            $data = DB::collection('ICD09')->select('KodeDiagnosaT', 'DiagnosaTindakan')
+                ->where('DiagnosaTindakan', 'LIKE', "%$cari%")
+                ->get();
+            return response()->json($data);
         }
-        $kodeDiagnosa = $getICD10['data'][$d]['kodeDiagnosa'];
-        // foreach ($getICD10['data'] as $item) {
-        //     if ($item['NamaDiagnosa'] == $request->get('PengkajianKeperawatan_2[Diagnosa][]')) {
-        //         break;
-        //     }
-        // }
+    }
 
-        // $kodeDiagnosa = $item['kodeDiagnosa'];
-        // dump($kodeDiagnosa);
-        return response()->json($kodeDiagnosa);
+    // get ICD 10
+    public function getICD10(Request $request)
+    {
+        if ($request->has('q')) {
+            $cari = $request->q;
+            $data = DB::collection('ICD10')->select('kodeDiagnosa', 'NamaDiagnosa')
+                ->where('NamaDiagnosa', 'LIKE', "%$cari%")
+                ->get();
+            return response()->json($data);
+        }
     }
 
     /**
@@ -328,7 +305,7 @@ class FormPengkajianController extends Controller
         DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
             ->where('NoPendaftaran', $noPendaftaran)
             ->where('deleted_at', null)
-            ->whereIn('StatusPengkajian', ["0", "1", "2", "3"])
+            ->whereIn('StatusPengkajian', ["0", "1", "2"])
             ->update(['StatusPengkajian' => $statusPengkajian]);
 
         // update data pengkajian

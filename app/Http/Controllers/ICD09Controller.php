@@ -6,21 +6,55 @@ use App\ICD09;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 
 class ICD09Controller extends Controller
 {
 
-    public function getICD09($page = null)
+    public function setICD09()
+    {
+        // $cookieTime = 1;
+
+        // $data = ICD09::all();
+        // dump($data);
+        // foreach ($data as $item) {
+        //     // $item['KodeDiagnosaT'];
+        //     dump($item['KodeDiagnosaT']);
+        // }
+        // $data       = [
+        //     'kodeDiagnosa' => "A0009",
+        //     'NamaDiagnosa' => "Salo"
+        // ];
+        // $json = serialize($data);
+        // $json = json_encode($data);
+        // dump($json);
+        // $response->withCookie(cookie('ICD9',  $json, $cookieTime));
+        // dump($response);
+        // return response(redirect('/listPasien'))->cookie(
+        //     'ICD9',
+        //     $json,
+        //     $cookieTime
+        // );
+    }
+
+    public function getICD09(Request $request)
+    {
+        $value = $request->cookie('ICD9');
+        return $value;
+    }
+
+    public function getAPIICD09($page = null)
     {
 
-        $client = new Client();
-        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/icd9?page=' . $page);
-        $statCode = $res->getStatusCode();
-        $data = $res->getBody()->getContents();
-        $data = json_decode($data, true);
-        $data = $data['response'];
+        // $client = new Client();
+        // $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/icd9?page=' . $page);
+        // $statCode = $res->getStatusCode();
+        // $data = $res->getBody()->getContents();
+        // $data = json_decode($data, true);
+        // $data = $data['response'];
+        // return $data;
 
-        return $data;
     }
 
     /**
@@ -58,7 +92,7 @@ class ICD09Controller extends Controller
     {
         for ($pages = 151; $pages <= 192; $pages++) {
 
-            $item = $this->getICD09($pages);
+            $item = $this->getAPIICD09($pages);
 
             foreach ($item['data'] as $row) {
                 ICD09::create($row);
@@ -68,50 +102,5 @@ class ICD09Controller extends Controller
         }
 
         return redirect('m_ICD09');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ICD09  $iCD09
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ICD09 $iCD09)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ICD09  $iCD09
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ICD09 $iCD09)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ICD09  $iCD09
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ICD09 $iCD09)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ICD09  $iCD09
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ICD09 $iCD09)
-    {
-        //
     }
 }

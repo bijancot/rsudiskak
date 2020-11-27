@@ -199,9 +199,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <button type="submit" class="btn green-long w-50 ml-auto mr-3"> Submit</button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -236,9 +236,9 @@
                                             <label for="diagnosa">Diagnosa (A) <span class="lbl-isRequired" style="color:red;">*</span></label>
                                             {{-- <input type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}"> --}}
                                             <select type="text" multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
-                                                @foreach ($getICD10 as $item)  
+                                                {{-- @foreach ($getICD10 as $item)  
                                                     <option value="{{ $item['kodeDiagnosa'] }}:{{ $item['NamaDiagnosa'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['NamaDiagnosa']) && $dataPengkajian['PengkajianMedis']['NamaDiagnosa'] == $item['NamaDiagnosa'] ? 'selected' : '')}}>{{ $item['kodeDiagnosa'] }} - {{ $item['NamaDiagnosa'] }}</option>
-                                                @endforeach                                    
+                                                @endforeach                                     --}}
                                             </select>
                                             <div class="invalid-feedback">
                                                 Data Diagnosa Harus Diisi.
@@ -282,10 +282,10 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="kodeICD09">Kode ICD 9</label>
-                                                <select class="custom-select" name="PengkajianMedis[KodeICD9]" id="kodeICD09">
-                                                    @foreach ($getICD09 as $item)  
+                                                <select class="custom-select" multiple="multiple" name="PengkajianMedis[KodeICD9][]" id="kodeICD09">
+                                                    {{-- @foreach ($getICD09 as $item)  
                                                         <option value="{{ $item['KodeDiagnosaT'] }}:{{ $item['DiagnosaTindakan'] }}" {{(!empty($dataPengkajian['PengkajianMedis']['DiagnosaTindakan']) && $dataPengkajian['PengkajianMedis']['DiagnosaTindakan'] == $item['DiagnosaTindakan'] ? 'selected' : '')}}>{{ $item['KodeDiagnosaT'] }} - {{ $item['DiagnosaTindakan'] }}</option>
-                                                    @endforeach   
+                                                    @endforeach    --}}
                                                 </select>
                                             </select>
                                         </div>
@@ -341,7 +341,9 @@
                                         </div>
                                     </div>
                                 </div>
-        
+                                <div class="col-12">
+                                    <button type="submit" class="btn green-long w-50 ml-auto mr-3"> Submit</button>
+                                </div>
                             </div>         
                         </div>
                     </div>
