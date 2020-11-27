@@ -90,8 +90,10 @@
                     <div class="form-group">
                         <label for="KodeRuangan" class="col-form-label">Kode Ruangan :</label>
                         <select name="KodeRuangan" class="form-control">
-                            @foreach ($kdRuangan as $item)
-                                <option value="{{$item['KdRuangan']}}" selected>{{$item['KdRuangan']}} - {{$item['NamaRuangan']}}</option>
+                            @foreach ($kdRuangan as $index)
+                                @foreach ($index as $item)
+                                    <option value="{{$item['KdRuangan']}}" selected>{{$item['KdRuangan']}} - {{$item['NamaRuangan']}}</option>
+                                @endforeach
                             @endforeach
                         </select>
                     </div>

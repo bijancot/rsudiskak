@@ -12,26 +12,37 @@ class DokumenController extends Controller
     public function index(){
         //get data kdruangan from api
         $client = new Client();
-        $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ');
-        $statCode = $res->getStatusCode();
-        $kdRuangan = $res->getBody()->getContents();
-        $kdRuangan = json_decode($kdRuangan, true);
-        $kdRuangan = $kdRuangan['data'];
+        for($i = 1; $i <=2; $i++){
+            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page='.$i);
+            $statCode = $res->getStatusCode();
+            $kdRuangan = $res->getBody()->getContents();
+            $kdRuangan = json_decode($kdRuangan, true);
+
+            $resKdRuangan[$i-1] = $kdRuangan['data'];
+        }
 
         // get data dokumen
         $dataDokumen = array();
         $index = 0;
-        foreach(\DB::connection()->getMongoDB()->listCollections() as $collection){
-            // check collection with name dokumen_
-            $pos = strpos($collection->getName(), 'dokumen_');
-            if($pos !== false){
-                $dataDokumen[$index] = DB::collection($collection->getName())->whereNotNull('Status')->get();
-                $index++;
-            }
+        $listDokumen = DB::collection('listDokumen')->get();
+        foreach($listDokumen as $item){
+            $dataDokumen[$index] = DB::collection('dokumen_'.$item['NoCM'])->whereNotNull('Status')->get();
+            $index++;
         }
+
+        // $dataDokumen = array();
+        // $index = 0;
+        // foreach(\DB::connection()->getMongoDB()->listCollections() as $collection){
+        //     // check collection with name dokumen_
+        //     $pos = strpos($collection->getName(), 'dokumen_');
+        //     if($pos !== false){
+        //         $dataDokumen[$index] = DB::collection($collection->getName())->whereNotNull('Status')->get();
+        //         $index++;
+        //     }
+        // }
         
         $data = [
-            'kdRuangan' => $kdRuangan,
+            'kdRuangan' => $resKdRuangan,
             'dataDokumen' => $dataDokumen
         ];
 
@@ -47,26 +58,41 @@ class DokumenController extends Controller
         
         //get data kdruangan from api
         $client = new Client();
-        $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ');
-        $statCode = $res->getStatusCode();
-        $kdRuangan = $res->getBody()->getContents();
-        $kdRuangan = json_decode($kdRuangan, true);
-        $kdRuangan = $kdRuangan['data'];
+        for($i = 1; $i <=2; $i++){
+            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page='.$i);
+            $statCode = $res->getStatusCode();
+            $kdRuangan = $res->getBody()->getContents();
+            $kdRuangan = json_decode($kdRuangan, true);
 
-        // insert data
+            $resKdRuangan[$i-1] = $kdRuangan['data'];
+        }
+
+        // register nocm into listDokumen
         $data = $req->all();
+        unset($data['_token']);
+
+        $statusData = DB::collection('listDokumen')->where('NoCM', $data['NoCM'])->get();
+
+        if(empty($statusData[0])){
+            DB::collection('listDokumen')->insert(['NoCM' => $data['NoCM'], 'NamaLengkap' => $data['NamaLengkap']]);
+        }
+
+
+        // insert data into db dokumen_
         unset($data['file']);
         $data['NamaFile'] = $destination."/".$data['NoPendaftaran'].'_'.$req->get('TanggalMasuk').'_'.$file->getClientOriginalName();
         
         //insert nama ruangan
         $data['NamaRuangan'] = "";
-        foreach ($kdRuangan as $item) {
-            if ($item['KdRuangan'] == $req->get('KodeRuangan')) {
-                $data['NamaRuangan'] = $item['NamaRuangan'];
-                break;
+        foreach ($resKdRuangan as $index) {
+            foreach($index as $item){
+                if ($item['KdRuangan'] == $req->get('KodeRuangan')) {
+                    $data['NamaRuangan'] = $item['NamaRuangan'];
+                    break;
+                }
             }
         }
-        
+
         DB::collection('dokumen_'.$data['NoCM'])->insert($data);
         
         return redirect('dokumen');

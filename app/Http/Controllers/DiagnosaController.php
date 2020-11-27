@@ -384,7 +384,7 @@ class DiagnosaController extends Controller
 
             $logging->toLogging('batal', 'BatalMasukPoli', 'No. Pendaftaran :' . $no_pendaftaran . ' batal masuk poli', $no_cm);
 
-            return redirect('/listPasien');
+            return redirect('/listPasien')->with('statusBatalMasukPoli', 'success');
             //endIf
 
         } else {
