@@ -23,8 +23,8 @@ Route::get('logActivities', 'LoggingController@index')->middleware('adminRole')-
 
 Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
 //Route::get('riwayatPasienAjax', 'RiwayatController@riwayatPasienAjax');
-Route::get('riwayatPasienAwal/{no_pendaftaran}', 'RiwayatController@printRiwayatAwal');
-Route::get('riwayatPasienUlang/{no_pendaftaran}', 'RiwayatController@printRiwayatUlang');
+Route::get('riwayatPasienAwal/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatAwal');
+Route::get('riwayatPasienUlang/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatUlang');
 Route::get('profilRingkas/{no_pendaftaran}', 'RiwayatController@printProfilRingkas');
 Route::post('riwayatPasien/getData', 'RiwayatController@getData');
 
