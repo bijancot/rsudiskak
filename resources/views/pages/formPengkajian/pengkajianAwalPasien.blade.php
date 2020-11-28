@@ -566,7 +566,7 @@
                                         <div class="col-12 mt-3">
                                             <a href="#" id="profilRingkas" class="btn secondary">List dirujuk/konsul ke</a>
                                             @if(Auth::user()->Role == "1")
-                                            <input type="checkbox" id="verifikasi" >
+                                            <input type="checkbox" id="verifikasi">
                                             <label for="verifikasi"> Verifikasi final pasien</label><br>
                                             <div class="invalid-feedback">
                                                 Verifikasi Harus Tercentang
@@ -574,7 +574,7 @@
                                             @endif
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <input type="hidden" id="statusPengkajian" name="StatusPengkajian" value="1">
+                                            <input type="hidden" id="statusPengkajian" name="StatusPengkajian">
                                         </div>
                                     </div>
                                 </div>
@@ -595,8 +595,13 @@
             // set hide field required
             $('.lbl-isRequired').hide();
             $(".print_button").hide();
-            $('#verifikasi').prop('checked', false);
             $('.inpt-isRequired').prop('required', false);
+
+            @if($dataMasukPoli['StatusPengkajian'] == '2')
+                $('#verifikasi').prop('checked', true);
+            @else
+                $('#verifikasi').prop('checked', false);
+            @endif
             
             var table = $('#tbl_dokumen').DataTable();
             $(table).DataTable();
@@ -668,7 +673,18 @@
                 $('#section-riwayat').css('display', 'block');
                 $('#section-berkas').css('display', 'none');
                 $('#section-form').css('display', 'none');
-            });    
+            });   
+
+            // check required if statusPenkajian == 2
+            @if($dataMasukPoli['StatusPengkajian'] == '2')
+                $('.lbl-isRequired').show();
+                $('.inpt-isRequired').prop('required', true);
+                $('#statusPengkajian').val('2');
+            @else
+                $('.lbl-isRequired').hide();
+                $('.inpt-isRequired').prop('required', false);
+                $('#statusPengkajian').val('1');
+            @endif
         })
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");
@@ -804,16 +820,19 @@
                 $("form :input").each(function(index, elm){
                     if(elm.name != ''){
                         if(elm.type == 'text'){
-                            if($('input[name="'+elm.name+'"]').attr('required') != 'required'){
-                                $('input[name="'+elm.name+'"]').val("-")
+                            let tagInput = 'input[name="'+elm.name+'"]';
+                            if($(tagInput).attr('required') != 'required' && $(tagInput).val() == ''){
+                                $(tagInput).val("-")
                             }
                         }else if(elm.type == 'textarea'){
-                            if($('textarea[name="'+elm.name+'"]').attr("required") != 'required'){
-                                $('textarea[name="'+elm.name+'"]').html("-")
+                            let tagInput = 'textarea[name="'+elm.name+'"]';
+                            if($(tagInput).attr("required") != 'required' && $(tagInput).html() == ''){
+                                $(tagInput).html("-")
                             }
                         }else if(elm.type == 'select-one'){
-                            if($('select[name="'+elm.name+'"]').attr("required") != 'required'){
-                                $('select[name="'+elm.name+'"]').val("-")
+                            let tagInput = 'select[name="'+elm.name+'"]';
+                            if($(tagInput).attr("required") != 'required' && $(tagInput).val() == ''){
+                                $(tagInput).val("-")
                             }
                         }
                     }

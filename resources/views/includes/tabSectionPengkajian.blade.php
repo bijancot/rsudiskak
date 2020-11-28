@@ -17,7 +17,10 @@
                     <tr>
                         <td data-label="Tgl Berkunjung">{{date_format($date, 'd/m/Y - h:i')}}</td>
                         <td data-label="Poliklinik">{{$item['Ruangan']}}</td>
-                        <td data-label="Diagnosis">CAD, HF</td>
+                        @php
+                            $namaDiagnosa = (!empty($item['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'])? $item['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'] : '-');
+                        @endphp
+                        <td data-label="Diagnosis">{{$namaDiagnosa}}</td>
                         <td data-label="Penatalaksanaan">-</td>
                         <td data-label="Riwayat Rawat Inap">-</td>
                         <td data-label="Verifikasi Petugas Kesehatan" class="p-lg-1">
