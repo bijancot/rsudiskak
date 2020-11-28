@@ -603,6 +603,17 @@
                 $('#verifikasi').prop('checked', false);
             @endif
             
+            // check required if statusPenkajian == 2
+            @if($dataMasukPoli['StatusPengkajian'] == '2')
+                $('.lbl-isRequired').show();
+                $('.inpt-isRequired').prop('required', true);
+                $('#statusPengkajian').val('2');
+            @else
+                $('.lbl-isRequired').hide();
+                $('.inpt-isRequired').prop('required', false);
+                $('#statusPengkajian').val('1');
+            @endif
+
             var table = $('#tbl_dokumen').DataTable();
             $(table).DataTable();
             $('#cstm_search').on( 'keyup', function () {
@@ -675,16 +686,6 @@
                 $('#section-form').css('display', 'none');
             });   
 
-            // check required if statusPenkajian == 2
-            @if($dataMasukPoli['StatusPengkajian'] == '2')
-                $('.lbl-isRequired').show();
-                $('.inpt-isRequired').prop('required', true);
-                $('#statusPengkajian').val('2');
-            @else
-                $('.lbl-isRequired').hide();
-                $('.inpt-isRequired').prop('required', false);
-                $('#statusPengkajian').val('1');
-            @endif
         })
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");

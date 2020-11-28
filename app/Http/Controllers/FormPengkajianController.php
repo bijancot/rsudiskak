@@ -61,7 +61,7 @@ class FormPengkajianController extends Controller
     public function storePilihForm(Request $req, $no_cm, $noPendaftaran)
     {
 
-        $logging        = new LoggingController;
+        // $logging        = new LoggingController;
         date_default_timezone_set('Asia/Jakarta');
 
         //get data pasien bersarakan nocm
@@ -86,11 +86,9 @@ class FormPengkajianController extends Controller
             ->whereNotNull('StatusPengkajian')
             ->update(['IdFormPengkajian' => $req->get('formPengkajian')]);
 
-        $getForm        = DB::collection('manajemenForm')->where('idForm', $req->get('formPengkajian'))->get();
-
-        $create_data = $getForm[0]['namaForm'];
-
-        $logging->toLogging('create', 'PilihForm', $create_data, $no_cm);
+        // $getForm        = DB::collection('manajemenForm')->where('idForm', $req->get('formPengkajian'))->get();
+        // $create_data = $getForm[0]['namaForm'];
+        // $logging->toLogging('create', 'PilihForm', $create_data, $no_cm);
 
         return redirect('formPengkajian/' . $req->get('formPengkajian') . '/' . $no_cm . '/' . $noPendaftaran . '/' . $dataMasukPoli['TglMasukPoli']);
     }
@@ -279,6 +277,39 @@ class FormPengkajianController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
 
+        // $old = $dataMasukPoli['DataPengkajian'];
+        // dump($old);
+        $old = [];
+        $oldKeperawatan = $dataMasukPoli['DataPengkajian']['PengkajianKeperawatan'];
+        $oldDiagnosa    = "-";
+        $oldICD9        = "-";
+        if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+            $oldDiagnosa = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
+        }
+        if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+            $oldICD9     = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
+        }
+
+        $oldMedis       = [
+            'Anamnesis'         => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Anamnesis'],
+            'PemeriksaanFisik'  => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['PemeriksaanFisik'],
+            'Diagnosa'          => $oldDiagnosa,
+            'Komplikasi'        => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Komplikasi'],
+            'Komorbid'          => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Komorbid'],
+            'RencanaDanTerapi'  => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['RencanaDanTerapi'],
+            'KodeICD9'          => $oldICD9,
+            'Edukasi'           => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Edukasi'],
+            'PenyakitMenular'   => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['PenyakitMenular'],
+            'KesanStatusGizi'   => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KesanStatusGizi'],
+        ];
+
+        // dump($oldKeperawatan);
+        // dump($oldMedis);
+        array_push($old, $oldKeperawatan);
+        array_push($old, $oldMedis);
+        // dump($old);
+
+
         // declare data update
         $dataUpdate = $req->all();
         // dump($dataUpdate);
@@ -317,7 +348,7 @@ class FormPengkajianController extends Controller
             // Jika KodeICD9 terisi
             $ICD09      = $dataUpdate['PengkajianMedis']['KodeICD9'];
             $kode9      = [];
-            $nama9       = [];
+            $nama9      = [];
 
             for ($item = 0; $item < count($ICD09); $item++) {
 
@@ -377,25 +408,93 @@ class FormPengkajianController extends Controller
             ->whereNotNull('StatusPengkajian')
             ->update(['DataPengkajian' => $dataUpdate]);
 
+        // $new = $dataUpdate;
+        // dump($new);
+        $new = [];
+        $newKeperawatan = $dataUpdate['PengkajianKeperawatan'];
+        if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+            $newDiagnosa = $dataUpdate['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
+        }
+        if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+            $newICD9     = $dataUpdate['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
+        }
+        $newMedis = [
+            'Anamnesis'         => $dataUpdate['PengkajianMedis']['Anamnesis'],
+            'PemeriksaanFisik'  => $dataUpdate['PengkajianMedis']['PemeriksaanFisik'],
+            'Diagnosa'          => $newDiagnosa,
+            'Komplikasi'        => $dataUpdate['PengkajianMedis']['Komplikasi'],
+            'Komorbid'          => $dataUpdate['PengkajianMedis']['Komorbid'],
+            'RencanaDanTerapi'  => $dataUpdate['PengkajianMedis']['RencanaDanTerapi'],
+            'KodeICD9'          => $newICD9,
+            'Edukasi'           => $dataUpdate['PengkajianMedis']['Edukasi'],
+            'PenyakitMenular'   => $dataUpdate['PengkajianMedis']['PenyakitMenular'],
+            'KesanStatusGizi'   => $dataUpdate['PengkajianMedis']['KesanStatusGizi'],
+        ];
+        // dump($newKeperawatan);
+        // dump($newMedis);
+        array_push($new, $newKeperawatan);
+        array_push($new, $newMedis);
+        // dump($new);
+
+        if ($statusPengkajian == "1") {
+            // Logging belum Verifikasi 
+            $logging->toLogging('save', 'FormPengkajian', 'Isi Form Pengkajian', $no_cm);
+            //
+
+        } else if ($statusPengkajian == "2") {
+
+            // logging sudah verifikasi
+            /**
+             * $data_old untuk mencari perbedaan atau perubahan data lama 
+             * $data_cur untuk mencari perbedaan atau perubahan data baru 
+             */
+            $data_oldKeperawatan    = array_diff_assoc($old[0], $new[0]);
+            $data_oldMedis          = array_diff_assoc($old[1], $new[1]);
+            $data_curKeperawatan    = array_diff_assoc($new[0], $old[0]);
+            $data_curMedis          = array_diff_assoc($new[1], $old[1]);
+
+            // dump($data_oldKeperawatan);
+            // dump($data_oldMedis);
+            // dump($data_curKeperawatan);
+            // dump($data_curMedis);
+
+            if ((count($data_oldKeperawatan) != 0 || count($data_curKeperawatan) != 0) && count($data_curMedis) == 0) {
+                // echo "yang ke 1";
+                $updateData = [
+                    'old'       => $data_oldKeperawatan,
+                    'current'   => $data_curKeperawatan,
+                ];
+                // dump($updateData);
+            } else if ((count($data_oldMedis) != 0 || count($data_curMedis) != 0) && count($data_curKeperawatan) == 0) {
+                // echo "yang ke 2";
+                $updateData = [
+                    'old'       => $data_oldMedis,
+                    'current'   => $data_curMedis,
+                ];
+                // dump($updateData);
+            } else if (count($data_curKeperawatan) != 0 && count($data_curMedis) != 0) {
+                // echo "yang ke 3";
+                $lama = [
+                    'PengkajianKeperawatan' => $data_oldKeperawatan,
+                    'PengkajianMedis'       => $data_oldMedis,
+                ];
+                $baru = [
+                    'PengkajianKeperawatan' => $data_curKeperawatan,
+                    'PengkajianMedis'       => $data_curMedis,
+                ];
+                $updateData = [
+                    'old'       => $lama,
+                    'current'   => $baru,
+                ];
+                // dump($updateData);
+            } else {
+                $updateData = 'Tidak ada perubahan';
+            }
+
+            $logging->toLogging('final', 'FormPengkajian', $updateData, $no_cm);
+        }
 
         return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
-
-        // $dataUpdate['PengkajianMedis']['Diagnosa'];
-        // $pengkajianDiagnosa = $req->get("PengkajianMedis['Diagnosa'][]");
-        // if (!empty($pengkajianDiagnosa) && $pengkajianDiagnosa != "-") {
-        //     $dataUpdate['PengkajianMedis']['Diagnosa'];
-        // } else {
-        //     $dataUpdate['PengkajianMedis']['Diagnosa'] = "-";
-        // }
-        // if ($req->get("PengkajianMedis['Diagnosa'][]")) {
-        //     $dataUpdate['PengkajianMedis']['KodeICD9'];
-        // } else {
-        //     $dataUpdate['PengkajianMedis']['KodeICD9'] = "-";
-        // }
-        // dump($dataUpdate);
-        // dump($dataUpdate['PengkajianMedis']['Diagnosa']);
-        // dump($pengkajianDiagnosa);
-        // dump($dataUpdate['PengkajianMedis']['KodeICD9']);
 
         /**
          *  Deprecated
