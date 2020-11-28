@@ -2,28 +2,28 @@
     <div class="table-container soft-shadow pt-5">
         <table id="tbl_antrianPoli" class="table table-striped">
             <thead>
-                <th>Tgl Berkunjung</th>
-                <th>Poliklinik</th>
-                <th>Diagnosis</th>
-                <th>Penatalaksanaan</th>
-                <th>Riwayat Rawat Inap</th>
-                <th>Verifikasi Petugas Kesehatan</th>
+                <th style="text-align:center">Tgl Berkunjung</th>
+                <th style="text-align:center">Poliklinik</th>
+                <th style="text-align:center">Diagnosis</th>
+                <th style="text-align:center">Penatalaksanaan</th>
+                <th style="text-align:center">Riwayat Rawat Inap</th>
+                <th style="text-align:center">Verifikasi Petugas Kesehatan</th>
             </thead>
             <tbody>
                 @foreach ($dataRiwayat as $item)
                     @php
-                        $date = date_create($item['TglMasukPoli']);
+                        $date = date_create($item['TglWaktuMasukPoli']);
                     @endphp
                     <tr>
-                        <td data-label="Tgl Berkunjung">{{date_format($date, 'd/m/Y - h:i')}}</td>
-                        <td data-label="Poliklinik">{{$item['Ruangan']}}</td>
+                        <td style="text-align:center" data-label="Tgl Berkunjung">{{date_format($date, 'd/m/Y - h:i')}}</td>
+                        <td style="text-align:center" data-label="Poliklinik">{{$item['Ruangan']}}</td>
                         @php
                             $namaDiagnosa = (!empty($item['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'])? $item['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'] : '-');
                         @endphp
-                        <td data-label="Diagnosis">{{$namaDiagnosa}}</td>
-                        <td data-label="Penatalaksanaan">-</td>
-                        <td data-label="Riwayat Rawat Inap">-</td>
-                        <td data-label="Verifikasi Petugas Kesehatan" class="p-lg-1">
+                        <td style="text-align:center" data-label="Diagnosis">{{$namaDiagnosa}}</td>
+                        <td style="text-align:center" data-label="Penatalaksanaan">-</td>
+                        <td style="text-align:center" data-label="Riwayat Rawat Inap">-</td>
+                        <td style="text-align:center" data-label="Verifikasi Petugas Kesehatan" class="p-lg-1">
                             @if ($item['StatusPengkajian'] == '2')
                                 <div class="btn diagnosa ml-auto px-5" style="cursor:default;">
                                     <svg width="20" height="20" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">

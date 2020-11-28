@@ -80,9 +80,11 @@
                     Riwayat Alergi : 
                     <?php
                         foreach($dataRiwayatAlergi as $item){
-                            $riwayatAlergi[]=$item['DataPengkajian']['PengkajianKeperawatan']['Alergi'];
+                            if($item['DataPengkajian']['PengkajianKeperawatan']['Alergi']!=null){
+                                $riwayatAlergi[]=$item['DataPengkajian']['PengkajianKeperawatan']['Alergi'];
+                            }
                         }
-                        echo implode(',', $riwayatAlergi);
+                        echo implode(', ', $riwayatAlergi);
                     ?>
                 @else
                     Agama : - <br>
@@ -110,15 +112,18 @@
         @foreach ($dataRiwayat as $item)
         @php
             $no=0;
-            $date = date_create($item['TglMasukPoli']);
+            $date = date_create($item['TglWaktuMasukPoli']);
         @endphp
         <tr>
-            <td>{{ $loop->iteration }}</td>
-            <td>{{date_format($date, 'd/m/Y - h:i')}}</td>
-            <td>{{$item['Ruangan']}}</td>
-            <td>CAD, HF</td>
-            <td>-</td>
-            <td>-</td>
+            <td style="text-align:center">{{ $loop->iteration }}</td>
+            <td style="text-align:center">{{date_format($date, 'd/m/Y - h:i')}}</td>
+            <td style="text-align:center">{{$item['Ruangan']}}</td>
+            @php
+                $namaDiagnosa = (!empty($item['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'])? $item['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'] : '-');
+            @endphp
+            <td style="text-align:center">{{$namaDiagnosa}}</td>
+            <td style="text-align:center">-</td>
+            <td style="text-align:center">-</td>
             <td style="text-align:center">
             @if ($item['StatusPengkajian'] == '2')
                 <img src="https://bgskr-project.my.id/img/centang.png" width=30px;>

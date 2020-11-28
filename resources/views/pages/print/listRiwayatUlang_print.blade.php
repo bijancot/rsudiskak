@@ -113,7 +113,16 @@ $TglLahir = strtotime($inputTglLahir);
             </td>
             <td>
                 Kode ICD 9 CM<br>
-                -
+                <?php
+                    if(isset($record2[0]->DataPengkajian->PengkajianMedis->KodeICD9->KodeDiagnosaT)){
+                        $ICD9 = $record2[0]->DataPengkajian->PengkajianMedis->KodeICD9->KodeDiagnosaT;
+                        $arrICD9=explode(";",$ICD9);
+                        foreach($arrICD9 as $dataICD9){echo $dataICD9.'<br>';}  
+                    }else{
+                        echo "-";
+                    }
+                    
+                ?>
         </tr>
         <tr>
             <td colspan=2>
@@ -135,12 +144,22 @@ $TglLahir = strtotime($inputTglLahir);
         </tr>
         <tr>
             <td colspan=3>
-                Diagnosa : -<br>    
+                <?php
+                    $diagnosa = $record2[0]->DataPengkajian->PengkajianMedis->Diagnosa->NamaDiagnosa;
+                    $arrDiagnosa=explode(";",$diagnosa);
+                    
+                ?> 
+                Diagnosa : <br><?php foreach($arrDiagnosa as $dataDiagnosa){echo $dataDiagnosa.'<br>';}?><br>   
                 Komplikasi : <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Komplikasi?><br>
                 Komorbid : <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Komorbid?>
             </td>
             <td colspan=3>
-                Kode ICD 10 CM : <br>-<br>
+                <?php
+                    $icd10 = $record2[0]->DataPengkajian->PengkajianMedis->Diagnosa->KodeDiagnosa;
+                    $arrICD10=explode(";",$icd10);
+                    
+                ?>
+                Kode ICD 10 CM : <br><?php foreach($arrICD10 as $dataICD10){echo $dataICD10.'<br>';}?>
             </td>
             <td colspan=2>
                 Kesan Status Gizi : <br>

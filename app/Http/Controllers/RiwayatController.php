@@ -87,9 +87,20 @@ class RiwayatController extends Controller
         $tempatTinggal          = DB::collection('tempatTinggal')->where("deleted_at", Null)->get();
         $statusPsikologi        = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
         $hambatanEdukasi        = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
+        $diagnosa           = [
+            'KodeDiagnosa'  => Null,
+            'NamaDiagnosa'  => Null,
+        ];
+
+        $diagnosaT          = [
+            'KodeDiagnosaT   ' => Null,
+            'DiagnosaTindakan' => Null,
+        ];
 
         $data = [
             'listRiwayat'       => $listriwayat,
+            'diagnosa'          => $diagnosa,
+            'diagnosaT'         => $diagnosaT,
             'pekerjaan'         => $pekerjaan,
             'agama'             => $agama,
             'statusPernikahan'  => $statusPernikahan,
@@ -109,10 +120,9 @@ class RiwayatController extends Controller
         $riwayat = new Riwayat();
         $riwayat->collection    = "transaksi_" . $tgl;
         $listriwayat            = $riwayat->where('NoPendaftaran', $no_pendaftaran)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian', '2')->get();
-
+        
         $data = [
             'listRiwayat'       => $listriwayat,
-
         ];
         // return $no_pendaftaran;
         // return view('pages.print.listRiwayat_print', $data);
@@ -161,13 +171,6 @@ class RiwayatController extends Controller
             $tempatTinggal      = DB::collection('tempatTinggal')->where("deleted_at", Null)->get();
             $statusPsikologi    = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
             $hambatanEdukasi    = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
-
-            // $dataMasukPoli      = DB::collection('pasien_' . $NoCM)
-            //     ->where('NoPendaftaran', $noPendaftaran)
-            //     ->where('deleted_at', null)
-            //     ->whereNotNull('StatusPengkajian')
-            //     ->orderBy('created_at', 'desc')
-            //     ->first();
 
             $data = [
                 'form_id'           => $idForm,
