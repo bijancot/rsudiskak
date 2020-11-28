@@ -76,7 +76,8 @@
                                 <td data-label="NoCM">{{ $item['NoCM'] }}</td>
                                 <td data-label="KodeRuangan" width="5%">{{ $item['KdRuangan'] }}</td>
                                 <td data-label="Keterangan" width="20%">
-                                    @if ($item['fitur'] == "DataPengkajian" && $item['metode'] == "update")
+                                    {{-- Deprecated --}}
+                                    {{-- @if ($item['fitur'] == "DataPengkajian" && $item['metode'] == "update")
                                         @php    
                                             $ketOld = array();
                                             foreach ($item['keterangan']['old'] as $keyOld => $valueOld) {    
@@ -91,6 +92,31 @@
                                         @endphp    
                                     @else
                                         {{ $keterangan }}
+                                    @endif --}}
+
+                                    @if (($item['fitur'] == "FormPengkajian" && $item['metode'] == "final"))
+                                        @php 
+                                            $keterangan = $item['keterangan'];
+                                        @endphp
+                                        @if ((array_key_exists('PengkajianKeperawatan',$keterangan['old'])) || (array_key_exists('PengkajianMedis',$keterangan['old'])) )
+                                            
+                                        @else
+                                            
+                                        @endif
+                                        @php    
+                                            // $ketOld = array();
+                                            // foreach ($item['keterangan']['old'] as $keyOld => $valueOld) {    
+                                            //     array_push($ketOld, $keyOld . " : ". $valueOld);
+                                            // }
+                                            // // dump($ketOld);
+                                            // foreach (array_combine($ketOld, $item['keterangan']['current']) as $old => $new) {
+                                            //     echo $old . 
+                                            //     " <i class='fas fa-arrow-right'></i> "
+                                            //     .$new . "<br>";
+                                            // }
+                                        @endphp    
+                                    @else
+                                        
                                     @endif
                                    
                                 </td>
