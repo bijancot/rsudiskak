@@ -37,7 +37,7 @@
 
 ?>
 @php
-    $dataPengkajian = $dataMasukPoli['DataPengkajian'];
+    $dataPengkajian = $dataRiwayatDetail['DataPengkajian'];
 @endphp
     <table>
         <tr>
@@ -70,11 +70,20 @@
         <tr>
             <td colspan=8>
                 Alamat : {{ $dataMasukPoli['Alamat'] }}<br>
+                @php 
+                    $riwayatAlergi = array();
+                @endphp
                 @if(isset($dataPengkajian['PengkajianKeperawatan']['Agama']) || isset($dataPengkajian['PengkajianKeperawatan']['Pekerjaan'] ))
                     Agama : {{ $dataPengkajian['PengkajianKeperawatan']['Agama'] }}<br>
                     Pekerjaan : {{ $dataPengkajian['PengkajianKeperawatan']['Pekerjaan'] }}<br>
                     Status Perkawinan : {{ $dataPengkajian['PengkajianKeperawatan']['StatusPernikahan'] }}<br>
-                    Riwayat Alergi : {{ $dataPengkajian['PengkajianKeperawatan']['Alergi'] }}<br>
+                    Riwayat Alergi : 
+                    <?php
+                        foreach($dataRiwayatAlergi as $item){
+                            $riwayatAlergi[]=$item['DataPengkajian']['PengkajianKeperawatan']['Alergi'];
+                        }
+                        echo implode(',', $riwayatAlergi);
+                    ?>
                 @else
                     Agama : - <br>
                     Pekerjaan : - <br>

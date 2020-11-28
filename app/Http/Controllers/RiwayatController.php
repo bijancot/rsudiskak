@@ -147,6 +147,9 @@ class RiwayatController extends Controller
                 return redirect('formPengkajian/' . $dataMasukPoli['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
             }
             $dataRiwayat        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->get();
+            $dataRiwayatDetail        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian','1')->first();
+            $dataRiwayatAlergi        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian','1')->get();
+            
             $dataDokumen        = DB::collection('dokumen_' . $NoCM)->whereNotNull('Status')->get();
 
             $pendidikan         = DB::collection('pendidikan')->where("deleted_at", Null)->get();
@@ -182,6 +185,8 @@ class RiwayatController extends Controller
                 'NoCM'              => $NoCM,
                 'noPendaftaran'     => $noPendaftaran,
                 'dataRiwayat'       => $dataRiwayat,
+                'dataRiwayatDetail' => $dataRiwayatDetail,
+                'dataRiwayatAlergi' => $dataRiwayatAlergi,
                 'dataDokumen'       => $dataDokumen,
                 'dataMasukPoli'     => $dataMasukPoli
             ];
