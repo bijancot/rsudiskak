@@ -278,7 +278,7 @@ class FormPengkajianController extends Controller
             ->first();
 
         $old = $dataMasukPoli['DataPengkajian'];
-        dump($old);
+        // dump($old);
         $old = [];
         $oldKeperawatan = [];
         $oldMedis       = [];
@@ -310,11 +310,11 @@ class FormPengkajianController extends Controller
         }
         array_push($old, $oldKeperawatan);
         array_push($old, $oldMedis);
-        dump($old);
+        // dump($old);
 
         // declare data update
         $dataUpdate = $req->all();
-        dump($dataUpdate);
+        // dump($dataUpdate);
 
         if (array_key_exists('Diagnosa', $dataUpdate['PengkajianMedis'])) {
             // Jika diagnosa terisi
@@ -377,7 +377,7 @@ class FormPengkajianController extends Controller
 
         // declare status pengkajian
         $statusPengkajian = $dataUpdate['StatusPengkajian'];
-        dump($statusPengkajian);
+        // dump($statusPengkajian);
         unset($dataUpdate['_token']);
         unset($dataUpdate['StatusPengkajian']);
 
@@ -423,10 +423,10 @@ class FormPengkajianController extends Controller
         // if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
         //     $newICD9     = $dataUpdate['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
         // }
-        if (array_key_exists('Diagnosa', $dataUpdate)) {
+        if (array_key_exists('Diagnosa', $dataUpdate['PengkajianMedis'])) {
             $newDiagnosa = $dataUpdate['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
         }
-        if (array_key_exists('KodeICD9', $dataUpdate)) {
+        if (array_key_exists('KodeICD9', $dataUpdate['PengkajianMedis'])) {
             $newICD9     = $dataUpdate['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
         }
         $newMedis = [
@@ -445,7 +445,7 @@ class FormPengkajianController extends Controller
         // dump($newMedis);
         array_push($new, $newKeperawatan);
         array_push($new, $newMedis);
-        dump($new);
+        // dump($new);
 
         /**
          * $data_old untuk mencari perbedaan atau perubahan data lama 
@@ -490,24 +490,26 @@ class FormPengkajianController extends Controller
             ];
             // dump($updateData);
         } else {
-            // echo "Tidak ada";
-            $updateData = 'Tidak ada perubahan';
+            // echo "Tidak ada perubahan";
+            $no_change  = ['Tidak ada perubahan'];
+            $updateData = [
+                'old'       => $no_change,
+                'current'   => $no_change,
+            ];
         }
 
 
         if ($dataMasukPoli['StatusPengkajian'] == "0") {
-            // Logging belum Verifikasi 
+            // Logging belum Verifikasi, form belum pernah diisi (baru masuk)
             $logging->toLogging('save', 'FormPengkajian', 'Isi Form Pengkajian', $no_cm);
             //
         } else if ($statusPengkajian == "1") {
-            // Logging belum Verifikasi 
-            // $logging->toLogging('save', 'FormPengkajian', 'Isi Form Pengkajian', $no_cm);
-
+            // Logging belum Verifikasi, form sudah pernah diisi 
             $logging->toLogging('update', 'FormPengkajian', $updateData, $no_cm);
             //
 
         } else if ($statusPengkajian == "2") {
-
+            // Logging sudah verifikasi, form sudah dicentang oleh dokter 
             $logging->toLogging('final', 'FormPengkajian', $updateData, $no_cm);
 
             // if (array_key_exists('verifikasi', $dataMasukPoli['DataPengkajian'])) {
@@ -518,7 +520,7 @@ class FormPengkajianController extends Controller
             // }
         }
 
-        // return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
+        return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
 
         /**
          *  Deprecated
@@ -677,7 +679,7 @@ class FormPengkajianController extends Controller
 
         //edit data
         DB::collection('pasien_' . $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('TglMasukPoli', $req->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => null]);
-        DB::collection('transaksi_' . date('Y-m-d'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('TglMasukPoli', $req->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => null]);
+        DB::collection('transaksi_' . $req->get('TglMasukPoli'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('TglMasukPoli', $req->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => null]);
 
         //reset variable
         unset($dataMasukPoli['_id']);

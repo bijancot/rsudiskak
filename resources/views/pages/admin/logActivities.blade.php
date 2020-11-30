@@ -98,46 +98,61 @@
                                         @php 
                                             $keterangan = $item['keterangan'];
                                         @endphp
-                                        @if ((array_key_exists('PengkajianKeperawatan',$keterangan['old'])) || (array_key_exists('PengkajianMedis',$keterangan['old'])) )
-                                            @php
-                                                $ketOldKeperawatan = array();
-                                                foreach ($item['keterangan']['old']['PengkajianKeperawatan'] as $keyOldK => $valueOldK) {    
-                                                    array_push($ketOldKeperawatan, $keyOldK . " : ". $valueOldK);
-                                                }
-                                                $ketOldMedis = array();
-                                                foreach ($item['keterangan']['old']['PengkajianMedis'] as $keyOldM => $valueOldM) {    
-                                                    array_push($ketOldMedis, $keyOldM . " : ". $valueOldM);
-                                                }
-                                                foreach (array_combine($ketOldKeperawatan, $item['keterangan']['current']['PengkajianKeperawatan']) as $oldK => $newK) {
-                                                    echo $oldK . 
-                                                    " <i class='fas fa-arrow-right'></i> "
-                                                    .$newK . "<br>";
-                                                }
-                                                foreach (array_combine($ketOldMedis, $item['keterangan']['current']['PengkajianMedis']) as $oldM => $newM) {
-                                                    echo $oldM . 
-                                                    " <i class='fas fa-arrow-right'></i> "
-                                                    .$newM . "<br>";
-                                                }
-                                            @endphp
-                                        @else
-
-                                            @php    
-                                                $ketOld = array();
-                                                foreach ($item['keterangan']['old'] as $keyOld => $valueOld) {    
-                                                    array_push($ketOld, $keyOld . " : ". $valueOld);
-                                                }
-                                                // dump($ketOld);
-                                                foreach (array_combine($ketOld, $item['keterangan']['current']) as $old => $new) {
-                                                    echo $old . 
-                                                    " <i class='fas fa-arrow-right'></i> "
-                                                    .$new . "<br>";
-                                                }
-                                            @endphp    
-                                            
-                                        @endif
-                                    @else
+                                        {{-- @dump($keterangan) --}}
                                         
-                                    @endif
+                                        @if (array_key_exists('old',$keterangan) || array_key_exists('current',$keterangan))
+                                            
+                                            
+                                            @if ((array_key_exists('PengkajianKeperawatan',$keterangan['old'])) || (array_key_exists('PengkajianMedis',$keterangan['old'])) )
+                                                @php
+                                                    $ketOldKeperawatan = array();
+                                                    foreach ($item['keterangan']['old']['PengkajianKeperawatan'] as $keyOldK => $valueOldK) {    
+                                                        array_push($ketOldKeperawatan, $keyOldK . " : ". $valueOldK);
+                                                    }
+                                                    $ketOldMedis = array();
+                                                    foreach ($item['keterangan']['old']['PengkajianMedis'] as $keyOldM => $valueOldM) {    
+                                                        array_push($ketOldMedis, $keyOldM . " : ". $valueOldM);
+                                                    }
+                                                    foreach (array_combine($ketOldKeperawatan, $item['keterangan']['current']['PengkajianKeperawatan']) as $oldK => $newK) {
+                                                        echo $oldK . 
+                                                        " <i class='fas fa-arrow-right'></i> "
+                                                        .$newK . "<br>";
+                                                    }
+                                                    foreach (array_combine($ketOldMedis, $item['keterangan']['current']['PengkajianMedis']) as $oldM => $newM) {
+                                                        echo $oldM . 
+                                                        " <i class='fas fa-arrow-right'></i> "
+                                                        .$newM . "<br>";
+                                                    }
+                                                @endphp
+
+                                            @else
+                                                @php    
+                                                    $ketOld = array();
+                                                    foreach ($item['keterangan']['old'] as $keyOld => $valueOld) {    
+                                                        array_push($ketOld, $keyOld . " : ". $valueOld);
+                                                    }
+                                                    // dump($ketOld);
+                                                    foreach (array_combine($ketOld, $item['keterangan']['current']) as $old => $new) {
+                                                        
+                                                        if ($old == 0){
+                                                            echo "Tidak ada perubahan";
+                                                        } else {
+                                                            echo $old . 
+                                                            " <i class='fas fa-arrow-right'></i> "
+                                                            .$new . "<br>";
+                                                        }
+
+                                                    }
+                                                @endphp
+                                            @endif
+
+                                        @endif
+
+                                        
+                                    @else
+                                    {{-- @dump($keterangan) --}}
+                                        {{ $keterangan }}
+                                    @endif 
                                    
                                 </td>
                             </tr>
