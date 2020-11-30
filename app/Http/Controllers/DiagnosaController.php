@@ -346,7 +346,7 @@ class DiagnosaController extends Controller
                     $logging->toLogging('create', 'PilihDokter', $create_data, $no_cm);
 
                     // return response()->json(['data' => TRUE, 'msg' => 'end']);
-                    return redirect('/listPasien')->with('status', 'success');
+                    return redirect('/listPasien')->with('status', 'success')->with('statusNotif', 'success');
                     //endElse
                 }
                 // endIf cekDokter

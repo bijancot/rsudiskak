@@ -373,7 +373,7 @@
         })
 
         $(document).ready(function() {
-
+            
             $('#loading').detach();
             $('#tbl_antrianPoli').DataTable();
             $('#tbl_masukPoli').DataTable();
@@ -399,25 +399,31 @@
                             $('#antrianPoli').hide();
                             $('#masukPoli').show();
                             
-                    $.toast({
-                        title: 'Sukses!',
-                        subtitle: '3 detik yang lalu',
-                        content: 'Berhasil Menambahkan Pasien Masuk Poli.',
-                        type: 'info',
-                        delay: 3000,
-                    });
+                            
+
+                    // $.toast({
+                    //     title: 'Sukses!',
+                    //     subtitle: '3 detik yang lalu',
+                    //     content: 'Berhasil Menambahkan Pasien Masuk Poli.',
+                    //     type: 'info',
+                    //     delay: 3000,
+                    // });
                 @endif
             @endif
             
+            @if(session('statusNotif'))
+                @if(session('statusNotif') == 'success')
+                        // alert Notification
+                        $('#msg_modal').html('Berhasil Menambahkan <br> Pasien Masuk Poli');
+                        $('#modal_success').modal('toggle')
+                @endif
+            @endif
+
             @if(session('statusBatalMasukPoli'))
                 @if(session('statusBatalMasukPoli') == 'success')
-                    $.toast({
-                        title: 'Sukses!',
-                        subtitle: '3 detik yang lalu',
-                        content: 'Berhasil Membatalkan Pasien Masuk Poli.',
-                        type: 'info',
-                        delay: 3000,
-                    });
+                        // alert Notification
+                        $('#msg_modal').html('Berhasil Membatalkan <br> Pasien Masuk Poli');
+                        $('#modal_success').modal('toggle')    
                 @endif
             @endif
 
