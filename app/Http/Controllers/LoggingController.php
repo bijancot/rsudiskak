@@ -16,6 +16,7 @@ class LoggingController extends Controller
      */
     public function index()
     {
+        date_default_timezone_set('Asia/Jakarta');
         $logging = new Logging();
         $logging->collection    = "loggings_" . date("Y-m-d");
         $listLog                = $logging->get();

@@ -566,7 +566,7 @@
                                         <div class="col-12 mt-3">
                                             <a href="#" id="profilRingkas" class="btn secondary">List dirujuk/konsul ke</a>
                                             @if(Auth::user()->Role == "1")
-                                            <input type="checkbox" id="verifikasi">
+                                            <input type="checkbox" id="verifikasi" name="verifikasi">
                                             <label for="verifikasi"> Verifikasi final pasien</label><br>
                                             <div class="invalid-feedback">
                                                 Verifikasi Harus Tercentang
@@ -574,7 +574,13 @@
                                             @endif
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <input type="hidden" id="statusPengkajian" name="StatusPengkajian">
+                                            @if($dataMasukPoli['StatusPengkajian'] == '0')
+                                                <input type="hidden" id="statusPengkajian" name="StatusPengkajian" value="1">
+                                            @elseif($dataMasukPoli['StatusPengkajian'] == '1')
+                                                <input type="hidden" id="statusPengkajian" name="StatusPengkajian" value="2">
+                                            @elseif($dataMasukPoli['StatusPengkajian'] == '2')
+                                                <input type="hidden" id="statusPengkajian" name="StatusPengkajian" value="2">
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -597,22 +603,38 @@
             $(".print_button").hide();
             $('.inpt-isRequired').prop('required', false);
 
+            // @if($dataMasukPoli['StatusPengkajian'] == '0')
+            //     $('#statusPengkajian').val('1');
+            // @endif
+
+            // @if($dataMasukPoli['StatusPengkajian'] == '1')
+            //     $('#statusPengkajian').val('2');
+            // @endif
+
             @if($dataMasukPoli['StatusPengkajian'] == '2')
-                $('#verifikasi').prop('checked', true);
+
+                @if(array_key_exists('verifikasi',$dataMasukPoli['DataPengkajian']))
+                    $('#verifikasi').prop('checked', true);
+                    $('#verifikasi').val('verifikasi');
+                @endif
+                
             @else
                 $('#verifikasi').prop('checked', false);
             @endif
             
             // check required if statusPenkajian == 2
             @if($dataMasukPoli['StatusPengkajian'] == '2')
-                $('.lbl-isRequired').show();
-                $('.inpt-isRequired').prop('required', true);
-                $('#statusPengkajian').val('2');
+                @if(array_key_exists('verifikasi',$dataMasukPoli['DataPengkajian']))
+                    $('.lbl-isRequired').show();
+                    $('.inpt-isRequired').prop('required', true);
+                    $('#statusPengkajian').val('2');
+                @endif
             @else
                 $('.lbl-isRequired').hide();
                 $('.inpt-isRequired').prop('required', false);
-                $('#statusPengkajian').val('1');
+                // $('#statusPengkajian').val('1');
             @endif
+            
 
             var table = $('#tbl_dokumen').DataTable();
             $(table).DataTable();
@@ -817,7 +839,7 @@
             let dataForm = $(this).serializeArray()
 
             if(statusPengkajian == '2'){
-                
+                @if(array_key_exists('verifikasi',$dataMasukPoli['DataPengkajian']))
                 $("form :input").each(function(index, elm){
                     if(elm.name != ''){
                         if(elm.type == 'text'){
@@ -838,6 +860,7 @@
                         }
                     }
                 });
+                @endif
             }
             console.log(dataForm)
             return true;

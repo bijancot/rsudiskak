@@ -259,7 +259,7 @@ class DiagnosaController extends Controller
                     $antrianPasien_noCM->RTRW                                           = $getDataPasien['RTRW'];
                     $antrianPasien_noCM->StatusPengkajian                               = "0";
                     $antrianPasien_noCM->IdFormPengkajian                               = "";
-                    $antrianPasien_noCM->DataPengkajian                                 = "";
+                    $antrianPasien_noCM->DataPengkajian                                 = [];
                     $antrianPasien_noCM->updated_at                                     = null;
                     $antrianPasien_noCM->deleted_at                                     = null;
                     $antrianPasien_noCM->save();
@@ -318,7 +318,7 @@ class DiagnosaController extends Controller
                     $antrianPasien_tgl->RTRW                                                = $getDataPasien['RTRW'];
                     $antrianPasien_tgl->StatusPengkajian                                    = "0";
                     $antrianPasien_tgl->IdFormPengkajian                                    = "";
-                    $antrianPasien_tgl->DataPengkajian                                      = "";
+                    $antrianPasien_tgl->DataPengkajian                                      = [];
                     $antrianPasien_tgl->updated_at                                          = null;
                     $antrianPasien_tgl->deleted_at                                          = null;
                     $antrianPasien_tgl->save();

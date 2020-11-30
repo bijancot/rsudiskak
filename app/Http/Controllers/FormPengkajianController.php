@@ -277,42 +277,45 @@ class FormPengkajianController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
 
-        // $old = $dataMasukPoli['DataPengkajian'];
-        // dump($old);
+        $old = $dataMasukPoli['DataPengkajian'];
+        dump($old);
         $old = [];
-        $oldKeperawatan = $dataMasukPoli['DataPengkajian']['PengkajianKeperawatan'];
+        $oldKeperawatan = [];
+        $oldMedis       = [];
         $oldDiagnosa    = "-";
         $oldICD9        = "-";
-        if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
-            $oldDiagnosa = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
-        }
-        if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
-            $oldICD9     = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
-        }
+        if (array_key_exists('PengkajianKeperawatan', $dataMasukPoli['DataPengkajian'])) {
+            $oldKeperawatan = $dataMasukPoli['DataPengkajian']['PengkajianKeperawatan'];
+            if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+                $oldDiagnosa = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
+            }
+            if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+                $oldICD9     = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
+            }
 
-        $oldMedis       = [
-            'Anamnesis'         => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Anamnesis'],
-            'PemeriksaanFisik'  => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['PemeriksaanFisik'],
-            'Diagnosa'          => $oldDiagnosa,
-            'Komplikasi'        => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Komplikasi'],
-            'Komorbid'          => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Komorbid'],
-            'RencanaDanTerapi'  => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['RencanaDanTerapi'],
-            'KodeICD9'          => $oldICD9,
-            'Edukasi'           => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Edukasi'],
-            'PenyakitMenular'   => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['PenyakitMenular'],
-            'KesanStatusGizi'   => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KesanStatusGizi'],
-        ];
-
-        // dump($oldKeperawatan);
-        // dump($oldMedis);
+            $oldMedis       = [
+                'Anamnesis'         => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Anamnesis'],
+                'PemeriksaanFisik'  => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['PemeriksaanFisik'],
+                'Diagnosa'          => $oldDiagnosa,
+                'Komplikasi'        => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Komplikasi'],
+                'Komorbid'          => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Komorbid'],
+                'RencanaDanTerapi'  => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['RencanaDanTerapi'],
+                'KodeICD9'          => $oldICD9,
+                'Edukasi'           => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Edukasi'],
+                'PenyakitMenular'   => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['PenyakitMenular'],
+                'KesanStatusGizi'   => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KesanStatusGizi'],
+            ];
+            // dump($oldKeperawatan);
+            // dump($oldMedis);
+        }
         array_push($old, $oldKeperawatan);
         array_push($old, $oldMedis);
-        // dump($old);
+        dump($old);
 
 
         // declare data update
         $dataUpdate = $req->all();
-        // dump($dataUpdate);
+        dump($dataUpdate);
 
         if (array_key_exists('Diagnosa', $dataUpdate['PengkajianMedis'])) {
             // Jika diagnosa terisi
@@ -375,6 +378,7 @@ class FormPengkajianController extends Controller
 
         // declare status pengkajian
         $statusPengkajian = $dataUpdate['StatusPengkajian'];
+        dump($statusPengkajian);
         unset($dataUpdate['_token']);
         unset($dataUpdate['StatusPengkajian']);
 
@@ -412,10 +416,18 @@ class FormPengkajianController extends Controller
         // dump($new);
         $new = [];
         $newKeperawatan = $dataUpdate['PengkajianKeperawatan'];
-        if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+        $newDiagnosa    = "-";
+        $newICD9        = "-";
+        // if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+        //     $newDiagnosa = $dataUpdate['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
+        // }
+        // if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+        //     $newICD9     = $dataUpdate['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
+        // }
+        if (array_key_exists('Diagnosa', $dataUpdate)) {
             $newDiagnosa = $dataUpdate['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
         }
-        if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+        if (array_key_exists('KodeICD9', $dataUpdate)) {
             $newICD9     = $dataUpdate['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
         }
         $newMedis = [
@@ -434,7 +446,7 @@ class FormPengkajianController extends Controller
         // dump($newMedis);
         array_push($new, $newKeperawatan);
         array_push($new, $newMedis);
-        // dump($new);
+        dump($new);
 
         if ($statusPengkajian == "1") {
             // Logging belum Verifikasi 
@@ -488,13 +500,18 @@ class FormPengkajianController extends Controller
                 ];
                 // dump($updateData);
             } else {
+                // echo "Tidak ada";
                 $updateData = 'Tidak ada perubahan';
             }
 
-            $logging->toLogging('final', 'FormPengkajian', $updateData, $no_cm);
+            if (array_key_exists('verifikasi', $dataMasukPoli['DataPengkajian'])) {
+                $logging->toLogging('final', 'FormPengkajian', $updateData, $no_cm);
+            } else {
+                $logging->toLogging('update', 'FormPengkajian', $updateData, $no_cm);
+            }
         }
 
-        return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
+        // return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
 
         /**
          *  Deprecated

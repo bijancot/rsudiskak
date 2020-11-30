@@ -94,7 +94,7 @@
                                         {{ $keterangan }}
                                     @endif --}}
 
-                                    @if (($item['fitur'] == "FormPengkajian" && $item['metode'] == "final"))
+                                    @if (($item['fitur'] == "FormPengkajian" && $item['metode'] == "update" || $item['metode'] == "final"))
                                         @php 
                                             $keterangan = $item['keterangan'];
                                         @endphp
