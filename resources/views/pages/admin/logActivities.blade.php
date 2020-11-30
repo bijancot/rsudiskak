@@ -127,21 +127,21 @@
 
                                             @else
                                                 @php    
+                                                // dump($item['keterangan']['old']);
                                                     $ketOld = array();
-                                                    foreach ($item['keterangan']['old'] as $keyOld => $valueOld) {    
-                                                        array_push($ketOld, $keyOld . " : ". $valueOld);
-                                                    }
-                                                    // dump($ketOld);
-                                                    foreach (array_combine($ketOld, $item['keterangan']['current']) as $old => $new) {
-                                                        
-                                                        if ($old == 0){
-                                                            echo "Tidak ada perubahan";
-                                                        } else {
-                                                            echo $old . 
-                                                            " <i class='fas fa-arrow-right'></i> "
-                                                            .$new . "<br>";
-                                                        }
+                                                    if(array_key_exists('no_change',$item['keterangan']['old']) && array_key_exists('no_change',$item['keterangan']['current'])) {
+                                                        echo "Tidak ada Perubahan";
+                                                    } else {
 
+                                                        foreach ($item['keterangan']['old'] as $keyOld => $valueOld) {    
+                                                            array_push($ketOld, $keyOld . " : ". $valueOld);
+                                                        }
+                                                        // dump($ketOld);
+                                                        foreach (array_combine($ketOld, $item['keterangan']['current']) as $old => $new) {
+                                                            
+                                                            echo $old . " <i class='fas fa-arrow-right'></i> " .$new . "<br>";
+
+                                                        }
                                                     }
                                                 @endphp
                                             @endif

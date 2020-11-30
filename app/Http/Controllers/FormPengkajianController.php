@@ -491,7 +491,9 @@ class FormPengkajianController extends Controller
             // dump($updateData);
         } else {
             // echo "Tidak ada perubahan";
-            $no_change  = ['Tidak ada perubahan'];
+            $no_change  = [
+                'no_change' => 'Tidak ada perubahan'
+            ];
             $updateData = [
                 'old'       => $no_change,
                 'current'   => $no_change,
