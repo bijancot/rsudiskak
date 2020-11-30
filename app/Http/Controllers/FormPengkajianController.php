@@ -312,7 +312,6 @@ class FormPengkajianController extends Controller
         array_push($old, $oldMedis);
         dump($old);
 
-
         // declare data update
         $dataUpdate = $req->all();
         dump($dataUpdate);
@@ -448,67 +447,75 @@ class FormPengkajianController extends Controller
         array_push($new, $newMedis);
         dump($new);
 
-        if ($statusPengkajian == "1") {
+        /**
+         * $data_old untuk mencari perbedaan atau perubahan data lama 
+         * $data_cur untuk mencari perbedaan atau perubahan data baru 
+         */
+        $data_oldKeperawatan    = array_diff_assoc($old[0], $new[0]);
+        $data_oldMedis          = array_diff_assoc($old[1], $new[1]);
+        $data_curKeperawatan    = array_diff_assoc($new[0], $old[0]);
+        $data_curMedis          = array_diff_assoc($new[1], $old[1]);
+        // dump($data_oldKeperawatan);
+        // dump($data_oldMedis);
+        // dump($data_curKeperawatan);
+        // dump($data_curMedis);
+
+        if ((count($data_oldKeperawatan) != 0 || count($data_curKeperawatan) != 0) && count($data_curMedis) == 0) {
+            // echo "yang ke 1";
+            $updateData = [
+                'old'       => $data_oldKeperawatan,
+                'current'   => $data_curKeperawatan,
+            ];
+            // dump($updateData);
+        } else if ((count($data_oldMedis) != 0 || count($data_curMedis) != 0) && count($data_curKeperawatan) == 0) {
+            // echo "yang ke 2";
+            $updateData = [
+                'old'       => $data_oldMedis,
+                'current'   => $data_curMedis,
+            ];
+            // dump($updateData);
+        } else if (count($data_curKeperawatan) != 0 && count($data_curMedis) != 0) {
+            // echo "yang ke 3";
+            $lama = [
+                'PengkajianKeperawatan' => $data_oldKeperawatan,
+                'PengkajianMedis'       => $data_oldMedis,
+            ];
+            $baru = [
+                'PengkajianKeperawatan' => $data_curKeperawatan,
+                'PengkajianMedis'       => $data_curMedis,
+            ];
+            $updateData = [
+                'old'       => $lama,
+                'current'   => $baru,
+            ];
+            // dump($updateData);
+        } else {
+            // echo "Tidak ada";
+            $updateData = 'Tidak ada perubahan';
+        }
+
+
+        if ($dataMasukPoli['StatusPengkajian'] == "0") {
             // Logging belum Verifikasi 
             $logging->toLogging('save', 'FormPengkajian', 'Isi Form Pengkajian', $no_cm);
+            //
+        } else if ($statusPengkajian == "1") {
+            // Logging belum Verifikasi 
+            // $logging->toLogging('save', 'FormPengkajian', 'Isi Form Pengkajian', $no_cm);
+
+            $logging->toLogging('update', 'FormPengkajian', $updateData, $no_cm);
             //
 
         } else if ($statusPengkajian == "2") {
 
-            // logging sudah verifikasi
-            /**
-             * $data_old untuk mencari perbedaan atau perubahan data lama 
-             * $data_cur untuk mencari perbedaan atau perubahan data baru 
-             */
-            $data_oldKeperawatan    = array_diff_assoc($old[0], $new[0]);
-            $data_oldMedis          = array_diff_assoc($old[1], $new[1]);
-            $data_curKeperawatan    = array_diff_assoc($new[0], $old[0]);
-            $data_curMedis          = array_diff_assoc($new[1], $old[1]);
+            $logging->toLogging('final', 'FormPengkajian', $updateData, $no_cm);
 
-            // dump($data_oldKeperawatan);
-            // dump($data_oldMedis);
-            // dump($data_curKeperawatan);
-            // dump($data_curMedis);
-
-            if ((count($data_oldKeperawatan) != 0 || count($data_curKeperawatan) != 0) && count($data_curMedis) == 0) {
-                // echo "yang ke 1";
-                $updateData = [
-                    'old'       => $data_oldKeperawatan,
-                    'current'   => $data_curKeperawatan,
-                ];
-                // dump($updateData);
-            } else if ((count($data_oldMedis) != 0 || count($data_curMedis) != 0) && count($data_curKeperawatan) == 0) {
-                // echo "yang ke 2";
-                $updateData = [
-                    'old'       => $data_oldMedis,
-                    'current'   => $data_curMedis,
-                ];
-                // dump($updateData);
-            } else if (count($data_curKeperawatan) != 0 && count($data_curMedis) != 0) {
-                // echo "yang ke 3";
-                $lama = [
-                    'PengkajianKeperawatan' => $data_oldKeperawatan,
-                    'PengkajianMedis'       => $data_oldMedis,
-                ];
-                $baru = [
-                    'PengkajianKeperawatan' => $data_curKeperawatan,
-                    'PengkajianMedis'       => $data_curMedis,
-                ];
-                $updateData = [
-                    'old'       => $lama,
-                    'current'   => $baru,
-                ];
-                // dump($updateData);
-            } else {
-                // echo "Tidak ada";
-                $updateData = 'Tidak ada perubahan';
-            }
-
-            if (array_key_exists('verifikasi', $dataMasukPoli['DataPengkajian'])) {
-                $logging->toLogging('final', 'FormPengkajian', $updateData, $no_cm);
-            } else {
-                $logging->toLogging('update', 'FormPengkajian', $updateData, $no_cm);
-            }
+            // if (array_key_exists('verifikasi', $dataMasukPoli['DataPengkajian'])) {
+            //     $logging->toLogging('final', 'FormPengkajian', $updateData, $no_cm);
+            // } 
+            // else {
+            //     $logging->toLogging('update', 'FormPengkajian', $updateData, $no_cm);
+            // }
         }
 
         // return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);

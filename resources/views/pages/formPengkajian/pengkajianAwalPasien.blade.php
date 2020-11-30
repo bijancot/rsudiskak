@@ -566,7 +566,7 @@
                                         <div class="col-12 mt-3">
                                             <a href="#" id="profilRingkas" class="btn secondary">List dirujuk/konsul ke</a>
                                             @if(Auth::user()->Role == "1")
-                                            <input type="checkbox" id="verifikasi" name="verifikasi">
+                                            <input type="checkbox" id="verifikasi">
                                             <label for="verifikasi"> Verifikasi final pasien</label><br>
                                             <div class="invalid-feedback">
                                                 Verifikasi Harus Tercentang
@@ -574,13 +574,14 @@
                                             @endif
                                         </div>
                                         <div class="col-12 mt-3">
-                                            @if($dataMasukPoli['StatusPengkajian'] == '0')
+                                            {{-- @if($dataMasukPoli['StatusPengkajian'] == '0')
                                                 <input type="hidden" id="statusPengkajian" name="StatusPengkajian" value="1">
                                             @elseif($dataMasukPoli['StatusPengkajian'] == '1')
                                                 <input type="hidden" id="statusPengkajian" name="StatusPengkajian" value="2">
                                             @elseif($dataMasukPoli['StatusPengkajian'] == '2')
                                                 <input type="hidden" id="statusPengkajian" name="StatusPengkajian" value="2">
-                                            @endif
+                                            @endif --}}
+                                            <input type="hidden" id="statusPengkajian" name="StatusPengkajian">
                                         </div>
                                     </div>
                                 </div>
@@ -598,43 +599,28 @@
     <script>
 
         $(document).ready(function(){
+
             // set hide field required
             $('.lbl-isRequired').hide();
-            $(".print_button").hide();
+            $('.print_button').hide();
             $('.inpt-isRequired').prop('required', false);
 
-            // @if($dataMasukPoli['StatusPengkajian'] == '0')
-            //     $('#statusPengkajian').val('1');
-            // @endif
-
-            // @if($dataMasukPoli['StatusPengkajian'] == '1')
-            //     $('#statusPengkajian').val('2');
-            // @endif
-
             @if($dataMasukPoli['StatusPengkajian'] == '2')
-
-                @if(array_key_exists('verifikasi',$dataMasukPoli['DataPengkajian']))
-                    $('#verifikasi').prop('checked', true);
-                    $('#verifikasi').val('verifikasi');
-                @endif
-                
+                $('#verifikasi').prop('checked', true);
             @else
                 $('#verifikasi').prop('checked', false);
             @endif
-            
+
             // check required if statusPenkajian == 2
             @if($dataMasukPoli['StatusPengkajian'] == '2')
-                @if(array_key_exists('verifikasi',$dataMasukPoli['DataPengkajian']))
-                    $('.lbl-isRequired').show();
-                    $('.inpt-isRequired').prop('required', true);
-                    $('#statusPengkajian').val('2');
-                @endif
+                $('.lbl-isRequired').show();
+                $('.inpt-isRequired').prop('required', true);
+                $('#statusPengkajian').val('2');
             @else
                 $('.lbl-isRequired').hide();
                 $('.inpt-isRequired').prop('required', false);
-                // $('#statusPengkajian').val('1');
+                $('#statusPengkajian').val('1');
             @endif
-            
 
             var table = $('#tbl_dokumen').DataTable();
             $(table).DataTable();
@@ -643,19 +629,19 @@
             });
             $('#tbl_filter').show();
             $('#tbl_dokumen tbody').on('click', '.pratinjau-data', function(){
-            let noPendaftaran = $(this).data('nopendaftaran');
-            let noCm = $(this).data('nocm');
-            $('#title-pratinjau').html('No Pendaftaran '+noPendaftaran);
-            // get data
-            $.ajax({
-                    url: "{{url('/dokumen/getData')}}",
-                    method: 'post',
-                    data: {noPendaftaran: noPendaftaran, noCm : noCm, _token: '<?php echo csrf_token()?>'},
-                    success : function(res){
-                        $('#pratinjauDokumen').attr('src', res.FullPath);
-                        $('#pathFile_pratinjau').val(res.PathFile);
-                    }
-                })
+                let noPendaftaran = $(this).data('nopendaftaran');
+                let noCm = $(this).data('nocm');
+                $('#title-pratinjau').html('No Pendaftaran '+noPendaftaran);
+                // get data
+                $.ajax({
+                        url: "{{url('/dokumen/getData')}}",
+                        method: 'post',
+                        data: {noPendaftaran: noPendaftaran, noCm : noCm, _token: '<?php echo csrf_token()?>'},
+                        success : function(res){
+                            $('#pratinjauDokumen').attr('src', res.FullPath);
+                            $('#pathFile_pratinjau').val(res.PathFile);
+                        }
+                    })
             })
             $('.btn-unduh').click(function(){
                 let noPendaftaran = $(this).data('nopendaftaran');
@@ -690,7 +676,7 @@
             })
 
             $("#tab_section-riwayat").on("click", function(){
-                $(".print_button").show();
+                    $(".print_button").show();
             });
             $("#tab_section-form").on("click", function(){
                 $(".print_button").hide();
@@ -706,8 +692,9 @@
                 $('#section-riwayat').css('display', 'block');
                 $('#section-berkas').css('display', 'none');
                 $('#section-form').css('display', 'none');
-            });   
-
+                
+            });    
+            
         })
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");
@@ -715,18 +702,6 @@
 
         $(document).ready(function() {
             // $('.pilihDiagnosa').selectpicker();
-
-            // $.ajax({
-            //         url: "{{url('/dokumen/getData')}}",
-            //         method: 'post',
-            //         data: {noPendaftaran: noPendaftaran, noCm : noCm, _token: '<?php echo csrf_token()?>'},
-            //         success : function(res){
-            //             $('#pratinjauDokumen').attr('src', res.FullPath);
-            //             $('#pathFile_pratinjau').val(res.PathFile);
-            //         }
-            //     })
-            // })
-
             $('.pilihDiagnosa').select2({
                 
                 placeholder: 'Cari...',
@@ -791,36 +766,34 @@
                 }
             });
         });
-        
+
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
             'use strict';
             window.addEventListener('load', function() {
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-                }, false);
-            });
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                    }, false);
+                });
             }, false);
-
-            
         })();
 
         function onlyNumberKey(evt) { 
           
-          // Only ASCII charactar in that range allowed 
-          var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
-          if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) && ASCIICode != 45) 
-              return false; 
-          return true; 
-        }
+            // Only ASCII charactar in that range allowed 
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) && ASCIICode != 45) 
+                return false; 
+            return true; 
+        } 
 
         $('#verifikasi').change(function(){
             if($(this).prop('checked') == true){
@@ -839,7 +812,7 @@
             let dataForm = $(this).serializeArray()
 
             if(statusPengkajian == '2'){
-                @if(array_key_exists('verifikasi',$dataMasukPoli['DataPengkajian']))
+                
                 $("form :input").each(function(index, elm){
                     if(elm.name != ''){
                         if(elm.type == 'text'){
@@ -860,11 +833,10 @@
                         }
                     }
                 });
-                @endif
             }
             console.log(dataForm)
             return true;
         });
-
+        
         </script>
 @endsection

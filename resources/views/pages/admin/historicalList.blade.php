@@ -13,7 +13,7 @@
                     
                     @csrf
                     &nbsp;
-                    <input type="date" id="date" onchange="handler(event);" class="form-control">&nbsp;
+                <input type="date" id="date" value="{{ date("Y-m-d") }}" onchange="handler(event);" class="form-control">&nbsp;
                     <!-- <input type="button" id="submit"  class="form-control btn btn-primary" value="Filter"> -->
                 </form>
                 </div>
@@ -38,6 +38,7 @@
                                 <td data-label="Action" class="d-flex flex-row p-lg-1">
                                     @if($item['IdFormPengkajian']=="1")
                                         <a href="riwayatPasienAwal/{{ $item['TglMasukPoli'] }}/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa">Print</a>
+                                        <a href="{{url('formPengkajian/'.$item['IdFormPengkajian'].'/'.$item['NoCM'].'/'.$item['NoPendaftaran'].'/'.$item['TglMasukPoli'])}}" class="btn diagnosa">Isi Form</a>
                                     @elseif($item['IdFormPengkajian']=="2")
                                         <a href="riwayatPasienUlang/{{ $item['TglMasukPoli'] }}/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa">Print</a>
                                     @endif    
@@ -58,6 +59,14 @@
                 table.search(this.value).draw();
             });
             $('#tbl_Riwayat_filter').hide();
+            
+            // let current_datetime = new Date()
+            // let formatted_date = current_datetime.getDate() + "/" 
+            // + (current_datetime.getMonth() + 1) 
+            // + "/" + current_datetime.getFullYear()
+            // console.log(formatted_date)
+            // alert(formatted_date);
+            // document.getElementById("date").value = new Date().toDateInputValue();
         });
         
     </script>
