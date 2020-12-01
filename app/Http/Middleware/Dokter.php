@@ -22,17 +22,17 @@ class Dokter
         }
         
         //admin
-        if(Auth::user()->KdJabatan == "3"){
-            return redirect()->route('admin');
+        if(Auth::user()->Role== "3"){
+            return redirect()->route('logActivities');
         }
 
         //perawat
-        if(Auth::user()->KdJabatan == "2"){
-            return redirect()->route('perawat');
+        if(Auth::user()->Role == "2"){
+            return redirect()->route('listPasien');
         }
 
         //dokter
-        if(Auth::user()->KdJabatan == "1"){
+        if(Auth::user()->Role == "1"){
             return $next($request);
         }
     }

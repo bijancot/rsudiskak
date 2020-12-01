@@ -13,14 +13,12 @@ class CekRole
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $roleName)
+    public function handle($request, Closure $next, ...$roles)
     {
-        if(! $request->user()->hasRole($roleName))
-        {
-            return redirect()
-                ->to('home');
+        if(in_array($request->user()->Role, $roles)){
+            return $next($request);
         }
-        return $next($request);
+        abort(403);
     }
     
 }

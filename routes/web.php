@@ -18,10 +18,22 @@ Route::get('/', function () {
 Route::get('layout', function () {
     return view('layouts.layout');
 });
-Route::get('logActivities', 'LoggingController@index')->middleware('adminRole')->name('admin');
+// Route::get('logActivities', 'LoggingController@index')->middleware('adminRole')->name('logActivities');
 //Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
+Route::group(['middleware' => ['auth', 'cekRole:3']], function () {
+    Route::get('logActivities', 'LoggingController@index');
+});
 
-Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
+
+Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
+    Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
+});
+
+// Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
+//     Route::get('logActivities', 'LoggingController@index');
+// });
+
+// Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
 Route::post('riwayatPasien/getData', 'RiwayatController@getData');
 Route::get('riwayatPasienAwal/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatAwal');
 Route::get('riwayatPasienUlang/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatUlang');
@@ -67,7 +79,7 @@ Route::get('templateASD', function () {
     return view('pages.template');
 });
 
-Route::get('logActivities', 'LoggingController@index');
+
 
 
 Route::get('m_pendidikan', 'PendidikanController@index');

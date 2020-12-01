@@ -22,18 +22,18 @@ class Perawat
         }
         
         //admin
-        if(Auth::user()->KdJabatan == "3"){
-            return redirect()->route('admin');
+        if(Auth::user()->Role == "3"){
+            return redirect()->route('logActivities');
         }
 
         //perawat
-        if(Auth::user()->KdJabatan == "2"){
+        if(Auth::user()->Role == "2"){
             return $next($request);
         }
 
         //dokter
-        if(Auth::user()->KdJabatan == "1"){
-            return redirect()->route('dokter');
+        if(Auth::user()->Role == "1"){
+            return redirect()->route('listPasien');
         }
     }
 }
