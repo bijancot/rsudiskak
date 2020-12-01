@@ -13,7 +13,7 @@
                     
                     @csrf
                     &nbsp;
-                <input type="date" id="date" value="{{ date("Y-m-d") }}" onchange="handler(event);" class="form-control">&nbsp;
+                <input type="date" id="date" value="{{ date('Y-m-d') }}" onchange="handler(event);" class="form-control">&nbsp;
                     <!-- <input type="button" id="submit"  class="form-control btn btn-primary" value="Filter"> -->
                 </form>
                 </div>
@@ -38,9 +38,10 @@
                                 <td data-label="Action" class="d-flex flex-row p-lg-1">
                                     @if($item['IdFormPengkajian']=="1")
                                         <a href="riwayatPasienAwal/{{ $item['TglMasukPoli'] }}/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa">Print</a>
-                                        <a href="{{url('formPengkajian/'.$item['IdFormPengkajian'].'/'.$item['NoCM'].'/'.$item['NoPendaftaran'].'/'.$item['TglMasukPoli'])}}" class="btn diagnosa">Isi Form</a>
+                                        <a href="#" data-toggle="modal" data-target="#modal_hapus" data-nopendaftaran="{{$item['NoPendaftaran']}}" data-nocm="{{$item['NoCM']}}" data-tanggal="{{$item['TglMasukPoli']}}" class="btn hapus-data batal">Batal Verifikasi</a>
                                     @elseif($item['IdFormPengkajian']=="2")
                                         <a href="riwayatPasienUlang/{{ $item['TglMasukPoli'] }}/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa">Print</a>
+                                        <a href="#" data-toggle="modal" data-target="#modal_hapus" data-nopendaftaran="{{$item['NoPendaftaran']}}" data-nocm="{{$item['NoCM']}}" data-tanggal="{{$item['TglMasukPoli']}}" class="btn hapus-data batal">Batal Verifikasi</a>
                                     @endif    
                                     <!-- <a href="profilRingkas/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa ml-auto">Profil Ringkas</a> -->
                                 </td>
@@ -51,6 +52,31 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal_hapus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title text-white">Batal Verifikasi '<span class="title-id"></span>'</h5>
+                <button type="button " class="close" data-dismiss="modal" aria-label="Close">
+                <span class="text-white" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ action('RiwayatController@batalVerifikasi')}}" method="POST" class="needs-validation" novalidate>
+                @csrf
+                
+                <p style="text-align:center;margin:20px;">Apakah anda yakin untuk membatalkan verifikasi '<span class="title-id"></span>'</p>
+                <div class="modal-footer">
+                    <input type="hidden" name="NoPendaftaran" id="NoPendaftaran">
+                    <input type="hidden" name="NoCM" id="NoCM">
+                    <input type="hidden" name="TglMasukPoli" id="TglMasukPoli">
+
+                    <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </form>
+            </div>
+        </div> 
+    </div>
     <script>
         $(document).ready(function() {
             var table = $('#tbl_Riwayat').DataTable();
@@ -59,14 +85,15 @@
                 table.search(this.value).draw();
             });
             $('#tbl_Riwayat_filter').hide();
-            
-            // let current_datetime = new Date()
-            // let formatted_date = current_datetime.getDate() + "/" 
-            // + (current_datetime.getMonth() + 1) 
-            // + "/" + current_datetime.getFullYear()
-            // console.log(formatted_date)
-            // alert(formatted_date);
-            // document.getElementById("date").value = new Date().toDateInputValue();
+            $('#tbl_Riwayat tbody').on('click', '.hapus-data', function(){
+                let NoCM = $(this).data('nocm');
+                let NoPendaftaran = $(this).data('nopendaftaran');
+                let TglMasukPoli = $(this).data('tanggal');
+                $('.title-id').html(NoCM);
+                $('#NoPendaftaran').val(NoPendaftaran);
+                $('#NoCM').val(NoCM);
+                $('#TglMasukPoli').val(TglMasukPoli);
+            })
         });
         
     </script>

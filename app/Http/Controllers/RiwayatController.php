@@ -36,11 +36,18 @@ class RiwayatController extends Controller
         $listriwayat            = $riwayat->whereNotNull('StatusPengkajian')->where('StatusPengkajian', '2')->get();
         $html = "";
         $action = "";
+        $ver = "";
         foreach($listriwayat as $data){
             if($data['IdFormPengkajian']=="1"){
                 $action = "<a href='riwayatPasienAwal/".$data['TglMasukPoli']."/".$data['NoPendaftaran']."' target='_blank' class='btn diagnosa'>Print</a>";
+                if(Auth::user()->Role =='003'){
+                    $ver = "<a href='#' data-toggle='modal' data-target='#modal_hapus' data-nopendaftaran='".$data['NoPendaftaran']."' data-nocm='".$data['NoCM']."' data-tanggal='".$data['TglMasukPoli']."' class='btn hapus-data batal'>Batal Verifikasi</a>";
+                }
             }elseif($data['IdFormPengkajian']=="2"){
                 $action = "<a href='riwayatPasienUlang/".$data['TglMasukPoli']."/".$data['NoPendaftaran']."' target='_blank' class='btn diagnosa'>Print</a>";
+                if(Auth::user()->Role =='003'){
+                    $ver = "<a href='#' data-toggle='modal' data-target='#modal_hapus' data-nopendaftaran='".$data['NoPendaftaran']."' data-nocm='".$data['NoCM']."' data-tanggal='".$data['TglMasukPoli']."' class='btn hapus-data batal'>Batal Verifikasi</a>";
+                }
             }
             $html .= "
             
@@ -50,7 +57,7 @@ class RiwayatController extends Controller
                 <td> ".$data['NamaLengkap']."</td>
                 <td> ".$data['TglMasukPoli']."</td>
                 <td data-label='Action' class='d-flex flex-row p-lg-1'>
-                ".$action."
+                ".$action."".$ver."
                 </td>
             </tr>";
             
@@ -199,5 +206,20 @@ class RiwayatController extends Controller
             $pdf->setPaper('legal', 'potrait');
             return $pdf->stream("profilRingkas_$noPendaftaran.pdf", array("Attachment" => false));
         }
+    }
+
+    public function batalVerifikasi(Request $req)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+
+        // //edit data
+        DB::collection('pasien_' . $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('TglMasukPoli', $req->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => '1']);
+        DB::collection('transaksi_' . $req->get('TglMasukPoli'))->where('NoCM', $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('TglMasukPoli', $req->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => '1']);
+        // print($req->get('NoPendaftaran'));
+        // print('<br>');
+        // print($req->get('NoCM'));
+        // print('<br>');
+        // print($req->get('TglMasukPoli'));
+        return redirect('/historicalList');
     }
 }

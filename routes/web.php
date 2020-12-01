@@ -22,14 +22,15 @@ Route::get('logActivities', 'LoggingController@index')->middleware('adminRole')-
 //Route::get('admin', 'AdminController@adminPage')->name('admin')->middleware('adminRole');
 
 Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
-//Route::get('riwayatPasienAjax', 'RiwayatController@riwayatPasienAjax');
+Route::post('riwayatPasien/getData', 'RiwayatController@getData');
 Route::get('riwayatPasienAwal/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatAwal');
 Route::get('riwayatPasienUlang/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatUlang');
 Route::get('profilRingkas/{no_pendaftaran}', 'RiwayatController@printProfilRingkas');
-Route::post('riwayatPasien/getData', 'RiwayatController@getData');
+Route::post('historicalList/batalVerifikasi', 'RiwayatController@batalVerifikasi');
 
 Route::get('profilRingkas/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'RiwayatController@printProfilRingkas');
 Route::get('historicalList', 'RiwayatController@historicalList');
+Route::post('historicalList/getDataVerifikasi', 'RiwayatController@getDataVerifikasi');
 
 Route::get('listPasien', 'PasienController@listPasien');
 Route::get('listPasien/masukPoliRedirect', 'DiagnosaController@masukPoliRedirect');
