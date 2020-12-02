@@ -166,6 +166,34 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="modal_gagal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title text-white font-weight-bold">Gagal Menambahkan data</h5>
+                        <!-- <button type="button bg-white" class="close" data-dismiss="modal" aria-label="Close"> -->
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <span class="my-4 ">
+                            <i class="fas fa-times" style="color: #ff0000; font-size:100px;"></i>
+                            
+                        </span>
+                        <p class="text-center"> <span id="msg_modal1"></span><br></p>
+                        <!-- <p>Modal body text goes here.</p> -->
+                    </div>
+                    <div class="modal-footer text-center">
+                        <button type="button" class="btn form-control btn-danger btn-lg" data-dismiss="modal">Oke</button>
+                    </div>
+                    <!-- <div class="d-flex flex-column justify-content-center text-center"> -->
+                        <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Oke</button> -->
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+
         {{-- Modal Pratinjau --}}
         <div class="modal fade" id="modal_pratinjau" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">

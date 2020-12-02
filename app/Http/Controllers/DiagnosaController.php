@@ -169,7 +169,7 @@ class DiagnosaController extends Controller
             // Cek data pasien masuk poli dengan $no_pendaftaran dan $no_cm yang sama
             if ($dataMasukPoli > 0) {
                 return redirect('/listPasien')
-                    ->with('status', 'Data Pasien dengan pendaftaran ' . $no_pendaftaran . ' sudah ada !');
+                    ->with('statusDuplikatMasukPoli', true);
 
                 //return response()->json(['data' => TRUE, 'msg' => 'Data Pasien dengan pendaftaran ' . $no_pendaftaran . ' sudah ada !']);
             } else {

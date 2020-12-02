@@ -428,7 +428,13 @@
                         $('#modal_success').modal('toggle')    
                 @endif
             @endif
-
+            @if(session('statusDuplikatMasukPoli'))
+                @if(session('statusDuplikatMasukPoli') == true)
+                        // alert Notification
+                        $('#msg_modal1').html('Pasien Sudah Tersedia');
+                        $('#modal_gagal').modal('toggle')    
+                @endif
+            @endif
         });
             $("#nav_antrianPoli").click(function(){
                 $(this).addClass('active');
