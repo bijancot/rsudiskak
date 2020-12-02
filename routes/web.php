@@ -119,9 +119,7 @@ Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
     Route::get('formPengkajianAwal/{no_cm}', 'FPengkajianAwalController@showRajal');
     Route::get('formPengkajianUlang/{no_cm}', 'FPengkajianUlangController@showRajal');
     Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@formPengkajian');
-
-    Route::post('riwayatPasien/getData', 'RiwayatController@getData');
-
+    
     Route::post('diagnosa/{no_cm}', 'DiagnosaController@storeDiagnosaAwal');
     Route::post('diagnosaAkhir', 'DiagnosaController@storeDiagnosaAkhir');
     Route::post('pilihDokter/{no_cm}/{no_pendaftaran}', 'DiagnosaController@storePilihDokter');
@@ -165,6 +163,7 @@ Route::post('m_user/update', 'ManajemenUserController@update');
 
 Route::post('m_user/getData', 'ManajemenUserController@getData');
 Route::post('m_user/ubahPassword', 'ManajemenUserController@updatePassword');
+Route::post('riwayatPasien/getData', 'RiwayatController@getData');
 
 Route::get('m_ICD09', 'ICD09Controller@index');
 Route::get('m_ICD10', 'ICD10Controller@index');
@@ -172,6 +171,7 @@ Route::get('m_ICD10', 'ICD10Controller@index');
 Route::get('formPengkajian/getICD09', 'FormPengkajianController@getICD09');
 Route::get('formPengkajian/getICD10', 'FormPengkajianController@getICD10');
 
+Route::get('lihatFormPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'RiwayatController@formPengkajian');
 
 // ============ TEMPLATE FRONT END
 

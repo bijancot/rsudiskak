@@ -37,14 +37,17 @@ class RiwayatController extends Controller
         $html = "";
         $action = "";
         $ver = "";
+        $lihatForm="";
         foreach($listriwayat as $data){
             if($data['IdFormPengkajian']=="1"){
-                $action = "<a href='riwayatPasienAwal/".$data['TglMasukPoli']."/".$data['NoPendaftaran']."' target='_blank' class='btn diagnosa'>Print</a>";
+                $lihatForm = "<a href='lihatFormPengkajian/".$data['IdFormPengkajian']."/".$data['NoCM']."/".$data['NoPendaftaran']."/".$data['TglMasukPoli']."' class='btn btn-primary'><i class='fas fa-eye'></i> Lihat Form</a>";
+                $action = "<a href='riwayatPasienAwal/".$data['TglMasukPoli']."/".$data['NoPendaftaran']."' target='_blank' class='btn diagnosa'><i class='fas fa-print'></i> Print</a>";
                 if(Auth::user()->Role =='003'){
                     $ver = "<a href='#' data-toggle='modal' data-target='#modal_hapus' data-nopendaftaran='".$data['NoPendaftaran']."' data-nocm='".$data['NoCM']."' data-tanggal='".$data['TglMasukPoli']."' class='btn hapus-data batal'>Batal Verifikasi</a>";
                 }
             }elseif($data['IdFormPengkajian']=="2"){
-                $action = "<a href='riwayatPasienUlang/".$data['TglMasukPoli']."/".$data['NoPendaftaran']."' target='_blank' class='btn diagnosa'>Print</a>";
+                $lihatForm = "<a href='lihatFormPengkajian/".$data['IdFormPengkajian']."/".$data['NoCM']."/".$data['NoPendaftaran']."/".$data['TglMasukPoli']."' class='btn btn-primary'><i class='fas fa-eye'></i> Lihat Form</a>";
+                $action = "<a href='riwayatPasienUlang/".$data['TglMasukPoli']."/".$data['NoPendaftaran']."' target='_blank' class='btn diagnosa'><i class='fas fa-print'></i> Print</a>";
                 if(Auth::user()->Role =='003'){
                     $ver = "<a href='#' data-toggle='modal' data-target='#modal_hapus' data-nopendaftaran='".$data['NoPendaftaran']."' data-nocm='".$data['NoCM']."' data-tanggal='".$data['TglMasukPoli']."' class='btn hapus-data batal'>Batal Verifikasi</a>";
                 }
@@ -57,7 +60,7 @@ class RiwayatController extends Controller
                 <td> ".$data['NamaLengkap']."</td>
                 <td> ".$data['TglMasukPoli']."</td>
                 <td data-label='Action' class='d-flex flex-row p-lg-1'>
-                ".$action."".$ver."
+                ".$lihatForm."".$action."".$ver."
                 </td>
             </tr>";
             
@@ -221,5 +224,110 @@ class RiwayatController extends Controller
         // print('<br>');
         // print($req->get('TglMasukPoli'));
         return redirect('/historicalList');
+    }
+
+    public function formPengkajian($idForm, $NoCM, $noPendaftaran, $tglMasukPoli)
+    {
+
+        $dataForm = ManajemenForm::where('idForm', $idForm)->get();
+
+        if ($NoCM && $noPendaftaran) {
+
+            $dataMasukPoli = DB::collection('pasien_' . $NoCM)
+                ->where('NoPendaftaran', $noPendaftaran)
+                ->where('TglMasukPoli', $tglMasukPoli)
+                ->where('deleted_at', null)
+                ->whereNotNull('StatusPengkajian')
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            $dataRiwayat        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->get();
+            $dataDokumen        = DB::collection('dokumen_' . $NoCM)->whereNotNull('Status')->get();
+            
+            $pendidikan         = DB::collection('pendidikan')->where("deleted_at", Null)->get();
+            $pekerjaan          = DB::collection('pekerjaan')->where("deleted_at", Null)->get();
+            $agama              = DB::collection('agama')->where("deleted_at", Null)->get();
+            $nilaiAnut          = DB::collection('nilaiAnut')->where("deleted_at", Null)->get();
+            $statusPernikahan   = DB::collection('statusPernikahan')->where("deleted_at", Null)->get();
+            $keluarga           = DB::collection('keluarga')->where("deleted_at", Null)->get();
+            $tempatTinggal      = DB::collection('tempatTinggal')->where("deleted_at", Null)->get();
+            $statusPsikologi    = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
+            $hambatanEdukasi    = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
+
+            $diagnosa           = [
+                'KodeDiagnosa'  => Null,
+                'NamaDiagnosa'  => Null,
+            ];
+
+            $diagnosaT          = [
+                'KodeDiagnosaT   ' => Null,
+                'DiagnosaTindakan' => Null,
+            ];
+
+            $ICD10T    = [];
+            $ICD10V    = [];
+            $ICD09T    = [];
+            $ICD09V    = [];
+
+            if (!empty($dataMasukPoli['DataPengkajian'])) {
+
+                if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+
+                    $diagnosa       = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa'];
+                    $pecahKode10    = explode(";", $diagnosa['KodeDiagnosa']);
+                    $pecahNama10    = explode(";", $diagnosa['NamaDiagnosa']);
+
+                    for ($item = 0; $item < count($pecahKode10); $item++) {
+                        array_push($ICD10T, $pecahKode10[$item] . " - " . $pecahNama10[$item]);
+                        array_push($ICD10V, $pecahKode10[$item] . ":" . $pecahNama10[$item]);
+                    }
+                }
+
+                if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+
+                    $diagnosaT      = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9'];
+                    $pecahKode09    = explode(";", $diagnosaT['KodeDiagnosaT']);
+                    $pecahNama09    = explode(";", $diagnosaT['DiagnosaTindakan']);
+
+                    for ($item = 0; $item < count($pecahKode09); $item++) {
+                        array_push($ICD09T, $pecahKode09[$item] . " - " . $pecahNama09[$item]);
+                        array_push($ICD09V, $pecahKode09[$item] . ":" . $pecahNama09[$item]);
+                    }
+                }
+            }
+            $data = [
+                'form_id'           => $idForm,
+                'nama_form'         => $dataForm[0]['namaForm'],
+                'pendidikan'        => $pendidikan,
+                'pekerjaan'         => $pekerjaan,
+                'agama'             => $agama,
+                'nilaiAnut'         => $nilaiAnut,
+                'statusPernikahan'  => $statusPernikahan,
+                'keluarga'          => $keluarga,
+                'tempatTinggal'     => $tempatTinggal,
+                'statusPsikologi'   => $statusPsikologi,
+                'hambatanEdukasi'   => $hambatanEdukasi,
+                'idForm'            => $idForm,
+                'NoCM'              => $NoCM,
+                'noPendaftaran'     => $noPendaftaran,
+                'tglMasukPoli'      => $tglMasukPoli,
+                'dataRiwayat'       => $dataRiwayat,
+                'dataDokumen'       => $dataDokumen,
+                'diagnosa'          => $diagnosa,
+                'diagnosaT'         => $diagnosaT,
+                'ICD10T'            => $ICD10T,
+                'ICD10V'            => $ICD10V,
+                'ICD09T'            => $ICD09T,
+                'ICD09V'            => $ICD09V,
+                'dataMasukPoli'     => $dataMasukPoli
+            ];
+            return view($dataForm[0]['namaFile'].'Lihat', $data);
+            //endIF
+
+        } else {
+
+            return 'Halaman yang anda tuju tidak ada';
+        }
+        // return view('pages.formPengkajian.pengkajianAwalPasien', $no_cm);
     }
 }
