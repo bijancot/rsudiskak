@@ -21,7 +21,7 @@
 
             <div class="content soft-shadow">
                 <div class="p-3">
-                    <p class="h4">Data Pasien <a href="/profilRingkas/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}/{{$dataMasukPoli['TglMasukPoli']}}" target="_blank" class="btn btn-primary print_button" id="print_button">Print</a></p>
+                    <p class="h4">Data Pasien <a href="/profilRingkas/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}/{{$dataMasukPoli['TglMasukPoli']}}" target="_blank" class="btn btn-primary print_button" id="print_button" hidden>Print</a></p>
                 </div>
                 <hr>
                 <div class="row p-3 py-4">
@@ -373,7 +373,6 @@
 
             // set hide field required
             $('.lbl-isRequired').hide();
-            $('.print_button').hide();
             $('.inpt-isRequired').prop('required', false);
 
             @if($dataMasukPoli['StatusPengkajian'] == '2')
@@ -447,19 +446,19 @@
             })
 
             $("#tab_section-riwayat").on("click", function(){
-                    $(".print_button").show();
+                $(".print_button").prop('hidden', false);
             });
             $("#tab_section-form").on("click", function(){
-                $(".print_button").hide();
+                $(".print_button").prop('hidden', true);
             });
             $("#tab_section-berkas").on("click", function(){
-                $(".print_button").hide();
+                $(".print_button").prop('hidden', true);
             });
 
             $("#profilRingkas").on("click", function(){
                 $('#tab_section-form').removeClass('active');
                 $('#tab_section-riwayat').addClass('active');
-                $(".print_button").show();    
+                $(".print_button").prop('hidden', false);
                 $('#section-riwayat').css('display', 'block');
                 $('#section-berkas').css('display', 'none');
                 $('#section-form').css('display', 'none');
