@@ -96,8 +96,6 @@ Route::group(['middleware' => ['auth', 'cekRole:3']], function () {
 Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
 
     Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
-    Route::get('riwayatPasienAwal/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatAwal');
-    Route::get('riwayatPasienUlang/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatUlang');
     Route::get('profilRingkas/{no_pendaftaran}', 'RiwayatController@printProfilRingkas');
     Route::get('profilRingkas/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'RiwayatController@printProfilRingkas');
 
@@ -172,6 +170,8 @@ Route::get('formPengkajian/getICD09', 'FormPengkajianController@getICD09');
 Route::get('formPengkajian/getICD10', 'FormPengkajianController@getICD10');
 
 Route::get('lihatFormPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'RiwayatController@formPengkajian');
+Route::get('riwayatPasienAwal/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatAwal');
+Route::get('riwayatPasienUlang/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatUlang');
 
 // ============ TEMPLATE FRONT END
 
