@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\AntrianPasien;
 use App\ManajemenUser;
 use App\User;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Hash;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+// use Auth;
 
 class ManajemenUserController extends Controller
 {
@@ -15,13 +17,13 @@ class ManajemenUserController extends Controller
     {
         //get data kdruangan from api
         $client = new Client();
-        for($i = 1; $i <=2; $i++){
-            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page='.$i);
+        for ($i = 1; $i <= 2; $i++) {
+            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page=' . $i);
             $statCode = $res->getStatusCode();
             $kdRuangan = $res->getBody()->getContents();
             $kdRuangan = json_decode($kdRuangan, true);
 
-            $resKdRuangan[$i-1] = $kdRuangan['data'];
+            $resKdRuangan[$i - 1] = $kdRuangan['data'];
         }
 
         //get all data user
@@ -40,13 +42,13 @@ class ManajemenUserController extends Controller
 
         //get data kdruangan from api
         $client = new Client();
-        for($i = 1; $i <=2; $i++){
-            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page='.$i);
+        for ($i = 1; $i <= 2; $i++) {
+            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page=' . $i);
             $statCode = $res->getStatusCode();
             $kdRuangan = $res->getBody()->getContents();
             $kdRuangan = json_decode($kdRuangan, true);
 
-            $resKdRuangan[$i-1] = $kdRuangan['data'];
+            $resKdRuangan[$i - 1] = $kdRuangan['data'];
         }
 
         //set password
@@ -55,7 +57,7 @@ class ManajemenUserController extends Controller
         //insert nama ruangan
         $data['NamaRuangan'] = "";
         foreach ($resKdRuangan as $index) {
-            foreach($index as $item){
+            foreach ($index as $item) {
                 if ($item['KdRuangan'] == $req->get('KodeRuangan')) {
                     $data['NamaRuangan'] = $item['NamaRuangan'];
                     break;
@@ -74,19 +76,19 @@ class ManajemenUserController extends Controller
 
         //get data kdruangan from api
         $client = new Client();
-        for($i = 1; $i <=2; $i++){
-            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page='.$i);
+        for ($i = 1; $i <= 2; $i++) {
+            $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page=' . $i);
             $statCode = $res->getStatusCode();
             $kdRuangan = $res->getBody()->getContents();
             $kdRuangan = json_decode($kdRuangan, true);
 
-            $resKdRuangan[$i-1] = $kdRuangan['data'];
+            $resKdRuangan[$i - 1] = $kdRuangan['data'];
         }
 
         //set nama ruangan
         $data['NamaRuangan'] = "";
         foreach ($resKdRuangan as $index) {
-            foreach($index as $item){
+            foreach ($index as $item) {
                 if ($item['KdRuangan'] == $req->get('KodeRuangan')) {
                     $data['NamaRuangan'] = $item['NamaRuangan'];
                     break;
@@ -112,9 +114,14 @@ class ManajemenUserController extends Controller
         User::where('ID', $req->get('ID_reset'))->update(['password' => $pass]);
         return redirect('m_user');
     }
-    public function delete(Request $req)
+    // public function delete(Request $req)
+    // {
+    //     User::where('ID', $req->get('ID_hapus'))->update(['Status' => null]);
+    //     return redirect('m_user');
+    // }
+    public function destroy(Request $req)
     {
-        User::where('ID', $req->get('ID_hapus'))->update(['Status' => null]);
+        User::where('ID', $req->get('ID_hapus'))->delete();
         return redirect('m_user');
     }
     public function ubahPassword()
@@ -136,9 +143,11 @@ class ManajemenUserController extends Controller
         User::where('ID', Auth::user()->ID)->whereNotNull('Status')->update(['StatusLogin' => '0']);
 
         $logging        = new LoggingController;
-        if (Auth::user()->getRole != 3) {
+
+        if (Auth::user()->Role != "3") {
             $logging->toLogging('Logout', 'Logout', 'Telah Logout', null);
         }
+
         Auth::logout();
         return redirect('/login');
     }

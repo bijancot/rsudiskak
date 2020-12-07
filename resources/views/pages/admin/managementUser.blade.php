@@ -215,12 +215,12 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-header bg-danger">
-                <h5 class="modal-title text-white">Reset Password User '<span class="title-id"></span>'</h5>
+                <h5 class="modal-title text-white">Hapus User '<span class="title-id"></span>'</h5>
                 <button type="button " class="close" data-dismiss="modal" aria-label="Close">
                 <span class="text-white" aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ action('ManajemenUserController@delete')}}" method="POST" class="needs-validation" novalidate>
+            <form action="{{ action('ManajemenUserController@destroy')}}" method="POST" class="needs-validation" novalidate>
                 @csrf
                 <p style="text-align:center;margin:20px;">Apakah anda yakin untuk menghapus user '<span class="title-id"></span>'</p>
                 <div class="modal-footer">

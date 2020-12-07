@@ -76,7 +76,8 @@ Route::group(['middleware' => ['auth', 'cekRole:3']], function () {
     Route::post('m_user', 'ManajemenUserController@store');
     // Route::post('m_user/update', 'ManajemenUserController@update');
     Route::post('m_user/resetPassword', 'ManajemenUserController@resetPassword');
-    Route::post('m_user/delete', 'ManajemenUserController@delete');
+    Route::post('m_user/delete', 'ManajemenUserController@destroy');
+    // Route::post('m_user/delete', 'ManajemenUserController@delete');
     // Route::post('m_user/getData', 'ManajemenUserController@getData');
     // Route::post('m_user/ubahPassword', 'ManajemenUserController@updatePassword');
 
@@ -117,7 +118,7 @@ Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
     Route::get('formPengkajianAwal/{no_cm}', 'FPengkajianAwalController@showRajal');
     Route::get('formPengkajianUlang/{no_cm}', 'FPengkajianUlangController@showRajal');
     Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@formPengkajian');
-    
+
     Route::post('diagnosa/{no_cm}', 'DiagnosaController@storeDiagnosaAwal');
     Route::post('diagnosaAkhir', 'DiagnosaController@storeDiagnosaAkhir');
     Route::post('pilihDokter/{no_cm}/{no_pendaftaran}', 'DiagnosaController@storePilihDokter');
