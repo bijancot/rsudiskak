@@ -1,13 +1,54 @@
 @extends('layouts.layout')
-
 @section('content')
 
     @include('includes.navbar')
+    <div id="slider">
+        <div style="padding:15px">
+            <div class="diagnosa">
+                <div class="float-left"> 
+                    <h4>Riwayat Pasien</h4> 
+                </div> 
+                <div class="float-right"> 
+                    <button class="btn btn-primary">Upload</button>
+                </div>
+                <br>
+            </div>
+            <hr>
+            <div class="content float-none">
+            <table class="table table-bordered" id="sliderTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Nomor Pendaftaran</th>
+                        <th scope="col">Tanggal Berkunjung</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach ($dataRiwayat as $item)
+                        @if($item['StatusPengkajian']=='2')
 
+                        @php
+                            $date = date_create($item['TglWaktuMasukPoli']);
+                        @endphp
+                        <tr>
+                            <td>{{ $item['NoPendaftaran'] }}</td>
+                            <td>{{date_format($date, 'd/m/Y - h:i')}}</td>
+                            <td><a href="#"><i class="fas fa-eye"></i> Lihat </a>
+                            </td>
+                        </tr>
+                        @endif
+                    @endforeach     
+                </tbody>
+                </table>
+                <h4>
+                    Preview
+                </h4>
+                <embed src="{{ URL::asset('dokumenRM/11600094/1603100066_2020-12-07_1603100066_2020-12-07_listRiwayatAwal_2011240007.pdf') }}" width="100%" height="300px" />
+            </div>
+        </div>
+    </div>
     <div class="bg-greenishwhite">
         <div class="wrapper">
-            
-
             <div class="d-flex align-items-center mb-5">
                 <a href="{{url('/listPasien/masukPoliRedirect')}}" class="mr-auto">
                     <span>
@@ -459,7 +500,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <label for="diagnosa">Diagnosa (A) <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <label for="diagnosa">ICD 10 <span class="lbl-isRequired" style="color:red;">*</span></label>
                                             <select multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
                                                 
                                                 @if ( !empty($diagnosa['KodeDiagnosa']) && !empty($diagnosa['NamaDiagnosa']) ) 
@@ -475,15 +516,10 @@
                                                 Data Diagnosa Harus Diisi.
                                             </div>
                                         </div>
-                                        {{-- <div class="col-12 mt-3">
-                                            <label for="kodeICD10">Kode ICD 10</label>
-                                            <select class="custom-select" name="PengkajianMedis[KodeICD10]" id="kodeICD10">
-                                                <option selected>-</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div> --}}
+                                        <div class="col-12 mt-3">
+                                            <label for="kodeICD10">Diagnosa (A)</label>
+                                            <textarea class="form-control"></textarea>
+                                        </div>
                                         <div class="col-12 mt-3">
                                             <label for="komplikasi">Komplikasi</label>
                                             <input type="text" class="form-control" name="PengkajianMedis[Komplikasi]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Komplikasi']) ? $dataPengkajian['PengkajianMedis']['Komplikasi'] : '')}}" >
@@ -582,12 +618,15 @@
                                                 <input type="hidden" id="statusPengkajian" name="StatusPengkajian" value="2">
                                             @endif --}}
                                             <input type="hidden" id="statusPengkajian" name="StatusPengkajian">
+                                            
+                                            <button type="submit" class="btn green-long">Submit</button> 
+                                        
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <button type="submit" class="btn green-long w-50 ml-auto mr-3">Submit</button>
-                                </div>
+                                </div> -->
                             </div>         
                         </div>
                     </div>
@@ -599,7 +638,7 @@
     <script>
 
         $(document).ready(function(){
-
+            $('#sliderTable_filter').hide();
             // set hide field required
             $('.lbl-isRequired').hide();
             $('.inpt-isRequired').prop('required', false);
@@ -837,5 +876,22 @@
             return true;
         });
         
+        </script>
+        <!-- slider -->
+        <script type="text/javascript">
+            //$('#test').BootSideMenu({side:"left", autoClose:false});
+            $('#slider').BootSideMenu({
+                side: "right",
+                autoClose: true,
+                width: "43%",
+                closeOnClick: false
+            });
+
+            $('#sliderTable').dataTable( {
+                "scrollY": "100px",
+                "scrollCollapse": true,
+                "paging": false,
+                "order": [[ 1, "desc" ]]
+            } );
         </script>
 @endsection
