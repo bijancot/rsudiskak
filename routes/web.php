@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth', 'cekRole:3']], function () {
     // Route::post('m_user/update', 'ManajemenUserController@update');
     Route::post('m_user/resetPassword', 'ManajemenUserController@resetPassword');
     Route::post('m_user/delete', 'ManajemenUserController@destroy');
+    Route::post('m_user/checkIdDuplicate', 'ManajemenUserController@checkIdDuplicate');
     // Route::post('m_user/delete', 'ManajemenUserController@delete');
     // Route::post('m_user/getData', 'ManajemenUserController@getData');
     // Route::post('m_user/ubahPassword', 'ManajemenUserController@updatePassword');
@@ -87,6 +88,7 @@ Route::group(['middleware' => ['auth', 'cekRole:3']], function () {
     Route::post('manajemen_form', 'ManajemenFormController@store');
     Route::patch('manajemen_form/{manajemenForm}/update', 'ManajemenFormController@update');
     Route::post('manajemen_form/{manajemenForm}/delete', 'ManajemenFormController@delete');
+    Route::post('manajemen_form/checkIdDuplicate', 'ManajemenFormController@checkIdDuplicate');
 
     Route::post('uploadFile', 'UploadFileController@store');
     Route::post('dokumen', 'DokumenController@store');
@@ -94,6 +96,7 @@ Route::group(['middleware' => ['auth', 'cekRole:3']], function () {
     // Route::post('dokumen/update', 'DokumenController@update');
     Route::post('dokumen/delete', 'DokumenController@delete');
     Route::post('dokumen/download', 'DokumenController@download');
+    Route::post('dokumen/checkIdDuplicate', 'DokumenController@checkIdDuplicate');
 });
 
 

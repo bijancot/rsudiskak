@@ -151,4 +151,18 @@ class ManajemenUserController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+
+    public function checkIdDuplicate(Request $req){
+        //get data user
+        $data = User::where('ID', $req->get('val'))->get();
+        if(empty($data[0])){
+            $res['status'] = false;
+            $res['ID'] = null;
+        }else{
+            $res['status'] = true;
+            $res['ID'] = $data[0]['ID'];
+        }
+
+        return response()->json($res);
+    }
 }

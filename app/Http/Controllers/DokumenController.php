@@ -189,4 +189,33 @@ class DokumenController extends Controller
 
         return view('pages.berkas', $data);
     }
+
+    public function checkIdDuplicate(Request $req){
+        // get data dokumen
+        $dataDokumen = array();
+        $index = 0;
+        $listDokumen = DB::collection('listDokumen')->get();
+        if(!empty($listDokumen[0])){
+            $res['status'] = false;
+            $res['ID'] = null;
+            foreach($listDokumen as $item){
+                if($item['NoCM'] == $req->get('noCm')){
+                    $dataDokumen = DB::collection('dokumen_'.$item['NoCM'])->whereNotNull('Status')->get();
+                    foreach($dataDokumen as $key){
+                        if($key['NoPendaftaran'] == $req->get('noPendaftaran')){
+                            $res['status'] = true;
+                            $res['ID'] = $key['NoPendaftaran'];
+                            return response()->json($res);
+                        }
+                    }
+                }
+                $index++;
+            }
+        }else{
+            $res['status'] = false;
+            $res['ID'] = null;
+        }
+
+        return response()->json($res);
+    }
 }
