@@ -69,21 +69,25 @@
                     <div class="form-group">
                         <label for="idForm" class="col-form-label">No Pendaftaran :</label>
                         <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control frm-input" id="noPendaftaran" name="NoPendaftaran">
-                        <div class="noPendaftaran-isInvalid invalid-feedback">
+                        <input type="hidden" id="noPendaftaran_checkValid" value="0">
+                        <div class="noPendaftaran_isNull invalid-feedback">
                             No Pendaftaran Harus Diisi.
+                        </div>
+                        <div class="noPendaftaran_duplicated isInvalid-feedback">
+                            Data No Pendaftaran Sudah Terdaftar.
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="namaForm" class="col-form-label">No Rekam Medis :</label>
                         <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control frm-input" id="noRekamMedis" name="NoCM">
-                        <div class="noRekamMedis-isInvalid invalid-feedback">
+                        <div class="noRekamMedis_isNull invalid-feedback">
                             No Rekam Medis Harus Diisi.
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="namaForm" class="col-form-label">Nama Lengkap :</label>
                         <input type="text" class="form-control frm-input" id="namaLengkap" name="NamaLengkap">
-                        <div class="namaLengkap-isInvalid invalid-feedback">
+                        <div class="namaLengkap_isNull invalid-feedback">
                             Nama Lengkap Harus Diisi.
                         </div>
                     </div>
@@ -100,7 +104,7 @@
                     <div class="form-group">
                         <label for="namaForm" class="col-form-label">Tanggal Masuk :</label>
                         <input type="date" id="tglMasuk" name="TanggalMasuk" class="custom-select frm-tanggal">
-                        <div class="tglMasuk-isInvalid invalid-feedback">
+                        <div class="tglMasuk_isNull invalid-feedback">
                             Tanggal Masuk Harus Diisi.
                         </div>
                     </div>
@@ -111,13 +115,13 @@
                                 <input id="fileTambah" type="file" name="file">
                             </label>
                         </div>
-                        <div class="fileTambah-isInvalid invalid-feedback">
+                        <div class="fileTambah_isNull invalid-feedback">
                             Upload File Harus Diisi.
                         </div>
                         
                     </div>
                     <div class="form-group">
-                        <div id="fileExtension-isInvalid" class="alert alert-danger mt-4" role="alert" style="display: none;">
+                        <div id="fileExtension_isNull" class="alert alert-danger mt-4" role="alert" style="display: none;">
                             Format file upload tidak sesuai
                         </div>
                     </div>
@@ -148,21 +152,21 @@
                         <div class="form-group">
                             <label for="idForm" class="col-form-label">No Pendaftaran :</label>
                             <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control frm-input" id="noPendaftaran_edit" name="NoPendaftaran">
-                            <div class="noPendaftaran_edit-isInvalid invalid-feedback">
+                            <div class="noPendaftaran_edit_isNull invalid-feedback">
                                 No Pendaftaran Harus Diisi.
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="namaForm" class="col-form-label">No Rekam Medis :</label>
                             <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control frm-input" id="noRekamMedis_edit" name="NoCM">
-                            <div class="noRekamMedis_edit-isInvalid invalid-feedback">
+                            <div class="noRekamMedis_edit_isNull invalid-feedback">
                                 No Rekam Medis Harus Diisi.
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="namaForm" class="col-form-label">Nama Lengkap :</label>
                             <input type="text" class="form-control frm-input" id="namaLengkap_edit" name="NamaLengkap">
-                            <div class="namaLengkap_edit-isInvalid invalid-feedback">
+                            <div class="namaLengkap_edit_isNull invalid-feedback">
                                 Nama Lengkap Harus Diisi.
                             </div>
                         </div>
@@ -177,7 +181,7 @@
                         <div class="form-group">
                             <label for="namaForm" class="col-form-label">Tanggal Masuk :</label>
                             <input type="date" id="tglMasuk_edit" name="TanggalMasuk" class="custom-select frm-tanggal">
-                            <div class="tglMasuk_edit-isInvalid invalid-feedback">
+                            <div class="tglMasuk_edit_isNull invalid-feedback">
                                 Tanggal Masuk Harus Diisi.
                             </div>
                         </div>
@@ -186,7 +190,7 @@
                             <input type="text" name="NamaFile" class="form-control frm-input" id="namaFile_edit">
                         </div>
                         <div class="form-group">
-                            <div class="namaFile_edit-isInvalid invalid-feedback">
+                            <div class="namaFile_edit_isNull invalid-feedback">
                                 Nama File Harus Diisi.
                             </div>
                         </div>
@@ -243,7 +247,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="col">
-                        <iframe id="pratinjauDokumen" src="" frameborder="0" width="100%" height="500px"></iframe>
+                        <embed id="pratinjauDokumen" src="" width="100%" height="500px" />
                     </div>
                 </div>
                 <form id="form-unduh" action="{{action('DokumenController@download')}}" method="POST">
@@ -266,6 +270,12 @@
                 table.search( this.value ).draw();
             });
             $('#tbl_filter').show();
+
+            if($('#noPendaftaran').val() != ''){
+                $('#noPendaftaran_checkValid').val('1')
+            }else{
+                $('#noPendaftaran_checkValid').val('0')
+            }
         });
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");
@@ -286,33 +296,36 @@
             
             if(noPendaftaran == ""){
                 $('#noPendaftaran').addClass('isInValid')
-                $('.noPendaftaran-isInvalid').css('display', 'block');
+                $('.noPendaftaran_isNull').css('display', 'block');
+            }else{
+                CheckIdDuplicate('noPendaftaran', noPendaftaran, noRekamMedis, 'tambah')
             }
             
             if(noRekamMedis == ""){
                 $('#noRekamMedis').addClass('isInValid')
-                $('.noRekamMedis-isInvalid').css('display', 'block');
+                $('.noRekamMedis_isNull').css('display', 'block');
             }
 
             if(namaLengkap == ""){
                 $('#namaLengkap').addClass('isInValid')
-                $('.namaLengkap-isInvalid').css('display', 'block');
+                $('.namaLengkap_isNull').css('display', 'block');
             }
 
             if(tglMasuk == ""){
                 $('#tglMasuk').addClass('isInValid')
-                $('.tglMasuk-isInvalid').css('display', 'block');
+                $('.tglMasuk_isNull').css('display', 'block');
             }
 
             if(fileVal == ""){
-                $('.fileTambah-isInvalid').css('display', 'block');
+                $('.fileTambah_isNull').css('display', 'block');
             }
             
+            let noPendaftaranCheckValid = $('#noPendaftaran_checkValid').val()
             if(fileExtension != 'pdf'){
-                $('#fileExtension-isInvalid').css('display', 'block');
+                $('#fileExtension_isNull').css('display', 'block');
             }else{
-                $('#fileExtension-isInvalid').css('display', 'none');
-                if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && fileVal != ""){
+                $('#fileExtension_isNull').css('display', 'none');
+                if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && fileVal != "" && noPendaftaranCheckValid == '1'){
                     $('#form-tambah').submit();
                 }
             }
@@ -323,11 +336,13 @@
             if($(this).val() == ""){
                 $(this).removeClass('isInValid')
                 $(this).removeClass('isValid')
-                $('.'+id+'-isInvalid').css('display', 'none')
+                $('.'+id+'_isNull').css('display', 'none')
+                $('.'+id+'_duplicated').css('display', 'none')
             }else{
                 $(this).removeClass('isInValid')
                 $(this).addClass('isValid')
-                $('.'+id+'-isInvalid').css('display', 'none')
+                $('.'+id+'_isNull').css('display', 'none')
+                $('.'+id+'_duplicated').css('display', 'none')
             }
         })
         $('.frm-tanggal').change(function(){
@@ -335,16 +350,16 @@
             if($(this).val() == ""){
                 $(this).removeClass('isInValid')
                 $(this).removeClass('isValid')
-                $('.'+id+'-isInvalid').css('display', 'none')
+                $('.'+id+'_isNull').css('display', 'none')
             }else{
                 $(this).removeClass('isInValid')
                 $(this).addClass('isValid')
-                $('.'+id+'-isInvalid').css('display', 'none')
+                $('.'+id+'_isNull').css('display', 'none')
             }
         })
         $('#fileTambah').change(function(){
             if($(this).val() != ""){
-                $('.fileTambah-isInvalid').css('display', 'none')
+                $('.fileTambah_isNull').css('display', 'none')
             }
         })
         function onlyNumberKey(evt) { 
@@ -419,27 +434,27 @@
 
         if(noPendaftaran == ""){
             $('#noPendaftaran_edit').addClass('isInValid')
-            $('.noPendaftaran_edit-isInvalid').css('display', 'block');
+            $('.noPendaftaran_edit_isNull').css('display', 'block');
         }
         
         if(noRekamMedis == ""){
             $('#noRekamMedis_edit').addClass('isInValid')
-            $('.noRekamMedis_edit-isInvalid').css('display', 'block');
+            $('.noRekamMedis_edit_isNull').css('display', 'block');
         }
 
         if(namaLengkap == ""){
             $('#namaLengkap_edit').addClass('isInValid')
-            $('.namaLengkap_edit-isInvalid').css('display', 'block');
+            $('.namaLengkap_edit_isNull').css('display', 'block');
         }
 
         if(tglMasuk == ""){
             $('#tglMasuk_edit').addClass('isInValid')
-            $('.tglMasuk_edit-isInvalid').css('display', 'block');
+            $('.tglMasuk_edit_isNull').css('display', 'block');
         }
 
         if(namaFile == ""){
             $('#namaFile_edit').addClass('isInValid')
-            $('.namaFile_edit-isInvalid').css('display', 'block');
+            $('.namaFile_edit_isNull').css('display', 'block');
         }
 
         if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && namaFile != ""){
@@ -465,5 +480,47 @@
                 }
             })
     })
+
+    const CheckIdDuplicate = (tagId, val, noCm, method) => {
+            let isUbah
+            if(method == 'ubah'){
+                isUbah = true;
+            }else{
+                isUbah = false;
+            }
+
+            $.ajax({
+                url: "{{url('dokumen/checkIdDuplicate')}}",
+                method: 'post',
+                data: {noPendaftaran: val, noCm: noCm, _token: '<?php echo csrf_token()?>'},
+                success : function(res){
+                    if(val == ''){
+                        $('#'+tagId).removeClass('isInValid');
+                        $('#'+tagId).removeClass('isValid');
+                        $('.'+tagId+'_duplicated').css('display', 'none');
+                        $('.'+tagId+'_isNull').css('display', 'none');
+                        $('#'+tagId+'_checkValid').val('0');
+                    }else if(isUbah == true && res.ID == $('#ID_ubah_hidden').val()){
+                        $('#'+tagId).removeClass('isInValid');
+                        $('#'+tagId).removeClass('isValid');
+                        $('.'+tagId+'_duplicated').css('display', 'none');
+                        $('.'+tagId+'_isNull').css('display', 'none');
+                        $('#'+tagId+'_checkValid').val('1');
+                    }else if(res.status == true){
+                        $('#'+tagId).removeClass('isValid');
+                        $('#'+tagId).addClass('isInValid');
+                        $('.'+tagId+'_duplicated').css('display', 'block');
+                        $('#'+tagId+'_checkValid').val('0');
+                    }else{
+                        $('#'+tagId).removeClass('isInValid');
+                        $('#'+tagId).addClass('isValid');
+                        $('.'+tagId+'_duplicated').css('display', 'none');
+                        $('.'+tagId+'_isNull').css('display', 'none');
+                        $('#'+tagId+'_checkValid').val('1');
+                    }
+                }
+            })
+
+        }
     </script>
 @endsection
