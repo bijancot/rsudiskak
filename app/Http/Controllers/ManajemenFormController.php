@@ -153,4 +153,18 @@ class ManajemenFormController extends Controller
         
         return redirect('manajemen_form');
     }
+
+    public function checkIdDuplicate(Request $req){
+        //get data user
+        $data = ManajemenForm::where('idForm', $req->get('val'))->whereNotNull('status')->get();
+        if(empty($data[0])){
+            $res['status'] = false;
+            $res['ID'] = null;
+        }else{
+            $res['status'] = true;
+            $res['ID'] = $data[0]['idForm'];
+        }
+
+        return response()->json($res);
+    }
 }

@@ -32,7 +32,7 @@
                                 <td data-label="NamaForm">{{ $item->namaForm }}</td>
                                 <td data-label="NamaFile">{{ $item->namaFile }}</td>
                                 <td data-label="Action" class="p-lg-1">
-                                    <a data-toggle="modal" data-target="#modal_edit-{{ $item->id }}" class="btn btn-secondary">Edit</a>
+                                    <a data-toggle="modal" data-target="#modal_edit-{{ $item->id }}" class="btn btn-primary">Ubah</a>
                                     <a data-toggle="modal" data-target="#modal_hapus-{{ $item->id }}" class="btn batal">Hapus</a>
                                 </td>
                             </tr>
@@ -62,15 +62,19 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="idForm" class="col-form-label">Id Form :</label>
-                        <input type="text" class="form-control frm-input" id="idFormTambah" name="idForm">
-                        <div class="idFormTambah-isInvalid invalid-feedback">
+                        <input type="text" class="form-control inptId" id="idFormTambah" name="idForm">
+                        <input type="hidden" id="idFormTambah_checkValid" value="0">
+                        <div class="idFormTambah_isNull isInvalid-feedback">
                             Id Form Harus Diisi.
+                        </div>
+                        <div class="idFormTambah_duplicated isInvalid-feedback">
+                            Data ID Sudah Terdaftar.
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="namaForm" class="col-form-label">Nama Form :</label>
                         <input type="text" class="form-control frm-input" id="namaFormTambah" name="namaForm">
-                        <div class="namaFormTambah-isInvalid invalid-feedback">
+                        <div class="namaFormTambah_isNull invalid-feedback">
                             Nama Form Harus Diisi.
                         </div>
                     </div>
@@ -81,12 +85,12 @@
                                 <input id="fileTambah" type="file" name="file">
                             </label>
                         </div>
-                        <div class="fileTambah-isInvalid invalid-feedback">
+                        <div class="fileTambah_isNull invalid-feedback">
                             Upload File Harus Diisi.
                         </div>
                     </div>
                     <div class="form-group">
-                        <div id="fileExtension-isInvalid" class="alert alert-danger mt-4" role="alert" style="display: none;">
+                        <div id="fileExtension_isNull" class="alert alert-danger mt-4" role="alert" style="display: none;">
                             Format file upload tidak sesuai
                         </div>
                     </div>
@@ -119,17 +123,21 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="idForm" class="col-form-label">Id Form :</label>
-                            <input type="text" class="form-control frm-input_edit" id="idForm-{{$item->idForm}}_edit" name="idForm" value="{{ $item->idForm }}">
+                            <input type="text" class="form-control inptIdEdit" id="idForm-{{$item->idForm}}_edit" name="idForm" value="{{ $item->idForm }}">
+                            <input type="hidden" class="form-control" id="idForm-{{$item->idForm}}_checkValid" value="{{ $item->idForm }}" value="1">
                             <input type="hidden" class="form-control" name="idFormOld" value="{{ $item->idForm }}">
-                            <div class="idForm-{{$item->idForm}}_edit-isInvalid invalid-feedback">
+                            <div class="idForm-{{$item->idForm}}_edit_isNull invalid-feedback">
                                 Id Form Harus Diisi.
+                            </div>
+                            <div class="idForm-{{$item->idForm}}_edit_duplicated invalid-feedback">
+                                Data ID Sudah Terdaftar.
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label for="namaForm" class="col-form-label">Nama Form :</label>
                             <input type="text" class="form-control frm-input_edit" id="namaForm-{{$item->idForm}}_edit" name="namaForm" value="{{ $item->namaForm }}">
-                            <div class="namaForm-{{$item->idForm}}_edit-isInvalid invalid-feedback">
+                            <div class="namaForm-{{$item->idForm}}_edit_isNull invalid-feedback">
                                 Nama Form Harus Diisi.
                             </div>
                         </div>
@@ -140,18 +148,19 @@
                                     <input id="file-{{$item->idForm}}_edit"  type="file" name="file">
                                 </label>
                             </div>
-                            <div class="fileEdit-isInvalid invalid-feedback">
+                            <div class="fileEdit_isNull invalid-feedback">
                                 Upload File Harus Diisi.
                             </div>
                         </div>
                         <div class="form-group">
-                            <div id="fileExtension-{{$item->idForm}}_edit-isInvalid" class="alert alert-danger mt-4" role="alert" style="display: none;">
+                            <div id="fileExtension-{{$item->idForm}}_edit_isNull" class="alert alert-danger mt-4" role="alert" style="display: none;">
                                 Format file upload tidak sesuai
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <input  type="hidden" name="namaFileOld" value="{{$item->namaFile}}">
+                        <input  type="hidden" id="idForm-{{$item->idForm}}_hidden" value="{{$item->idForm}}">
                         <div data-idform="{{$item->idForm}}" class="btn btn-dark diagnosa btn_edit_submit">Ubah</div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     </div>
@@ -199,6 +208,12 @@
                 table.search( this.value ).draw();
             });
             $('#tbl_filter').show();
+            
+            if($('#idFormTambah').val() != ''){
+                $('#idFormTambah_checkValid').val('1');
+            }else{
+                $('#idFormTambah_checkValid').val('0');
+            }
         });
         $('#btn_tambah_submit').click(function(){
             let idFormTambah = $('#idFormTambah').val();
@@ -206,21 +221,24 @@
             let fileVal = $('#fileTambah').val();
             let file = $('#fileTambah');
             
-            
-            
+        
             if(idFormTambah == ""){
                 $('#idFormTambah').addClass('isInValid')
-                $('.idFormTambah-isInvalid').css('display', 'block');
+                $('.idFormTambah_isNull').css('display', 'block');
+            }else{
+                CheckIdDuplicate('idFormTambah', idFormTambah, 'tambah')
             }
             
             if(namaFormTambah == ""){
                 $('#namaFormTambah').addClass('isInValid')
-                $('.namaFormTambah-isInvalid').css('display', 'block');
+                $('.namaFormTambah_isNull').css('display', 'block');
             }
 
             if(fileVal == ""){
-                $('.fileTambah-isInvalid').css('display', 'block');
+                $('.fileTambah_isNull').css('display', 'block');
             }
+
+            let idFormCheckValid = $('#idFormTambah_checkValid').val();
             
             // set var file fileExtension
             if(fileVal != ""){
@@ -229,10 +247,10 @@
                 
                 // check extension
                 if(fileArray[fileArray.length - 1] != "php" || fileArray[fileArray.length - 2] != "blade"){
-                    $('#fileExtension-isInvalid').css('display', 'block');
+                    $('#fileExtension_isNull').css('display', 'block');
                 }else{
-                    $('#fileExtension-isInvalid').css('display', 'none');
-                    if(idFormTambah != "" && namaFormTambah != "" && fileVal != ""){
+                    $('#fileExtension_isNull').css('display', 'none');
+                    if(idFormTambah != "" && namaFormTambah != "" && fileVal != "" && idFormCheckValid == '1'){
                         $('#form-tambah').submit();
                     }
                 }
@@ -250,12 +268,12 @@
             
             if(idFormEdit == ""){
                 $('#idForm-'+id+'_edit').addClass('isInValid')
-                $('.idForm-'+id+'_edit-isInvalid').css('display', 'block');
+                $('.idForm-'+id+'_edit_isNull').css('display', 'block');
             }
             
             if(namaFormEdit == ""){
                 $('#namaForm-'+id+'_edit').addClass('isInValid')
-                $('.namaForm-'+id+'_edit-isInvalid').css('display', 'block');
+                $('.namaForm-'+id+'_edit_isNull').css('display', 'block');
             }
             
             // set var file fileExtension
@@ -266,10 +284,10 @@
                 
                 // check extension
                 if(fileArray[fileArray.length - 1] != "php" || fileArray[fileArray.length - 2] != "blade"){
-                    $('#fileExtension-'+id+'_edit-isInvalid').css('display', 'block');
+                    $('#fileExtension-'+id+'_edit_isNull').css('display', 'block');
                     statusExtension = '0'
                 }else{
-                    $('#fileExtension-'+id+'_edit-isInvalid').css('display', 'none');
+                    $('#fileExtension-'+id+'_edit_isNull').css('display', 'none');
                     statusExtension = '1'
                 }
             }
@@ -285,11 +303,11 @@
             if($(this).val() == ""){
                 $(this).removeClass('isInValid')
                 $(this).removeClass('isValid')
-                $('.'+id+'-isInvalid').css('display', 'none')
+                $('.'+id+'_isNull').css('display', 'none')
             }else{
                 $(this).removeClass('isInValid')
                 $(this).addClass('isValid')
-                $('.'+id+'-isInvalid').css('display', 'none')
+                $('.'+id+'_isNull').css('display', 'none')
             }
         })
 
@@ -298,18 +316,72 @@
             if($(this).val() == ""){
                 $(this).removeClass('isInValid')
                 $(this).removeClass('isValid')
-                $('.'+id+'-isInvalid').css('display', 'none')
+                $('.'+id+'_isNull').css('display', 'none')
             }else{
                 $(this).removeClass('isInValid')
                 $(this).addClass('isValid')
-                $('.'+id+'-isInvalid').css('display', 'none')
+                $('.'+id+'_isNull').css('display', 'none')
             }
         })
         
         $('#fileTambah').change(function(){
             if($(this).val() != ""){
-                $('.fileTambah-isInvalid').css('display', 'none')
+                $('.fileTambah_isNull').css('display', 'none')
             }
         })
+
+        $('.inptId').keyup(function(){
+            let tagId = $(this).prop('id');
+            let val = $(this).val();
+            CheckIdDuplicate(tagId, val, 'tambah');
+        })
+
+        $('.inptIdEdit').keyup(function(){
+            let tagId = $(this).prop('id');
+            let val = $(this).val();
+            CheckIdDuplicate(tagId, val, 'ubah');
+        })
+        
+        const CheckIdDuplicate = (tagId, val, method) => {
+            let isUbah
+            if(method == 'ubah'){
+                isUbah = true;
+                console.log(tagId);
+            }else{
+                isUbah = false;
+            }
+
+            $.ajax({
+                url: "{{url('manajemen_form/checkIdDuplicate')}}",
+                method: 'post',
+                data: {val: val, _token: '<?php echo csrf_token()?>'},
+                success : function(res){
+                    if(val == ''){
+                        $('#'+tagId).removeClass('isInValid');
+                        $('#'+tagId).removeClass('isValid');
+                        $('.'+tagId+'_duplicated').css('display', 'none');
+                        $('.'+tagId+'_isNull').css('display', 'none');
+                        $('#'+tagId+'_checkValid').val('0');
+                    }else if(isUbah == true && res.ID == $('#'+tagId+'hidden').val()){
+                        $('#'+tagId).removeClass('isInValid');
+                        $('#'+tagId).removeClass('isValid');
+                        $('.'+tagId+'_duplicated').css('display', 'none');
+                        $('.'+tagId+'_isNull').css('display', 'none');
+                        $('#'+tagId+'_checkValid').val('1');
+                    }else if(res.status == true){
+                        $('#'+tagId).removeClass('isValid');
+                        $('#'+tagId).addClass('isInValid');
+                        $('.'+tagId+'_duplicated').css('display', 'block');
+                        $('#'+tagId+'_checkValid').val('0');
+                    }else{
+                        $('#'+tagId).removeClass('isInValid');
+                        $('#'+tagId).addClass('isValid');
+                        $('.'+tagId+'_duplicated').css('display', 'none');
+                        $('.'+tagId+'_isNull').css('display', 'none');
+                        $('#'+tagId+'_checkValid').val('1');
+                    }
+                }
+            })
+        }
     </script>
 @endsection

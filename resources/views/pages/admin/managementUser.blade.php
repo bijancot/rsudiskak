@@ -83,20 +83,24 @@
                 </button>
             </div>
             {{-- <form action="{{ route('register') }}" method="POST" class="needs-validation" novalidate> --}}
-            <form action="{{ action('ManajemenUserController@store') }}" method="POST" class="needs-validation" novalidate>
+            <form id="form-tambah" action="{{ action('ManajemenUserController@store') }}" method="POST" class="needs-validation" novalidate>
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="ID" class="col-form-label">ID :</label>
-                        <input type="text" class="form-control" name="ID" required>
-                        <div class="invalid-feedback">
+                        <input type="text" class="form-control inptId" id="ID_tambah" name="ID" required>
+                        <input type="hidden" class="form-control" id="ID_tambah_checkValid" value="0">
+                        <div class="ID_tambah_isNull isInvalid-feedback">
                             Data ID Harus Diisi.
+                        </div>
+                        <div class="ID_tambah_duplicated isInvalid-feedback">
+                            Data ID Sudah Terdaftar.
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Nama" class="col-form-label">Nama :</label>
-                        <input type="text" class="form-control" name="Nama" required>
-                        <div class="invalid-feedback">
+                        <input type="text" id="nama_tambah" class="form-control inpt" name="Nama" required>
+                        <div class="nama_tambah_isNull isInvalid-feedback">
                             Data Nama Harus Diisi.
                         </div>
                     </div>
@@ -126,7 +130,7 @@
                 <div class="modal-footer">
                     <input type="hidden" name="StatusLogin" value="0">
                     <input type="hidden" name="Status" value="1">
-                    <button type="submit" class="btn btn-dark diagnosa">Simpan</button>
+                    <div id="btn-tambah" class="btn btn-dark diagnosa">Simpan</div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 </div>
             </form>
@@ -148,15 +152,19 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="ID" class="col-form-label">ID :</label>
-                        <input type="text" class="form-control" id="ID" name="ID" required>
-                        <div class="invalid-feedback">
+                        <input type="text" class="form-control inptId" id="ID_ubah" name="ID" required>
+                        <input type="hidden" class="form-control" id="ID_ubah_checkValid" value="1">
+                        <div class="ID_ubah_isNull isInvalid-feedback">
                             Data ID Harus Diisi.
+                        </div>
+                        <div class="ID_ubah_duplicated isInvalid-feedback">
+                            Data ID Sudah Terdaftar.
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Nama" class="col-form-label">Nama :</label>
-                        <input type="text" class="form-control" id="Nama" name="Nama" required>
-                        <div class="invalid-feedback">
+                        <input type="text" class="form-control inpt" id="nama_ubah" name="Nama" required>
+                        <div class="nama_ubah_isNull isInvalid-feedback">
                             Data Nama Harus Diisi.
                         </div>
                     </div>
@@ -181,7 +189,8 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="IDOld" id="IDOld">
-                    <button type="submit" class="btn btn-dark diagnosa">Simpan</button>
+                    <input type="hidden" class="form-control" id="ID_ubah_hidden">
+                    <div id="btn-ubah" class="btn btn-dark diagnosa">Simpan</div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 </div>
             </form>
@@ -240,25 +249,32 @@
                 table.search( this.value ).draw();
             });
             $('#tbl_user_filter').hide();
+
+            if($('#ID_tambah').val() != ''){
+                $('#ID_tambah_checkValid').val('1');
+            }else{
+                $('#ID_tambah_checkValid').val('0');
+            }
+            
         });
         
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-                }, false);
-            });
-            }, false);
-        })();
+        // (function() {
+        //     'use strict';
+        //     window.addEventListener('load', function() {
+        //     // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        //     var forms = document.getElementsByClassName('needs-validation');
+        //     // Loop over them and prevent submission
+        //     var validation = Array.prototype.filter.call(forms, function(form) {
+        //         form.addEventListener('submit', function(event) {
+        //         if (form.checkValidity() === false) {
+        //             event.preventDefault();
+        //             event.stopPropagation();
+        //         }
+        //         form.classList.add('was-validated');
+        //         }, false);
+        //     });
+        //     }, false);
+        // })();
         $('#tbl_user tbody').on('click', '.ubah-data', function(){
             let ID = $(this).data('id');
             $('.title-id').html(ID);
@@ -268,16 +284,26 @@
                 method: 'post',
                 data: {ID: ID, _token: '<?php echo csrf_token()?>'},
                 success : function(res){
-                    $('#ID').val(res.ID);
-                    $('#Nama').val(res.Nama);
+                    $('#ID_ubah').val(res.ID);
+                    $('#ID_ubah_hidden').val(res.ID);
+                    $('#nama_ubah').val(res.Nama);
                     $('#Role').val(res.Role);
                     $('#KodeRuangan').val(res.KodeRuangan);
                 }
             })
         })
         $(document).on('hidden.bs.modal','#modal_ubah', function () {
-            $('#form-ubah').reset()
+            // $('#form-ubah').reset()
+            $('#ID_ubah').removeClass('isInValid');
+            $('#ID_ubah').removeClass('isValid');
+            $('#nama_ubah').removeClass('isInValid');
+            $('#nama_ubah').removeClass('isValid');
+            $('.ID_ubah_duplicated').css('display', 'none');
+            $('.ID_ubah_isNull').css('display', 'none');
+            $('.nama_ubah_isNull').css('display', 'none');
+            $('#ID_ubah_checkValid').val('1');
         })
+
         $('#tbl_user tbody').on('click', '.reset-password', function(){
             let ID = $(this).data('id');
             $('.title-id').html(ID);
@@ -288,5 +314,120 @@
             $('.title-id').html(ID);
             $('#ID_hapus').val(ID);
         })
+
+        $('#btn-tambah').click(function(){
+            let ID = $('#ID_tambah').val();
+            let nama = $('#nama_tambah').val();
+
+
+            
+            if(ID == ''){
+                $('#ID_tambah').removeClass('isValid')
+                $('#ID_tambah').addClass('isInValid')
+                $('.ID_tambah_isNull').css('display', 'block')
+            }else{
+                CheckIdDuplicate('ID_tambah', ID);
+            }
+
+            if(nama == ''){
+                $('nama_tambah').removeClass('isValid')
+                $('#nama_tambah').addClass('isInValid')
+                $('.nama_tambah_isNull').css('display', 'block')
+            }
+            
+            let IDCheckValid = $('#ID_tambah_checkValid').val();
+            if(ID != '' && nama != '' && IDCheckValid == '1'){
+                $('#form-tambah').submit();
+            }
+
+        })
+
+        $('#btn-ubah').click(function(){
+            let ID = $('#ID_ubah').val();
+            let nama = $('#nama_ubah').val();
+            
+            if(ID == ''){
+                $('#ID_ubah').removeClass('isValid')
+                $('#ID_ubah').addClass('isInValid')
+                $('.ID_ubah_isNull').css('display', 'block')
+            }else{
+                CheckIdDuplicate('ID_ubah', ID);
+            }
+
+            if(nama == ''){
+                $('nama_ubah').removeClass('isValid')
+                $('#nama_ubah').addClass('isInValid')
+                $('.nama_ubah_isNull').css('display', 'block')
+            }
+            
+            let IDCheckValid = $('#ID_ubah_checkValid').val();
+            if(ID != '' && nama != '' && IDCheckValid == '1'){
+                $('#form-ubah').submit();
+            }
+
+        })
+
+        $('.inptId').keyup(function(){
+            let tagId = $(this).prop('id');
+            let val = $(this).val();
+            CheckIdDuplicate(tagId, val);
+        })
+        
+        $('.inpt').keyup(function(){
+            let tagId = $(this).prop('id');
+            let val = $(this).val();
+
+            if(val == ''){
+                $(this).removeClass('isInValid')
+                $(this).removeClass('isValid')
+            }else{
+                $(this).removeClass('isInValid')
+                $(this).addClass('isValid')
+                $('.'+tagId+'_isNull').css('display', 'none')
+            }
+        })
+
+
+        const CheckIdDuplicate = (tagId, val) => {
+            let isUbah
+            if(tagId == 'ID_ubah'){
+                isUbah = true;
+            }else{
+                isUbah = false;
+            }
+
+            $.ajax({
+                url: "{{url('m_user/checkIdDuplicate')}}",
+                method: 'post',
+                data: {val: val, _token: '<?php echo csrf_token()?>'},
+                success : function(res){
+                    if(val == ''){
+                        $('#'+tagId).removeClass('isInValid');
+                        $('#'+tagId).removeClass('isValid');
+                        $('.'+tagId+'_duplicated').css('display', 'none');
+                        $('.'+tagId+'_isNull').css('display', 'none');
+                        $('#'+tagId+'_checkValid').val('0');
+                    }else if(isUbah == true && res.ID == $('#ID_ubah_hidden').val()){
+                        $('#'+tagId).removeClass('isInValid');
+                        $('#'+tagId).removeClass('isValid');
+                        $('.'+tagId+'_duplicated').css('display', 'none');
+                        $('.'+tagId+'_isNull').css('display', 'none');
+                        $('#'+tagId+'_checkValid').val('1');
+                    }else if(res.status == true){
+                        $('#'+tagId).removeClass('isValid');
+                        $('#'+tagId).addClass('isInValid');
+                        $('.'+tagId+'_duplicated').css('display', 'block');
+                        $('#'+tagId+'_checkValid').val('0');
+                    }else{
+                        $('#'+tagId).removeClass('isInValid');
+                        $('#'+tagId).addClass('isValid');
+                        $('.'+tagId+'_duplicated').css('display', 'none');
+                        $('.'+tagId+'_isNull').css('display', 'none');
+                        $('#'+tagId+'_checkValid').val('1');
+                    }
+                }
+            })
+
+        }
     </script>
 @endsection
