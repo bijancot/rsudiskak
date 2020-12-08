@@ -76,6 +76,108 @@ class PasienController extends Controller
         return view('pages.listPasien', $datax);
     }
 
+    public function getDataByDate(Request $request)
+    {
+        $getKdRuangan   = Auth::user()->KodeRuangan;
+        date_default_timezone_set('Asia/Jakarta');
+
+        $date = date("Y-m-d", strtotime($request->get('date')));
+
+        $masukPoli = new AntrianPasien();
+        $masukPoli->collection  = "transaksi_" . $date;
+        $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->where('KdRuangan', $getKdRuangan)->orderBy('WaktuMasukPoli', 'ASC')->get();
+
+        if (Auth::user()->Role == "1") {
+
+            $role             = "1";
+            $ID               = Auth::user()->ID;
+            $getKdRuangan     = Auth::user()->KodeRuangan;
+            $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->where('IdDokter', $ID)->where('KdRuangan', $getKdRuangan)->orderBy('WaktuMasukPoli', 'ASC')->get();
+            // endIf
+
+        } else if (Auth::user()->Role == "2") {
+
+            $ID = Auth::user()->ID;
+            $role = "2";
+            // endElseIf
+        }
+
+        $html       = "";
+        $pilihForm  = "";
+        $isiForm    = "";
+        $batalForm  = "";
+
+        foreach ($getPasienMasukPoli as $poli) {
+            $StatusPengkajian = "";
+            // set style status periksa
+            if ($poli['StatusPengkajian'] == "0") {
+                $StatusPengkajian = "Belum";
+                $status = "orange";
+            } else if ($poli['StatusPengkajian'] == "1") {
+                $StatusPengkajian = "Periksa";
+                $status = "yellow";
+            } else if ($poli['StatusPengkajian'] == "2") {
+                $StatusPengkajian = "Selesai";
+                $status = "blue";
+            }
+            // set detail JK
+            $jenkel = ($poli['JenisKelamin'] == "L" ? "Laki - Laki" : "Perempuan");
+            // check if disabled button
+            $isDisabled = ($poli['StatusPengkajian'] == '2' ? 'disabled' : '');
+
+            if ($poli['StatusPengkajian'] == 0) {
+                $pilihForm   = "<a data-toggle='modal' data-target='#modal_pilih_form-" . $poli['NoCM'] . "-" . $poli['NoPendaftaran'] . "' class='btn diagnosa " . $isDisabled . "'>Pilih Form Pengkajian</a>";
+            } else {
+                $isiForm     = "<a href='" . url('formPengkajian/' . $poli['IdFormPengkajian'] . '/' . $poli['NoCM'] . '/' . $poli['NoPendaftaran'] . '/' . $poli['TglMasukPoli']) . "' class='btn diagnosa " . $isDisabled . "'>Isi Form</a>";
+                $batalForm   = "<a href='" . url('pilihForm/' . $poli['NoCM']) . "' data-toggle='modal' data-pendaftaran='" . $poli['NoPendaftaran'] . "' data-nocm='" . $poli['NoCM'] . "' data-target='#modal_batal_form' class='btn batal batalForm " . $isDisabled . "'>Batal Form</a>";
+            }
+
+            if ($role == "1" && $poli['StatusPengkajian'] != "") {
+                $html .= " 
+                    <tr>
+                        <td data-label='No Pendaftaran'>" . $poli['NoPendaftaran'] . "</td>
+                        <td data-label='No Rekam Medis'>" . $poli['NoCM'] . "</td>
+                        <td data-label='Dok. Pemeriksa'>" . $poli['NamaDokter'] . "</td>
+                        <td data-label='Nama Pasien'>" . $poli['NamaLengkap'] . "</td>
+                        <td data-label='Umur'>" . $poli['UmurTahun'] . " Th</td>
+                        <td data-label='Jenis Kelamin'>" . $jenkel . "</td>
+                        <td data-label='Tanggal Masuk'>" . date("d/m/Y", strtotime($poli['TglMasuk'])) . "</td>
+                        <td data-label='Keterangan'>
+                            <span class='ml-auto label-keterangan " . $status . "'>" . $StatusPengkajian . "</span>
+                        </td>
+                        <td data-label='Action' class='d-flex flex-row p-lg-1'> 
+                            " . $pilihForm . "" . $isiForm . "" . $batalForm . " 
+                            <a data-toggle='modal' data-target='#modal_batal_masukPoli-" . $poli['NoCM'] . "-" . $poli['NoPendaftaran'] . "' class='btn btn-secondary " . $isDisabled . "'>Batal Masuk Poli</a>
+                        </td>
+                    </tr> ";
+            } elseif ($role == "2" && $poli['StatusPengkajian'] != "") {
+                $html .= " 
+                    <tr>
+                        <td data-label='No Pendaftaran'>" . $poli['NoPendaftaran'] . "</td>
+                        <td data-label='No Rekam Medis'>" . $poli['NoCM'] . "</td>
+                        <td data-label='Dok. Pemeriksa'>" . $poli['NamaDokter'] . "</td>
+                        <td data-label='Nama Pasien'>" . $poli['NamaLengkap'] . "</td>
+                        <td data-label='Umur'>" . $poli['UmurTahun'] . " Th</td>
+                        <td data-label='Jenis Kelamin'>" . $jenkel . "</td>
+                        <td data-label='Tanggal Masuk'>" . date("d/m/Y", strtotime($poli['TglMasuk'])) . "</td>
+                        <td data-label='Keterangan'>
+                            <span class='ml-auto label-keterangan " . $status . "'>" . $StatusPengkajian . "</span>
+                        </td>
+                        <td data-label='Action' class='d-flex flex-row p-lg-1'> 
+                            " . $pilihForm . "" . $isiForm . "" . $batalForm . " 
+                            <a data-toggle='modal' data-target='#modal_batal_masukPoli-" . $poli['NoCM'] . "-" . $poli['NoPendaftaran'] . "' class='btn btn-secondary " . $isDisabled . "'>Batal Masuk Poli</a>
+                        </td>
+                    </tr>";
+            }
+        }
+
+        $data = [
+            'html' => $html
+        ];
+
+        return response()->json($data);
+    }
+
     public function dataPasien($no_cm)
     {
         //get data

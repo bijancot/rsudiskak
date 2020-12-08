@@ -81,6 +81,9 @@ Route::group(['middleware' => ['auth', 'cekRole:3']], function () {
     // Route::post('m_user/getData', 'ManajemenUserController@getData');
     // Route::post('m_user/ubahPassword', 'ManajemenUserController@updatePassword');
 
+    // Route::post('logActivities/getDataByDate', 'LoggingController@getDataByDate');
+    Route::post('logActivities/cari', 'LoggingController@getDataByDate');
+
     Route::post('manajemen_form', 'ManajemenFormController@store');
     Route::patch('manajemen_form/{manajemenForm}/update', 'ManajemenFormController@update');
     Route::post('manajemen_form/{manajemenForm}/delete', 'ManajemenFormController@delete');
@@ -118,6 +121,8 @@ Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
     Route::get('formPengkajianAwal/{no_cm}', 'FPengkajianAwalController@showRajal');
     Route::get('formPengkajianUlang/{no_cm}', 'FPengkajianUlangController@showRajal');
     Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@formPengkajian');
+
+    Route::post('listPasien/getDataByDate', 'PasienController@getDataByDate');
 
     Route::post('diagnosa/{no_cm}', 'DiagnosaController@storeDiagnosaAwal');
     Route::post('diagnosaAkhir', 'DiagnosaController@storeDiagnosaAkhir');

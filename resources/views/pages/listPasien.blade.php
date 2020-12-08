@@ -38,10 +38,23 @@
     <div class="bg-greenishwhite">
         <div class="wrapper">
             <div class="row">
-                <div class="col-lg-8 col-12">
+                <div class="col-lg-6 col-12">
                     <div class="search-box-box">
                         <input id="cstm_search" style="width: 100%;" type="text" placeholder="Cari Nama Pasien" class="soft-shadow">
                         <span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.9167 11.6667H12.2583L12.025 11.4417C12.8417 10.4917 13.3333 9.25833 13.3333 7.91667C13.3333 4.925 10.9083 2.5 7.91667 2.5C4.925 2.5 2.5 4.925 2.5 7.91667C2.5 10.9083 4.925 13.3333 7.91667 13.3333C9.25833 13.3333 10.4917 12.8417 11.4417 12.025L11.6667 12.2583V12.9167L15.8333 17.075L17.075 15.8333L12.9167 11.6667ZM7.91667 11.6667C5.84167 11.6667 4.16667 9.99167 4.16667 7.91667C4.16667 5.84167 5.84167 4.16667 7.91667 4.16667C9.99167 4.16667 11.6667 5.84167 11.6667 7.91667C11.6667 9.99167 9.99167 11.6667 7.91667 11.6667Z" fill="#C7D3CC"/></svg></span>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="search-box-box">
+                        <form class="form form-inline" >
+                            @csrf
+                            <div class="input-group date">
+                                <input type="date" id="date" class="form-control" data-date-end-date="0d" value="{{ date('Y-m-d') }}" >
+                                <div class="input-group-append">
+                                    {{-- <span class="fa fa-calendar"></span> --}}
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-lg-4 col-12 mt-4 mt-lg-0">
@@ -118,7 +131,7 @@
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody_masukPoli">
                             @foreach ($masukPoli as $poli)
                             @php
                                 $StatusPengkajian = "";
@@ -379,6 +392,7 @@
             $('#loading').detach();
             $('#tbl_antrianPoli').DataTable();
             $('#tbl_masukPoli').DataTable();
+            $('#date').hide();
             $('#tbl_antrianPoli_filter').hide();
             $('#tbl_masukPoli_filter').hide();
             //Js Check isDokter / isPerawat
@@ -390,6 +404,7 @@
                 var table = $('#tbl_antrianPoli').DataTable();
             @endif
             FilterSearch(table);
+            filterByDate(table);
 
             $('.pilihDokter').selectpicker();
             $('.pilihForm').selectpicker();
@@ -436,10 +451,20 @@
                 @endif
             @endif
         });
+
+        $('.datepicker').datepicker({
+            today: "Today",
+            format: "yyyy-m-d",
+            todayHighlight: true,
+            clearBtn: true,
+            language: 'id'
+        });
+
             $("#nav_antrianPoli").click(function(){
                 $(this).addClass('active');
                 $('#nav_masukPoli').removeClass('active');
                 $('#antrianPoli').show();
+                $('#date').hide();
                 $('#masukPoli').hide();
                 var table = $('#tbl_antrianPoli').DataTable();
                 FilterSearch(table);
@@ -448,9 +473,12 @@
                 $(this).addClass('active');
                 $('#nav_antrianPoli').removeClass('active');
                 $('#antrianPoli').hide();
+                $('#date').show();
                 $('#masukPoli').show();
                 var table = $('#tbl_masukPoli').DataTable();
                 FilterSearch(table);
+                filterByDate(table);
+
             })
             function FilterSearch(table){
                 $('#cstm_search').on( 'keyup', function () {
@@ -466,6 +494,38 @@
                 $('#mdl_title_pendaftaran').html(noCm);
 
             })
+
+        function filterByDate(table){
+            $('#date').on('change', function () {
+                var date = this.value;
+                var table = table;
+                
+                $("tbody").empty();
+
+                $.ajax({
+                    url: "{{ url('/listPasien/getDataByDate') }}",
+                    method: 'post',
+                    data: {date: date, _token: '<?php echo csrf_token()?>'},
+                    success : function(data){
+                        // console.log("success");
+                        // console.log(data);
+                        $('#tbody_masukPoli').html(data.html);
+                        $('#cstm_search').on("keyup search input paste cut", function () {
+                            $('#tbl_masukPoli').DataTable().rows('.odd').search(table).draw();
+                            //$('#tbl_masukPoli').hasClass('odd').draw();
+                        });
+                        $("#tbl_masukPoli").dataTable();
+                        $('#tbl_masukPoli_filter').hide();
+                    },
+                    error: function (request, status, error) {
+                        // console.log("error");
+                        // console.log(request.responseText);
+                        //alert("error");
+                        //alert(request.responseText);
+                    }
+                })
+            });
+        }
 
             
             
