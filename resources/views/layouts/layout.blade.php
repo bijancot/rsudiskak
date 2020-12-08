@@ -32,6 +32,10 @@
         <script type="text/javascript" src="{{ URL::asset('js/bootstrap-multiselect.js') }}"></script>
         <link rel="stylesheet" href="{{ URL::asset('css/bootstrap-multiselect.css') }}" />
         
+        <!-- bootstrap slider  -->
+        <script type="text/javascript" src="{{ URL::asset('js/BootSideMenu.js') }}"></script>
+        <link rel="stylesheet" href="{{ URL::asset('css/BootSideMenu.css') }}" />
+
         {{-- toast --}}
         <link rel="stylesheet" href="{{ URL::asset('css/toast.min.css') }}" />
         <script type="text/javascript" src="{{ URL::asset('js/toast.min.js') }}"></script>
@@ -145,7 +149,6 @@
 
     </head>
     <body>
-        
         <div class="bg-white">
             @yield ('content')
         </div>
