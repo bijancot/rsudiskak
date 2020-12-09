@@ -55,7 +55,7 @@ class DokumenController extends Controller
         $destination = 'dokumenRM/'.$req->get('NoCM');
 
         // upload data
-        $file->move($destination, $req->get('NoPendaftaran').'_'.$req->get('TanggalMasuk').'_'.$file->getClientOriginalName());
+        $file->move($destination, $req->get('NoPendaftaran').'_'.$req->get('TanggalMasuk').'.pdf');
         
         //get data kdruangan from api
         $client = new Client();
@@ -89,7 +89,7 @@ class DokumenController extends Controller
 
         // insert data into db dokumen_
         unset($data['file']);
-        $data['NamaFile'] = $destination."/".$data['NoPendaftaran'].'_'.$req->get('TanggalMasuk').'_'.$file->getClientOriginalName();
+        $data['NamaFile'] = $destination."/".$data['NoPendaftaran'].'_'.$req->get('TanggalMasuk').'.pdf';
         
         //insert nama ruangan
         $data['NamaRuangan'] = "";
@@ -144,8 +144,8 @@ class DokumenController extends Controller
         // declare filepath
         $destination = 'dokumenRM/'.$req->get('NoCM');
         $deleteDate = date('Ymdhis');
-        $namaFileOld = $destination.'/'.$req->get('NoPendaftaran').'_'.$req->get('TanggalMasuk').'_'.$req->get('NamaFile').'.pdf';
-        $namaFileNew = $destination.'/(deleted)_'.$req->get('NoPendaftaran').'_'.$req->get('TanggalMasuk').'_'.$req->get('NamaFile').'pdf';
+        $namaFileOld = $destination.'/'.$req->get('NoPendaftaran').'_'.$req->get('TanggalMasuk').'.pdf';
+        $namaFileNew = $destination.'/(deleted)_'.$req->get('NoPendaftaran').'_'.$req->get('TanggalMasuk').'pdf';
 
         //move to deleted directory
         File::move($namaFileOld, $namaFileNew);
@@ -204,10 +204,6 @@ class DokumenController extends Controller
         return view('pages.berkas', $data);
     }
 
-    public function ajaxStore(Request $req){
-        return response()->json($req);
-    }
-
     public function checkIdDuplicate(Request $req){
         //get data no pendaftaran
         $data = DB::collection('dokumen_'.$req->get('noCm'))->get();
@@ -230,9 +226,11 @@ class DokumenController extends Controller
         if(empty($data[0])){
             $res['status'] = true;
             $res['ID'] = null;
+            $res['NamaLengkap'] = null;
         }else{
             $res['status'] = false;
             $res['ID'] = $data[0]['NoCM'];
+            $res['NamaLengkap'] = $data[0]['NamaLengkap'];
          }
 
         return response()->json($res);

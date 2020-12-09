@@ -90,10 +90,11 @@
                     </div>
                     <div class="form-group">
                         <label for="namaForm" class="col-form-label">Nama Lengkap :</label>
-                        <input type="text" class="form-control frm-input" id="namaLengkap" name="NamaLengkap">
+                        <input type="text" class="form-control frm-input" id="namaLengkap" disabled>
                         <div class="namaLengkap_isNull invalid-feedback">
                             Nama Lengkap Harus Diisi.
                         </div>
+                        <input type="hidden" id="namaLengkap_hidden" name="NamaLengkap">
                     </div>
                     <div class="form-group">
                         <label for="KodeRuangan" class="col-form-label">Kode Ruangan :</label>
@@ -568,24 +569,32 @@
                         $('.'+tagId+'_duplicated').css('display', 'none');
                         $('.'+tagId+'_isNull').css('display', 'none');
                         $('#'+tagId+'_checkValid').val('0');
+                        $('#namaLengkap').val(res.NamaLengkap)
+                        $('#namaLengkap_hidden').val(res.NamaLengkap)
                     }else if(isUbah == true && res.ID == $('#ID_ubah_hidden').val()){
                         $('#'+tagId).removeClass('isInValid');
                         $('#'+tagId).removeClass('isValid');
                         $('.'+tagId+'_duplicated').css('display', 'none');
                         $('.'+tagId+'_isNull').css('display', 'none');
                         $('#'+tagId+'_checkValid').val('1');
+                        $('#namaLengkap').val(res.NamaLengkap)
+                        $('#namaLengkap_hidden').val(res.NamaLengkap)
                     }else if(res.status == true){
                         $('#'+tagId).removeClass('isValid');
                         $('#'+tagId).addClass('isInValid');
                         $('.'+tagId+'_duplicated').css('display', 'block');
                         $('.'+tagId+'_isNull').css('display', 'none');
                         $('#'+tagId+'_checkValid').val('0');
+                        $('#namaLengkap').val(res.NamaLengkap)
+                        $('#namaLengkap_hidden').val(res.NamaLengkap)
                     }else{
                         $('#'+tagId).removeClass('isInValid');
                         $('#'+tagId).addClass('isValid');
                         $('.'+tagId+'_duplicated').css('display', 'none');
                         $('.'+tagId+'_isNull').css('display', 'none');
                         $('#'+tagId+'_checkValid').val('1');
+                        $('#namaLengkap').val(res.NamaLengkap)
+                        $('#namaLengkap_hidden').val(res.NamaLengkap)
                     }
                 }
             })
