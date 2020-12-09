@@ -12,7 +12,7 @@
             </div>
             <hr>
             <div class="content mt-3 soft-shadow collapsible">
-                <div class="p-3 collapsible-head inactive">
+                <div class="p-3 collapsible-head inactive" id="upload_section">
                     <p class="h6">
                         <i class="fa fa-upload" style="color: #0F4F2C;"></i>
                         Upload Dokumen
@@ -64,10 +64,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="namaForm" class="col-form-label">Nama Lengkap :</label>
-                                <input type="text" class="form-control frm-input" id="namaLengkap" name="NamaLengkap">
+                                <input type="text" class="form-control frm-input" id="namaLengkap" value="{{$dataMasukPoli['NamaLengkap']}}" disabled>
                                 <div class="namaLengkap_isNull invalid-feedback">
                                     Nama Lengkap Harus Diisi.
                                 </div>
+                                <input type="hidden" id="namaLengkap_hidden" name="NamaLengkap" value="{{$dataMasukPoli['NamaLengkap']}}" />
                             </div>
                             <div class="form-group">
                                 <label for="namaForm" class="col-form-label">Tanggal Masuk :</label>
@@ -98,7 +99,7 @@
                             <input type="hidden" name="Status" id="" value="1">
                             <input type="hidden" name="urlPengkajian" id="" value="{{$urlPengkajian}}">
                             <div id="btn_tambah_submit" class="btn btn-dark diagnosa">Simpan</div>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-secondary" id="btn_batal_upload" data-dismiss="modal">Batal</button>
                         </div>
                     </form>
                 </div>
@@ -1039,6 +1040,10 @@
                     }
                 }
 
+            })
+            $('#btn_batal_upload').click(function(){
+                $('#upload_section').removeClass('active')
+                $('#upload_section').addClass('inactive')
             })
             $('.frm-input').keyup(function(){
                 let id = $(this).attr('id');
