@@ -97,6 +97,8 @@ Route::group(['middleware' => ['auth', 'cekRole:3']], function () {
 });
 
 
+
+
 Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
 
     Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
@@ -141,9 +143,11 @@ Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
     Route::post('batalForm', 'FormPengkajianController@storeBatalForm');
     Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@storeFormPengkajian');
     // Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
-
 });
 
+Route::post('dokumen', 'DokumenController@store');
+Route::post('dokumen/checkIdDuplicate', 'DokumenController@checkIdDuplicate');
+Route::post('dokumen/checkNoCmIsNull', 'DokumenController@checkNoCmIsNull');
 // Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
 //     Route::get('logActivities', 'LoggingController@index');
 // });

@@ -219,6 +219,16 @@ class FormPengkajianController extends Controller
             //     ->orderBy('created_at', 'desc')
             //     ->first();
 
+            //get data kdruangan from api
+            $client = new Client();
+            for($i = 1; $i <=2; $i++){
+                $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page='.$i);
+                $statCode = $res->getStatusCode();
+                $kdRuangan = $res->getBody()->getContents();
+                $kdRuangan = json_decode($kdRuangan, true);
+
+                $resKdRuangan[$i-1] = $kdRuangan['data'];
+            }
             $data = [
                 'form_id'           => $idForm,
                 'nama_form'         => $dataForm[0]['namaForm'],
@@ -243,7 +253,9 @@ class FormPengkajianController extends Controller
                 'ICD10V'            => $ICD10V,
                 'ICD09T'            => $ICD09T,
                 'ICD09V'            => $ICD09V,
-                'dataMasukPoli'     => $dataMasukPoli
+                'dataMasukPoli'     => $dataMasukPoli,
+                'kdRuangan'         => $resKdRuangan,
+                'urlPengkajian'     => 'formPengkajian/'.$idForm.'/'.$NoCM.'/'.$noPendaftaran.'/'.$tglMasukPoli
             ];
             return view($dataForm[0]['namaFile'], $data);
             //endIF
