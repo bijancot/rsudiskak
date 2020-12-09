@@ -476,7 +476,7 @@
                 $('#date').show();
                 $('#masukPoli').show();
                 var table = $('#tbl_masukPoli').DataTable();
-                FilterSearch(table);
+                FilterSearchCut(table);
                 filterByDate(table);
 
             })
@@ -495,11 +495,45 @@
 
             })
 
+            function FilterSearchCut(table){
+                $('#date').on('change', function () {
+                    var date = this.value;
+                    var table = table;
+                    
+                    $("#tbl_masukPoli").dataTable().fnDestroy()
+                    $("tbody").empty();
+
+                    $.ajax({
+                        url: "{{ url('/listPasien/getDataByDate') }}",
+                        method: 'post',
+                        data: {date: date, _token: '<?php echo csrf_token()?>'},
+                        success : function(data){
+                            // console.log("success");
+                            // console.log(data);
+                            $('#tbody_masukPoli').html(data.html);
+                            $('#cstm_search').on("keyup search input paste cut", function () {
+                                $('#tbl_masukPoli').DataTable().rows('.odd').search(this.value).draw();
+                                //$('#tbl_masukPoli').hasClass('odd').draw();
+                            });
+                            $("#tbl_masukPoli").dataTable();
+                            $('#tbl_masukPoli_filter').hide();
+                        },
+                        error: function (request, status, error) {
+                            // console.log("error");
+                            // console.log(request.responseText);
+                            //alert("error");
+                            //alert(request.responseText);
+                        }
+                    })
+                });
+            }
+
         function filterByDate(table){
             $('#date').on('change', function () {
                 var date = this.value;
                 var table = table;
                 
+                $("#tbl_masukPoli").dataTable().fnDestroy()
                 $("tbody").empty();
 
                 $.ajax({
@@ -511,7 +545,7 @@
                         // console.log(data);
                         $('#tbody_masukPoli').html(data.html);
                         $('#cstm_search').on("keyup search input paste cut", function () {
-                            $('#tbl_masukPoli').DataTable().rows('.odd').search(table).draw();
+                            $('#tbl_masukPoli').DataTable().rows('.odd').search(this.value).draw();
                             //$('#tbl_masukPoli').hasClass('odd').draw();
                         });
                         $("#tbl_masukPoli").dataTable();

@@ -127,7 +127,10 @@ class PasienController extends Controller
 
             if ($poli['StatusPengkajian'] == 0) {
                 $pilihForm   = "<a data-toggle='modal' data-target='#modal_pilih_form-" . $poli['NoCM'] . "-" . $poli['NoPendaftaran'] . "' class='btn diagnosa " . $isDisabled . "'>Pilih Form Pengkajian</a>";
+                $isiForm     = "";
+                $batalForm   = "";
             } else {
+                $pilihForm   = "";
                 $isiForm     = "<a href='" . url('formPengkajian/' . $poli['IdFormPengkajian'] . '/' . $poli['NoCM'] . '/' . $poli['NoPendaftaran'] . '/' . $poli['TglMasukPoli']) . "' class='btn diagnosa " . $isDisabled . "'>Isi Form</a>";
                 $batalForm   = "<a href='" . url('pilihForm/' . $poli['NoCM']) . "' data-toggle='modal' data-pendaftaran='" . $poli['NoPendaftaran'] . "' data-nocm='" . $poli['NoCM'] . "' data-target='#modal_batal_form' class='btn batal batalForm " . $isDisabled . "'>Batal Form</a>";
             }
