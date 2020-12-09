@@ -67,21 +67,25 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
+                        <label for="namaForm" class="col-form-label">No Rekam Medis :</label>
+                        <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control inptNoCm" id="noRekamMedis" name="NoCM">
+                        <input type="hidden" id="noRekamMedis_checkValid" value="0">
+                        <div class="noRekamMedis_isNull invalid-feedback">
+                            No Rekam Medis Harus Diisi.
+                        </div>
+                        <div class="noRekamMedis_duplicated isInvalid-feedback">
+                            Data No Rekam Medis Tidak Ditemukan.
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="idForm" class="col-form-label">No Pendaftaran :</label>
-                        <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control frm-input" id="noPendaftaran" name="NoPendaftaran">
+                        <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control inptId" id="noPendaftaran" name="NoPendaftaran">
                         <input type="hidden" id="noPendaftaran_checkValid" value="0">
                         <div class="noPendaftaran_isNull invalid-feedback">
                             No Pendaftaran Harus Diisi.
                         </div>
                         <div class="noPendaftaran_duplicated isInvalid-feedback">
                             Data No Pendaftaran Sudah Terdaftar.
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="namaForm" class="col-form-label">No Rekam Medis :</label>
-                        <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control frm-input" id="noRekamMedis" name="NoCM">
-                        <div class="noRekamMedis_isNull invalid-feedback">
-                            No Rekam Medis Harus Diisi.
                         </div>
                     </div>
                     <div class="form-group">
@@ -276,6 +280,12 @@
             }else{
                 $('#noPendaftaran_checkValid').val('0')
             }
+            
+            if($('#noRekamMedis').val() != ''){
+                $('#noRekamMedis_checkValid').val('1')
+            }else{
+                $('#noRekamMedis_checkValid').val('0')
+            }
         });
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");
@@ -304,6 +314,8 @@
             if(noRekamMedis == ""){
                 $('#noRekamMedis').addClass('isInValid')
                 $('.noRekamMedis_isNull').css('display', 'block');
+            }else{
+                CheckNoCmIsNull('noRekamMedis', noRekamMedis, 'tambah');
             }
 
             if(namaLengkap == ""){
@@ -321,11 +333,12 @@
             }
             
             let noPendaftaranCheckValid = $('#noPendaftaran_checkValid').val()
+            let noCmCheckValid = $('#noRekamMedis_checkValid').val()
             if(fileExtension != 'pdf'){
                 $('#fileExtension_isNull').css('display', 'block');
             }else{
                 $('#fileExtension_isNull').css('display', 'none');
-                if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && fileVal != "" && noPendaftaranCheckValid == '1'){
+                if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && fileVal != "" && noPendaftaranCheckValid == '1' && noCmCheckValid == '1'){
                     $('#form-tambah').submit();
                 }
             }
@@ -481,6 +494,20 @@
             })
     })
 
+    $('.inptNoCm').keyup(function(){
+        let tagId = $(this).prop('id');
+        let val = $(this).val();
+        CheckNoCmIsNull(tagId, val, 'tambah');
+    })
+    
+    $('.inptId').keyup(function(){
+        let tagId = $(this).prop('id');
+        let val = $(this).val();
+        if($('#noRekamMedis').val() != ''){
+            CheckIdDuplicate(tagId, val, $('#noRekamMedis').val(), 'tambah');
+        }
+    })
+
     const CheckIdDuplicate = (tagId, val, noCm, method) => {
             let isUbah
             if(method == 'ubah'){
@@ -510,6 +537,48 @@
                         $('#'+tagId).removeClass('isValid');
                         $('#'+tagId).addClass('isInValid');
                         $('.'+tagId+'_duplicated').css('display', 'block');
+                        $('#'+tagId+'_checkValid').val('0');
+                    }else{
+                        $('#'+tagId).removeClass('isInValid');
+                        $('#'+tagId).addClass('isValid');
+                        $('.'+tagId+'_duplicated').css('display', 'none');
+                        $('.'+tagId+'_isNull').css('display', 'none');
+                        $('#'+tagId+'_checkValid').val('1');
+                    }
+                }
+            })
+
+        }
+    const CheckNoCmIsNull = (tagId, noCm, method) => {
+            let isUbah
+            if(method == 'ubah'){
+                isUbah = true;
+            }else{
+                isUbah = false;
+            }
+
+            $.ajax({
+                url: "{{url('dokumen/checkNoCmIsNull')}}",
+                method: 'post',
+                data: {noCm: noCm, _token: '<?php echo csrf_token()?>'},
+                success : function(res){
+                    if(noCm == ''){
+                        $('#'+tagId).removeClass('isInValid');
+                        $('#'+tagId).removeClass('isValid');
+                        $('.'+tagId+'_duplicated').css('display', 'none');
+                        $('.'+tagId+'_isNull').css('display', 'none');
+                        $('#'+tagId+'_checkValid').val('0');
+                    }else if(isUbah == true && res.ID == $('#ID_ubah_hidden').val()){
+                        $('#'+tagId).removeClass('isInValid');
+                        $('#'+tagId).removeClass('isValid');
+                        $('.'+tagId+'_duplicated').css('display', 'none');
+                        $('.'+tagId+'_isNull').css('display', 'none');
+                        $('#'+tagId+'_checkValid').val('1');
+                    }else if(res.status == true){
+                        $('#'+tagId).removeClass('isValid');
+                        $('#'+tagId).addClass('isInValid');
+                        $('.'+tagId+'_duplicated').css('display', 'block');
+                        $('.'+tagId+'_isNull').css('display', 'none');
                         $('#'+tagId+'_checkValid').val('0');
                     }else{
                         $('#'+tagId).removeClass('isInValid');

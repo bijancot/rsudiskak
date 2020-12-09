@@ -49,6 +49,7 @@ class DokumenController extends Controller
         return view('pages.admin.dokumen', $data);
     }
     public function store(Request $req){
+
         // declare filepath
         $file = $req->file('file');
         $destination = 'dokumenRM/'.$req->get('NoCM');
@@ -77,6 +78,14 @@ class DokumenController extends Controller
             DB::collection('listDokumen')->insert(['NoCM' => $data['NoCM'], 'NamaLengkap' => $data['NamaLengkap']]);
         }
 
+        // check if redirect to formpengkajian
+        $redirectPage = '';
+        if(!empty($data['urlPengkajian'])){
+            $redirectPage = $data['urlPengkajian'];
+            unset($data['urlPengkajian']);
+        }else{
+            $redirectPage = 'dokumen';
+        }
 
         // insert data into db dokumen_
         unset($data['file']);
@@ -94,8 +103,13 @@ class DokumenController extends Controller
         }
 
         DB::collection('dokumen_'.$data['NoCM'])->insert($data);
-        
-        return redirect('dokumen');
+
+        // assignment redirect
+        if($redirectPage == 'dokumen'){
+            return redirect($redirectPage);
+        }else{
+            return redirect($redirectPage);
+        }
     }
     public function update(Request $req){
         // declare filepath
@@ -190,31 +204,36 @@ class DokumenController extends Controller
         return view('pages.berkas', $data);
     }
 
+    public function ajaxStore(Request $req){
+        return response()->json($req);
+    }
+
     public function checkIdDuplicate(Request $req){
-        // get data dokumen
-        $dataDokumen = array();
-        $index = 0;
-        $listDokumen = DB::collection('listDokumen')->get();
-        if(!empty($listDokumen[0])){
-            $res['status'] = false;
-            $res['ID'] = null;
-            foreach($listDokumen as $item){
-                if($item['NoCM'] == $req->get('noCm')){
-                    $dataDokumen = DB::collection('dokumen_'.$item['NoCM'])->whereNotNull('Status')->get();
-                    foreach($dataDokumen as $key){
-                        if($key['NoPendaftaran'] == $req->get('noPendaftaran')){
-                            $res['status'] = true;
-                            $res['ID'] = $key['NoPendaftaran'];
-                            return response()->json($res);
-                        }
-                    }
-                }
-                $index++;
+        //get data no pendaftaran
+        $data = DB::collection('dokumen_'.$req->get('noCm'))->get();
+        if(!empty($data[0])){
+            $dataDokumen = DB::collection('dokumen_'.$req->get('noCm'))->where('NoPendaftaran', $req->get('noPendaftaran'))->whereNotNull('Status')->get();
+            if(!empty($dataDokumen[0])){
+                $res['status'] = true;
+                $res['ID'] = $req->get('noPendaftaran');
+                return response()->json($res);
             }
+        }
+        
+        $res['status'] = false;
+        $res['ID'] = null;
+        return response()->json($res);
+    }
+    public function checkNoCmIsNull(Request $req){
+         //get data noCm
+        $data = DB::collection('pasien_'.$req->get('noCm'))->get();
+        if(empty($data[0])){
+            $res['status'] = true;
+            $res['ID'] = null;
         }else{
             $res['status'] = false;
-            $res['ID'] = null;
-        }
+            $res['ID'] = $data[0]['NoCM'];
+         }
 
         return response()->json($res);
     }

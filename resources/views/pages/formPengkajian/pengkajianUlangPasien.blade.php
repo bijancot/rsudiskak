@@ -9,12 +9,101 @@
                 <div class="float-left"> 
                     <h4>Riwayat Pasien</h4> 
                 </div> 
-                <div class="float-right"> 
-                    <button class="btn btn-primary">Upload</button>
-                </div>
                 <br>
             </div>
             <hr>
+            <div class="content mt-3 soft-shadow collapsible">
+                <div class="p-3 collapsible-head inactive">
+                    <p class="h6">
+                        <i class="fa fa-upload" style="color: #0F4F2C;"></i>
+                        Upload Dokumen
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg>
+                    </p>
+                </div>
+                <div class="collapsible-body">
+                    <hr>
+                    <form id="form-tambah" action="{{ action ('DokumenController@store')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="namaForm" class="col-form-label">No Rekam Medis :</label>
+                                <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control inptNoCm" id="noRekamMedis" value="{{$NoCM}}" disabled>
+                                <input type="hidden" onkeypress="return onlyNumberKey(event)" class="form-control inptNoCm" id="noRekamMedis" value="{{$NoCM}}" name="NoCM">
+                                <input type="hidden" id="noRekamMedis_checkValid" value="1">
+                                <div class="noRekamMedis_isNull invalid-feedback">
+                                    No Rekam Medis Harus Diisi.
+                                </div>
+                                <div class="noRekamMedis_duplicated isInvalid-feedback">
+                                    Data No Rekam Medis Tidak Ditemukan.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="KodeRuangan" class="col-form-label">Kode Ruangan :</label>
+                                <select class="form-control" disabled>
+                                    @foreach ($kdRuangan as $index)
+                                        @foreach ($index as $item)
+                                            @if ($item['KdRuangan'] == $dataMasukPoli['KdRuangan'])
+                                                <option value="{{$item['KdRuangan']}}" selected>{{$item['KdRuangan']}} - {{$item['NamaRuangan']}}</option>
+                                            @else
+                                                <option value="{{$item['KdRuangan']}}">{{$item['KdRuangan']}} - {{$item['NamaRuangan']}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                </select>
+                                <input type="hidden" name="KodeRuangan" value="{{$dataMasukPoli['KdRuangan']}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="idForm" class="col-form-label">No Pendaftaran :</label>
+                                <input type="number" onkeypress="return onlyNumberKey(event)" class="form-control inptId" id="noPendaftaran" name="NoPendaftaran">
+                                <input type="hidden" id="noPendaftaran_checkValid" value="0">
+                                <div class="noPendaftaran_isNull invalid-feedback">
+                                    No Pendaftaran Harus Diisi.
+                                </div>
+                                <div class="noPendaftaran_duplicated isInvalid-feedback">
+                                    Data No Pendaftaran Sudah Terdaftar.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="namaForm" class="col-form-label">Nama Lengkap :</label>
+                                <input type="text" class="form-control frm-input" id="namaLengkap" name="NamaLengkap">
+                                <div class="namaLengkap_isNull invalid-feedback">
+                                    Nama Lengkap Harus Diisi.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="namaForm" class="col-form-label">Tanggal Masuk :</label>
+                                <input type="date" id="tglMasuk" name="TanggalMasuk" class="custom-select frm-tanggal">
+                                <div class="tglMasuk_isNull invalid-feedback">
+                                    Tanggal Masuk Harus Diisi.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="namaFile" class="col-form-label">Upload File (.pdf)</label>
+                                <div>
+                                    <label for="file-upload1">
+                                        <input id="fileTambah" type="file" name="file">
+                                    </label>
+                                </div>
+                                <div class="fileTambah_isNull invalid-feedback">
+                                    Upload File Harus Diisi.
+                                </div>
+                                
+                            </div>
+                            <div class="form-group">
+                                <div id="fileExtension_isNull" class="alert alert-danger mt-4" role="alert" style="display: none;">
+                                    Format file upload tidak sesuai
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="Status" id="" value="1">
+                            <input type="hidden" name="urlPengkajian" id="" value="{{$urlPengkajian}}">
+                            <div id="btn_tambah_submit" class="btn btn-dark diagnosa">Simpan</div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="content float-none">
             <table class="table table-bordered" id="sliderTable">
                 <thead>
@@ -38,7 +127,18 @@
                             </td>
                         </tr>
                         @endif
-                    @endforeach     
+                    @endforeach
+                    @foreach ($dataDokumen as $item)
+                        @php
+                            $date = date_create($item['TanggalMasuk']);
+                        @endphp
+                        <tr>
+                            <td>{{ $item['NoPendaftaran'] }}</td>
+                            <td>{{date_format($date, 'd/m/Y - h:i')}}</td>
+                            <td><a href="#"><i class="fas fa-eye"></i> Lihat </a>
+                            </td>
+                        </tr>
+                    @endforeach 
                 </tbody>
                 </table>
                 <h4>
@@ -651,6 +751,186 @@
         });
         
         </script>
+        {{-- upload dokumen --}}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#btn_tambah_submit').click(function(){
+                    let noPendaftaran = $('#noPendaftaran').val();
+                    let noRekamMedis = $('#noRekamMedis').val();
+                    let namaLengkap = $('#namaLengkap').val();
+                    let tglMasuk = $('#tglMasuk').val();
+                    let fileVal = $('#fileTambah').val();
+                    let file = $('#fileTambah');
+                    let fileExtension = ""
+                    // set var file fileExtension
+                    if(fileVal != ""){
+                        fileExtension = file[0].files[0].name;
+                        fileExtension = fileExtension.replace(/^.*\./, '');
+                    }
+                    
+                    if(noPendaftaran == ""){
+                        $('#noPendaftaran').addClass('isInValid')
+                        $('.noPendaftaran_isNull').css('display', 'block');
+                    }else{
+                        CheckIdDuplicate('noPendaftaran', noPendaftaran, noRekamMedis, 'tambah')
+                    }
+                    
+                    // if(noRekamMedis == ""){
+                    //     $('#noRekamMedis').addClass('isInValid')
+                    //     $('.noRekamMedis_isNull').css('display', 'block');
+                    // }else{
+                    //     CheckNoCmIsNull('noRekamMedis', noRekamMedis, 'tambah');
+                    // }
+    
+                    if(namaLengkap == ""){
+                        $('#namaLengkap').addClass('isInValid')
+                        $('.namaLengkap_isNull').css('display', 'block');
+                    }
+    
+                    if(tglMasuk == ""){
+                        $('#tglMasuk').addClass('isInValid')
+                        $('.tglMasuk_isNull').css('display', 'block');
+                    }
+    
+                    if(fileVal == ""){
+                        $('.fileTambah_isNull').css('display', 'block');
+                    }
+                    
+                    let noPendaftaranCheckValid = $('#noPendaftaran_checkValid').val()
+                    let noCmCheckValid = $('#noRekamMedis_checkValid').val()
+                    if(fileExtension != 'pdf'){
+                        $('#fileExtension_isNull').css('display', 'block');
+                    }else{
+                        $('#fileExtension_isNull').css('display', 'none');
+                        if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && fileVal != "" && noPendaftaranCheckValid == '1' && noCmCheckValid == '1'){
+                            // $('#form-tambah').submit();
+                        }
+                    }
+    
+                })
+                $('.frm-input').keyup(function(){
+                    let id = $(this).attr('id');
+                    if($(this).val() == ""){
+                        $(this).removeClass('isInValid')
+                        $(this).removeClass('isValid')
+                        $('.'+id+'_isNull').css('display', 'none')
+                        $('.'+id+'_duplicated').css('display', 'none')
+                    }else{
+                        $(this).removeClass('isInValid')
+                        $(this).addClass('isValid')
+                        $('.'+id+'_isNull').css('display', 'none')
+                        $('.'+id+'_duplicated').css('display', 'none')
+                    }
+                })
+                $('.inptId').keyup(function(){
+                    let tagId = $(this).prop('id');
+                    let val = $(this).val();
+                    if($('#noRekamMedis').val() != ''){
+                        CheckIdDuplicate(tagId, val, $('#noRekamMedis').val(), 'tambah');
+                    }
+                })
+                $('.frm-tanggal').change(function(){
+                    let id = $(this).attr('id')
+                    if($(this).val() == ""){
+                        $(this).removeClass('isInValid')
+                        $(this).removeClass('isValid')
+                        $('.'+id+'_isNull').css('display', 'none')
+                    }else{
+                        $(this).removeClass('isInValid')
+                        $(this).addClass('isValid')
+                        $('.'+id+'_isNull').css('display', 'none')
+                    }
+                })
+                $('#fileTambah').change(function(){
+                    if($(this).val() != ""){
+                        $('.fileTambah_isNull').css('display', 'none')
+                    }
+                })
+                function onlyNumberKey(evt) { 
+                // Only ASCII charactar in that range allowed 
+                    var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
+                    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) 
+                        return false; 
+                    return true; 
+                }
+    
+                const CheckIdDuplicate = (tagId, val, noCm, method) => {
+                    let isUbah
+                    if(method == 'ubah'){
+                        isUbah = true;
+                    }else{
+                        isUbah = false;
+                    }
+    
+                    $.ajax({
+                        url: "{{url('dokumen/checkIdDuplicate')}}",
+                        method: 'post',
+                        data: {noPendaftaran: val, noCm: noCm, _token: '<?php echo csrf_token()?>'},
+                        success : function(res){
+                            if(val == ''){
+                                $('#'+tagId).removeClass('isInValid');
+                                $('#'+tagId).removeClass('isValid');
+                                $('.'+tagId+'_duplicated').css('display', 'none');
+                                $('.'+tagId+'_isNull').css('display', 'none');
+                                $('#'+tagId+'_checkValid').val('0');
+                            }else if(isUbah == true && res.ID == $('#ID_ubah_hidden').val()){
+                                $('#'+tagId).removeClass('isInValid');
+                                $('#'+tagId).removeClass('isValid');
+                                $('.'+tagId+'_duplicated').css('display', 'none');
+                                $('.'+tagId+'_isNull').css('display', 'none');
+                                $('#'+tagId+'_checkValid').val('1');
+                            }else if(res.status == true){
+                                $('#'+tagId).removeClass('isValid');
+                                $('#'+tagId).addClass('isInValid');
+                                $('.'+tagId+'_duplicated').css('display', 'block');
+                                $('#'+tagId+'_checkValid').val('0');
+                            }else{
+                                $('#'+tagId).removeClass('isInValid');
+                                $('#'+tagId).addClass('isValid');
+                                $('.'+tagId+'_duplicated').css('display', 'none');
+                                $('.'+tagId+'_isNull').css('display', 'none');
+                                $('#'+tagId+'_checkValid').val('1');
+                            }
+                        }
+                    })
+    
+                }
+    
+                const AjaxStore = () => {
+                    let dataForm = $('#form-tambah').serializeArray();
+                    console.log(dataForm)
+    
+                    // dataForm[6]['name'] = 'file';
+                    var dataFile = new FormData();
+                    jQuery.each(jQuery('#fileTambah')[0].files, function(i, file) {
+                        dataFile.append('file-'+i, file);
+                    });
+    
+                    console.log(dataFile)
+                    console.log(dataFile.FormData)
+    
+                    $.ajax({
+                        url: "{{url('dokumen/ajaxStore')}}",
+                        method: 'post',
+                        data: {dataForm: dataForm, _token: '<?php echo csrf_token()?>'},
+                        success: function(res){
+                            
+                        }
+                    })
+                    $.ajax({
+                        url: "{{url('dokumen/ajaxStore')}}",
+                        method: 'post',
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: dataFile,
+                        success: function(res){
+    
+                        }
+                    })
+                }
+            })
+            </script>
         <!-- slider -->
         <script type="text/javascript">
             //$('#test').BootSideMenu({side:"left", autoClose:false});
