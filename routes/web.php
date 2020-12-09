@@ -125,7 +125,7 @@ Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
     Route::get('formPengkajianUlang/{no_cm}', 'FPengkajianUlangController@showRajal');
     Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@formPengkajian');
 
-    Route::post('listPasien/getDataByDate', 'PasienController@getDataByDate');
+    Route::post('listPasien/getDataMasukPoliByDate', 'PasienController@getDataMasukPoliByDate');
 
     Route::post('diagnosa/{no_cm}', 'DiagnosaController@storeDiagnosaAwal');
     Route::post('diagnosaAkhir', 'DiagnosaController@storeDiagnosaAkhir');

@@ -79,7 +79,7 @@
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody_antrian">
                             @foreach ($datas['data'] as $data)
                             @php
                                 // set style status periksa
@@ -476,7 +476,7 @@
                 $('#date').show();
                 $('#masukPoli').show();
                 var table = $('#tbl_masukPoli').DataTable();
-                FilterSearchCut(table);
+                FilterSearchMasukPoli(table);
                 filterByDate(table);
 
             })
@@ -495,7 +495,7 @@
 
             })
 
-            function FilterSearchCut(table){
+            function FilterSearchMasukPoli(table){
                 $('#date').on('change', function () {
                     var date = this.value;
                     var table = table;
@@ -504,7 +504,7 @@
                     $("tbody").empty();
 
                     $.ajax({
-                        url: "{{ url('/listPasien/getDataByDate') }}",
+                        url: "{{ url('/listPasien/getDataMasukPoliByDate') }}",
                         method: 'post',
                         data: {date: date, _token: '<?php echo csrf_token()?>'},
                         success : function(data){
@@ -537,7 +537,7 @@
                 $("tbody").empty();
 
                 $.ajax({
-                    url: "{{ url('/listPasien/getDataByDate') }}",
+                    url: "{{ url('/listPasien/getDataMasukPoliByDate') }}",
                     method: 'post',
                     data: {date: date, _token: '<?php echo csrf_token()?>'},
                     success : function(data){

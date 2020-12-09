@@ -76,7 +76,67 @@ class PasienController extends Controller
         return view('pages.listPasien', $datax);
     }
 
-    public function getDataByDate(Request $request)
+    public function getDataAntrianByDate(Request $request)
+    {
+        $getKdRuangan   = Auth::user()->KodeRuangan;
+        date_default_timezone_set('Asia/Jakarta');
+
+        $date = date("Y-m-d", strtotime($request->get('date')));
+
+        $client = new Client();
+        $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/' . $getKdRuangan . '?tglawal=2020-09-21andtglakhir=' . $date);
+        // $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/215?tglawal=2020-09-21&tglakhir=' . date("Y-m-d"));
+        // $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/215');
+        // $res = $client->request('GET', 'https://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/antrianpoli/' . $getKdRuangan);
+        $statCode = $res->getStatusCode();
+        $antriPoli = $res->getBody()->getContents();
+        $antriPoli = json_decode($antriPoli, true);
+        $antriPoli = $antriPoli['response'];
+
+        $html           = "";
+        $pilihDokter    = "";
+        $batalPeriksa   = "";
+
+        foreach ($antriPoli['data'] as $data) {
+            // set style status periksa
+            if ($data['Status Periksa'] == "Menunggu") {
+                $status = "yellow";
+            } else if ($data['Status Periksa'] == "Diperiksa") {
+                $status = "blue";
+            } else if ($data['Status Periksa'] == "Selesai") {
+                $status = "lime";
+            } else if ($data['Status Periksa'] == "Belum") {
+                $status = "orange";
+            }
+            // set detail JK
+            $jenkel = ($data['JK'] == "L" ? "Laki - Laki" : "Perempuan");
+
+            $pilihDokter    = "<a data-toggle='modal' data-target='#modal_pilih_dokter-" . $data['NoCM'] . "' class='btn diagnosa ml-auto'>Pilih Dokter</a>";
+            $batalPeriksa   = "<a data-toggle='modal' data-target='#modal_batal_periksa-" . $data['NoPendaftaran'] . "' class='btn batal'>Batal Periksa</a>";
+
+            $html .= " 
+            <tr>
+                <td data-label='Urutan'>" . $data['No. Urut'] . "</td>
+                <td data-label='No Pendaftaran'>" . $data['NoPendaftaran'] . "</td>
+                <td data-label='No Rekam Medis'>" . $data['NoCM'] . "</td>
+                <td data-label='Nama Pasien'>" . $data['Nama Pasien'] . "</td>
+                <td data-label='Umur'>" . $data['UmurTahun'] . " Th</td>
+                <td data-label='Jenis Kelamin'>" . $jenkel . "</td>
+                <td data-label='Tanggal Masuk'>" . date("d/m/Y", strtotime($poli['TglMasuk'])) . "</td>
+                <td data-label='Action' class='d-flex flex-row p-lg-1'>  
+                " . $pilihDokter . "" . $batalPeriksa . " 
+                </td>
+            </tr> ";
+        }
+
+        $data = [
+            'html' => $html
+        ];
+
+        return response()->json($data);
+    }
+
+    public function getDataMasukPoliByDate(Request $request)
     {
         $getKdRuangan   = Auth::user()->KodeRuangan;
         date_default_timezone_set('Asia/Jakarta');
