@@ -55,7 +55,7 @@ $TglLahir = strtotime($inputTglLahir);
             </td>
             <td colspan=3>
             <p style="font-size:10px">Nama Pasien : {{ $listRiwayat['NamaLengkap']}}</p>
-                <p style="font-size:10px">Jenis Kelamin : {{ $listRiwayat['NamaLengkap']}}</p>
+                <p style="font-size:10px">Jenis Kelamin : {{ $listRiwayat['JenisKelamin'] == "L" ? "Laki - Laki" : "Perempuan" }}</p>
                 <p style="font-size:10px">Ruang/Kelas : {{ $listRiwayat['Ruangan']}}</p>
             </td>
             <td colspan=3>

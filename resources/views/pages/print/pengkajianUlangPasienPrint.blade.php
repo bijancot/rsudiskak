@@ -55,13 +55,13 @@ $TglLahir = strtotime($inputTglLahir);
                 </div>             
             </td>
             <td colspan=3>
-            <p style="font-size:10px">Nama Pasien : {{ $listRiwayat['NamaLengkap']}}</p>
-                <p style="font-size:10px">Jenis Kelamin : {{ $listRiwayat['NamaLengkap']}}</p>
-                <p style="font-size:10px">Ruang/Kelas : {{ $listRiwayat['Ruangan']}}</p>
+            <p style="font-size:10px">Nama Pasien : {{ $listRiwayat['NamaLengkap'] }}</p>
+                <p style="font-size:10px">Jenis Kelamin : {{ $listRiwayat['JenisKelamin'] == "L" ? "Laki - Laki" : "Perempuan" }}</p>
+                <p style="font-size:10px">Ruang/Kelas : {{ $listRiwayat['Ruangan'] }}</p>
             </td>
             <td colspan=3>
-                <p style="font-size:10px">No. RM : {{ $listRiwayat['NoCM']}}</p>
-                <p style="font-size:10px">Tgl Lahir : <?php echo date('d F Y', $TglLahir); ?> / {{ $listRiwayat['Umur']}}</p>
+                <p style="font-size:10px">No. RM : {{ $listRiwayat['NoCM'] }}</p>
+                <p style="font-size:10px">Tgl Lahir : <?php echo date('d F Y', $TglLahir); ?> / {{ $listRiwayat['Umur'] }}</p>
                 <p style="font-size:10px">Tgl Masuk : <?php echo date('d F Y', $TglMasuk); ?> Jam: <?php echo date('H:i', $JamMasuk); ?></p>
             </td>
         </tr>

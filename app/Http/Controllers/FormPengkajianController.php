@@ -6,8 +6,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\ManajemenForm;
 use GuzzleHttp\Client;
+use PDF;
+use File;
 use App\ICD10;
 use App\ICD09;
+use Illuminate\Support\Facades\Storage;
 
 class FormPengkajianController extends Controller
 {
@@ -221,13 +224,13 @@ class FormPengkajianController extends Controller
 
             //get data kdruangan from api
             $client = new Client();
-            for($i = 1; $i <=2; $i++){
-                $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page='.$i);
+            for ($i = 1; $i <= 2; $i++) {
+                $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page=' . $i);
                 $statCode = $res->getStatusCode();
                 $kdRuangan = $res->getBody()->getContents();
                 $kdRuangan = json_decode($kdRuangan, true);
 
-                $resKdRuangan[$i-1] = $kdRuangan['data'];
+                $resKdRuangan[$i - 1] = $kdRuangan['data'];
             }
             $data = [
                 'form_id'           => $idForm,
@@ -255,7 +258,7 @@ class FormPengkajianController extends Controller
                 'ICD09V'            => $ICD09V,
                 'dataMasukPoli'     => $dataMasukPoli,
                 'kdRuangan'         => $resKdRuangan,
-                'urlPengkajian'     => 'formPengkajian/'.$idForm.'/'.$NoCM.'/'.$noPendaftaran.'/'.$tglMasukPoli
+                'urlPengkajian'     => 'formPengkajian/' . $idForm . '/' . $NoCM . '/' . $noPendaftaran . '/' . $tglMasukPoli
             ];
             return view($dataForm[0]['namaFile'], $data);
             //endIF
@@ -533,6 +536,74 @@ class FormPengkajianController extends Controller
             //     $logging->toLogging('update', 'FormPengkajian', $updateData, $no_cm);
             // }
         }
+
+        if ($statusPengkajian == "2") {
+
+            // $riwayat = new RiwayatController;
+            // $riwayat->printRiwayat($idForm, $no_cm, $noPendaftaran, $tglMasukPoli);
+
+            $dataForm = ManajemenForm::where('idForm', $idForm)->get();
+            $PrintPasien = DB::collection('pasien_' . $no_cm)
+                ->where('NoPendaftaran', $noPendaftaran)
+                ->where('TglMasukPoli', $tglMasukPoli)
+                ->where('deleted_at', null)
+                ->whereNotNull('StatusPengkajian')
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            $pekerjaan              = DB::collection('pekerjaan')->where("deleted_at", Null)->get();
+            $agama                  = DB::collection('agama')->where("deleted_at", Null)->get();
+            $statusPernikahan       = DB::collection('statusPernikahan')->where("deleted_at", Null)->get();
+            $keluarga               = DB::collection('keluarga')->where("deleted_at", Null)->get();
+            $tempatTinggal          = DB::collection('tempatTinggal')->where("deleted_at", Null)->get();
+            $statusPsikologi        = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
+            $hambatanEdukasi        = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
+            $diagnosa           = [
+                'KodeDiagnosa'  => Null,
+                'NamaDiagnosa'  => Null,
+            ];
+
+            $diagnosaT          = [
+                'KodeDiagnosaT   ' => Null,
+                'DiagnosaTindakan' => Null,
+            ];
+
+            $dataPrint = [
+                'listRiwayat'       => $PrintPasien,
+                'diagnosa'          => $diagnosa,
+                'diagnosaT'         => $diagnosaT,
+                'pekerjaan'         => $pekerjaan,
+                'agama'             => $agama,
+                'statusPernikahan'  => $statusPernikahan,
+                'keluarga'          => $keluarga,
+                'tempatTinggal'     => $tempatTinggal,
+                'statusPsikologi'   => $statusPsikologi,
+                'hambatanEdukasi'   => $hambatanEdukasi
+            ];
+
+            // Storage::makeDirectory('public/dokumenRM/' . $no_cm);
+            // Storage::makeDirectory('public/dokumenRM/' . $no_cm . '/' . $noPendaftaran);
+
+            $destination    = 'dokumenRM/' . $no_cm;
+
+            $dataF = $dataForm[0]['namaFile'] . 'Print';
+            $dataZ = str_replace("formPengkajian", "print", $dataF);
+            // return view($dataZ, $dataPrint);
+
+            $isExist = File::exists('dokumenRM/' . $no_cm);
+
+            if ($isExist == false) {
+                File::makeDirectory('dokumenRM/' . $no_cm, 7777, false, false);
+            }
+
+            PDF::loadview($dataZ, $dataPrint)
+                ->setPaper('legal', 'potrait')
+                ->save(public_path() . '/dokumenRM/' . $no_cm . '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf');
+            // ->stream('Nama_File.pdf');
+            //
+
+        }
+
 
         return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
 

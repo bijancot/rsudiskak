@@ -48,6 +48,10 @@
         <style>
             .dataTables_length, .dataTables_info, .dataTables_paginate, .dataTables_filter {
                 padding: 20px !important;
+                
+            }
+            .tgl {
+                border-radius: 30px !important;
             }
             .page-item.active .page-link{
                 background: #009241;

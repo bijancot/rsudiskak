@@ -49,7 +49,7 @@
                         <form class="form form-inline" >
                             @csrf
                             <div class="input-group date">
-                                <input type="date" id="date" class="form-control" data-date-end-date="0d" value="{{ date('Y-m-d') }}" >
+                                <input type="date" id="date" class="form-control tgl" data-date-end-date="0d" value="{{ date('Y-m-d') }}" >
                                 <div class="input-group-append">
                                     {{-- <span class="fa fa-calendar"></span> --}}
                                 </div>
@@ -399,6 +399,9 @@
             @if ($role == "1")
                 $('#antrianPoli').hide();
                 var table = $('#tbl_masukPoli').DataTable();
+                FilterSearchMasukPoli(table);
+                $('#date').show();
+                $('#masukPoli').show();
             @else
                 $('#masukPoli').hide();
                 var table = $('#tbl_antrianPoli').DataTable();

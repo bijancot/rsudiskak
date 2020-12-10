@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Riwayat;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use File;
 use App\ManajemenForm;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +28,7 @@ class RiwayatController extends Controller
         ];
         return view('pages.riwayatPasien', $data);
     }
-    
+
     public function getData(Request $req)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -37,36 +38,36 @@ class RiwayatController extends Controller
         $html = "";
         $action = "";
         $ver = "";
-        $lihatForm="";
-        foreach($listriwayat as $data){
-            $lihatForm = "<a href='lihatFormPengkajian/".$data['IdFormPengkajian']."/".$data['NoCM']."/".$data['NoPendaftaran']."/".$data['TglMasukPoli']."' class='btn btn-primary'><i class='fas fa-eye'></i> Lihat Form</a>";
-            $action = "<a href='printRiwayat/".$data['IdFormPengkajian']."/".$data['NoCM']."/".$data['NoPendaftaran']."/".$data['TglMasukPoli']."' target='_blank' class='btn diagnosa'><i class='fas fa-print'></i> Print</a>";
-            if(Auth::user()->Role =='003'){
-                $ver = "<a href='#' data-toggle='modal' data-target='#modal_hapus' data-nopendaftaran='".$data['NoPendaftaran']."' data-nocm='".$data['NoCM']."' data-tanggal='".$data['TglMasukPoli']."' class='btn hapus-data batal'>Batal Verifikasi</a>";
+        $lihatForm = "";
+        foreach ($listriwayat as $data) {
+            $lihatForm = "<a href='lihatFormPengkajian/" . $data['IdFormPengkajian'] . "/" . $data['NoCM'] . "/" . $data['NoPendaftaran'] . "/" . $data['TglMasukPoli'] . "' class='btn btn-primary'><i class='fas fa-eye'></i> Lihat Form</a>";
+            $action = "<a href='printRiwayat/" . $data['IdFormPengkajian'] . "/" . $data['NoCM'] . "/" . $data['NoPendaftaran'] . "/" . $data['TglMasukPoli'] . "' target='_blank' class='btn diagnosa'><i class='fas fa-print'></i> Print</a>";
+            if (Auth::user()->Role == '003') {
+                $ver = "<a href='#' data-toggle='modal' data-target='#modal_hapus' data-nopendaftaran='" . $data['NoPendaftaran'] . "' data-nocm='" . $data['NoCM'] . "' data-tanggal='" . $data['TglMasukPoli'] . "' class='btn hapus-data batal'>Batal Verifikasi</a>";
             }
-            
+
             $html .= "
             
             <tr>
-                <td> ".$data['NoPendaftaran']."</td>
-                <td> ".$data['NoCM']."</td>
-                <td> ".$data['NamaLengkap']."</td>
-                <td> ".$data['TglMasukPoli']."</td>
+                <td> " . $data['NoPendaftaran'] . "</td>
+                <td> " . $data['NoCM'] . "</td>
+                <td> " . $data['NamaLengkap'] . "</td>
+                <td> " . $data['TglMasukPoli'] . "</td>
                 <td data-label='Action' class='d-flex flex-row p-lg-1'>
-                ".$lihatForm."".$action."".$ver."
+                " . $lihatForm . "" . $action . "" . $ver . "
                 </td>
             </tr>";
-            
-        } 
+        }
 
         $data = [
             'html' => $html
         ];
-        
+
         return response()->json($data);
     }
 
-    public function printRiwayat($idForm, $NoCM, $noPendaftaran, $tglMasukPoli){
+    public function printRiwayat($idForm, $NoCM, $noPendaftaran, $tglMasukPoli)
+    {
         date_default_timezone_set('Asia/Jakarta');
         $dataForm = ManajemenForm::where('idForm', $idForm)->get();
         // return view("'".$data[0]['namaFile']."'");
@@ -78,7 +79,7 @@ class RiwayatController extends Controller
                 ->where('deleted_at', null)
                 ->whereNotNull('StatusPengkajian')
                 ->orderBy('created_at', 'desc')
-                ->first();     
+                ->first();
 
             /**
              * Cek IdFormPengkajian jika idForm pada collection pasien masukPoli 
@@ -90,9 +91,9 @@ class RiwayatController extends Controller
                 return redirect('formPengkajian/' . $listriwayat['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
             }
             $dataRiwayat        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->get();
-            $dataRiwayatDetail        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian','1')->first();
-            $dataRiwayatAlergi        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian','1')->get();
-            
+            $dataRiwayatDetail        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian', '1')->first();
+            $dataRiwayatAlergi        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian', '1')->get();
+
             $dataDokumen        = DB::collection('dokumen_' . $NoCM)->whereNotNull('Status')->get();
 
             $pendidikan         = DB::collection('pendidikan')->where("deleted_at", Null)->get();
@@ -126,14 +127,13 @@ class RiwayatController extends Controller
                 'dataDokumen'       => $dataDokumen,
                 'listRiwayat'       => $listriwayat
             ];
-        $dataF = $dataForm[0]['namaFile'].'Print';
-        $dataZ = str_replace("formPengkajian","print",$dataF);
-        // return view($dataZ, $data);
+            $dataF = $dataForm[0]['namaFile'] . 'Print';
+            $dataZ = str_replace("formPengkajian", "print", $dataF);
+            // return view($dataZ, $data);
 
-        $pdf = PDF::loadview($dataZ, $data);
-        $pdf->setPaper('legal', 'potrait');
-        return $pdf->stream("listRiwayat.pdf", array("Attachment" => false));
-
+            $pdf = PDF::loadview($dataZ, $data);
+            $pdf->setPaper('legal', 'potrait');
+            return $pdf->stream("listRiwayat.pdf", array("Attachment" => false));
         }
     }
 
@@ -146,9 +146,10 @@ class RiwayatController extends Controller
         $data = [
             'listRiwayat' => $listriwayat
         ];
+        // dump($listriwayat);
         return view('pages.admin.historicalList', $data);
     }
-    
+
     public function printProfilRingkas($idForm, $NoCM, $noPendaftaran, $tglMasukPoli)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -174,9 +175,9 @@ class RiwayatController extends Controller
                 return redirect('formPengkajian/' . $dataMasukPoli['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
             }
             $dataRiwayat        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->get();
-            $dataRiwayatDetail        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian','1')->first();
-            $dataRiwayatAlergi        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian','1')->get();
-            
+            $dataRiwayatDetail        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian', '1')->first();
+            $dataRiwayatAlergi        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian', '1')->get();
+
             $dataDokumen        = DB::collection('dokumen_' . $NoCM)->whereNotNull('Status')->get();
 
             $pendidikan         = DB::collection('pendidikan')->where("deleted_at", Null)->get();
@@ -223,13 +224,25 @@ class RiwayatController extends Controller
         date_default_timezone_set('Asia/Jakarta');
 
         // //edit data
-        DB::collection('pasien_' . $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('TglMasukPoli', $req->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => '1']);
-        DB::collection('transaksi_' . $req->get('TglMasukPoli'))->where('NoCM', $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('TglMasukPoli', $req->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => '1']);
+        DB::collection('pasien_' . $req->get('NoCM'))
+            ->where('NoPendaftaran', $req->get('NoPendaftaran'))
+            ->where('TglMasukPoli', $req->get('TglMasukPoli'))
+            ->where('deleted_at', null)->update(['StatusPengkajian' => '1']);
+        DB::collection('transaksi_' . $req->get('TglMasukPoli'))
+            ->where('NoCM', $req->get('NoCM'))
+            ->where('NoPendaftaran', $req->get('NoPendaftaran'))
+            ->where('TglMasukPoli', $req->get('TglMasukPoli'))
+            ->where('deleted_at', null)
+            ->update(['StatusPengkajian' => '1']);
         // print($req->get('NoPendaftaran'));
         // print('<br>');
         // print($req->get('NoCM'));
         // print('<br>');
         // print($req->get('TglMasukPoli'));
+
+        $file_path = public_path('dokumenRM/' . $req->get('NoCM') . '/' . $req->get('NoPendaftaran') . '_' . $req->get('TglMasukPoli') . '.pdf');
+        File::delete($file_path);
+
         return redirect('/historicalList');
     }
 
@@ -250,7 +263,7 @@ class RiwayatController extends Controller
 
             $dataRiwayat        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->get();
             $dataDokumen        = DB::collection('dokumen_' . $NoCM)->whereNotNull('Status')->get();
-            
+
             $pendidikan         = DB::collection('pendidikan')->where("deleted_at", Null)->get();
             $pekerjaan          = DB::collection('pekerjaan')->where("deleted_at", Null)->get();
             $agama              = DB::collection('agama')->where("deleted_at", Null)->get();
@@ -328,7 +341,7 @@ class RiwayatController extends Controller
                 'ICD09V'            => $ICD09V,
                 'dataMasukPoli'     => $dataMasukPoli
             ];
-            return view($dataForm[0]['namaFile'].'Lihat', $data);
+            return view($dataForm[0]['namaFile'] . 'Lihat', $data);
             //endIF
 
         } else {
