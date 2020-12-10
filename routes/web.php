@@ -183,8 +183,10 @@ Route::get('formPengkajian/getICD09', 'FormPengkajianController@getICD09');
 Route::get('formPengkajian/getICD10', 'FormPengkajianController@getICD10');
 
 Route::get('lihatFormPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'RiwayatController@formPengkajian');
-Route::get('riwayatPasienAwal/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatAwal');
-Route::get('riwayatPasienUlang/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatUlang');
+// Route::get('riwayatPasienAwal/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatAwal');
+// Route::get('riwayatPasienUlang/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatUlang');
+
+Route::get('printRiwayat/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'RiwayatController@printRiwayat');
 
 // ============ TEMPLATE FRONT END
 

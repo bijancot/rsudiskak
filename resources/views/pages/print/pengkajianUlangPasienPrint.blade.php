@@ -33,15 +33,16 @@
 <body>
 <?php
 
-$record2 = json_decode(json_encode($listRiwayat));
-$inputTglLahir = $record2[0]->TglLahir; 
-$inputJamMasukPoli = $record2[0]->TglWaktuMasukPoli;
-$inputTanggalMasukPoli = $record2[0]->TglWaktuMasukPoli;
+$inputTglLahir = $listRiwayat['TglLahir']; 
+$inputJamMasukPoli = $listRiwayat['TglWaktuMasukPoli'];
+$inputTanggalMasukPoli = $listRiwayat['TglWaktuMasukPoli'];
 $JamMasuk = strtotime($inputJamMasukPoli);
 $TglMasuk = strtotime($inputTanggalMasukPoli);
 $TglLahir = strtotime($inputTglLahir); 
 
 ?>
+<div class="float-right" style="font-size:12px;">RM 02 c </div> <br>&nbsp;<br>
+
     <table>
         <tr>
             <td style="text-align:center" colspan=2>
@@ -54,13 +55,13 @@ $TglLahir = strtotime($inputTglLahir);
                 </div>             
             </td>
             <td colspan=3>
-            <p style="font-size:10px">Nama Pasien : <?php echo $record2[0]->NamaLengkap; ?></p>
-                <p style="font-size:10px">Jenis Kelamin : <?php echo $record2[0]->JenisKelamin; ?></p>
-                <p style="font-size:10px">Ruang/Kelas : <?php echo $record2[0]->Ruangan; ?></p>
+            <p style="font-size:10px">Nama Pasien : {{ $listRiwayat['NamaLengkap']}}</p>
+                <p style="font-size:10px">Jenis Kelamin : {{ $listRiwayat['NamaLengkap']}}</p>
+                <p style="font-size:10px">Ruang/Kelas : {{ $listRiwayat['Ruangan']}}</p>
             </td>
             <td colspan=3>
-                <p style="font-size:10px">No. RM : <?php echo $record2[0]->NoCM; ?></p>
-                <p style="font-size:10px">Tgl Lahir : <?php echo date('d F Y', $TglLahir); ?> / <?php echo $record2[0]->Umur; ?></p>
+                <p style="font-size:10px">No. RM : {{ $listRiwayat['NoCM']}}</p>
+                <p style="font-size:10px">Tgl Lahir : <?php echo date('d F Y', $TglLahir); ?> / {{ $listRiwayat['Umur']}}</p>
                 <p style="font-size:10px">Tgl Masuk : <?php echo date('d F Y', $TglMasuk); ?> Jam: <?php echo date('H:i', $JamMasuk); ?></p>
             </td>
         </tr>
@@ -73,24 +74,24 @@ $TglLahir = strtotime($inputTglLahir);
         </tr>
         <tr>
             <td colspan=3>
-                1. Tekanan darah : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->TekananDarah?> mmHg<br>
-                2. Frekuensi nadi : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNadi?> x/menit<br>
-                3. Suhu : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->Suhu?> C<br>
-                4. Frekuensi nafas : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->FrekuensiNafas?> x/menit<br>
+                1. Tekanan darah : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['TekananDarah']}} mmHg<br>
+                2. Frekuensi nadi : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['FrekuensiNadi']}} x/menit<br>
+                3. Suhu : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['Suhu']}} C<br>
+                4. Frekuensi nafas : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['FrekuensiNafas']}} x/menit<br>
             </td>
             <td colspan=3>
-                1. Berat badan : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->BeratBadan?><br>
-                2. Tinggi badan : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->TinggiBadan?><br>
-                3. Skor Nyeri : <?php echo $record2[0]->DataPengkajian->PengkajianKeperawatan->SkorNyeri?><br>
+                1. Berat badan : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['BeratBadan']}}<br>
+                2. Tinggi badan : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['TinggiBadan']}}<br>
+                3. Skor Nyeri : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['SkorNyeri']}}<br>
                 4. Skala resiko jatuh : <br>
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkorJatuh=="rendah" ? 'checked' : '');?>> Rendah &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkorJatuh=="sedang" ? 'checked' : '');?>> Sedang &nbsp;
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianKeperawatan->SkorJatuh=="tinggi   " ? 'checked' : '');?>> Tinggi &nbsp;
+                <input type="checkbox" <?php echo ($listRiwayat['DataPengkajian']['PengkajianKeperawatan']['SkorJatuh']=="rendah" ? 'checked' : '');?>> Rendah &nbsp;
+                <input type="checkbox" <?php echo ($listRiwayat['DataPengkajian']['PengkajianKeperawatan']['SkorJatuh']=="sedang" ? 'checked' : '');?>> Sedang &nbsp;
+                <input type="checkbox" <?php echo ($listRiwayat['DataPengkajian']['PengkajianKeperawatan']['SkorJatuh']=="tinggi   " ? 'checked' : '');?>> Tinggi &nbsp;
                 <br>
             </td>
             <td style="text-align:center" colspan=2>
                 Perawat / Terapis<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
-                {{ $record2[0]->NamaPerawat }}
+                {{$listRiwayat['NamaPerawat']}}
             </td>
         </tr>
         <tr>
@@ -99,23 +100,23 @@ $TglLahir = strtotime($inputTglLahir);
         <tr>
             <td rowspan="4" colspan="6">
                 Amnesis (S) : <br>
-                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Anamnesis?>
+                {{$listRiwayat['DataPengkajian']['PengkajianMedis']['Anamnesis']}}
                 <br><br>
                 Pemeriksaan Fisik (O) : <br>
-                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->PemeriksaanFisik?>
+                {{$listRiwayat['DataPengkajian']['PengkajianMedis']['PemeriksaanFisik']}}
                 <br>&nbsp;<br>
                 <img src="https://cdn.pixabay.com/photo/2017/01/31/08/20/anatomical-2023188_960_720.png" width="50px">
                 
             </td>
             <td>
                 Rencana dan Terapi(P)<br>
-                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->RencanaDanTerapi?>
+                {{$listRiwayat['DataPengkajian']['PengkajianMedis']['RencanaDanTerapi']}}
             </td>
             <td>
                 Kode ICD 9 CM<br>
                 <?php
-                    if(isset($record2[0]->DataPengkajian->PengkajianMedis->KodeICD9->KodeDiagnosaT)){
-                        $ICD9 = $record2[0]->DataPengkajian->PengkajianMedis->KodeICD9->KodeDiagnosaT;
+                    if(isset($listRiwayat['DataPengkajian']['PengkajianMedis']['KodeICD10']['KodeDiagnosaT'])){
+                        $ICD9 = $listRiwayat['DataPengkajian']['PengkajianMedis']['KodeICD10']['KodeDiagnosaT'];
                         $arrICD9=explode(";",$ICD9);
                         foreach($arrICD9 as $dataICD9){echo $dataICD9.'<br>';}  
                     }else{
@@ -127,13 +128,13 @@ $TglLahir = strtotime($inputTglLahir);
         <tr>
             <td colspan=2>
                 Edukasi :<br>
-                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Edukasi?>
+                {{$listRiwayat['DataPengkajian']['PengkajianMedis']['Edukasi']}}
             </td>
         </tr>
         <tr>
             <td colspan=2>
                 Penyakit menular : <br>
-                <?php echo $record2[0]->DataPengkajian->PengkajianMedis->PenyakitMenular?>
+                {{$listRiwayat['DataPengkajian']['PengkajianMedis']['PenyakitMenular']}}
             </td>
         </tr>
         <tr>
@@ -145,17 +146,17 @@ $TglLahir = strtotime($inputTglLahir);
         <tr>
             <td colspan=3>
                 <?php
-                    $diagnosa = $record2[0]->DataPengkajian->PengkajianMedis->Diagnosa->NamaDiagnosa;
+                    $diagnosa = $listRiwayat['DataPengkajian']['PengkajianMedis']['Diagnosa']['NamaDiagnosa'];
                     $arrDiagnosa=explode(";",$diagnosa);
                     
                 ?> 
                 Diagnosa : <br><?php foreach($arrDiagnosa as $dataDiagnosa){echo $dataDiagnosa.'<br>';}?><br>   
-                Komplikasi : <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Komplikasi?><br>
-                Komorbid : <?php echo $record2[0]->DataPengkajian->PengkajianMedis->Komorbid?>
+                Komplikasi : {{$listRiwayat['DataPengkajian']['PengkajianMedis']['Komplikasi']}}<br>
+                Komorbid : {{$listRiwayat['DataPengkajian']['PengkajianMedis']['Komorbid']}}
             </td>
             <td colspan=3>
                 <?php
-                    $icd10 = $record2[0]->DataPengkajian->PengkajianMedis->Diagnosa->KodeDiagnosa;
+                    $icd10 = $listRiwayat['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
                     $arrICD10=explode(";",$icd10);
                     
                 ?>
@@ -163,9 +164,9 @@ $TglLahir = strtotime($inputTglLahir);
             </td>
             <td colspan=2>
                 Kesan Status Gizi : <br>
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianMedis->KesanStatusGizi=="kurang" ? 'checked' : '');?>> Gizi Kurang / Buruk &nbsp;<br>
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianMedis->KesanStatusGizi=="cukup" ? 'checked' : '');?>> Gizi Cukup &nbsp;<br>
-                <input type="checkbox" <?php echo ($record2[0]->DataPengkajian->PengkajianMedis->KesanStatusGizi=="lebih" ? 'checked' : '');?>> Gizi Lebih &nbsp;<br>
+                <input type="checkbox" <?php echo ($listRiwayat['DataPengkajian']['PengkajianMedis']['KesanStatusGizi']=="kurang" ? 'checked' : '');?>> Gizi Kurang / Buruk &nbsp;<br>
+                <input type="checkbox" <?php echo ($listRiwayat['DataPengkajian']['PengkajianMedis']['KesanStatusGizi']=="cukup" ? 'checked' : '');?>> Gizi Cukup &nbsp;<br>
+                <input type="checkbox" <?php echo ($listRiwayat['DataPengkajian']['PengkajianMedis']['KesanStatusGizi']=="lebih" ? 'checked' : '');?>> Gizi Lebih &nbsp;<br>
             </td>
         </tr>
         <tr>
@@ -193,7 +194,7 @@ $TglLahir = strtotime($inputTglLahir);
         </tr>
         <tr>
             <td colspan=6></td>
-            <td style="text-align:center" colspan=2><?php echo $record2[0]->NamaDokter; ?></td>
+            <td style="text-align:center" colspan=2>{{$listRiwayat['NamaDokter']}}</td>
         </tr>
     </table>
 </body>
