@@ -95,6 +95,15 @@ class ManajemenFormController extends Controller
      * @param  \App\ManajemenForm  $manajemenForm
      * @return \Illuminate\Http\Response
      */
+    public function getData(Request $req)
+    {
+        //get data user by id
+        $data = ManajemenForm::where('idForm', $req->get('idForm'))->get();
+        $data = (!empty($data[0]) ? $data[0] : "Data Tidak Ditemukan");
+
+        return response()->json($data);
+    }
+
     public function update(Request $request, ManajemenForm $manajemenForm)
     {
         
