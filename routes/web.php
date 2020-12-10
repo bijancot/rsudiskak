@@ -86,9 +86,10 @@ Route::group(['middleware' => ['auth', 'cekRole:3']], function () {
     Route::post('logActivities/cari', 'LoggingController@getDataByDate');
 
     Route::post('manajemen_form', 'ManajemenFormController@store');
-    Route::patch('manajemen_form/{manajemenForm}/update', 'ManajemenFormController@update');
+    Route::post('manajemen_form/update', 'ManajemenFormController@update');
     Route::post('manajemen_form/{manajemenForm}/delete', 'ManajemenFormController@delete');
     Route::post('manajemen_form/checkIdDuplicate', 'ManajemenFormController@checkIdDuplicate');
+    Route::post('manajemen_form/getData', 'ManajemenFormController@getData');
 
     Route::post('uploadFile', 'UploadFileController@store');
     Route::post('dokumen', 'DokumenController@store');
