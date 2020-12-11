@@ -37,7 +37,7 @@
                                 <td>{{ $item['TglMasukPoli'] }}</td>
                                 <td data-label="Action" class="d-flex flex-row p-lg-1">
                                     <a href="{{url('lihatFormPengkajian/'.$item['IdFormPengkajian'].'/'.$item['NoCM'].'/'.$item['NoPendaftaran'].'/'.$item['TglMasukPoli'])}}" class="btn btn-primary"><i class="fas fa-eye"></i> Lihat Form</a>
-                                    <a href="{{url('printRiwayat/'.$item['IdFormPengkajian'].'/'.$item['NoCM'].'/'.$item['NoPendaftaran'].'/'.$item['TglMasukPoli'])}}" target='_blank' class="btn diagnosa"><i class="fas fa-print"></i> Print</a>
+                                    <a href="{{url('printPreview/'.$item['NoCM'].'/'.$item['NoPendaftaran'].'/'.$item['TglMasukPoli'])}}" target='_blank' class="btn diagnosa"><i class="fas fa-print"></i> Print</a>
                                     <a href="#" data-toggle="modal" data-target="#modal_hapus" data-nopendaftaran="{{$item['NoPendaftaran']}}" data-nocm="{{$item['NoCM']}}" data-tanggal="{{$item['TglMasukPoli']}}" class="btn hapus-data batal">Batal Verifikasi</a>
                                     
                                     <!-- <a href="profilRingkas/{{ $item['NoPendaftaran'] }}" target="_blank" class="btn diagnosa ml-auto">Profil Ringkas</a> -->
