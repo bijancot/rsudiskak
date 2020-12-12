@@ -41,7 +41,7 @@ class RiwayatController extends Controller
         $lihatForm = "";
         foreach ($listriwayat as $data) {
             $lihatForm = "<a href='lihatFormPengkajian/" . $data['IdFormPengkajian'] . "/" . $data['NoCM'] . "/" . $data['NoPendaftaran'] . "/" . $data['TglMasukPoli'] . "' class='btn btn-primary'><i class='fas fa-eye'></i> Lihat Form</a>";
-            $action = "<a href='printRiwayat/" . $data['IdFormPengkajian'] . "/" . $data['NoCM'] . "/" . $data['NoPendaftaran'] . "/" . $data['TglMasukPoli'] . "' target='_blank' class='btn diagnosa'><i class='fas fa-print'></i> Print</a>";
+            $action = "<a href='printPreview/" . $data['NoCM'] . "/" . $data['NoPendaftaran'] . "/" . $data['TglMasukPoli'] . "' target='_blank' class='btn diagnosa'><i class='fas fa-print'></i> Print</a>";
             if (Auth::user()->Role == '003') {
                 $ver = "<a href='#' data-toggle='modal' data-target='#modal_hapus' data-nopendaftaran='" . $data['NoPendaftaran'] . "' data-nocm='" . $data['NoCM'] . "' data-tanggal='" . $data['TglMasukPoli'] . "' class='btn hapus-data batal'>Batal Verifikasi</a>";
             }
@@ -349,5 +349,14 @@ class RiwayatController extends Controller
             return 'Halaman yang anda tuju tidak ada';
         }
         // return view('pages.formPengkajian.pengkajianAwalPasien', $no_cm);
+    }
+    public function printPreview($NoCM, $noPendaftaran, $tglMasukPoli){
+        $data = [
+            'NoCM' => $NoCM,
+            'NoPendaftaran' => $noPendaftaran,
+            'TglMasukPoli' => $tglMasukPoli
+        ];
+
+        return view('pages.print.printPreview', $data);
     }
 }

@@ -188,6 +188,7 @@ Route::get('lihatFormPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}'
 // Route::get('riwayatPasienUlang/{tgl}/{no_pendaftaran}', 'RiwayatController@printRiwayatUlang');
 
 Route::get('printRiwayat/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'RiwayatController@printRiwayat');
+Route::get('printPreview/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'RiwayatController@printPreview');
 
 // ============ TEMPLATE FRONT END
 

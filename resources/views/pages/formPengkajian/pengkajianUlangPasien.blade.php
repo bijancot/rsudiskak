@@ -124,7 +124,7 @@
                         <tr>
                             <td>{{ $item['NoPendaftaran'] }}</td>
                             <td>{{date_format($date, 'd/m/Y - h:i')}}</td>
-                            <td><a href="#"><i class="fas fa-eye"></i> Lihat </a>
+                            <td><a href="#" onClick="previewPDF('{{$item['NoCM']}}', '{{$item['NoPendaftaran']}}', '{{$item['TglMasukPoli']}}');" data-lihatNoCM="{{$item['NoCM']}}" class="clickLihat"><i class="fas fa-eye"></i> Lihat </a>
                             </td>
                         </tr>
                         @endif
@@ -136,7 +136,7 @@
                         <tr>
                             <td>{{ $item['NoPendaftaran'] }}</td>
                             <td>{{date_format($date, 'd/m/Y - h:i')}}</td>
-                            <td><a href="#"><i class="fas fa-eye"></i> Lihat </a>
+                            <td><a href="#" onClick="previewPDF('{{$item['NoCM']}}', '{{$item['NoPendaftaran']}}', '{{$item['TanggalMasuk']}}');" data-noCM="{{$item['NoCM']}}" class="clickLihat"><i class="fas fa-eye"></i> Lihat </a>
                             </td>
                         </tr>
                     @endforeach 
@@ -145,7 +145,8 @@
                 <h4>
                     Preview
                 </h4>
-                <embed src="{{ URL::asset('dokumenRM/11600094/1603100066_2020-12-07_1603100066_2020-12-07_listRiwayatAwal_2011240007.pdf') }}" width="100%" height="300px" />
+                <div class="arema1"></div> 
+                <!-- <embed src="{{ URL::asset('dokumenRM/11600094/1603100066_2020-12-07_1603100066_2020-12-07_listRiwayatAwal_2011240007.pdf') }}" width="100%" height="300px" /> -->
             </div>
         </div>
     </div>
@@ -952,5 +953,18 @@
                 "paging": false,
                 "order": [[ 1, "desc" ]]
             } );
+            
+            function previewPDF(noCM, noPendaftaran, tahun){
+                
+                // let NoCM = $('.clickLihat').data('lihatNoCM');
+                let date = noCM+"/"+noPendaftaran+"_"+tahun+".pdf";
+                // alert(date);
+                // var test ="URL::asset('"+date+"')";
+                // alert(test);
+                var str = "<embed src='{{ URL::asset('dokumenRM/') }}/"+noCM+"/"+noPendaftaran+"_"+tahun+".pdf' width='100%' height='300px' />";
+                // // // // noPendaftaran + ' ' + noCM+ ' ' + thn;
+                $('.arema1').html(str);
+                
+            }
         </script>
 @endsection
