@@ -165,7 +165,7 @@
             </div>
             <div class="content soft-shadow">
                 <div class="p-3">
-                    <p class="h4">Data Pasien<a href="/profilRingkas/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}/{{$dataMasukPoli['TglMasukPoli']}}" target="_blank" class="btn btn-primary print_button" id="print_button" hidden>Print</a></p>
+                    <p class="h4">Data Pasien<a href="/profilRingkas/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}/{{$dataMasukPoli['TglMasukPoli']}}" target="_blank" class="btn btn-primary print_button float-right" id="print_button" hidden>Print</a></p>
                 </div>
                 <hr>
                 <div class="row p-3 py-4">

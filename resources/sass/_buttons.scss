@@ -40,15 +40,20 @@
 
 .capsule-btn {
     background: $grey4;
-    color: white;
+    color: #5d5d5d;
     padding: 8px 16px;
     
     border: 2px solid $outlinegrey;
     
     &.active {
+        color: white;
         background: $green;
     }
+    &.active:hover {
+        color: #5d5d5d;
+    }
     &.secondary {
+        color: white;
         background: $grey3;
     }
 
