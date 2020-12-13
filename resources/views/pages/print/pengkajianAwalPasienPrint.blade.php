@@ -39,6 +39,28 @@ $inputTanggalMasukPoli = $listRiwayat['TglWaktuMasukPoli'];
 $JamMasuk = strtotime($inputJamMasukPoli);
 $TglMasuk = strtotime($inputTanggalMasukPoli);
 $TglLahir = strtotime($inputTglLahir); 
+$TglLahir2 = date('Y-m-d', $TglLahir);
+$TglMasuk2 = date('Y-m-d', $TglMasuk);
+
+function tgl_indo($tanggal){
+	$bulan = array (
+		1 =>   'Januari',
+		'Februari',
+		'Maret',
+		'April',
+		'Mei',
+		'Juni',
+		'Juli',
+		'Agustus',
+		'September',
+		'Oktober',
+		'November',
+		'Desember'
+	);
+	$pecahkan = explode('-', $tanggal);
+	
+	return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+}
 
 ?>
 <div class="float-right" style="font-size:12px;">RM 02 a</div> <br>&nbsp;<br>
@@ -60,8 +82,8 @@ $TglLahir = strtotime($inputTglLahir);
             </td>
             <td colspan=3>
                 <p style="font-size:10px">No. RM : {{ $listRiwayat['NoCM']}}</p>
-                <p style="font-size:10px">Tgl Lahir : <?php echo date('d F Y', $TglLahir); ?> / {{ $listRiwayat['Umur']}}</p>
-                <p style="font-size:10px">Tgl Masuk : <?php echo date('d F Y', $TglMasuk); ?> Jam: <?php echo date('H:i', $JamMasuk); ?></p>
+                <p style="font-size:10px">Tgl Lahir : <?php echo tgl_indo($TglLahir2); ?> / {{ $listRiwayat['Umur']}}</p>
+                <p style="font-size:10px">Tgl Masuk : <?php echo tgl_indo($TglMasuk2); ?> Jam: <?php echo date('H:i', $JamMasuk); ?></p>
             </td>
         </tr>
         <tr>
@@ -186,8 +208,8 @@ $TglLahir = strtotime($inputTglLahir);
             <td>
                 Kode ICD 9 CM<br>
                 <?php
-                    if(isset($listRiwayat['DataPengkajian']['PengkajianMedis']['KodeICD10']['KodeDiagnosaT'])){
-                        $ICD9 = $listRiwayat['DataPengkajian']['PengkajianMedis']['KodeICD10']['KodeDiagnosaT'];
+                    if(isset($listRiwayat['DataPengkajian']['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'])){
+                        $ICD9 = $listRiwayat['DataPengkajian']['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
                         $arrICD9=explode(";",$ICD9);
                         foreach($arrICD9 as $dataICD9){echo $dataICD9.'<br>';}  
                     }else{
@@ -245,7 +267,7 @@ $TglLahir = strtotime($inputTglLahir);
             <td colspan=2 style="text-align:center">Telah Dikode</td>
             <td colspan=2 style="text-align:center">Legalisasi Severity</td>
             <td colspan=2 rowspan=3 style="text-align:center">
-                Tulungagung, <?php echo date('d F Y', $TglMasuk)?><br>
+                Tulungagung, <?php echo tgl_indo($TglMasuk2);?><br>
                 Dokter<br>
             </td>
         </tr>
@@ -257,9 +279,9 @@ $TglLahir = strtotime($inputTglLahir);
             <td style="text-align:center" colspan=2>Komite Medis</td>
         </tr>
         <tr>
-            <td style="text-align:center"><?php echo date('d F Y', $TglMasuk)?>&nbsp;<br>&nbsp;<br></td>
+            <td style="text-align:center"><?php echo tgl_indo($TglMasuk2);?>&nbsp;<br>&nbsp;<br></td>
             <td><br></td>
-            <td style="text-align:center"><?php echo date('d F Y', $TglMasuk)?><br></td>
+            <td style="text-align:center"><?php echo tgl_indo($TglMasuk2);?><br></td>
             <td><br></td>
             <td colspan=2><br></td>
         </tr>
