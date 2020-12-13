@@ -402,7 +402,7 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="kodeICD10">Diagnosa (A)</label>
-                                            <textarea class="form-control"></textarea>
+                                            <textarea class="form-control" name="PengkajianMedis[Diagnosa(A)]">{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa(A)']) ? $dataPengkajian['PengkajianMedis']['Diagnosa(A)'] : '')}}</textarea>
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="komplikasi">Komplikasi</label>

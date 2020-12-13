@@ -122,7 +122,7 @@
 
                     @endphp
                     <tr>
-                        <td>{{ $item['NoCM'] }}</td>
+                        <td>{{ $item['NoPendaftaran'] }}</td>
                         <td>{{date_format($date, 'd/m/Y - h:i')}}</td>
                         <td><a href="#" onClick="previewPDF('{{$item['NoCM']}}', '{{$item['NoPendaftaran']}}', '{{$item['TglMasukPoli']}}');" data-lihatNoCM="{{$item['NoCM']}}" class="clickLihat"><i class="fas fa-eye"></i> Lihat </a>
                         </td>
@@ -134,7 +134,7 @@
                         $date = date_create($item['TanggalMasuk']);
                     @endphp
                     <tr>
-                        <td>{{ $item['NoCM'] }}</td>
+                        <td>{{ $item['NoPendaftaran'] }}</td>
                         <td>{{date_format($date, 'd/m/Y - h:i')}}</td>
                         <td><a href="#" onClick="previewPDF('{{$item['NoCM']}}', '{{$item['NoPendaftaran']}}', '{{$item['TanggalMasuk']}}');" data-noCM="{{$item['NoCM']}}" class="clickLihat"><i class="fas fa-eye"></i> Lihat </a>
                         </td>
@@ -621,7 +621,7 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="kodeICD10">Diagnosa (A)</label>
-                                            <textarea class="form-control"></textarea>
+                                            <textarea name="PengkajianMedis[Diagnosa(A)]" class="form-control">{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa(A)']) ? $dataPengkajian['PengkajianMedis']['Diagnosa(A)'] : '')}}</textarea>
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="komplikasi">Komplikasi</label>

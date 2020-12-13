@@ -168,8 +168,8 @@
                                     </td>
                                     <td data-label="Action" class="d-flex flex-row p-lg-1">
                                         @if ($poli['StatusPengkajian'] == 0)
-                                            {{-- <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form Pengkajian</a> --}}
-                                            <a data-toggle="modal" data-target="#modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn diagnosa {{$isDisabled}}">Pilih Form Pengkajian</a>
+                                            {{-- <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form</a> --}}
+                                            <a data-toggle="modal" data-target="#modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn diagnosa {{$isDisabled}}">Pilih Form</a>
                                         @else
                                             <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'].'/'.$poli['TglMasukPoli'])}}" class="btn diagnosa {{$isDisabled}}">Isi Form</a>
                                             <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm {{$isDisabled}}">Batal Form</a>
@@ -194,8 +194,8 @@
                                         </td>
                                         <td data-label="Action" class="d-flex flex-row p-lg-1">
                                             @if ($poli['StatusPengkajian'] == 0)
-                                                {{-- <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form Pengkajian</a> --}}
-                                                <a data-toggle="modal" data-target="#modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn diagnosa {{$isDisabled}}">Pilih Form Pengkajian</a>
+                                                {{-- <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form</a> --}}
+                                                <a data-toggle="modal" data-target="#modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn diagnosa {{$isDisabled}}">Pilih Form</a>
                                             @else
                                                 <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'].'/'.$poli['TglMasukPoli'])}}" class="btn diagnosa {{$isDisabled}}">Isi Form</a>
                                                 <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm {{$isDisabled}}">Batal Form</a>
@@ -446,6 +446,7 @@
                         $('#modal_success').modal('toggle')    
                 @endif
             @endif
+            
             @if(session('statusDuplikatMasukPoli'))
                 @if(session('statusDuplikatMasukPoli') == true)
                         // alert Notification
@@ -453,6 +454,15 @@
                         $('#modal_gagal').modal('toggle')    
                 @endif
             @endif
+
+            @if(session('statusBatalPilihForm'))
+                @if(session('statusBatalPilihForm') == 'success')
+                        // alert Notification
+                        $('#msg_modal').html('Berhasil Batal <br> Pilih Form');
+                        $('#modal_success').modal('toggle')    
+                @endif
+            @endif
+
         });
 
         $('.datepicker').datepicker({

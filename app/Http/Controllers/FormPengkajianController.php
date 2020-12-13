@@ -137,7 +137,7 @@ class FormPengkajianController extends Controller
             // if ($dataMasukPoli['IdFormPengkajian'] != $idForm) {
             //     return redirect('formPengkajian/' . $dataMasukPoli['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran . '/' . $tglMasukPoli);
             // }
-            $dataRiwayat        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->get();
+            $dataRiwayat        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('StatusPengkajian', '2')->get();
             $dataDokumen        = DB::collection('dokumen_' . $NoCM)->whereNotNull('Status')->get();
             /**
              * Get Data dari Collection menggunakan Eloquent ORM 
@@ -778,6 +778,6 @@ class FormPengkajianController extends Controller
 
         $logging->toLogging('batal', 'PilihForm', $req->get('NoPendaftaran'), $req->get('NoCM'));
 
-        return redirect('/listPasien');
+        return redirect('/listPasien')->with('status', 'success')->with('statusBatalPilihForm', 'success');
     }
 }

@@ -227,11 +227,13 @@ class RiwayatController extends Controller
         DB::collection('pasien_' . $req->get('NoCM'))
             ->where('NoPendaftaran', $req->get('NoPendaftaran'))
             ->where('TglMasukPoli', $req->get('TglMasukPoli'))
+            ->whereNotNull('StatusPengkajian')
             ->where('deleted_at', null)->update(['StatusPengkajian' => '1']);
-        DB::collection('transaksi_' . $req->get('TglMasukPoli'))
+            DB::collection('transaksi_' . $req->get('TglMasukPoli'))
             ->where('NoCM', $req->get('NoCM'))
             ->where('NoPendaftaran', $req->get('NoPendaftaran'))
             ->where('TglMasukPoli', $req->get('TglMasukPoli'))
+            ->whereNotNull('StatusPengkajian')
             ->where('deleted_at', null)
             ->update(['StatusPengkajian' => '1']);
         // print($req->get('NoPendaftaran'));
