@@ -584,7 +584,30 @@ class FormPengkajianController extends Controller
             // Storage::makeDirectory('public/dokumenRM/' . $no_cm);
             // Storage::makeDirectory('public/dokumenRM/' . $no_cm . '/' . $noPendaftaran);
 
+            // register nocm into listDokumen
+            $statusData = DB::collection('listDokumen')->where('NoCM', $PrintPasien['NoCM'])->get();
+
+            if(empty($statusData[0])){
+                DB::collection('listDokumen')->insert(['NoCM' => $PrintPasien['NoCM'], 'NamaLengkap' => $PrintPasien['NamaLengkap']]);
+            }
+
+            // insert into collection dokumen_{NoCM}
             $destination    = 'dokumenRM/' . $no_cm;
+
+            $dataDokumenInsert = [
+                'NoCM' => $PrintPasien['NoCM'],
+                'NoPendaftaran' => $PrintPasien['NoPendaftaran'],
+                'NamaLengkap' => $PrintPasien['NamaLengkap'],
+                'KodeRuangan' => $PrintPasien['KdRuangan'],
+                'TanggalMasuk' => $PrintPasien['TglMasukPoli'],
+                'Status' => '1',
+                'NamaFile' => $destination. '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf',
+                'NamaRuangan' => $PrintPasien['Ruangan']
+            ];
+
+            DB::collection('dokumen_'.$PrintPasien['NoCM'])->insert($dataDokumenInsert);
+
+            // generate file and upload
 
             $dataF = $dataForm[0]['namaFile'] . 'Print';
             $dataZ = str_replace("formPengkajian", "print", $dataF);
@@ -603,7 +626,6 @@ class FormPengkajianController extends Controller
             //
 
         }
-
 
         return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
 

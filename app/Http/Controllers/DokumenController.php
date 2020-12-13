@@ -145,7 +145,7 @@ class DokumenController extends Controller
         $destination = 'dokumenRM/'.$req->get('NoCM');
         $deleteDate = date('Ymdhis');
         $namaFileOld = $destination.'/'.$req->get('NoPendaftaran').'_'.$req->get('TanggalMasuk').'.pdf';
-        $namaFileNew = $destination.'/(deleted)_'.$req->get('NoPendaftaran').'_'.$req->get('TanggalMasuk').'pdf';
+        $namaFileNew = $destination.'/(deleted at '.$deleteDate.' )_'.$req->get('NoPendaftaran').'_'.$req->get('TanggalMasuk').'pdf';
 
         //move to deleted directory
         File::move($namaFileOld, $namaFileNew);

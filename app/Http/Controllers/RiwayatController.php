@@ -242,8 +242,24 @@ class RiwayatController extends Controller
         // print('<br>');
         // print($req->get('TglMasukPoli'));
 
-        $file_path = public_path('dokumenRM/' . $req->get('NoCM') . '/' . $req->get('NoPendaftaran') . '_' . $req->get('TglMasukPoli') . '.pdf');
-        File::delete($file_path);
+        // delete data on collection dokumen_{no_cm}
+        $destination = 'dokumenRM/'.$req->get('NoCM');
+        $deleteDate = date('Ymdhis');
+        $namaFileOld = $destination.'/'.$req->get('NoPendaftaran').'_'.$req->get('TglMasukPoli').'.pdf';
+        $namaFileNew = $destination.'/(deleted at '.$deleteDate.' )_'.$req->get('NoPendaftaran').'_'.$req->get('TglMasukPoli').'.pdf';
+
+        //move to deleted directory
+        File::move($namaFileOld, $namaFileNew);
+        
+        // delete data
+        DB::collection('dokumen_'.$req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->update(['Status' => null, 'NamaFile' => $namaFileNew]);
+        
+        
+        // DB::collection('dokumen_'. $req->get('NoCM'))->where('NoCM', $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->delete();
+
+        // // delete file
+        // $file_path = public_path('dokumenRM/' . $req->get('NoCM') . '/' . $req->get('NoPendaftaran') . '_' . $req->get('TglMasukPoli') . '.pdf');
+        // File::delete($file_path);
 
         return redirect('/historicalList');
     }
