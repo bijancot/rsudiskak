@@ -86,7 +86,7 @@
                                 $date = date_create($item['created_at']);
                             @endphp
                                 <tr>
-                                    <td data-label="Tanggal-Waktu">{{ date_format($date,"d/m/Y - H:m")}}</td>
+                                    <td data-label="Tanggal-Waktu">{{ date_format($date,"d/m/Y - H:i:s")}}</td>
                                     <td data-label="IdUser">{{ $item['id_user'] }}</td>
                                     <td data-label="User">{{ $item['nama_user'] }}</td>
                                     <td data-label="Role">{{ $role }}</td>

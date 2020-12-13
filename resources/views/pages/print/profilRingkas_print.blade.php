@@ -38,7 +38,35 @@
 ?>
 @php
     $dataPengkajian = $dataRiwayatDetail['DataPengkajian'];
+    $inputTglLahir = $dataMasukPoli['UmurTahun']; 
+    $inputTanggalMasukPoli = $dataMasukPoli['TglMasuk'];
+    $TglMasuk = strtotime($inputTanggalMasukPoli);
+    $TglLahir = strtotime($inputTglLahir); 
+    $TglLahir2 = date('Y-m-d', $TglLahir);
+    $TglMasuk2 = date('Y-m-d', $TglMasuk);
+
+    function tgl_indo($tanggal){
+        $bulan = array (
+            1 =>   'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        );
+        $pecahkan = explode('-', $tanggal);
+        
+        return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+    }
 @endphp
+<div class="float-right" style="font-size:12px;">RM 01 </div> <br>&nbsp;<br>
+
     <table>
         <tr>
             <td style="text-align:center" colspan=2>
@@ -60,8 +88,8 @@
                     $date = date_create($dataMasukPoli['TglMasuk']);
                 @endphp
                 <p style="font-size:11px">No. RM : {{ $dataMasukPoli['NoCM'] }}</p>
-                <p style="font-size:11px">Tgl Lahir : {{ $dataMasukPoli['UmurTahun'] }}</p>
-                <p style="font-size:11px">Tgl Masuk : {{ date_format($date,"d/m/Y")}}</p>
+                <p style="font-size:11px">Tgl Lahir : <?php echo tgl_indo($TglLahir2); ?> / {{ $dataMasukPoli['Umur'] }}</p>
+                <p style="font-size:11px">Tgl Masuk : {{ tgl_indo($TglMasuk2) }}</p>
             </td>
         </tr>
         <tr>
@@ -80,7 +108,7 @@
                     Riwayat Alergi : 
                     <?php
                         foreach($dataRiwayatAlergi as $item){
-                            if($item['DataPengkajian']['PengkajianKeperawatan']['Alergi']!=null){
+                            if($item['DataPengkajian']['PengkajianKeperawatan']['Alergi']!=null OR $item['DataPengkajian']['PengkajianKeperawatan']['Alergi']!='-'){
                                 $riwayatAlergi[]=$item['DataPengkajian']['PengkajianKeperawatan']['Alergi'];
                             }
                         }
@@ -110,12 +138,13 @@
         
         <?php $i = 1; ?>
         @foreach ($dataRiwayat as $item)
+            @if($item['StatusPengkajian']=='2')
         @php
-            $no=0;
+            
             $date = date_create($item['TglWaktuMasukPoli']);
         @endphp
         <tr>
-            <td style="text-align:center">{{ $loop->iteration }}</td>
+            <td style="text-align:center">{{ $i++ }}</td>
             <td style="text-align:center">{{date_format($date, 'd/m/Y - h:i')}}</td>
             <td style="text-align:center">{{$item['Ruangan']}}</td>
             @php
@@ -132,6 +161,7 @@
             @endif
             </td>
         </tr>
+            @endif
         @endforeach
     </table>
 </body>
