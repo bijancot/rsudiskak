@@ -158,7 +158,7 @@
         </script>
 
     </head>
-    <body class="m-0">
+    <body>
         <div class="bg-white">
             @yield ('content')
         </div>
