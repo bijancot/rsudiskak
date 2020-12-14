@@ -79,7 +79,7 @@
                 <form id="form-pengkajian" action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, $tglMasukPoli])}}" class="needs-validation" method="POST" novalidate>
                     @csrf
                     <div class="content mt-3 soft-shadow collapsible">
-                        <div class="p-3 collapsible-head inactive">
+                        <div class="p-3 collapsible-head inactive" style="cursor: pointer;">
                             <p class="h6">I. Pengkajian Keperawatan <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
                         </div>
                         <hr>
@@ -218,7 +218,7 @@
                         </div>
                     </div>
                     <div class="content mt-3 soft-shadow collapsible">
-                        <div class="p-3 collapsible-head inactive">
+                        <div class="p-3 collapsible-head inactive" style="cursor: pointer;">
                             <p class="h6">II. Pengkajian Medis <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
                         </div>
                         <hr>

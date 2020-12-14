@@ -528,10 +528,13 @@ class FormPengkajianController extends Controller
         if ($dataMasukPoli['StatusPengkajian'] == "0") {
             // Logging belum Verifikasi, form belum pernah diisi (baru masuk)
             $logging->toLogging('save', 'FormPengkajian', 'Isi Form Pengkajian', $no_cm);
+            return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
             //
+
         } else if ($statusPengkajian == "1") {
             // Logging belum Verifikasi, form sudah pernah diisi 
             $logging->toLogging('update', 'FormPengkajian', $updateData, $no_cm);
+            return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
             //
 
         } else if ($statusPengkajian == "2") {
@@ -596,7 +599,7 @@ class FormPengkajianController extends Controller
             // register nocm into listDokumen
             $statusData = DB::collection('listDokumen')->where('NoCM', $PrintPasien['NoCM'])->get();
 
-            if(empty($statusData[0])){
+            if (empty($statusData[0])) {
                 DB::collection('listDokumen')->insert(['NoCM' => $PrintPasien['NoCM'], 'NamaLengkap' => $PrintPasien['NamaLengkap']]);
             }
 
@@ -610,11 +613,11 @@ class FormPengkajianController extends Controller
                 'KodeRuangan' => $PrintPasien['KdRuangan'],
                 'TanggalMasuk' => $PrintPasien['TglMasukPoli'],
                 'Status' => '1',
-                'NamaFile' => $destination. '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf',
+                'NamaFile' => $destination . '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf',
                 'NamaRuangan' => $PrintPasien['Ruangan']
             ];
 
-            DB::collection('dokumen_'.$PrintPasien['NoCM'])->insert($dataDokumenInsert);
+            DB::collection('dokumen_' . $PrintPasien['NoCM'])->insert($dataDokumenInsert);
 
             // generate file and upload
 
@@ -633,10 +636,10 @@ class FormPengkajianController extends Controller
                 ->save(public_path() . '/dokumenRM/' . $no_cm . '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf');
             // ->stream('Nama_File.pdf');
             //
-
+            return redirect('lihatformPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
         }
 
-        return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
+        // return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
 
         /**
          *  Deprecated

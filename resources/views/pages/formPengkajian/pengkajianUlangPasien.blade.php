@@ -13,7 +13,7 @@
             </div>
             <hr>
             <div class="content mt-3 soft-shadow collapsible">
-                <div class="p-3 collapsible-head inactive" id="upload_section">
+                <div class="p-3 collapsible-head inactive" id="upload_section" style="cursor: pointer;">
                     <p class="h6">
                         <i class="fa fa-upload" style="color: #0F4F2C;"></i>
                         Upload Dokumen
@@ -216,7 +216,7 @@
                 @endphp
                 <form id="form-pengkajian" action="{{action('FormPengkajianController@storeFormPengkajian', [$idForm, $NoCM, $noPendaftaran, $tglMasukPoli])}}" class="needs-validation" method="POST" novalidate>
                     @csrf
-                    <div class="content mt-3 soft-shadow collapsible">
+                    <div class="content mt-3 soft-shadow collapsible" style="cursor: pointer;">
                         <div class="p-3 collapsible-head inactive">
                             <p class="h6">I. Pengkajian Keperawatan <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
                         </div>
@@ -355,7 +355,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content mt-3 soft-shadow collapsible">
+                    <div class="content mt-3 soft-shadow collapsible" style="cursor: pointer;">
                         <div class="p-3 collapsible-head inactive">
                             <p class="h6">II. Pengkajian Medis <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
                         </div>
