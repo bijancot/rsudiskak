@@ -805,7 +805,7 @@
                     }else{
                         $('#fileExtension_isNull').css('display', 'none');
                         if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && fileVal != "" && noPendaftaranCheckValid == '1' && noCmCheckValid == '1'){
-                            // $('#form-tambah').submit();
+                            $('#form-tambah').submit();
                         }
                     }
     

@@ -96,7 +96,7 @@ Route::group(['middleware' => ['auth', 'cekRole:3']], function () {
     // Route::post('dokumen/getData', 'DokumenController@getData');
     // Route::post('dokumen/update', 'DokumenController@update');
     Route::post('dokumen/delete', 'DokumenController@delete');
-    Route::post('dokumen/download', 'DokumenController@download');
+    
     Route::post('dokumen/checkIdDuplicate', 'DokumenController@checkIdDuplicate');
 });
 
@@ -157,6 +157,7 @@ Route::post('dokumen/checkNoCmIsNull', 'DokumenController@checkNoCmIsNull');
 // Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
 //     Route::get('logActivities', 'LoggingController@index');
 // });
+Route::post('dokumen/download', 'DokumenController@download');
 
 Route::post('dokumen/getData', 'DokumenController@getData');
 // Route::get('riwayatPasien', 'RiwayatController@riwayatPasien');
