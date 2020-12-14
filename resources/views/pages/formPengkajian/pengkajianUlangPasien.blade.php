@@ -115,7 +115,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($dataRiwayat as $item)
+                    {{-- @foreach ($dataRiwayat as $item)
                         @if($item['StatusPengkajian']=='2')
 
                         @php
@@ -128,7 +128,7 @@
                             </td>
                         </tr>
                         @endif
-                    @endforeach
+                    @endforeach --}}
                     @foreach ($dataDokumen as $item)
                         @php
                             $date = date_create($item['TanggalMasuk']);
