@@ -636,7 +636,7 @@ class FormPengkajianController extends Controller
                 ->save(public_path() . '/dokumenRM/' . $no_cm . '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf');
             // ->stream('Nama_File.pdf');
             //
-            return redirect('lihatformPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
+            return redirect('lihatFormPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
         }
 
         // return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
