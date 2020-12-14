@@ -395,8 +395,8 @@
                                         <hr>
                                         </div>
                                         <div class="col-8 mt-3 mt-lg-0">
-                                            <label for="nopendaftaran">Berat Badan <span>*</span></label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[BeratBadan]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['BeratBadan']) ? $dataPengkajian['PengkajianKeperawatan']['BeratBadan'] : '')}}" >
+                                            <label for="nopendaftaran">Berat Badan <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[BeratBadan]" value="{{(!empty($dataBB['DataPengkajian']['PengkajianKeperawatan']['BeratBadan']) ? $dataBB['DataPengkajian']['PengkajianKeperawatan']['BeratBadan'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Berat Badan Harus Diisi.
                                             </div>
@@ -407,8 +407,8 @@
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Tinggi Badan <span>*</span></label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[TinggiBadan]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TinggiBadan']) ? $dataPengkajian['PengkajianKeperawatan']['TinggiBadan'] : '')}}" >
+                                            <label for="nopendaftaran">Tinggi Badan <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TinggiBadan]" value="{{(!empty($dataBB['DataPengkajian']['PengkajianKeperawatan']['TinggiBadan']) ? $dataBB['DataPengkajian']['PengkajianKeperawatan']['TinggiBadan'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Tinggi Badan Harus Diisi.
                                             </div>

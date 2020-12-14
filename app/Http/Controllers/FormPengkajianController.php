@@ -126,6 +126,14 @@ class FormPengkajianController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->first();
 
+            $dataBB = DB::collection('pasien_' . $NoCM)
+                ->where('NoPendaftaran', $noPendaftaran)
+                ->whereNotNull('StatusPengkajian')
+                ->where('StatusPengkajian', '!=', '0')
+                ->where('deleted_at', null)
+                ->orderBy('created_at', 'desc')
+                ->first();
+
             // dump($dataMasukPoli);
 
             /**
@@ -250,6 +258,7 @@ class FormPengkajianController extends Controller
                 'tglMasukPoli'      => $tglMasukPoli,
                 'dataRiwayat'       => $dataRiwayat,
                 'dataDokumen'       => $dataDokumen,
+                'dataBB'       => $dataBB,
                 'diagnosa'          => $diagnosa,
                 'diagnosaT'         => $diagnosaT,
                 'ICD10T'            => $ICD10T,
