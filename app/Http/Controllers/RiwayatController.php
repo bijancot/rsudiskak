@@ -261,7 +261,7 @@ class RiwayatController extends Controller
         // $file_path = public_path('dokumenRM/' . $req->get('NoCM') . '/' . $req->get('NoPendaftaran') . '_' . $req->get('TglMasukPoli') . '.pdf');
         // File::delete($file_path);
 
-        return redirect('/historicalList');
+        return redirect('/historicalList')->with('isBatalVerif', true);
     }
 
     public function formPengkajian($idForm, $NoCM, $noPendaftaran, $tglMasukPoli)

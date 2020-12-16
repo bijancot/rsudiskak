@@ -66,7 +66,7 @@ class ManajemenUserController extends Controller
         }
 
         User::insert($data);
-        return redirect('m_user');
+        return redirect('m_user')->with('isCreate', true);
     }
     public function update(Request $req)
     {
@@ -97,7 +97,7 @@ class ManajemenUserController extends Controller
         }
 
         User::where('ID', $IDOld)->update($data);
-        return redirect('m_user');
+        return redirect('m_user')->with('isUpdate', true);
     }
     public function getData(Request $req)
     {
@@ -122,7 +122,7 @@ class ManajemenUserController extends Controller
     public function destroy(Request $req)
     {
         User::where('ID', $req->get('ID_hapus'))->delete();
-        return redirect('m_user');
+        return redirect('m_user')->with('isDelete', true);
     }
     public function ubahPassword()
     {

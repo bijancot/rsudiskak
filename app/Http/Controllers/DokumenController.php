@@ -106,7 +106,7 @@ class DokumenController extends Controller
 
         // assignment redirect
         if($redirectPage == 'dokumen'){
-            return redirect($redirectPage);
+            return redirect($redirectPage)->with('isCreate', true);
         }else{
             return redirect($redirectPage);
         }
@@ -152,7 +152,7 @@ class DokumenController extends Controller
         
         // delete data
         DB::collection('dokumen_'.$req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->update(['Status' => null, 'NamaFile' => $namaFileNew]);
-        return redirect('dokumen');
+        return redirect('dokumen')->with('isDelete', true);
     }
 
     public function getData(Request $req){

@@ -608,6 +608,11 @@
                 $('#section-form').css('display', 'none');
                 
             });    
+            // notification save data
+            @if(!empty(session('isSaveRM')))
+                $('#msg_modal').html('Berhasil Menyimpan <br> Data Rekam Medis');
+                $('#modal_success').modal('toggle')    
+            @endIf
             
         })
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {

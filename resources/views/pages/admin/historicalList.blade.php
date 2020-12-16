@@ -91,6 +91,12 @@
                 $('#NoCM').val(NoCM);
                 $('#TglMasukPoli').val(TglMasukPoli);
             })
+
+            // notification batal verifkasi
+            @if(!empty(session('isBatalVerif')))
+                $('#msg_modal').html('Berhasil <br> Batal Verifikasi');
+                $('#modal_success').modal('toggle')   
+            @endIf
         });
         
     </script>

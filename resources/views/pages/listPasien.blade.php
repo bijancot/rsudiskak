@@ -465,6 +465,14 @@
                 @endif
             @endif
 
+            @if(session('statusBatalPeriksa'))
+                @if(session('statusBatalPeriksa') == 'success')
+                        // alert Notification
+                        $('#msg_modal').html('Berhasil Membatalkan <br> Periksa Pasien');
+                        $('#modal_success').modal('toggle')    
+                @endif
+            @endif
+
             @if(!empty(session('dateMasukPoli')))
                 $('#date').show();
             @endif
