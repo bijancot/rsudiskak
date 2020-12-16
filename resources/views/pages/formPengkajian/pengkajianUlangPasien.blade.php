@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="namaFile" class="col-form-label">Upload File (.pdf)</label>
+                                <label for="namaFile" class="col-form-label">Upload File (.pdf; < 2Mb)</label>
                                 <div>
                                     <label for="file-upload1">
                                         <input id="fileTambah" type="file" name="file">
@@ -94,6 +94,9 @@
                                 <div id="fileExtension_isNull" class="alert alert-danger mt-4" role="alert" style="display: none;">
                                     Format file upload tidak sesuai
                                 </div>
+                                <div id="fileExtension_isMaxSize" class="alert alert-danger mt-4" role="alert" style="display: none;">
+                                    File melebihi batas maksimal
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -104,6 +107,9 @@
                         </div>
                     </form>
                 </div>
+            </div>
+            <div id="log-success" class="alert alert-success mt-4" role="alert" hidden>
+                Upload dokumen berhasil
             </div>
             <div class="content float-none">
             <table class="table table-bordered" id="sliderTable">
@@ -613,7 +619,11 @@
                 $('#msg_modal').html('Berhasil Menyimpan <br> Data Rekam Medis');
                 $('#modal_success').modal('toggle')    
             @endIf
-            
+
+            //notification isUploadData
+            @if(!empty(session('isUploadDokumen')))
+                $('#log-success').prop('hidden', false)
+            @endIf
         })
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");
@@ -806,11 +816,18 @@
                     let noPendaftaranCheckValid = $('#noPendaftaran_checkValid').val()
                     let noCmCheckValid = $('#noRekamMedis_checkValid').val()
                     if(fileExtension != 'pdf'){
+                        $('#fileExtension_isMaxSize').css('display', 'none');
                         $('#fileExtension_isNull').css('display', 'block');
                     }else{
                         $('#fileExtension_isNull').css('display', 'none');
-                        if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && fileVal != "" && noPendaftaranCheckValid == '1' && noCmCheckValid == '1'){
-                            $('#form-tambah').submit();
+                        let fileSize = parseInt(file[0].files[0].size)
+                        if(fileSize > 2000000){
+                            $('#fileExtension_isMaxSize').css('display', 'block');
+                        }else{
+                            $('#fileExtension_isMaxSize').css('display', 'none');
+                            if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && fileVal != "" && noPendaftaranCheckValid == '1' && noCmCheckValid == '1'){
+                                $('#form-tambah').submit();
+                            }
                         }
                     }
     

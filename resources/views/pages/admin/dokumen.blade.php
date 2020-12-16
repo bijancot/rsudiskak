@@ -114,7 +114,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="namaFile" class="col-form-label">Upload File (.pdf)</label>
+                        <label for="namaFile" class="col-form-label">Upload File (.pdf; < 2Mb)</label>
                         <div>
                             <label for="file-upload1">
                                 <input id="fileTambah" type="file" name="file">
@@ -128,6 +128,9 @@
                     <div class="form-group">
                         <div id="fileExtension_isNull" class="alert alert-danger mt-4" role="alert" style="display: none;">
                             Format file upload tidak sesuai
+                        </div>
+                        <div id="fileExtension_isMaxSize" class="alert alert-danger mt-4" role="alert" style="display: none;">
+                            File melebihi batas maksimal
                         </div>
                     </div>
                 </div>
@@ -347,11 +350,18 @@
             let noPendaftaranCheckValid = $('#noPendaftaran_checkValid').val()
             let noCmCheckValid = $('#noRekamMedis_checkValid').val()
             if(fileExtension != 'pdf'){
+                $('#fileExtension_isMaxSize').css('display', 'none');
                 $('#fileExtension_isNull').css('display', 'block');
             }else{
                 $('#fileExtension_isNull').css('display', 'none');
-                if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && fileVal != "" && noPendaftaranCheckValid == '1' && noCmCheckValid == '1'){
-                    $('#form-tambah').submit();
+                let fileSize = parseInt(file[0].files[0].size)
+                if(fileSize > 2000000){
+                    $('#fileExtension_isMaxSize').css('display', 'block');
+                }else{
+                    $('#fileExtension_isMaxSize').css('display', 'none');
+                    if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && fileVal != "" && noPendaftaranCheckValid == '1' && noCmCheckValid == '1'){
+                        $('#form-tambah').submit();
+                    }
                 }
             }
 
@@ -487,7 +497,6 @@
         }
 
         $('#modal_pratinjau').on('hide.bs.modal', function (e) {
-            alert("masuk")
         })
 
     })

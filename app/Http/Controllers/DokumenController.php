@@ -108,7 +108,7 @@ class DokumenController extends Controller
         if($redirectPage == 'dokumen'){
             return redirect($redirectPage)->with('isCreate', true);
         }else{
-            return redirect($redirectPage);
+            return redirect($redirectPage)->with('isUploadDokumen', true);
         }
     }
     public function update(Request $req){
