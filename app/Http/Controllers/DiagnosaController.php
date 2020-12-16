@@ -113,7 +113,7 @@ class DiagnosaController extends Controller
         }
     }
 
-    public function storePilihDokter(Request $request)
+    public function storePilihDokter(Request $request, $no_cm, $no_pendaftaran)
     {
         $getKdRuangan   = Auth::user()->KodeRuangan;
         $getIDPerawat   = Auth::user()->ID;
@@ -125,8 +125,6 @@ class DiagnosaController extends Controller
         $current_time       = date('H:i:s');
 
         $logging        = new LoggingController;
-        $no_cm          = $request->get('NoCM');
-        $no_pendaftaran = $request->get('NoPendaftaran');
 
         if ($no_cm) {
 
