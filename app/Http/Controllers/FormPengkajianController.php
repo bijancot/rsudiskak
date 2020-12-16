@@ -61,11 +61,14 @@ class FormPengkajianController extends Controller
     /**
      * Simpan pilihan form 
      */
-    public function storePilihForm(Request $req, $no_cm, $noPendaftaran)
+    public function storePilihForm(Request $req)
     {
 
         // $logging        = new LoggingController;
         date_default_timezone_set('Asia/Jakarta');
+        $no_cm          = $req->get('NoCM');
+        $noPendaftaran  = $req->get('NoPendaftaran');
+        $TglMasukPoli   = $req->get('TglMasukPoli');
 
         //get data pasien bersarakan nocm
         $dataMasukPoli = DB::collection('pasien_' . $no_cm)
