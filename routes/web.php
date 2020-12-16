@@ -110,7 +110,7 @@ Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
     Route::get('profilRingkas/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'RiwayatController@printProfilRingkas');
 
     Route::get('listPasien', 'PasienController@listPasien');
-    Route::get('listPasien/masukPoliRedirect', 'DiagnosaController@masukPoliRedirect');
+    Route::get('listPasien/masukPoliRedirect/{dateMasukPoli}', 'DiagnosaController@masukPoliRedirect');
     Route::get('dataPasien/{no_cm}', 'PasienController@DataPasien');
 
     // Route::get('pilihDokter/{no_cm}', 'DiagnosaController@pilihDokter');
