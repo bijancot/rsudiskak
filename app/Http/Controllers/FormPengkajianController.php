@@ -623,7 +623,6 @@ class FormPengkajianController extends Controller
             DB::collection('dokumen_' . $PrintPasien['NoCM'])->insert($dataDokumenInsert);
 
             // generate file and upload
-
             $dataF = $dataForm[0]['namaFile'] . 'Print';
             $dataZ = str_replace("formPengkajian", "print", $dataF);
             // return view($dataZ, $dataPrint);
