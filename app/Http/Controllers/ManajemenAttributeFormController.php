@@ -48,7 +48,7 @@ class ManajemenAttributeFormController extends Controller
             'deleted_at'        => NULL,
         ]);
 
-        return redirect('m_attribute');
+        return redirect('m_attribute')->with('isCreateAttribute', true);
     }
 
     public function storeDetailAttribute(Request $request, AttributeForm $attributeForm)
@@ -64,7 +64,7 @@ class ManajemenAttributeFormController extends Controller
             'deleted_at' => NULL,
         ]);
 
-        return redirect('m_attribute/' . $attributeForm->id);
+        return redirect('m_attribute/' . $attributeForm->id)->with('isCreateDetailAttribute', true);
     }
 
     /**
@@ -127,7 +127,7 @@ class ManajemenAttributeFormController extends Controller
 
         // NormalDelete
         // Agama::destroy($agama->id);
-        return redirect('m_attribute');
+        return redirect('m_attribute')->with('isDeleteAttribute', true);
     }
 
     /**
@@ -147,6 +147,6 @@ class ManajemenAttributeFormController extends Controller
 
         // NormalDelete
         DB::collection($attributeForm->namaCollection)->where('_id', $request->get('id_detail'))->delete();
-        return redirect('m_attribute/' . $attributeForm->id);
+        return redirect('m_attribute/' . $attributeForm->id)->with('isDeleteDetailAttribute', true);
     }
 }

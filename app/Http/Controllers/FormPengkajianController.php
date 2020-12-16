@@ -531,13 +531,13 @@ class FormPengkajianController extends Controller
         if ($dataMasukPoli['StatusPengkajian'] == "0") {
             // Logging belum Verifikasi, form belum pernah diisi (baru masuk)
             $logging->toLogging('save', 'FormPengkajian', 'Isi Form Pengkajian', $no_cm);
-            return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
+            return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli)->with('isSaveRM', true);
             //
 
         } else if ($statusPengkajian == "1") {
             // Logging belum Verifikasi, form sudah pernah diisi 
             $logging->toLogging('update', 'FormPengkajian', $updateData, $no_cm);
-            return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
+            return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli)->with('isSaveRM', true);
             //
 
         } else if ($statusPengkajian == "2") {
@@ -638,7 +638,7 @@ class FormPengkajianController extends Controller
                 ->save(public_path() . '/dokumenRM/' . $no_cm . '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf');
             // ->stream('Nama_File.pdf');
             //
-            return redirect('lihatFormPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
+            return redirect('lihatFormPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli)->with('isVerifRM', true);
         }
 
         // return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);

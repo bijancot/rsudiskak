@@ -289,7 +289,7 @@ class PasienController extends Controller
 
             $logging->toLogging('batal', 'BatalPeriksa', $batal_periksa, $no_cm);
 
-            return redirect('/listPasien');
+            return redirect('/listPasien')->with('statusBatalPeriksa', 'success');
             //endIf
 
         } else {

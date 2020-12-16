@@ -116,6 +116,17 @@
                 table.search( this.value ).draw();
             });
             $('#tbl_filter').show();
+
+            // notification crud
+            @if(!empty(session('isCreateDetailAttribute')))
+                $('#msg_modal').html('Berhasil Menambahkan <br> Data Detail Attribute');
+                $('#modal_success').modal('toggle')
+            @endIf
+
+            @if(!empty(session('isDeleteDetailAttribute')))
+                $('#msg_modal').html('Berhasil Menghapus <br> Data Detail Attribute');
+                $('#modal_success').modal('toggle')
+            @endIf
         });
         function noSpacing(evt) { 
           

@@ -63,7 +63,7 @@ class ManajemenFormController extends Controller
 
         ManajemenForm::insert($data);
 
-        return redirect('manajemen_form');
+        return redirect('manajemen_form')->with('isCreate', true);
     }
 
     /**
@@ -114,7 +114,7 @@ class ManajemenFormController extends Controller
             // rename file old to edited
             $typeFile = '.blade.php';
             $destinationOld = '../resources/views/' . str_replace('.', '/', $request->get('namaFileOld')) . $typeFile;
-            $destinationNew = '../resources/views/pages/formPengkajian/(edited)_' . date('Ymdhis') . '_' . str_replace('pages.formPengkajian.', '', $request->get('namaFileOld')) . $typeFile;
+            $destinationNew = '../resources/views/pages/formPengkajian/(edited at '.date('Ymdhis').')_' . str_replace('pages.formPengkajian.', '', $request->get('namaFileOld')) . $typeFile;
             
             File::move($destinationOld, $destinationNew) ;
 
@@ -138,7 +138,7 @@ class ManajemenFormController extends Controller
 
         ManajemenForm::where('idForm', $idFormOld)->whereNotNull('status')->update($data);
 
-        return redirect('manajemen_form');
+        return redirect('manajemen_form')->with('isUpdate', true);
     }
 
     /**
@@ -153,14 +153,14 @@ class ManajemenFormController extends Controller
         $destination = '../resources/views/pages/formPengkajian/';
         $typeFile = '.blade.php';
         
-        File::move($destination . $request->get('namaFile') . $typeFile, $destination.'(deleted)_'. date('Ymdhis') . $request->get('namaFile') . $typeFile);
+        File::move($destination . $request->get('namaFile') . $typeFile, $destination.'(deleted at '.date('Ymdhis').')_' . $request->get('namaFile') . $typeFile);
         
         ManajemenForm::where('_id', $manajemenForm->id)
             ->update([
                 'status'    => null,
             ]);
         
-        return redirect('manajemen_form');
+        return redirect('manajemen_form')->with('isDelete', true);
     }
 
     public function checkIdDuplicate(Request $req){
