@@ -7,8 +7,9 @@ use App\ManajemenForm;
 use App\User;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-// use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\MessageBag;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 class PasienController extends Controller
 {
@@ -186,13 +187,13 @@ class PasienController extends Controller
             $isDisabled = ($poli['StatusPengkajian'] == '2' ? 'disabled' : '');
 
             if ($poli['StatusPengkajian'] == 0) {
-                $pilihForm   = "<a data-toggle='modal' data-target='#modal_pilih_form-" . $poli['NoCM'] . "-" . $poli['NoPendaftaran'] . "' class='btn diagnosa " . $isDisabled . "'>Pilih Form Pengkajian</a>";
-                $isiForm     = "";
-                $batalForm   = "";
+                $pilihForm          = "<a data-toggle='modal' data-pendaftaran='" . $poli['NoPendaftaran'] . "' data-nocm='" . $poli['NoCM'] . "' data-tglmasukpoli='" . $poli['TglMasukPoli'] . "' data-target='#modal_pilih_form' class='btn diagnosa pilihFormBtn ml-auto " . $isDisabled . "'>Pilih Form Pengkajian</a>";
+                $isiForm            = "";
+                $batalForm          = "";
             } else {
                 $pilihForm   = "";
-                $isiForm     = "<a href='" . url('formPengkajian/' . $poli['IdFormPengkajian'] . '/' . $poli['NoCM'] . '/' . $poli['NoPendaftaran'] . '/' . $poli['TglMasukPoli']) . "' class='btn diagnosa " . $isDisabled . "'>Isi Form</a>";
-                $batalForm   = "<a href='" . url('pilihForm/' . $poli['NoCM']) . "' data-toggle='modal' data-pendaftaran='" . $poli['NoPendaftaran'] . "' data-nocm='" . $poli['NoCM'] . "' data-target='#modal_batal_form' class='btn batal batalForm " . $isDisabled . "'>Batal Form</a>";
+                $isiForm     = "<a href='" . url('formPengkajian/' . $poli['IdFormPengkajian'] . '/' . $poli['NoCM'] . '/' . $poli['NoPendaftaran'] . '/' . $poli['TglMasukPoli']) . "' class='btn diagnosa ml-auto " . $isDisabled . "'>Isi Form</a>";
+                $batalForm   = "<a data-toggle='modal' data-pendaftaran='" . $poli['NoPendaftaran'] . "' data-nocm='" . $poli['NoCM'] . "' data-tglmasukpoli='" . $poli['TglMasukPoli'] . "' data-target='#modal_batal_form' class='btn batal batalForm " . $isDisabled . "'>Batal Form</a>";
             }
 
             if ($role == "1" && $poli['StatusPengkajian'] != "") {
@@ -210,7 +211,7 @@ class PasienController extends Controller
                         </td>
                         <td data-label='Action' class='d-flex flex-row p-lg-1'> 
                             " . $pilihForm . "" . $isiForm . "" . $batalForm . " 
-                            <a data-toggle='modal' data-target='#modal_batal_masukPoli-" . $poli['NoCM'] . "-" . $poli['NoPendaftaran'] . "' class='btn btn-secondary " . $isDisabled . "'>Batal Masuk Poli</a>
+                            <a data-toggle='modal' data-target='#modal_batal_masukPoli' data-pendaftaran='" . $poli['NoPendaftaran'] . "' data-nocm='" . $poli['NoCM'] . "' data-tglmasukpoli='" . $poli['TglMasukPoli'] . "' class='btn btn-secondary batalMasukPoliBtn " . $isDisabled . "'>Batal Masuk Poli</a>
                         </td>
                     </tr> ";
             } elseif ($role == "2" && $poli['StatusPengkajian'] != "") {
@@ -228,7 +229,7 @@ class PasienController extends Controller
                         </td>
                         <td data-label='Action' class='d-flex flex-row p-lg-1'> 
                             " . $pilihForm . "" . $isiForm . "" . $batalForm . " 
-                            <a data-toggle='modal' data-target='#modal_batal_masukPoli-" . $poli['NoCM'] . "-" . $poli['NoPendaftaran'] . "' class='btn btn-secondary " . $isDisabled . "'>Batal Masuk Poli</a>
+                            <a data-toggle='modal' data-target='#modal_batal_masukPoli' data-pendaftaran='" . $poli['NoPendaftaran'] . "' data-nocm='" . $poli['NoCM'] . "' data-tglmasukpoli='" . $poli['TglMasukPoli'] . "' class='btn btn-secondary batalMasukPoliBtn " . $isDisabled . "'>Batal Masuk Poli</a>
                         </td>
                     </tr>";
             }

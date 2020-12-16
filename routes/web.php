@@ -96,7 +96,7 @@ Route::group(['middleware' => ['auth', 'cekRole:3']], function () {
     // Route::post('dokumen/getData', 'DokumenController@getData');
     // Route::post('dokumen/update', 'DokumenController@update');
     Route::post('dokumen/delete', 'DokumenController@delete');
-    
+
     Route::post('dokumen/checkIdDuplicate', 'DokumenController@checkIdDuplicate');
 });
 
@@ -133,22 +133,13 @@ Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
     Route::post('diagnosa/{no_cm}', 'DiagnosaController@storeDiagnosaAwal');
     Route::post('diagnosaAkhir', 'DiagnosaController@storeDiagnosaAkhir');
     Route::post('pilihDokter/{no_cm}/{no_pendaftaran}', 'DiagnosaController@storePilihDokter');
-    Route::post('pilihForm/{no_cm}/{noPendaftaran}', 'FormPengkajianController@storePilihForm');
+    Route::post('pilihForm', 'FormPengkajianController@storePilihForm');
     Route::post('batalPeriksa/{no_cm}/{no_pendaftaran}', 'PasienController@storeBatalPeriksa');
-    Route::post('batalMasukPoli/{no_cm}/{no_pendaftaran}', 'DiagnosaController@storeBatalMasukPoli');
+    Route::post('batalMasukPoli', 'DiagnosaController@storeBatalMasukPoli');
     Route::post('batalForm', 'FormPengkajianController@storeBatalForm');
     Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@storeFormPengkajian');
     // Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
 
-    Route::post('diagnosa/{no_cm}', 'DiagnosaController@storeDiagnosaAwal');
-    Route::post('diagnosaAkhir', 'DiagnosaController@storeDiagnosaAkhir');
-    Route::post('pilihDokter/{no_cm}/{no_pendaftaran}', 'DiagnosaController@storePilihDokter');
-    Route::post('pilihForm/{no_cm}/{noPendaftaran}', 'FormPengkajianController@storePilihForm');
-    Route::post('batalPeriksa/{no_cm}/{no_pendaftaran}', 'PasienController@storeBatalPeriksa');
-    Route::post('batalMasukPoli/{no_cm}/{no_pendaftaran}', 'DiagnosaController@storeBatalMasukPoli');
-    Route::post('batalForm', 'FormPengkajianController@storeBatalForm');
-    Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@storeFormPengkajian');
-    // Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
 });
 
 Route::post('dokumen', 'DokumenController@store');

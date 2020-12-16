@@ -168,13 +168,12 @@
                                     </td>
                                     <td data-label="Action" class="d-flex flex-row p-lg-1">
                                         @if ($poli['StatusPengkajian'] == 0)
-                                            {{-- <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form</a> --}}
-                                            <a data-toggle="modal" data-target="#modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn diagnosa ml-auto {{$isDisabled}}">Pilih Form</a>
+                                            <a data-toggle="modal" data-target="#modal_pilih_form" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-tglmasukpoli="{{$poli['TglMasukPoli']}}" class="btn diagnosa ml-auto pilihFormBtn {{$isDisabled}}">Pilih Form</a>
                                         @else
                                             <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'].'/'.$poli['TglMasukPoli'])}}" class="btn diagnosa ml-auto {{$isDisabled}}">Isi Form</a>
-                                            <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm {{$isDisabled}}">Batal Form</a>
+                                            <a data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-tglmasukpoli="{{$poli['TglMasukPoli']}}" data-target="#modal_batal_form" class="btn batal batalForm {{$isDisabled}}">Batal Form</a>
                                         @endif
-                                        <a data-toggle="modal" data-target="#modal_batal_masukPoli-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn btn-secondary {{$isDisabled}}">Batal Masuk Poli</a>
+                                        <a data-toggle="modal" data-target="#modal_batal_masukPoli" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-tglmasukpoli="{{$poli['TglMasukPoli']}}" class="btn btn-secondary batalMasukPoliBtn {{$isDisabled}}">Batal Masuk Poli</a>
                                     </td>
                                 </tr>
                                 @elseif($role == "2" && $poli['StatusPengkajian'] != "")
@@ -194,13 +193,12 @@
                                         </td>
                                         <td data-label="Action" class="d-flex flex-row p-lg-1">
                                             @if ($poli['StatusPengkajian'] == 0)
-                                                {{-- <a href="{{url('pilihForm/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'])}}" class="btn diagnosa">Pilih Form</a> --}}
-                                                <a data-toggle="modal" data-target="#modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn diagnosa ml-auto {{$isDisabled}}">Pilih Form</a>
+                                                <a data-toggle="modal" data-target="#modal_pilih_form" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-tglmasukpoli="{{$poli['TglMasukPoli']}}" class="btn diagnosa ml-auto pilihFormBtn {{$isDisabled}}">Pilih Form</a>
                                             @else
                                                 <a href="{{url('formPengkajian/'.$poli['IdFormPengkajian'].'/'.$poli['NoCM'].'/'.$poli['NoPendaftaran'].'/'.$poli['TglMasukPoli'])}}" class="btn diagnosa ml-auto {{$isDisabled}}">Isi Form</a>
-                                                <a href="{{url('pilihForm/'.$poli['NoCM'])}}" data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-target="#modal_batal_form" class="btn batal batalForm {{$isDisabled}}">Batal Form</a>
+                                                <a data-toggle="modal" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-tglmasukpoli="{{$poli['TglMasukPoli']}}" data-target="#modal_batal_form" class="btn batal batalForm {{$isDisabled}}">Batal Form</a>
                                             @endif
-                                            <a data-toggle="modal" data-target="#modal_batal_masukPoli-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" class="btn btn-secondary {{$isDisabled}}">Batal Masuk Poli</a>
+                                            <a data-toggle="modal" data-target="#modal_batal_masukPoli" data-pendaftaran="{{$poli['NoPendaftaran']}}" data-nocm="{{$poli['NoCM']}}" data-tglmasukpoli="{{$poli['TglMasukPoli']}}" class="btn btn-secondary batalMasukPoliBtn {{$isDisabled}}">Batal Masuk Poli</a>
                                         </td>
                                     </tr>
                                 
@@ -293,13 +291,13 @@
 
     @foreach ($masukPoli as $poli)
      <!-- modal pilih form -->
-     <div class="modal fade" id="modal_pilih_form-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal fade" id="modal_pilih_form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header bg-success">
-                    <h5 class="modal-title text-white text-center">Pilih Form NoCM: {{ $poli['NoCM'] }}</h5>
+                    <h5 class="modal-title text-white text-center">Pilih Form NoCM: <span id="title_nocm_pilihForm"></span></h5>
                 </div>
-                <form method="POST" action="{{action('FormPengkajianController@storePilihForm', [$poli['NoCM'], $poli['NoPendaftaran']])}}">
+                <form method="POST" action="{{action('FormPengkajianController@storePilihForm')}}">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -311,7 +309,9 @@
                             <div class="invalid-feedback">
                                 Form harus diisi
                             </div>
-                            <input type="hidden" name="TglMasukPoli" value="{{ $poli['TglMasukPoli'] }}">
+                            <input type="hidden" name="NoCM" id="NoCM_pilihForm">
+                            <input type="hidden" name="NoPendaftaran" id="Pendaftaran_pilihForm">
+                            <input type="hidden" name="TglMasukPoli" id="TglMasukPoli_pilihForm">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -325,18 +325,20 @@
     <!-- end of modal pilih Form -->
 
     <!-- modal batal masuk poli -->
-    <div class="modal fade" id="modal_batal_masukPoli-{{ $poli['NoCM'] }}-{{ $poli['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_batal_masukPoli" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header bg-success">
                     <h5 class="modal-title text-white text-center">Batal Masuk Poli</h5>
                 </div>
-                <form method="POST" action="{{action('DiagnosaController@storeBatalMasukPoli', [$poli['NoCM'], $poli['NoPendaftaran']])}}">
+                <form method="POST" action="{{action('DiagnosaController@storeBatalMasukPoli')}}">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="keterangan" class="col-form-label">Apa anda yakin ingin membatalkan masuk poli NoCM : <code>{{ $poli['NoCM'] }}</code> ?</label>
-                            <input type="hidden" name="TglMasukPoli" id="TglMasukPoli" value="{{ $poli['TglMasukPoli'] }}">
+                            <label for="keterangan" class="col-form-label">Apa anda yakin ingin membatalkan masuk poli NoCM : <code id="title_nocm_batalMasukPoli"></code> ?</label>
+                            <input type="hidden" name="NoCM" id="NoCM_batalMasukPoli">
+                            <input type="hidden" name="NoPendaftaran" id="Pendaftaran_batalMasukPoli">
+                            <input type="hidden" name="TglMasukPoli" id="TglMasukPoli_batalMasukPoli">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -354,16 +356,16 @@
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header bg-danger">
-                    <h5 class="modal-title text-white text-center">Batal Form '<span id="mdl_title_pendaftaran"></span>' </h5>
+                    <h5 class="modal-title text-white text-center">Batal Form '<span id="title_nocm_batalForm"></span>' </h5>
                 </div>
                 <form action="{{ action ('FormPengkajianController@storeBatalForm', $poli['NoPendaftaran'])}}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <p style="text-align: center;">Apakah anda yakin batal pilih form ? </p>
-                            <input type="hidden" name="NoCM" id="mdl_NoCM">
-                            <input type="hidden" name="NoPendaftaran" id="mdl_Pendaftaran">
-                            <input type="hidden" name="TglMasukPoli" id="TglMasukPoli" value="{{ $poli['TglMasukPoli'] }}">
+                            <input type="hidden" name="NoCM" id="NoCM_batalForm">
+                            <input type="hidden" name="NoPendaftaran" id="Pendaftaran_batalForm">
+                            <input type="hidden" name="TglMasukPoli" id="TglMasukPoli_batalForm">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -498,13 +500,38 @@
                     table.search( this.value ).draw();
                 });
             }
+            $('#tbl_masukPoli tbody').on('click', '.pilihFormBtn', function(){
+                let noCm = $(this).data('nocm');
+                let noPendaftaran = $(this).data('pendaftaran');
+                let tglMasukPoli = $(this).data('tglmasukpoli');
+                
+                $('#NoCM_pilihForm').val(noCm);
+                $('#Pendaftaran_pilihForm').val(noPendaftaran);
+                $('#TglMasukPoli_pilihForm').val(tglMasukPoli);
+                $('#title_nocm_pilihForm').html(noCm);
+
+            })
+            $('#tbl_masukPoli tbody').on('click', '.batalMasukPoliBtn', function(){
+                let noCm = $(this).data('nocm');
+                let noPendaftaran = $(this).data('pendaftaran');
+                let tglMasukPoli = $(this).data('tglmasukpoli');
+                
+                $('#NoCM_batalMasukPoli').val(noCm);
+                $('#Pendaftaran_batalMasukPoli').val(noPendaftaran);
+                $('#TglMasukPoli_batalMasukPoli').val(tglMasukPoli);
+                $('#title_nocm_batalMasukPoli').html(noCm);
+
+            })
             $('#tbl_masukPoli tbody').on('click', '.batalForm', function(){
                 let noCm = $(this).data('nocm');
                 let noPendaftaran = $(this).data('pendaftaran');
+                let tglMasukPoli = $(this).data('tglmasukpoli');
                 
-                $('#mdl_Pendaftaran').val(noPendaftaran);
-                $('#mdl_NoCM').val(noCm);
-                $('#mdl_title_pendaftaran').html(noCm);
+                $('#NoCM_batalForm').val(noCm);
+                $('#Pendaftaran_batalForm').val(noPendaftaran);
+                $('#TglMasukPoli_batalForm').val(tglMasukPoli);
+                $('#title_nocm_batalForm').html(noCm);
+
 
             })
 

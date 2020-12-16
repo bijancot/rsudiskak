@@ -113,7 +113,7 @@ class DiagnosaController extends Controller
         }
     }
 
-    public function storePilihDokter(Request $request, $no_cm, $no_pendaftaran)
+    public function storePilihDokter(Request $request)
     {
         $getKdRuangan   = Auth::user()->KodeRuangan;
         $getIDPerawat   = Auth::user()->ID;
@@ -125,7 +125,9 @@ class DiagnosaController extends Controller
         $current_time       = date('H:i:s');
 
         $logging        = new LoggingController;
-        //return response()->json(['d' => $request->dokter]);
+        $no_cm          = $request->get('NoCM');
+        $no_pendaftaran = $request->get('NoPendaftaran');
+
         if ($no_cm) {
 
             // get API antrian data pasien
@@ -362,12 +364,15 @@ class DiagnosaController extends Controller
     {
         return redirect('/listPasien')->with('status', 'success');
     }
-    public function storeBatalMasukPoli(Request $request, $no_cm, $no_pendaftaran)
+    public function storeBatalMasukPoli(Request $request)
     {
 
         date_default_timezone_set('Asia/Jakarta');
 
         $logging        = new LoggingController;
+
+        $no_cm          = $request->get('NoCM');
+        $no_pendaftaran = $request->get('NoPendaftaran');
 
         if ($no_cm) {
 
