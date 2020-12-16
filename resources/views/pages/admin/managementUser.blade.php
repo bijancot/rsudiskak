@@ -256,6 +256,21 @@
                 $('#ID_tambah_checkValid').val('0');
             }
             
+            // notification crud
+            @if(!empty(session('isCreate')))
+                $('#msg_modal').html('Berhasil Menambahkan <br> Data User');
+                $('#modal_success').modal('toggle')  
+            @endIf
+
+            @if(!empty(session('isUpdate')))
+                $('#msg_modal').html('Berhasil Mengubah <br> Data User');
+                $('#modal_success').modal('toggle')  
+            @endIf
+
+            @if(!empty(session('isDelete')))
+                $('#msg_modal').html('Berhasil Menghapus <br> Data User');
+                $('#modal_success').modal('toggle')  
+            @endIf
         });
         
         // (function() {

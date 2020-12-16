@@ -114,6 +114,16 @@
             // $('#namaCollection').popover('enable')    
             $('[data-toggle="popover"]').popover()
             
+            // notification crud
+            @if(!empty(session('isCreateAttribute')))
+                $('#msg_modal').html('Berhasil Menambahkan <br> Data Attribute');
+                $('#modal_success').modal('toggle')
+            @endIf
+
+            @if(!empty(session('isDeleteAttribute')))
+                $('#msg_modal').html('Berhasil Menghapus <br> Data Attribute');
+                $('#modal_success').modal('toggle')
+            @endIf
         });
         
         function noSpacing(evt) { 

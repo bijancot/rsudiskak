@@ -841,6 +841,12 @@
             }else{
                 $('#noPendaftaran_checkValid').val('0')
             }
+            // notification save data & verif
+            @if(!empty(session('isSaveRM')))
+                $('#msg_modal').html('Berhasil Menyimpan <br> Data Rekam Medis');
+                $('#modal_success').modal('toggle')    
+            @endIf
+
             
         })
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {

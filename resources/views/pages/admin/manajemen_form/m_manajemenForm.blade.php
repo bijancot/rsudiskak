@@ -275,6 +275,22 @@
             }else{
                 $('#idFormTambah_checkValid').val('0');
             }
+
+            // notification crud
+            @if(!empty(session('isCreate')))
+                $('#msg_modal').html('Berhasil Menambahkan <br> Data Master Form');
+                $('#modal_success').modal('toggle') 
+            @endIf
+
+            @if(!empty(session('isUpdate')))
+                $('#msg_modal').html('Berhasil Mengubah <br> Data Master Form');
+                $('#modal_success').modal('toggle') 
+            @endIf
+
+            @if(!empty(session('isDelete')))
+                $('#msg_modal').html('Berhasil Menghapus <br> Data Master Form');
+                $('#modal_success').modal('toggle') 
+            @endIf
         });
         $('#tbl tbody').on('click', '.ubah-data', function(){
             let idForm = $(this).data('idform');

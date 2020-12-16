@@ -469,7 +469,10 @@
                 $('#section-form').css('display', 'none');
                 
             });    
-            
+            @if(!empty(session('isVerifRM')))
+                $('#msg_modal').html('Berhasil Memverifikasi <br> Data Rekam Medis');
+                $('#modal_success').modal('toggle')    
+            @endIf
         })
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");

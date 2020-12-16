@@ -287,6 +287,17 @@
             }else{
                 $('#noRekamMedis_checkValid').val('0')
             }
+
+            // notification after crud
+            @if(!empty(session('isCreate')))
+                    $('#msg_modal').html('Berhasil Menambahkan <br> Dokumen Rekam Medis');
+                    $('#modal_success').modal('toggle')
+            @endIf
+            
+            @if(!empty(session('isDelete')))
+                    $('#msg_modal').html('Berhasil Menghapus <br> Dokumen Rekam Medis');
+                    $('#modal_success').modal('toggle')
+            @endIf
         });
         $(document).on('hidden.bs.modal','#modal_pratinjau', function () {
             $('#pratinjauDokumen').attr('src', "");
