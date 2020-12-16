@@ -49,7 +49,7 @@
                         <form class="form form-inline" >
                             @csrf
                             <div class="input-group date">
-                                <input type="date" id="date" class="form-control tgl" data-date-end-date="0d" value="{{ date('Y-m-d') }}" >
+                                <input type="date" id="date" class="form-control tgl" data-date-end-date="0d" value="{{ $dateMasukPoli }}" >
                                 <div class="input-group-append">
                                     {{-- <span class="fa fa-calendar"></span> --}}
                                 </div>
@@ -465,6 +465,10 @@
                 @endif
             @endif
 
+            @if(!empty(session('dateMasukPoli')))
+                $('#date').show();
+            @endif
+
         });
 
         $('.datepicker').datepicker({
@@ -541,7 +545,7 @@
                     var table = table;
                     
                     $("#tbl_masukPoli").dataTable().fnDestroy()
-                    $("tbody").empty();
+                    $("#tbody_masukPoli").empty();
 
                     $.ajax({
                         url: "{{ url('/listPasien/getDataMasukPoliByDate') }}",
@@ -574,7 +578,7 @@
                 var table = table;
                 
                 $("#tbl_masukPoli").dataTable().fnDestroy()
-                $("tbody").empty();
+                $("#tbody_masukPoli").empty();
 
                 $.ajax({
                     url: "{{ url('/listPasien/getDataMasukPoliByDate') }}",

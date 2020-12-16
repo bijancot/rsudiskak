@@ -34,8 +34,14 @@ class PasienController extends Controller
         $antriPoli = json_decode($antriPoli, true);
         $antriPoli = $antriPoli['response'];
 
+        if(!empty(session('dateMasukPoli'))){
+            $dateMasukPoli = session('dateMasukPoli');
+        }else{
+            $dateMasukPoli = date("Y-m-d");
+        }
+
         $masukPoli = new AntrianPasien();
-        $masukPoli->collection  = "transaksi_" . date("Y-m-d");
+        $masukPoli->collection  = "transaksi_" . $dateMasukPoli;
         // $masukPoli->get();
         $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->where('KdRuangan', $getKdRuangan)->orderBy('WaktuMasukPoli', 'ASC')->get();
 
@@ -72,6 +78,7 @@ class PasienController extends Controller
             'masukPoli'         => $getPasienMasukPoli,
             'listDokter'        => $getlistDokter,
             'listForm'          => $getForm,
+            'dateMasukPoli'     => $dateMasukPoli
         ];
 
         return view('pages.listPasien', $datax);

@@ -360,9 +360,9 @@ class DiagnosaController extends Controller
         }
     }
 
-    public function masukPoliRedirect()
+    public function masukPoliRedirect($dateMasukPoli)
     {
-        return redirect('/listPasien')->with('status', 'success');
+        return redirect('/listPasien')->with('status', 'success')->with('dateMasukPoli', $dateMasukPoli);
     }
     public function storeBatalMasukPoli(Request $request)
     {
