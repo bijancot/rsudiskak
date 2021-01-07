@@ -69,7 +69,7 @@ class PasienController extends Controller
             ['KodeRuangan', '=', $getKdRuangan],
         ])->orderBy('Nama', 'asc')->get();
 
-        $getForm = ManajemenForm::all();
+        $getForm = ManajemenForm::whereNotNull('status')->get();
 
         $datax = [
             'ID'                => $ID,
