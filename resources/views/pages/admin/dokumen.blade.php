@@ -255,7 +255,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="col">
-                        <iframe id="pratinjauDokumen" src="" width="100%" height="500px" />
+                        <iframe id="pratinjauDokumen" src="" width="100%" height="500px"></iframe>
                     </div>
                 </div>
                 <form id="form-unduh" action="{{action('DokumenController@download')}}" method="POST">
