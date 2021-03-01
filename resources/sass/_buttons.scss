@@ -9,14 +9,32 @@
     &.diagnosa {
         color: white;
         background: $green;
+
+        &:hover {
+            background: white;
+            border: 1px solid $green;
+            color: $green;
+        }
     }
     &.batal {
         color: white;
         background: $red;
+
+        &:hover {
+            background: white;
+            border: 1px solid $red;
+            color: $red;
+        }
     }
     &.secondary {
         color: white;
         background: $grey5;
+
+        &:hover {
+            background: white;
+            border: 1px solid $grey5;
+            color: $grey5;
+        }
     }
     &.green-long {
         background: $green;
@@ -32,8 +50,9 @@
         text-align: center;
         
         &:hover {
-            background: $black;
-            color: white;
+            background: white;
+            border: 1px solid $green;
+            color: $green;
         }
     }
 }
@@ -96,10 +115,11 @@
     width: 100%;
     height: 50px;
     font-weight: bold;
-}
-.btn-tambah:hover {
-    background: $green;
-    color: white;
+
+    &:hover {
+        background: $green;
+        color: white;
+    }
 }
 
 .collapsible {

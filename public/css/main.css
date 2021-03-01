@@ -274,14 +274,32 @@ nav ul li.profile img {
   background: #009241;
 }
 
+.btn.diagnosa:hover {
+  background: white;
+  border: 1px solid #009241;
+  color: #009241;
+}
+
 .btn.batal {
   color: white;
   background: #EB5757;
 }
 
+.btn.batal:hover {
+  background: white;
+  border: 1px solid #EB5757;
+  color: #EB5757;
+}
+
 .btn.secondary {
   color: white;
   background: #BDBDBD;
+}
+
+.btn.secondary:hover {
+  background: white;
+  border: 1px solid #BDBDBD;
+  color: #BDBDBD;
 }
 
 .btn.green-long {
@@ -298,8 +316,9 @@ nav ul li.profile img {
 }
 
 .btn.green-long:hover {
-  background: #505050;
-  color: white;
+  background: white;
+  border: 1px solid #009241;
+  color: #009241;
 }
 
 .capsule-btn {

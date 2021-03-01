@@ -262,7 +262,7 @@
                                                 Data Berat Badan Harus Diisi.
                                             </div>
                                         </div>
-                                        <div class="pl-0 col-4 mt-3">
+                                        <div class="pl-0 col-4 mt-3 mt-lg-0">
                                             <label for="norekammedis"></label>
                                             <input disabled type="text" name="" value="kg" disabled>
                                         </div>

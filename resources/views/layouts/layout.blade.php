@@ -42,6 +42,9 @@
         <script type="text/javascript" src="{{ URL::asset('js/BootSideMenu.js') }}"></script>
         <link rel="stylesheet" href="{{ URL::asset('css/BootSideMenu.css') }}" />
 
+        <!-- Iconify -->
+        <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+
         {{-- toast --}}
         <link rel="stylesheet" href="{{ URL::asset('css/toast.min.css') }}" />
         <script type="text/javascript" src="{{ URL::asset('js/toast.min.js') }}"></script>

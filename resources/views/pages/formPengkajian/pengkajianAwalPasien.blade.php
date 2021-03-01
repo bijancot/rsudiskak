@@ -407,7 +407,7 @@
                                                 Data Berat Badan Harus Diisi.
                                             </div>
                                         </div>
-                                        <div class="pl-0 col-4 mt-3">
+                                        <div class="pl-0 col-4 mt-3 mt-lg-0">
                                             <label for="norekammedis"></label>
                                             <input type="text" name="" value="kg" disabled>
                                         </div>
@@ -601,7 +601,12 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <div class="form-group h-100">
-                                                <label for="pemeriksaanFisik">Pemeriksaan Fisik (O) <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <div class="d-flex">
+                                                    <label for="pemeriksaanFisik">Pemeriksaan Fisik (O) <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                    <a href="#" class="btn diagnosa py-0 mb-1 ml-auto">
+                                                       + Get Data
+                                                    </a>
+                                                </div>
                                                 <textarea class="form-control inpt-isRequired" name="PengkajianMedis[PemeriksaanFisik]" >{{(!empty($dataPengkajian['PengkajianMedis']['PemeriksaanFisik']) ? $dataPengkajian['PengkajianMedis']['PemeriksaanFisik'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Pemeriksaan Fisik Harus Diisi.
