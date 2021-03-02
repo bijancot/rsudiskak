@@ -1,5 +1,5 @@
 <div id="section-riwayat" style="display: none;">
-    <div class="table-container soft-shadow pt-5">
+    <!-- <div class="table-container soft-shadow pt-5">
         <table id="tbl_antrianPoli" class="table table-striped">
             <thead>
                 <th style="text-align:center">Tgl Berkunjung</th>
@@ -38,8 +38,200 @@
                 @endforeach
             </tbody>
         </table>
+    </div> -->
+    <div class="content mt-5 soft-shadow collapsible" style="cursor: pointer;">
+        <div class="p-4 collapsible-head">
+            <p class="h6 font-weight-bold">Kunjungan Poli <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
+        </div>
+        <hr>
+
+        <div class="collapsible-body">
+
+            <table class="table table-striped table-borderless">
+                <thead class="text-muted font-weight-light">
+                    <th class="font-weight-light">Tgl Berkunjung</th>
+                    <th class="font-weight-light">Poliklinik</th>
+                    <th class="font-weight-light">Diagnosis</th>
+                    <th class="font-weight-light">Penatalaksanaan</th>
+                    <th class="font-weight-light">Riwayat Rawat Inap</th>
+                    <th class="font-weight-light">Verifikasi Petugas</th>
+                </thead>
+                <tbody class="font-weight-bold text-black">
+                    <tr class="border-0">
+                        <td>13/09/2020</td>
+                        <td>Poli Jantung</td>
+                        <td>CAD, HF</td>
+                        <td></td>
+                        <td></td>
+                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
+                    </tr>
+                    <tr>
+                        <td>13/09/2020</td>
+                        <td>Poli Jantung</td>
+                        <td>CAD, HF</td>
+                        <td></td>
+                        <td></td>
+                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="content mt-3 soft-shadow collapsible" style="cursor: pointer;">
+        <div class="p-4 collapsible-head">
+            <p class="h6 font-weight-bold"> Rawat Jalan <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
+        </div>
+        <hr>
+
+        <div class="collapsible-body">
+
+            <table class="table table-striped table-borderless">
+                <thead class="text-muted font-weight-light">
+                    <th class="font-weight-light">Tgl Berkunjung</th>
+                    <th class="font-weight-light">Poliklinik</th>
+                    <th class="font-weight-light">Diagnosis</th>
+                    <th class="font-weight-light">Tatalaksana Terapi</th>
+                    <th class="font-weight-light">Verifikasi Petugas</th>
+                    <th class="font-weight-light">Lihat Data</th>
+                </thead>
+                <tbody class="font-weight-bold text-black">
+                    <tr class="border-0">
+                        <td>13/09/2020</td>
+                        <td>Poli Jantung</td>
+                        <td>CAD, HF</td>
+                        <td>Furosemide 1x40 mg</td>
+                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
+                        <td><a class="label-keterangan gray px-0">PDF</a></td>
+                    </tr>
+                    <tr>
+                        <td>13/09/2020</td>
+                        <td>Poli Jantung</td>
+                        <td>CAD, HF</td>
+                        <td>Bendzodiazepin</td>
+                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
+                        <td><a class="label-keterangan gray px-0">PDF</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="content mt-3 soft-shadow collapsible" style="cursor: pointer;">
+        <div class="p-4 collapsible-head">
+            <p class="h6 font-weight-bold"> Rawat Inap <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
+        </div>
+        <hr>
+
+        <div class="collapsible-body">
+
+            <table class="table table-striped table-borderless">
+                <thead class="text-muted font-weight-light">
+                    <th class="font-weight-light">Tgl Berkunjung</th>
+                    <th class="font-weight-light">Ruangan</th>
+                    <th class="font-weight-light">Diagnosis</th>
+                    <th class="font-weight-light">Tindakan</th>
+                    <th class="font-weight-light">Verifikasi Petugas</th>
+                    <th class="font-weight-light">Lihat Data</th>
+                </thead>
+                <tbody class="font-weight-bold text-black">
+                    <tr class="border-0">
+                        <td>13/09/2020</td>
+                        <td>Poli Jantung</td>
+                        <td>CAD, HF</td>
+                        <td>PCI</td>
+                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
+                        <td><a class="label-keterangan gray px-0">PDF</a></td>
+                    </tr>
+                    <tr>
+                        <td>13/09/2020</td>
+                        <td>Poli Jantung</td>
+                        <td>CAD, HF</td>
+                        <td></td>
+                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
+                        <td><a class="label-keterangan gray px-0">PDF</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="content mt-3 soft-shadow collapsible" style="cursor: pointer;">
+        <div class="p-4 collapsible-head">
+            <p class="h6 font-weight-bold"> Diagnosa Penunjang <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
+        </div>
+        <hr>
+
+        <div class="collapsible-body">
+
+            <table class="table table-striped table-borderless">
+                <thead class="text-muted font-weight-light">
+                    <th class="font-weight-light">Tgl Berkunjung</th>
+                    <th class="font-weight-light">Instalasi</th>
+                    <th class="font-weight-light">Pemeriksaan</th>
+                    <th class="font-weight-light">Hasil</th>
+                    <th class="font-weight-light">Verifikasi Petugas</th>
+                </thead>
+                <tbody class="font-weight-bold text-black">
+                    <tr class="border-0">
+                        <td>13/09/2020</td>
+                        <td>Poli Jantung</td>
+                        <td>CAD, HF</td>
+                        <td><a class="label-keterangan gray px-0">PDF</a></td>
+                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
+                    </tr>
+                    <tr>
+                        <td>13/09/2020</td>
+                        <td>Poli Jantung</td>
+                        <td>CAD, HF</td>
+                        <td><a class="label-keterangan gray px-0">PDF</a></td>
+                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="content mt-3 soft-shadow collapsible" style="cursor: pointer;">
+        <div class="p-4 collapsible-head">
+            <p class="h6 font-weight-bold"> Tindakan <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
+        </div>
+        <hr>
+
+        <div class="collapsible-body">
+
+            <table class="table table-striped table-borderless">
+                <thead class="text-muted font-weight-light px-5">
+                    <th class="font-weight-light">Tgl Tindakan</th>
+                    <th class="font-weight-light">Diagnosis</th>
+                    <th class="font-weight-light">Tindakan</th>
+                    <th class="font-weight-light">Hasil</th>
+                    <th class="font-weight-light">Verifikasi Petugas</th>
+                </thead>
+                <tbody class="font-weight-bold text-black px-5">
+                    <tr class="border-0">
+                        <td>13/09/2020</td>
+                        <td>Poli Jantung</td>
+                        <td>CAD, HF</td>
+                        <td><a class="label-keterangan gray px-0">PDF</a></td>
+                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
+                    </tr>
+                    <tr>
+                        <td>13/09/2020</td>
+                        <td>Poli Jantung</td>
+                        <td>CAD, HF</td>
+                        <td><a class="label-keterangan gray px-0">PDF</a></td>
+                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
     </div>
 </div>
+
+
+
 <div id="section-berkas" style="display: none;">
     <div class="table-container soft-shadow mt-4">
         <div class="card">

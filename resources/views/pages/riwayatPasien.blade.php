@@ -16,7 +16,7 @@
                     <input type="date" value="{{ date('Y-m-d') }}" id="date" onchange="handler(event);" class="form-control">&nbsp;
                     <!-- <input type="button" id="submit"  class="form-control btn btn-primary" value="Filter"> -->
                 </form>
-                </div>
+            </div>
             <div class="table-container soft-shadow">
                 <table id="tbl_Riwayat" class="table table-striped">
                     <thead>

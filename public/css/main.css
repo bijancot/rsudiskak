@@ -11376,6 +11376,10 @@ select:focus {
   color: #AEAEAE;
 }
 
+.text-black {
+  color: #505050;
+}
+
 .fullvh {
   min-height: 100vh;
 }
@@ -11462,6 +11466,10 @@ select:focus {
 
 .label-keterangan.orange {
   background: #F2994A;
+}
+
+.label-keterangan.gray {
+  background: #AEAEAE;
 }
 
 .soft-shadow {

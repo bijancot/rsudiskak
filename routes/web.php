@@ -205,6 +205,10 @@ Route::get('profilRingkasMedis', function () {
     return view('pages.formPengkajian.profilRingkasMedis');
 });
 
+Route::get('dataPasien', function () {
+    return view('pages.formPengkajian.dataPasien');
+});
+
 Route::get('subNavbar', function () {
     return view('includes.admin.navbar');
 });

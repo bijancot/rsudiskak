@@ -45,6 +45,9 @@ select:focus {
 .text-grey {
     color: $grey3;
 }
+.text-black {
+    color: $black;
+}
 
 .fullvh {
     min-height: 100vh;
@@ -117,6 +120,9 @@ select:focus {
     }
     &.orange {
         background: $orange;
+    }
+    &.gray {
+        background: $grey3;
     }
 }
 
