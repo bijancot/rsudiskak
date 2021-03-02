@@ -54,7 +54,7 @@
                     <th class="font-weight-light">Diagnosis</th>
                     <th class="font-weight-light">Penatalaksanaan</th>
                     <th class="font-weight-light">Riwayat Rawat Inap</th>
-                    <th class="font-weight-light">Verifikasi Petugas</th>
+                    <th class="font-weight-light th-last">Verifikasi Petugas</th>
                 </thead>
                 <tbody class="font-weight-bold text-black">
                     <tr class="border-0">
@@ -92,8 +92,8 @@
                     <th class="font-weight-light">Poliklinik</th>
                     <th class="font-weight-light">Diagnosis</th>
                     <th class="font-weight-light">Tatalaksana Terapi</th>
-                    <th class="font-weight-light">Verifikasi Petugas</th>
-                    <th class="font-weight-light">Lihat Data</th>
+                    <th class="font-weight-light th-last">Verifikasi Petugas</th>
+                    <th class="font-weight-light th-last">Lihat Data</th>
                 </thead>
                 <tbody class="font-weight-bold text-black">
                     <tr class="border-0">
@@ -131,8 +131,8 @@
                     <th class="font-weight-light">Ruangan</th>
                     <th class="font-weight-light">Diagnosis</th>
                     <th class="font-weight-light">Tindakan</th>
-                    <th class="font-weight-light">Verifikasi Petugas</th>
-                    <th class="font-weight-light">Lihat Data</th>
+                    <th class="font-weight-light th-last">Verifikasi Petugas</th>
+                    <th class="font-weight-light th-last">Lihat Data</th>
                 </thead>
                 <tbody class="font-weight-bold text-black">
                     <tr class="border-0">
@@ -169,8 +169,8 @@
                     <th class="font-weight-light">Tgl Berkunjung</th>
                     <th class="font-weight-light">Instalasi</th>
                     <th class="font-weight-light">Pemeriksaan</th>
-                    <th class="font-weight-light">Hasil</th>
-                    <th class="font-weight-light">Verifikasi Petugas</th>
+                    <th class="font-weight-light th-last">Hasil</th>
+                    <th class="font-weight-light th-last">Verifikasi Petugas</th>
                 </thead>
                 <tbody class="font-weight-bold text-black">
                     <tr class="border-0">
@@ -205,8 +205,8 @@
                     <th class="font-weight-light">Tgl Tindakan</th>
                     <th class="font-weight-light">Diagnosis</th>
                     <th class="font-weight-light">Tindakan</th>
-                    <th class="font-weight-light">Hasil</th>
-                    <th class="font-weight-light">Verifikasi Petugas</th>
+                    <th class="font-weight-light th-last">Hasil</th>
+                    <th class="font-weight-light th-last">Verifikasi Petugas</th>
                 </thead>
                 <tbody class="font-weight-bold text-black px-5">
                     <tr class="border-0">

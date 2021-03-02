@@ -50,3 +50,15 @@
         }
     }
 }
+
+.th-last {
+    width: 150px;
+
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .th-last {
+        width: auto;
+    }
+}

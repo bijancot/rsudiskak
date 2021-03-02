@@ -261,6 +261,17 @@ nav ul li.profile img {
   }
 }
 
+.th-last {
+  width: 150px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .th-last {
+    width: auto;
+  }
+}
+
 .btn {
   padding: 0px 10px;
   margin: 0 2px;
