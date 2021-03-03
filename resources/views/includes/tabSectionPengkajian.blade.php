@@ -233,6 +233,8 @@
 
 
 <div id="section-berkas" style="display: none;">
+    @include('includes.tabTerapiRacikan')
+    @include('includes.tabTerapiNonRacikan')
     <div class="table-container soft-shadow mt-4">
         <div class="card">
             {{-- <div class="card-title mt-3 ml-3">

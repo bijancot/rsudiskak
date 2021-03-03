@@ -62,3 +62,21 @@
         width: auto;
     }
 }
+
+.table-input td input {
+    height: auto !important;
+    text-align: center;
+}
+
+.th-number {
+    width: 8%;
+    text-align: center;
+}
+
+.td-hover-action tr td .fas {
+    opacity: .4;
+}
+
+.td-hover-action tr:hover .fas {
+    opacity: 1;
+}

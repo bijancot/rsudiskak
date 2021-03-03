@@ -9,11 +9,21 @@
     &.diagnosa {
         color: white;
         background: $green;
+        border: 2px solid $green;
 
         &:hover {
             background: white;
-            border: 1px solid $green;
             color: $green;
+        }
+    }
+    &.diagnosa-outline {
+        background: white;
+        border: 2px solid $green;
+        color: $green;
+
+        &:hover {
+            color: white;
+            background: $green;
         }
     }
     &.batal {

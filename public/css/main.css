@@ -272,6 +272,24 @@ nav ul li.profile img {
   }
 }
 
+.table-input td input {
+  height: auto !important;
+  text-align: center;
+}
+
+.th-number {
+  width: 8%;
+  text-align: center;
+}
+
+.td-hover-action tr td .fas {
+  opacity: 0.4;
+}
+
+.td-hover-action tr:hover .fas {
+  opacity: 1;
+}
+
 .btn {
   padding: 0px 10px;
   margin: 0 2px;
@@ -283,12 +301,23 @@ nav ul li.profile img {
 .btn.diagnosa {
   color: white;
   background: #009241;
+  border: 2px solid #009241;
 }
 
 .btn.diagnosa:hover {
   background: white;
-  border: 1px solid #009241;
   color: #009241;
+}
+
+.btn.diagnosa-outline {
+  background: white;
+  border: 2px solid #009241;
+  color: #009241;
+}
+
+.btn.diagnosa-outline:hover {
+  color: white;
+  background: #009241;
 }
 
 .btn.batal {

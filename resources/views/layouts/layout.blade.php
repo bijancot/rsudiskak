@@ -6,6 +6,9 @@
 
         <title>RSUD</title>
 
+        <!-- logo title -->
+        <link rel="icon" href="{{URL::asset('/img/logo-min.png')}}" type="image/x-icon"> 
+
         <!-- main css  -->
         <link rel="stylesheet" href="{{ URL::asset('css/main.css') }}" />
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />
