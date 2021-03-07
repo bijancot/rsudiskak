@@ -246,7 +246,7 @@
         </div>
     </div>
     <!-- end of modal pilih dokter -->
-    <!--<script>
+    {{-- <script>
         $('.modal_pilih_dokter-{{ $data['NoCM'] }}').on("click", ".add_dokter", function() {
             $.ajax({
                     url 	        : "{{ action('DiagnosaController@storePilihDokter', [$data['NoCM'], $data['NoPendaftaran']]) }}",
@@ -262,7 +262,7 @@
                     }
                 });
         });
-    </script>-->
+    </script> --}}
     <!-- modal batal periksa -->
     <div class="modal fade" id="modal_batal_periksa-{{ $data['NoPendaftaran'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md">
@@ -289,26 +289,26 @@
     <!-- end of modal batal periksa -->
     @endforeach
 
-    @foreach ($masukPoli as $poli)
-     <!-- modal pilih form -->
+    <!-- modal pilih form -->
      <div class="modal fade" id="modal_pilih_form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header bg-success">
-                    <h5 class="modal-title text-white text-center">Pilih Form NoCM: <span id="title_nocm_pilihForm"></span></h5>
+                    <h5 class="modal-title text-white text-center">Pilih Form Pengkajian </h5>
                 </div>
                 <form method="POST" action="{{action('FormPengkajianController@storePilihForm')}}">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <select name="formPengkajian" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }} pilihForm" id="formPengkajian" title="Pilih salah satu..." data-live-search="true" required>
+                            {{-- <select name="formPengkajian" class="form-control{{ $errors->has('Error') ? ' is-invalid' : '' }} pilihForm" id="formPengkajian" title="Pilih salah satu..." data-live-search="true" required>
                                 @foreach ($listForm as $item)
                                     <option value="{{ $item['idForm'] }}"> {{ $item['namaForm'] }} </option>
                                 @endforeach
                             </select>
                             <div class="invalid-feedback">
                                 Form harus diisi
-                            </div>
+                            </div> --}}
+                            <p class="center">Apa anda yakin ingin memilih form untuk pasien dengan No.CM <span class="badge badge-success" id="title_nocm_pilihForm"></span> ? </p>
                             <input type="hidden" name="NoCM" id="NoCM_pilihForm">
                             <input type="hidden" name="NoPendaftaran" id="Pendaftaran_pilihForm">
                             <input type="hidden" name="TglMasukPoli" id="TglMasukPoli_pilihForm">
@@ -358,7 +358,7 @@
                 <div class="modal-header bg-danger">
                     <h5 class="modal-title text-white text-center">Batal Form '<span id="title_nocm_batalForm"></span>' </h5>
                 </div>
-                <form action="{{ action ('FormPengkajianController@storeBatalForm', $poli['NoPendaftaran'])}}" method="POST">
+                <form action="{{ action ('FormPengkajianController@storeBatalForm')}}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -376,7 +376,7 @@
             </div>
         </div>
     </div>
-    @endforeach
+    
 
     <script>
 
@@ -438,6 +438,10 @@
                         // alert Notification
                         $('#msg_modal').html('Berhasil Menambahkan <br> Pasien Masuk Poli');
                         $('#modal_success').modal('toggle')
+                @elseif(session('statusNotif') == 'failed')
+                        // alert Notification
+                        $('#msg_modal1').html('Data Pasien Belum lengkap (API)');
+                        $('#modal_gagal').modal('toggle')
                 @endif
             @endif
 

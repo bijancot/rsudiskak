@@ -143,6 +143,9 @@ class DiagnosaController extends Controller
 
             // get API detail data pasien
             $getDataPasien = $this->dataPasien($no_cm);
+            if ($getDataPasien == null) {
+                return redirect('/listPasien')->with('statusNotif', 'failed');
+            }
 
             // dump($a);
             // dump($getDataPasien);
@@ -197,8 +200,8 @@ class DiagnosaController extends Controller
 
                     $getDokter = User::where([
                         ['Role', '=', '1'],
-                        ['KodeRuangan', '=', $getKdRuangan],
                         ['ID', '=', $request->get('dokter')],
+                        // ['KodeRuangan', '=', $getKdRuangan],
                     ])->orderBy('Nama', 'asc')->get();
 
                     foreach ($getDokter as $item) {

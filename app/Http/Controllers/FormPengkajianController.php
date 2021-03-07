@@ -11,6 +11,7 @@ use File;
 use App\ICD10;
 use App\ICD09;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class FormPengkajianController extends Controller
 {
@@ -61,42 +62,52 @@ class FormPengkajianController extends Controller
     /**
      * Simpan pilihan form 
      */
-    public function storePilihForm(Request $req)
+    public function storePilihForm(Request $request)
     {
+
+        $getKdRuangan   = Auth::user()->KodeRuangan;
 
         // $logging        = new LoggingController;
         date_default_timezone_set('Asia/Jakarta');
-        $no_cm          = $req->get('NoCM');
-        $noPendaftaran  = $req->get('NoPendaftaran');
-        $TglMasukPoli   = $req->get('TglMasukPoli');
+        $no_cm          = $request->get('NoCM');
+        $noPendaftaran  = $request->get('NoPendaftaran');
+        $tglMasukPoli   = $request->get('TglMasukPoli');
 
         //get data pasien bersarakan nocm
         $dataMasukPoli = DB::collection('pasien_' . $no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
-            ->where('TglMasukPoli', $req->get('TglMasukPoli'))
+            ->where('TglMasukPoli', $tglMasukPoli)
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->orderBy('created_at', 'desc')
             ->first();
+
+        $cekPasien = DB::collection('pasien_' . $no_cm)
+            ->where('KdRuangan', $getKdRuangan)
+            ->where('deleted_at', null)
+            ->whereNotNull('StatusPengkajian')
+            ->count();
+
+        $idFormPengkajian = ($cekPasien > '1') ? "2" : "1";
 
         DB::collection('pasien_' . $no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
             ->where('TglMasukPoli', $dataMasukPoli['TglMasukPoli'])
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
-            ->update(['IdFormPengkajian' => $req->get('formPengkajian')]);
+            ->update(['IdFormPengkajian' => $idFormPengkajian]);
 
         DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
             ->where('NoPendaftaran', $noPendaftaran)
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
-            ->update(['IdFormPengkajian' => $req->get('formPengkajian')]);
+            ->update(['IdFormPengkajian' => $idFormPengkajian]);
 
-        // $getForm        = DB::collection('manajemenForm')->where('idForm', $req->get('formPengkajian'))->get();
+        // $getForm        = DB::collection('manajemenForm')->where('idForm', $request->get('formPengkajian'))->get();
         // $create_data = $getForm[0]['namaForm'];
         // $logging->toLogging('create', 'PilihForm', $create_data, $no_cm);
 
-        return redirect('formPengkajian/' . $req->get('formPengkajian') . '/' . $no_cm . '/' . $noPendaftaran . '/' . $dataMasukPoli['TglMasukPoli']);
+        return redirect('formPengkajian/' . $idFormPengkajian . '/' . $no_cm . '/' . $noPendaftaran . '/' . $dataMasukPoli['TglMasukPoli']);
     }
 
     /**
@@ -196,42 +207,29 @@ class FormPengkajianController extends Controller
                 if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
 
                     $diagnosa       = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa'];
-                    $pecahKode10    = explode(";", $diagnosa['KodeDiagnosa']);
-                    $pecahNama10    = explode(";", $diagnosa['NamaDiagnosa']);
-                    // dump($pecahKode10);
-                    // dump($pecahNama10);
+                    $pecahKode10    = explode(";", $diagnosa['KodeDiagnosa']); // dump($pecahKode10);
+                    $pecahNama10    = explode(";", $diagnosa['NamaDiagnosa']); // dump($pecahNama10);
 
                     for ($item = 0; $item < count($pecahKode10); $item++) {
                         array_push($ICD10T, $pecahKode10[$item] . " - " . $pecahNama10[$item]);
                         array_push($ICD10V, $pecahKode10[$item] . ":" . $pecahNama10[$item]);
                     }
-                    // dump($ICD10T);
-                    // dump($ICD10V);
+                    // dump($ICD10T); // dump($ICD10V);
                 }
 
                 if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
 
                     $diagnosaT      = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9'];
-                    $pecahKode09    = explode(";", $diagnosaT['KodeDiagnosaT']);
-                    $pecahNama09    = explode(";", $diagnosaT['DiagnosaTindakan']);
-                    // dump($pecahKode09);
-                    // dump($pecahNama09);
+                    $pecahKode09    = explode(";", $diagnosaT['KodeDiagnosaT']);    // dump($pecahKode09);
+                    $pecahNama09    = explode(";", $diagnosaT['DiagnosaTindakan']); // dump($pecahNama09);
 
                     for ($item = 0; $item < count($pecahKode09); $item++) {
                         array_push($ICD09T, $pecahKode09[$item] . " - " . $pecahNama09[$item]);
                         array_push($ICD09V, $pecahKode09[$item] . ":" . $pecahNama09[$item]);
                     }
-                    // dump($ICD09T);
-                    // dump($ICD09V);
+                    // dump($ICD09T); // dump($ICD09V);
                 }
             }
-            // $dataMasukPoli      = DB::collection('pasien_' . $NoCM)
-            //     ->where('NoPendaftaran', $noPendaftaran)
-            //     ->where('TglMasukPoli', $tglMasukPoli)
-            //     ->where('deleted_at', null)
-            //     ->whereNotNull('StatusPengkajian')
-            //     ->orderBy('created_at', 'desc')
-            //     ->first();
 
             //get data kdruangan from api
             $client = new Client();
@@ -285,7 +283,7 @@ class FormPengkajianController extends Controller
     /**
      * Simpan Form Pengkajian
      */
-    public function storeFormPengkajian(Request $req, $idForm, $no_cm, $noPendaftaran, $tglMasukPoli)
+    public function storeFormPengkajian(Request $request, $idForm, $no_cm, $noPendaftaran, $tglMasukPoli)
     {
 
         $logging        = new LoggingController;
@@ -312,7 +310,61 @@ class FormPengkajianController extends Controller
         $oldDiagnosa    = "-";
         $oldICD9        = "-";
         if (array_key_exists('PengkajianKeperawatan', $dataMasukPoli['DataPengkajian'])) {
-            $oldKeperawatan = $dataMasukPoli['DataPengkajian']['PengkajianKeperawatan'];
+
+            if (array_key_exists('TekananDarah', $dataMasukPoli['DataPengkajian']['PengkajianKeperawatan'])) {
+                $oldSistolik    = $dataMasukPoli['DataPengkajian']['PengkajianKeperawatan']['TekananDarah']['Sistolik'];
+                $oldDiastolik   = $dataMasukPoli['DataPengkajian']['PengkajianKeperawatan']['TekananDarah']['Diastolik'];
+            }
+
+            $oldPengkajianKeperawatan = $dataMasukPoli['DataPengkajian']['PengkajianKeperawatan'];
+
+            if ($idForm == '1') {
+                $oldKeperawatan = [
+                    "Pendidikan"                            => $oldPengkajianKeperawatan['Pendidikan'],
+                    "Pekerjaan"                             => $oldPengkajianKeperawatan['Pekerjaan'],
+                    "Agama"                                 => $oldPengkajianKeperawatan['Agama'],
+                    "NilaiAnut"                             => $oldPengkajianKeperawatan['NilaiAnut'],
+                    "StatusPernikahan"                      => $oldPengkajianKeperawatan['StatusPernikahan'],
+                    "Keluarga"                              => $oldPengkajianKeperawatan['Keluarga'],
+                    "TempatTinggal"                         => $oldPengkajianKeperawatan['TempatTinggal'],
+                    "StatusPsikologi"                       => $oldPengkajianKeperawatan['StatusPsikologi'],
+                    "HambatanEdukasi"                       => $oldPengkajianKeperawatan['HambatanEdukasi'],
+                    "Sistolik"                              => $oldSistolik,
+                    "Diastolik"                             => $oldDiastolik,
+                    "FrekuensiNadi"                         => $oldPengkajianKeperawatan['FrekuensiNadi'],
+                    "Suhu"                                  => $oldPengkajianKeperawatan['Suhu'],
+                    "FrekuensiNafas"                        => $oldPengkajianKeperawatan['FrekuensiNafas'],
+                    "SkorNyeri"                             => $oldPengkajianKeperawatan['SkorNyeri'],
+                    "SkorJatuh"                             => $oldPengkajianKeperawatan['SkorJatuh'],
+                    "BeratBadan"                            => $oldPengkajianKeperawatan['BeratBadan'],
+                    "TinggiBadan"                           => $oldPengkajianKeperawatan['TinggiBadan'],
+                    "LingkarKepala"                         => $oldPengkajianKeperawatan['LingkarKepala'],
+                    "IMT"                                   => $oldPengkajianKeperawatan['IMT'],
+                    "LingkaranLenganAtas"                   => $oldPengkajianKeperawatan['LingkaranLenganAtas'],
+                    "AlatBantu"                             => $oldPengkajianKeperawatan['AlatBantu'],
+                    "Prothesa"                              => $oldPengkajianKeperawatan['Prothesa'],
+                    "ADL"                                   => $oldPengkajianKeperawatan['ADL'],
+                    "RiwayatPenyakitDahulu"                 => $oldPengkajianKeperawatan['RiwayatPenyakitDahulu'],
+                    "Alergi"                                => $oldPengkajianKeperawatan['Alergi'],
+                    "StatusObstetri"                        => $oldPengkajianKeperawatan['StatusObstetri'],
+                    "HPTT"                                  => $oldPengkajianKeperawatan['HPTT'],
+                    "TP"                                    => $oldPengkajianKeperawatan['TP'],
+                    "Ket_Obstetri_Ginekologi_Laktasi_KB"    => $oldPengkajianKeperawatan['Ket_Obstetri_Ginekologi_Laktasi_KB'],
+                ];
+            } else if ($idForm == '2') {
+                $oldKeperawatan = [
+                    "Sistolik"                              => $oldSistolik,
+                    "Diastolik"                             => $oldDiastolik,
+                    "FrekuensiNadi"                         => $oldPengkajianKeperawatan['FrekuensiNadi'],
+                    "Suhu"                                  => $oldPengkajianKeperawatan['Suhu'],
+                    "FrekuensiNafas"                        => $oldPengkajianKeperawatan['FrekuensiNafas'],
+                    "SkorNyeri"                             => $oldPengkajianKeperawatan['SkorNyeri'],
+                    "SkorJatuh"                             => $oldPengkajianKeperawatan['SkorJatuh'],
+                    "BeratBadan"                            => $oldPengkajianKeperawatan['BeratBadan'],
+                    "TinggiBadan"                           => $oldPengkajianKeperawatan['TinggiBadan'],
+                ];
+            }
+
             if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
                 $oldDiagnosa = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
             }
@@ -337,10 +389,10 @@ class FormPengkajianController extends Controller
         }
         array_push($old, $oldKeperawatan);
         array_push($old, $oldMedis);
-        // dump($old);
+        // dd($old);
 
         // declare data update
-        $dataUpdate = $req->all();
+        $dataUpdate = $request->all();
         // dump($dataUpdate);
 
         if (array_key_exists('Diagnosa', $dataUpdate['PengkajianMedis'])) {
@@ -367,7 +419,6 @@ class FormPengkajianController extends Controller
                 'KodeDiagnosa' => $Jkode10,
                 'NamaDiagnosa' => $Jnama10,
             ];
-
 
             $dataUpdate['PengkajianMedis']['Diagnosa'] = $diagnosa;
             // dump($dataUpdate['PengkajianMedis']['Diagnosa']);
@@ -441,21 +492,70 @@ class FormPengkajianController extends Controller
         // $new = $dataUpdate;
         // dump($new);
         $new = [];
-        $newKeperawatan = $dataUpdate['PengkajianKeperawatan'];
         $newDiagnosa    = "-";
         $newICD9        = "-";
-        // if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
-        //     $newDiagnosa = $dataUpdate['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
-        // }
-        // if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
-        //     $newICD9     = $dataUpdate['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
-        // }
+
+        if (array_key_exists('TekananDarah', $dataUpdate['PengkajianKeperawatan'])) {
+            $newSistolik    = $dataUpdate['PengkajianKeperawatan']['TekananDarah']['Sistolik'];
+            $newDiastolik   = $dataUpdate['PengkajianKeperawatan']['TekananDarah']['Diastolik'];
+        }
+
         if (array_key_exists('Diagnosa', $dataUpdate['PengkajianMedis'])) {
             $newDiagnosa = $dataUpdate['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
         }
         if (array_key_exists('KodeICD9', $dataUpdate['PengkajianMedis'])) {
             $newICD9     = $dataUpdate['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
         }
+
+
+        if ($idForm == '1') {
+            $newKeperawatan = [
+                "Pendidikan"                            => $dataUpdate['PengkajianKeperawatan']['Pendidikan'],
+                "Pekerjaan"                             => $dataUpdate['PengkajianKeperawatan']['Pekerjaan'],
+                "Agama"                                 => $dataUpdate['PengkajianKeperawatan']['Agama'],
+                "NilaiAnut"                             => $dataUpdate['PengkajianKeperawatan']['NilaiAnut'],
+                "StatusPernikahan"                      => $dataUpdate['PengkajianKeperawatan']['StatusPernikahan'],
+                "Keluarga"                              => $dataUpdate['PengkajianKeperawatan']['Keluarga'],
+                "TempatTinggal"                         => $dataUpdate['PengkajianKeperawatan']['TempatTinggal'],
+                "StatusPsikologi"                       => $dataUpdate['PengkajianKeperawatan']['StatusPsikologi'],
+                "HambatanEdukasi"                       => $dataUpdate['PengkajianKeperawatan']['HambatanEdukasi'],
+                "Sistolik"                              => $newSistolik,
+                "Diastolik"                             => $newDiastolik,
+                "FrekuensiNadi"                         => $dataUpdate['PengkajianKeperawatan']['FrekuensiNadi'],
+                "Suhu"                                  => $dataUpdate['PengkajianKeperawatan']['Suhu'],
+                "FrekuensiNafas"                        => $dataUpdate['PengkajianKeperawatan']['FrekuensiNafas'],
+                "SkorNyeri"                             => $dataUpdate['PengkajianKeperawatan']['SkorNyeri'],
+                "SkorJatuh"                             => $dataUpdate['PengkajianKeperawatan']['SkorJatuh'],
+                "BeratBadan"                            => $dataUpdate['PengkajianKeperawatan']['BeratBadan'],
+                "TinggiBadan"                           => $dataUpdate['PengkajianKeperawatan']['TinggiBadan'],
+                "LingkarKepala"                         => $dataUpdate['PengkajianKeperawatan']['LingkarKepala'],
+                "IMT"                                   => $dataUpdate['PengkajianKeperawatan']['IMT'],
+                "LingkaranLenganAtas"                   => $dataUpdate['PengkajianKeperawatan']['LingkaranLenganAtas'],
+                "AlatBantu"                             => $dataUpdate['PengkajianKeperawatan']['AlatBantu'],
+                "Prothesa"                              => $dataUpdate['PengkajianKeperawatan']['Prothesa'],
+                "ADL"                                   => $dataUpdate['PengkajianKeperawatan']['ADL'],
+                "RiwayatPenyakitDahulu"                 => $dataUpdate['PengkajianKeperawatan']['RiwayatPenyakitDahulu'],
+                "Alergi"                                => $dataUpdate['PengkajianKeperawatan']['Alergi'],
+                "StatusObstetri"                        => $dataUpdate['PengkajianKeperawatan']['StatusObstetri'],
+                "HPTT"                                  => $dataUpdate['PengkajianKeperawatan']['HPTT'],
+                "TP"                                    => $dataUpdate['PengkajianKeperawatan']['TP'],
+                "Ket_Obstetri_Ginekologi_Laktasi_KB"    => $dataUpdate['PengkajianKeperawatan']['Ket_Obstetri_Ginekologi_Laktasi_KB'],
+            ];
+        } else if ($idForm == '2') {
+            $newKeperawatan = [
+                "Sistolik"                              => $newSistolik,
+                "Diastolik"                             => $newDiastolik,
+                "FrekuensiNadi"                         => $dataUpdate['PengkajianKeperawatan']['FrekuensiNadi'],
+                "Suhu"                                  => $dataUpdate['PengkajianKeperawatan']['Suhu'],
+                "FrekuensiNafas"                        => $dataUpdate['PengkajianKeperawatan']['FrekuensiNafas'],
+                "SkorNyeri"                             => $dataUpdate['PengkajianKeperawatan']['SkorNyeri'],
+                "SkorJatuh"                             => $dataUpdate['PengkajianKeperawatan']['SkorJatuh'],
+                "BeratBadan"                            => $dataUpdate['PengkajianKeperawatan']['BeratBadan'],
+                "TinggiBadan"                           => $dataUpdate['PengkajianKeperawatan']['TinggiBadan'],
+            ];
+        }
+
+
         $newMedis = [
             'Anamnesis'         => $dataUpdate['PengkajianMedis']['Anamnesis'],
             'PemeriksaanFisik'  => $dataUpdate['PengkajianMedis']['PemeriksaanFisik'],
@@ -717,16 +817,16 @@ class FormPengkajianController extends Controller
         //         ->where('NoPendaftaran', $noPendaftaran)
         //         ->where('deleted_at', null)
         //         ->whereNotNull('StatusPengkajian')
-        //         ->push('DataPengkajian', $req->all(), true);
+        //         ->push('DataPengkajian', $request->all(), true);
 
         //     // berdasarkan tanggal
         //     DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
         //         ->where('NoPendaftaran', $noPendaftaran)
         //         ->where('deleted_at', null)
         //         ->whereNotNull('StatusPengkajian')
-        //         ->push('DataPengkajian', $req->all(), true);
+        //         ->push('DataPengkajian', $request->all(), true);
 
-        //     // $pushData = $req->all();
+        //     // $pushData = $request->all();
         //     $pushData = "Buat Data Pengkajian No. Pendaftaran '" . $noPendaftaran . "' dengan mengisi data form " . $subForm;
         //     $logging->toLogging('create', 'DataPengkajian', $pushData, $no_cm);
         //     //
@@ -741,14 +841,14 @@ class FormPengkajianController extends Controller
         //         ->where('NoPendaftaran', $noPendaftaran)
         //         ->where('deleted_at', null)
         //         ->whereNotNull('StatusPengkajian')
-        //         ->update(['DataPengkajian.' . $index => $req->all()]);
+        //         ->update(['DataPengkajian.' . $index => $request->all()]);
 
         //     // berdasarkan tanggal
         //     DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
         //         ->where('NoPendaftaran', $noPendaftaran)
         //         ->where('deleted_at', null)
         //         ->whereNotNull('StatusPengkajian')
-        //         ->update(['DataPengkajian.' . $index => $req->all()]);
+        //         ->update(['DataPengkajian.' . $index => $request->all()]);
 
         //     /**
         //      * Get dataMasukPoli baru
@@ -780,7 +880,7 @@ class FormPengkajianController extends Controller
     /**
      * Batal Form Pengkajian
      */
-    public function storeBatalForm(Request $req)
+    public function storeBatalForm(Request $request)
     {
 
         date_default_timezone_set('Asia/Jakarta');
@@ -788,19 +888,19 @@ class FormPengkajianController extends Controller
         $logging        = new LoggingController;
 
         //get data pasien bersarakan nocm
-        // $dataMasukPoli = DB::collection('pasien_' . $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->whereNotNull('StatusPengkajian')->get();
+        // $dataMasukPoli = DB::collection('pasien_' . $request->get('NoCM'))->where('NoPendaftaran', $request->get('NoPendaftaran'))->whereNotNull('StatusPengkajian')->get();
         // $dataMasukPoli = $dataMasukPoli[0];
-        $dataMasukPoli = DB::collection('pasien_' . $req->get('NoCM'))
-            ->where('NoPendaftaran', $req->get('NoPendaftaran'))
-            ->where('TglMasukPoli', $req->get('TglMasukPoli'))
+        $dataMasukPoli = DB::collection('pasien_' . $request->get('NoCM'))
+            ->where('NoPendaftaran', $request->get('NoPendaftaran'))
+            ->where('TglMasukPoli', $request->get('TglMasukPoli'))
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->orderBy('created_at', 'desc')
             ->first();
 
         //edit data
-        DB::collection('pasien_' . $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('TglMasukPoli', $req->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => null]);
-        DB::collection('transaksi_' . $req->get('TglMasukPoli'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->where('TglMasukPoli', $req->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => null]);
+        DB::collection('pasien_' . $request->get('NoCM'))->where('NoPendaftaran', $request->get('NoPendaftaran'))->where('TglMasukPoli', $request->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => null]);
+        DB::collection('transaksi_' . $request->get('TglMasukPoli'))->where('NoPendaftaran', $request->get('NoPendaftaran'))->where('TglMasukPoli', $request->get('TglMasukPoli'))->where('deleted_at', null)->update(['StatusPengkajian' => null]);
 
         //reset variable
         unset($dataMasukPoli['_id']);
@@ -809,11 +909,25 @@ class FormPengkajianController extends Controller
         $dataMasukPoli['DataPengkajian'] = array();
 
         //insert data baru
-        DB::collection('pasien_' . $req->get('NoCM'))->insertGetId($dataMasukPoli);
+        DB::collection('pasien_' . $request->get('NoCM'))->insertGetId($dataMasukPoli);
         DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])->insert($dataMasukPoli);
 
-        $logging->toLogging('batal', 'PilihForm', $req->get('NoPendaftaran'), $req->get('NoCM'));
+        $logging->toLogging('batal', 'PilihForm', $request->get('NoPendaftaran'), $request->get('NoCM'));
 
         return redirect('/listPasien')->with('status', 'success')->with('statusBatalPilihForm', 'success');
+    }
+
+    public function lastPengkajianKeperawatan(Request $request)
+    {
+        $dataMasukPoli = DB::collection('pasien_' . $request->get('noCM'))
+            ->where('KdRuangan', $request->get('kdRuangan'))
+            ->where('deleted_at', null)
+            ->whereNotNull('StatusPengkajian')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $lastPengkajianKeperawatan = $dataMasukPoli[1]['DataPengkajian']['PengkajianKeperawatan'];
+
+        return response()->json($lastPengkajianKeperawatan);
     }
 }

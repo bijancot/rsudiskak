@@ -95,7 +95,8 @@ function tgl_indo($tanggal){
         </tr>
         <tr>
             <td colspan=3>
-                1. Tekanan darah : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['TekananDarah']}} mmHg<br>
+                {{-- nambah tekanan darah sistolik dan diastolik --}}
+                {{-- 1. Tekanan darah : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['TekananDarah']}} mmHg<br> --}}
                 2. Frekuensi nadi : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['FrekuensiNadi']}} x/menit<br>
                 3. Suhu : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['Suhu']}} C<br>
                 4. Frekuensi nafas : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['FrekuensiNafas']}} x/menit<br>

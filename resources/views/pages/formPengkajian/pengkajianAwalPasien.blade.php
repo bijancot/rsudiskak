@@ -275,67 +275,82 @@
                                         </div>
             
                                         <div class="col-8 mt-3 mt-lg-0">
-                                            <label for="tekananDarah">Tekanan Darah <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah'] : '')}}" >
+                                            <label for="TekananDarah">Tekanan Darah <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                        </div>
+                                        <div class="col-8 mt-3 mt-lg-0">
+                                            <label for="Sistolik">Sistolik <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input id="Sistolik" type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah][Sistolik]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Sistolik']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Sistolik'] : '')}}" >
                                             <div class="invalid-feedback">
-                                                Data Tekanan Darah Harus Diisi.
+                                                Data Tekanan Darah Sistolik Harus Diisi.
                                             </div>
                                         </div>
                                         <div class="pl-0 col-4 mt-3 mt-lg-0">
-                                            <label for="norekammedis"></label>
+                                            <label for="mmHgS"></label>
+                                            <input type="text" name="" value="mmHg" disabled>
+                                        </div>
+                                        
+                                        <div class="col-8 mt-3 mt-lg-0">
+                                            <label for="Diastolik">Diastolik <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input id="Diastolik" type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah][Diastolik]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Diastolik']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Diastolik'] : '')}}" >
+                                            <div class="invalid-feedback">
+                                                Data Tekanan Darah Diastolik Harus Diisi.
+                                            </div>
+                                        </div>
+                                        <div class="pl-0 col-4 mt-3 mt-lg-0">
+                                            <label for="mmHgD"></label>
                                             <input type="text" name="" value="mmHg" disabled>
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Frekuensi Nadi <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[FrekuensiNadi]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['FrekuensiNadi']) ? $dataPengkajian['PengkajianKeperawatan']['FrekuensiNadi'] : '')}}" >
+                                            <label for="FrekuensiNadi">Frekuensi Nadi <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input id="FrekuensiNadi" type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[FrekuensiNadi]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['FrekuensiNadi']) ? $dataPengkajian['PengkajianKeperawatan']['FrekuensiNadi'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Frekuensi Nadi Harus Diisi.
                                             </div>
                                         </div>
                                         <div class="pl-0 col-4 mt-3">
-                                            <label for="norekammedis"></label>
+                                            <label for="x/menitFNadi"></label>
                                             <input type="text" name="" value="x/menit" disabled>
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Suhu <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[Suhu]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['Suhu']) ? $dataPengkajian['PengkajianKeperawatan']['Suhu'] : '')}}" >
+                                            <label for="Suhu">Suhu <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input id="Suhu" type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[Suhu]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['Suhu']) ? $dataPengkajian['PengkajianKeperawatan']['Suhu'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Suhu Harus Diisi.
                                             </div>
                                         </div>
                                         <div class="pl-0 col-4 mt-3">
-                                            <label for="norekammedis"></label>
+                                            <label for="C"></label>
                                             <input type="text" name="" value="C" disabled>
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Frekuensi Nafas <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[FrekuensiNafas]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['FrekuensiNafas']) ? $dataPengkajian['PengkajianKeperawatan']['FrekuensiNafas'] : '')}}" >
+                                            <label for="FrekuensiNafas">Frekuensi Nafas <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input id="FrekuensiNafas" type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[FrekuensiNafas]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['FrekuensiNafas']) ? $dataPengkajian['PengkajianKeperawatan']['FrekuensiNafas'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Frekuensi Nafas Harus Diisi.
                                             </div>
                                         </div>  
                                         <div class="pl-0 col-4 mt-3">
-                                            <label for="norekammedis"></label>
+                                            <label for="x/menitFNafas"></label>
                                             <input type="text" name="" value="x/menit" disabled>
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Skor Nyeri</label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[SkorNyeri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['SkorNyeri']) ? $dataPengkajian['PengkajianKeperawatan']['SkorNyeri'] : '')}}" >
+                                            <label for="SkorNyeri">Skor Nyeri</label>
+                                            <input id="SkorNyeri" type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[SkorNyeri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['SkorNyeri']) ? $dataPengkajian['PengkajianKeperawatan']['SkorNyeri'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Skor Nyeri Harus Diisi.
                                             </div>
                                         </div>
                                         
                                         <div class="col-12 mt-3 pr-5">
-                                            <label for="nopendaftaran" class="pb-3">Skor Jatuh</label>
+                                            <label for="SkorJatuh" class="pb-3">Skor Jatuh</label>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="form-check" hidden>
-                                                    <input type="radio" class="form-check-input" id="skorJatuh_isNull" class="form" name="PengkajianKeperawatan[SkorJatuh]" value="-" {{(empty($dataPengkajian['PengkajianKeperawatan']['SkorJatuh']) || $dataPengkajian['PengkajianKeperawatan']['SkorJatuh'] == '-' ? 'checked' : '')}} >
-                                                    <label for="rendah">-</label>
+                                                    <input type="radio" class="form-check-input" id="skorJatuh_isNull" class="form" name="PengkajianKeperawatan[SkorJatuh]" value="Normal/Tidak dilakukan pemeriksaan" {{(empty($dataPengkajian['PengkajianKeperawatan']['SkorJatuh']) || $dataPengkajian['PengkajianKeperawatan']['SkorJatuh'] == 'Normal/Tidak dilakukan pemeriksaan' ? 'checked' : '')}} >
+                                                    <label for="skorJatuh_isNull">Normal/Tidak dilakukan pemeriksaan</label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input type="radio" class="form-check-input" id="rendah" class="form" name="PengkajianKeperawatan[SkorJatuh]" value="rendah" {{(!empty($dataPengkajian['PengkajianKeperawatan']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan']['SkorJatuh'] == 'rendah' ? 'checked' : '')}} >
@@ -363,31 +378,31 @@
                                         <hr>
                                         </div>
                                         <div class="col-8 mt-3 mt-lg-0">
-                                            <label for="nopendaftaran">Berat Badan <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <label for="BeratBadan">Berat Badan <span class="lbl-isRequired" style="color:red;">*</span></label>
                                             <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[BeratBadan]" value="{{(!empty($dataBB['DataPengkajian']['PengkajianKeperawatan']['BeratBadan']) ? $dataBB['DataPengkajian']['PengkajianKeperawatan']['BeratBadan'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Berat Badan Harus Diisi.
                                             </div>
                                         </div>
                                         <div class="pl-0 col-4 mt-3 mt-lg-0">
-                                            <label for="norekammedis"></label>
+                                            <label for="kg"></label>
                                             <input type="text" name="" value="kg" disabled>
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Tinggi Badan <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <label for="TinggiBadan">Tinggi Badan <span class="lbl-isRequired" style="color:red;">*</span></label>
                                             <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TinggiBadan]" value="{{(!empty($dataBB['DataPengkajian']['PengkajianKeperawatan']['TinggiBadan']) ? $dataBB['DataPengkajian']['PengkajianKeperawatan']['TinggiBadan'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Tinggi Badan Harus Diisi.
                                             </div>
                                         </div>
                                         <div class="pl-0 col-4 mt-3">
-                                            <label for="norekammedis"></label>
+                                            <label for="cm"></label>
                                             <input type="text" name="" value="cm" disabled>
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Lingkar Kepala <span>**</span></label>
+                                            <label for="LingkarKepala">Lingkar Kepala <span>**</span></label>
                                             <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[LingkarKepala]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['LingkarKepala']) ? $dataPengkajian['PengkajianKeperawatan']['LingkarKepala'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Lingkar Kepala Harus Diisi.
@@ -395,7 +410,7 @@
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">IMT</label>
+                                            <label for="IMT">IMT</label>
                                             <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[IMT]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['IMT']) ? $dataPengkajian['PengkajianKeperawatan']['IMT'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data IMT Harus Diisi.
@@ -403,7 +418,7 @@
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Lingkaran Lengan Atas</label>
+                                            <label for="LingkaranLenganAtas">Lingkaran Lengan Atas</label>
                                             <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[LingkaranLenganAtas]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['LingkaranLenganAtas']) ? $dataPengkajian['PengkajianKeperawatan']['LingkaranLenganAtas'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Lingkaran Lengan Atas Harus Diisi.
@@ -423,7 +438,7 @@
                                         </div>
             
                                         <div class="col-8 mt-3 mt-lg-0">
-                                            <label for="nopendaftaran">Alat Bantu</label>
+                                            <label for="AlatBantu">Alat Bantu</label>
                                             <input type="text" class="form-control" name="PengkajianKeperawatan[AlatBantu]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['AlatBantu']) ? $dataPengkajian['PengkajianKeperawatan']['AlatBantu'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Alat Bantu Harus Diisi.
@@ -431,7 +446,7 @@
                                         </div>
             
                                         <div class="col-8 mt-3">
-                                            <label for="nopendaftaran">Prothesa</label>
+                                            <label for="Prothesa">Prothesa</label>
                                             <input type="text" class="form-control" name="PengkajianKeperawatan[Prothesa]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['Prothesa']) ? $dataPengkajian['PengkajianKeperawatan']['Prothesa'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Prothesa Harus Diisi.
@@ -439,11 +454,11 @@
                                         </div>
                                         
                                         <div class="col-12 mt-3 pr-5">
-                                            <label for="nopendaftaran" class="pb-3">ADL</label>
+                                            <label for="ADL" class="pb-3">ADL</label>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="form-check" hidden>
-                                                    <input type="radio" class="form-check-input" id="adl_isNull" name="PengkajianKeperawatan[ADL]" value="-" {{(empty($dataPengkajian['PengkajianKeperawatan']['ADL']) || $dataPengkajian['PengkajianKeperawatan']['ADL'] == '-' ? 'checked' : '')}} >
-                                                    <label for="mandiri">-</label>
+                                                    <input type="radio" class="form-check-input" id="adl_isNull" name="PengkajianKeperawatan[ADL]" value="Normal/Tidak dilakukan pemeriksaan" {{(empty($dataPengkajian['PengkajianKeperawatan']['ADL']) || $dataPengkajian['PengkajianKeperawatan']['ADL'] == 'Normal/Tidak dilakukan pemeriksaan' ? 'checked' : '')}} >
+                                                    <label for="adl_isNull">Normal/Tidak dilakukan pemeriksaan</label>
                                                     <div class="invalid-feedback">
                                                         Data ADL Harus Diisi.
                                                     </div>
@@ -467,7 +482,7 @@
                                     <div class="row m-3 py-3 border-round">
                                         <div class="col-lg-6 col-12">
                                             <div class="form-group h-100">
-                                                <label for="anamnesis">Riwayat Penyakit Dahulu</label>
+                                                <label for="RiwayatPenyakitDahulu">Riwayat Penyakit Dahulu</label>
                                                 <textarea class="form-control" name="PengkajianKeperawatan[RiwayatPenyakitDahulu]" >{{(!empty($dataPengkajian['PengkajianKeperawatan']['RiwayatPenyakitDahulu']) ? $dataPengkajian['PengkajianKeperawatan']['RiwayatPenyakitDahulu'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Riwayat Penyakit Dahulu Harus Diisi.
@@ -476,7 +491,7 @@
                                         </div>
                                         <div class="col-lg-6 col-12 mt-3 mt-lg-0">
                                             <div class="form-group h-100">
-                                                <label for="pemeriksaanFisik">Alergi</label>
+                                                <label for="Alergi">Alergi</label>
                                                 <textarea class="form-control" name="PengkajianKeperawatan[Alergi]" >{{(!empty($dataPengkajian['PengkajianKeperawatan']['Alergi']) ? $dataPengkajian['PengkajianKeperawatan']['Alergi'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Alergi Harus Diisi.
@@ -485,7 +500,7 @@
                                         </div>
                                         @if(Auth::user()->KodeRuangan == "209")
                                         <div class="col-lg-3 col-12 mt-3">
-                                            <label for="diagnosa">Status Obstetri</label>
+                                            <label for="StatusObstetri-209">Status Obstetri</label>
                                             <input type="text" class="form-control" name="PengkajianKeperawatan[StatusObstetri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['StatusObstetri']) ? $dataPengkajian['PengkajianKeperawatan']['StatusObstetri'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Status Obstetri Harus Diisi.
@@ -493,14 +508,14 @@
                                         </div>
                                         @else
                                         <div class="col-lg-3 col-12 mt-3">
-                                            <label for="diagnosa">Status Obstetri</label>
+                                            <label for="StatusObstetri">Status Obstetri</label>
                                             <input type="text" class="form-control" name="PengkajianKeperawatan[StatusObstetri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['StatusObstetri']) ? $dataPengkajian['PengkajianKeperawatan']['StatusObstetri'] : '')}}">
                                         </div>
                                         @endif
     
                                         @if(Auth::user()->KodeRuangan == "209")
                                         <div class="col-lg-3 col-12 mt-3">
-                                            <label for="komplikasi">HPTT</label>
+                                            <label for="HPTT-209">HPTT</label>
                                             <input type="text" class="form-control" name="PengkajianKeperawatan[HPTT]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['HPTT']) ? $dataPengkajian['PengkajianKeperawatan']['HPTT'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data HPTT Harus Diisi.
@@ -508,13 +523,13 @@
                                         </div>
                                         @else
                                         <div class="col-lg-3 col-12 mt-3">
-                                            <label for="komplikasi">HPTT</label>
+                                            <label for="HPTT">HPTT</label>
                                             <input type="text" class="form-control" name="PengkajianKeperawatan[HPTT]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['HPTT']) ? $dataPengkajian['PengkajianKeperawatan']['HPTT'] : '')}}">
                                         </div>
                                         @endif
     
                                         <div class="col-lg-4 col-12 mt-3">
-                                            <label for="komplikasi">TP</label>
+                                            <label for="TP">TP</label>
                                             <input type="text" class="form-control" name="PengkajianKeperawatan[TP]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TP']) ? $dataPengkajian['PengkajianKeperawatan']['TP'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data TP Harus Diisi.
@@ -523,7 +538,7 @@
     
                                         @if(Auth::user()->KodeRuangan == "209")
                                         <div class="col-lg-6 col-12 mt-3">
-                                            <label for="komplikasi">Keterangan Obstetri/Ginekologi/Laktasi/KB</label>
+                                            <label for="KeteranganObstetri/Ginekologi/Laktasi/KB-209">Keterangan Obstetri/Ginekologi/Laktasi/KB</label>
                                             <input type="text" class="form-control" name="PengkajianKeperawatan[Ket_Obstetri_Ginekologi_Laktasi_KB]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['Ket_Obstetri_Ginekologi_Laktasi_KB']) ? $dataPengkajian['PengkajianKeperawatan']['Ket_Obstetri_Ginekologi_Laktasi_KB'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Keterangan Obstetri Harus Diisi.
@@ -531,7 +546,7 @@
                                         </div>
                                         @else
                                         <div class="col-lg-6 col-12 mt-3">
-                                            <label for="komplikasi">Keterangan Obstetri/Ginekologi/Laktasi/KB</label>
+                                            <label for="KeteranganObstetri/Ginekologi/Laktasi/KB">Keterangan Obstetri/Ginekologi/Laktasi/KB</label>
                                             <input type="text" class="form-control" name="PengkajianKeperawatan[Ket_Obstetri_Ginekologi_Laktasi_KB]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['Ket_Obstetri_Ginekologi_Laktasi_KB']) ? $dataPengkajian['PengkajianKeperawatan']['Ket_Obstetri_Ginekologi_Laktasi_KB'] : '')}}" >
                                         </div>
                                         @endif
@@ -565,18 +580,18 @@
                                             <div class="form-group h-100">
                                                 <div class="d-flex">
                                                     <label for="pemeriksaanFisik">Pemeriksaan Fisik (O) <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                                    <a href="#" class="btn diagnosa py-0 mb-1 ml-auto">
+                                                    <a id="btn-pemeriksaanFisik" class="btn diagnosa py-0 mb-1 ml-auto">
                                                        + Get Data
                                                     </a>
                                                 </div>
-                                                <textarea class="form-control inpt-isRequired" name="PengkajianMedis[PemeriksaanFisik]" >{{(!empty($dataPengkajian['PengkajianMedis']['PemeriksaanFisik']) ? $dataPengkajian['PengkajianMedis']['PemeriksaanFisik'] : '')}}</textarea>
+                                                <textarea id="txt-pemeriksaanFisik" class="form-control inpt-isRequired" name="PengkajianMedis[PemeriksaanFisik]" >{{(!empty($dataPengkajian['PengkajianMedis']['PemeriksaanFisik']) ? $dataPengkajian['PengkajianMedis']['PemeriksaanFisik'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Pemeriksaan Fisik Harus Diisi.
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <label for="diagnosa">ICD 10 <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <label for="kodeICD10">ICD 10 <span class="lbl-isRequired" style="color:red;">*</span></label>
                                             <select multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
                                                 
                                                 @if ( !empty($diagnosa['KodeDiagnosa']) && !empty($diagnosa['NamaDiagnosa']) ) 
@@ -593,7 +608,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <label for="kodeICD10">Diagnosa (A)</label>
+                                            <label for="diagnosa">Diagnosa (A)</label>
                                             <textarea name="PengkajianMedis[Diagnosa(A)]" class="form-control">{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa(A)']) ? $dataPengkajian['PengkajianMedis']['Diagnosa(A)'] : '')}}</textarea>
                                         </div>
                                         <div class="col-12 mt-3">
@@ -655,8 +670,8 @@
                                             <label for="kesanstatusgizi" class="pb-3">Kesan Status Gizi</label>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="form-check" hidden>
-                                                    <input type="radio" class="form-check-input" id="kesanStatusGizi" name="PengkajianMedis[KesanStatusGizi]" value="-" {{(empty($dataPengkajian['PengkajianMedis']['KesanStatusGizi']) || $dataPengkajian['PengkajianMedis']['KesanStatusGizi'] == '-' ? 'checked' : '')}} >
-                                                    <label for="cukup">-</label>
+                                                    <input type="radio" class="form-check-input" id="kesanStatusGizi" name="PengkajianMedis[KesanStatusGizi]" value="Normal/Tidak dilakukan pemeriksaan" {{(empty($dataPengkajian['PengkajianMedis']['KesanStatusGizi']) || $dataPengkajian['PengkajianMedis']['KesanStatusGizi'] == 'Normal/Tidak dilakukan pemeriksaan' ? 'checked' : '')}} >
+                                                    <label for="kesanStatusGizi">Normal/Tidak dilakukan pemeriksaan</label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input type="radio" class="form-check-input" id="kurang" name="PengkajianMedis[KesanStatusGizi]" value="kurang" {{(!empty($dataPengkajian['PengkajianMedis']['KesanStatusGizi']) && $dataPengkajian['PengkajianMedis']['KesanStatusGizi'] == 'kurang' ? 'checked' : '')}} >
@@ -916,7 +931,6 @@
         })();
 
         function onlyNumberKey(evt) { 
-          
             // Only ASCII charactar in that range allowed 
             var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
             if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57) && ASCIICode != 45) 
@@ -924,6 +938,39 @@
             return true; 
         } 
 
+        $(document).ready(function(){
+            // get data Pemeriksaan Fisik By Tanda Vital Section
+            $('#btn-pemeriksaanFisik').click(function () {
+                let sistolik        = $('#Sistolik').val();
+                let diastolik       = $('#Diastolik').val();
+                let frekuensiNadi   = $('#FrekuensiNadi').val();
+                let suhu            = $('#Suhu').val();
+                let frekuensiNafas  = $('#FrekuensiNafas').val();
+                let skorNyeri       = $('#SkorNyeri').val();
+                
+                var skorJatuh = null; 
+
+                if ($('#rendah').prop("checked")) {
+                    skorJatuh       = $('#rendah').val();
+                } else if ($('#sedang').prop("checked")) {
+                    skorJatuh       = $('#sedang').val();
+                } else if ($('#tinggi').prop("checked")) {
+                    skorJatuh       = $('#tinggi').val();
+                }
+
+                $('#txt-pemeriksaanFisik').val(
+                    'Sistolik : '+sistolik+'\n'+
+                    'Diastolik : '+diastolik+'\n'+
+                    'Frekuensi Nadi : '+frekuensiNadi+'\n'+
+                    'Suhu : '+suhu+'\n'+
+                    'Frekuensi Nafas : '+frekuensiNafas+'\n'+
+                    'Skor Nyeri : '+skorNyeri+'\n'+
+                    'Skor Jatuh : '+skorJatuh+'\n'
+                );
+            });
+        });
+
+        // checkbox verifikasi 
         $('#verifikasi').change(function(){
             if($(this).prop('checked') == true){
                 $('.lbl-isRequired').show();
@@ -936,6 +983,7 @@
             }
         })
 
+        // Auto Fill Form bila tidak diisi = "Normal/Tidak dilakukan pemeriksaan"
         $('#form-pengkajian').submit(function () {
             let statusPengkajian = $('#statusPengkajian').val()
             let dataForm = $(this).serializeArray()
@@ -947,17 +995,17 @@
                         if(elm.type == 'text'){
                             let tagInput = 'input[name="'+elm.name+'"]';
                             if($(tagInput).attr('required') != 'required' && $(tagInput).val() == ''){
-                                $(tagInput).val("-")
+                                $(tagInput).val("Normal/Tidak dilakukan pemeriksaan")
                             }
                         }else if(elm.type == 'textarea'){
                             let tagInput = 'textarea[name="'+elm.name+'"]';
                             if($(tagInput).attr("required") != 'required' && $(tagInput).html() == ''){
-                                $(tagInput).html("-")
+                                $(tagInput).html("Normal/Tidak dilakukan pemeriksaan")
                             }
                         }else if(elm.type == 'select-one'){
                             let tagInput = 'select[name="'+elm.name+'"]';
                             if($(tagInput).attr("required") != 'required' && $(tagInput).val() == ''){
-                                $(tagInput).val("-")
+                                $(tagInput).val("Normal/Tidak dilakukan pemeriksaan")
                             }
                         }
                     }

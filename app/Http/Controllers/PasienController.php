@@ -34,9 +34,9 @@ class PasienController extends Controller
         $antriPoli = json_decode($antriPoli, true);
         $antriPoli = $antriPoli['response'];
 
-        if(!empty(session('dateMasukPoli'))){
+        if (!empty(session('dateMasukPoli'))) {
             $dateMasukPoli = session('dateMasukPoli');
-        }else{
+        } else {
             $dateMasukPoli = date("Y-m-d");
         }
 
@@ -66,7 +66,7 @@ class PasienController extends Controller
 
         $getlistDokter = User::where([
             ['Role', '=', '1'],
-            ['KodeRuangan', '=', $getKdRuangan],
+            // ['KodeRuangan', '=', $getKdRuangan],
         ])->orderBy('Nama', 'asc')->get();
 
         $getForm = ManajemenForm::whereNotNull('status')->get();

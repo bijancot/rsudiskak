@@ -11,6 +11,10 @@
 |
 */
 
+// use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('pages.login');
 });
@@ -140,6 +144,7 @@ Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
     Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@storeFormPengkajian');
     // Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
 
+    Route::post('getPengkajian/lastPengkajianKeperawatan', 'FormPengkajianController@lastPengkajianKeperawatan');
 });
 
 Route::post('dokumen', 'DokumenController@store');
@@ -227,7 +232,31 @@ Route::get('footer', function () {
     return view('includes.footer');
 });
 // ======= 
-Auth::routes();
+
+Route::get('/ff', function () {
+
+    $dataMasukPoli = DB::collection('pasien_' . "11608050")
+        ->where('KdRuangan', "215")
+        ->where('deleted_at', null)
+        ->whereNotNull('StatusPengkajian')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    dump($dataMasukPoli);
+
+    $lastPengkajianKeperawatan = $dataMasukPoli[1]['DataPengkajian']['PengkajianKeperawatan'];
+
+    dump($lastPengkajianKeperawatan['TekananDarah']['Sistolik']);
+    dump($lastPengkajianKeperawatan['TekananDarah']['Diastolik']);
+    dump($lastPengkajianKeperawatan['FrekuensiNadi']);
+    dump($lastPengkajianKeperawatan['Suhu']);
+    dump($lastPengkajianKeperawatan['FrekuensiNafas']);
+    dump($lastPengkajianKeperawatan['BeratBadan']);
+    dump($lastPengkajianKeperawatan['TinggiBadan']);
+    dump($lastPengkajianKeperawatan['SkorNyeri']);
+    dump($lastPengkajianKeperawatan['SkorJatuh']);
+});
+
 
 Route::get('home', 'HomeController@index')->name('home');
 

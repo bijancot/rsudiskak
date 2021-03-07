@@ -96,15 +96,30 @@
                                         </div>
             
                                         <div class="col-8 mt-3 mt-lg-0">
-                                            <label for="tekananDarah">Tekanan Darah <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input disabled type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah'] : '')}}" >
+                                            <label for="TekananDarah">Tekanan Darah <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                        </div>
+                                        <div class="col-8 mt-3 mt-lg-0">
+                                            <label for="Sistolik">Sistolik <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah][Sistolik]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Sistolik']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Sistolik'] : '')}}" >
                                             <div class="invalid-feedback">
-                                                Data Tekanan Darah Harus Diisi.
+                                                Data Tekanan Darah Sistolik Harus Diisi.
                                             </div>
                                         </div>
                                         <div class="pl-0 col-4 mt-3 mt-lg-0">
                                             <label for="norekammedis"></label>
-                                            <input disabled type="text" name="" value="mmHg" disabled>
+                                            <input type="text" name="" value="mmHg" disabled>
+                                        </div>
+                                        
+                                        <div class="col-8 mt-3 mt-lg-0">
+                                            <label for="Diastolik">Diastolik <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah][Diastolik]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Diastolik']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Diastolik'] : '')}}" >
+                                            <div class="invalid-feedback">
+                                                Data Tekanan Darah Diastolik Harus Diisi.
+                                            </div>
+                                        </div>
+                                        <div class="pl-0 col-4 mt-3 mt-lg-0">
+                                            <label for="norekammedis"></label>
+                                            <input type="text" name="" value="mmHg" disabled>
                                         </div>
             
                                         <div class="col-8 mt-3">
@@ -189,8 +204,8 @@
                                             <label for="nopendaftaran" class="pb-3">Skor Jatuh</label>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="form-check" hidden>
-                                                    <input disabled type="radio" class="form-check-input" id="skorJatuh_isNull" class="form" name="PengkajianKeperawatan[SkorJatuh]" value="-" {{(empty($dataPengkajian['PengkajianKeperawatan']['SkorJatuh']) || $dataPengkajian['PengkajianKeperawatan']['SkorJatuh'] == '-' ? 'checked' : '')}} >
-                                                    <label for="rendah">-</label>
+                                                    <input disabled type="radio" class="form-check-input" id="skorJatuh_isNull" class="form" name="PengkajianKeperawatan[SkorJatuh]" value="Normal/Tidak dilakukan pemeriksaan" {{(empty($dataPengkajian['PengkajianKeperawatan']['SkorJatuh']) || $dataPengkajian['PengkajianKeperawatan']['SkorJatuh'] == 'Normal/Tidak dilakukan pemeriksaan' ? 'checked' : '')}} >
+                                                    <label for="skorJatuh_isNull">Normal/Tidak dilakukan pemeriksaan</label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input disabled type="radio" class="form-check-input" id="rendah" name="PengkajianKeperawatan[SkorJatuh]" value="rendah" {{(!empty($dataPengkajian['PengkajianKeperawatan']['SkorJatuh']) && $dataPengkajian['PengkajianKeperawatan']['SkorJatuh'] == 'rendah' ? 'checked' : '')}} >
@@ -325,8 +340,8 @@
                                             <label for="kesanstatusgizi" class="pb-3">Kesan Status Gizi</label>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="form-check" hidden>
-                                                    <input disabled type="radio" class="form-check-input" id="kesanStatusGizi" name="PengkajianMedis[KesanStatusGizi]" value="-" {{(empty($dataPengkajian['PengkajianMedis']['KesanStatusGizi']) || $dataPengkajian['PengkajianMedis']['KesanStatusGizi'] == '-' ? 'checked' : '')}} >
-                                                    <label for="cukup">-</label>
+                                                    <input disabled type="radio" class="form-check-input" id="kesanStatusGizi" name="PengkajianMedis[KesanStatusGizi]" value="Normal/Tidak dilakukan pemeriksaan" {{(empty($dataPengkajian['PengkajianMedis']['KesanStatusGizi']) || $dataPengkajian['PengkajianMedis']['KesanStatusGizi'] == 'Normal/Tidak dilakukan pemeriksaan' ? 'checked' : '')}} >
+                                                    <label for="kesanStatusGizi">Normal/Tidak dilakukan pemeriksaan</label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input disabled type="radio" class="form-check-input" id="kurang" name="PengkajianMedis[KesanStatusGizi]" value="kurang" {{(!empty($dataPengkajian['PengkajianMedis']['KesanStatusGizi']) && $dataPengkajian['PengkajianMedis']['KesanStatusGizi'] == 'kurang' ? 'checked' : '')}} >
@@ -596,17 +611,17 @@
                         if(elm.type == 'text'){
                             let tagInput = 'input[name="'+elm.name+'"]';
                             if($(tagInput).attr('required') != 'required' && $(tagInput).val() == ''){
-                                $(tagInput).val("-")
+                                $(tagInput).val("Normal/Tidak dilakukan pemeriksaan")
                             }
                         }else if(elm.type == 'textarea'){
                             let tagInput = 'textarea[name="'+elm.name+'"]';
                             if($(tagInput).attr("required") != 'required' && $(tagInput).html() == ''){
-                                $(tagInput).html("-")
+                                $(tagInput).html("Normal/Tidak dilakukan pemeriksaan")
                             }
                         }else if(elm.type == 'select-one'){
                             let tagInput = 'select[name="'+elm.name+'"]';
                             if($(tagInput).attr("required") != 'required' && $(tagInput).val() == ''){
-                                $(tagInput).val("-")
+                                $(tagInput).val("Normal/Tidak dilakukan pemeriksaan")
                             }
                         }
                     }
