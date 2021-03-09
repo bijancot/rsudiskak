@@ -172,7 +172,7 @@
                                         </div>
                                         <div class="col-8 mt-3 mt-lg-0">
                                             <label for="Sistolik">Sistolik <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah][Sistolik]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Sistolik']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Sistolik'] : '')}}" >
+                                            <input disabled type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah][Sistolik]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Sistolik']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Sistolik'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Tekanan Darah Sistolik Harus Diisi.
                                             </div>
@@ -184,7 +184,7 @@
                                         
                                         <div class="col-8 mt-3 mt-lg-0">
                                             <label for="Diastolik">Diastolik <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah][Diastolik]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Diastolik']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Diastolik'] : '')}}" >
+                                            <input disabled type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TekananDarah][Diastolik]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Diastolik']) ? $dataPengkajian['PengkajianKeperawatan']['TekananDarah']['Diastolik'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Tekanan Darah Diastolik Harus Diisi.
                                             </div>

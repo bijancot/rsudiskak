@@ -379,7 +379,7 @@
                                         </div>
                                         <div class="col-8 mt-3 mt-lg-0">
                                             <label for="BeratBadan">Berat Badan <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[BeratBadan]" value="{{(!empty($dataBB['DataPengkajian']['PengkajianKeperawatan']['BeratBadan']) ? $dataBB['DataPengkajian']['PengkajianKeperawatan']['BeratBadan'] : '')}}" >
+                                            <input id="BeratBadan" type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[BeratBadan]" value="{{(!empty($dataBB['DataPengkajian']['PengkajianKeperawatan']['BeratBadan']) ? $dataBB['DataPengkajian']['PengkajianKeperawatan']['BeratBadan'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Berat Badan Harus Diisi.
                                             </div>
@@ -391,7 +391,7 @@
             
                                         <div class="col-8 mt-3">
                                             <label for="TinggiBadan">Tinggi Badan <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TinggiBadan]" value="{{(!empty($dataBB['DataPengkajian']['PengkajianKeperawatan']['TinggiBadan']) ? $dataBB['DataPengkajian']['PengkajianKeperawatan']['TinggiBadan'] : '')}}" >
+                                            <input id="TinggiBadan" type="text" onkeypress="return onlyNumberKey(event)" class="form-control inpt-isRequired" name="PengkajianKeperawatan[TinggiBadan]" value="{{(!empty($dataBB['DataPengkajian']['PengkajianKeperawatan']['TinggiBadan']) ? $dataBB['DataPengkajian']['PengkajianKeperawatan']['TinggiBadan'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Tinggi Badan Harus Diisi.
                                             </div>
@@ -403,7 +403,7 @@
             
                                         <div class="col-8 mt-3">
                                             <label for="LingkarKepala">Lingkar Kepala <span>**</span></label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[LingkarKepala]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['LingkarKepala']) ? $dataPengkajian['PengkajianKeperawatan']['LingkarKepala'] : '')}}" >
+                                            <input id="LingkarKepala" type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[LingkarKepala]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['LingkarKepala']) ? $dataPengkajian['PengkajianKeperawatan']['LingkarKepala'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Lingkar Kepala Harus Diisi.
                                             </div>
@@ -411,7 +411,7 @@
             
                                         <div class="col-8 mt-3">
                                             <label for="IMT">IMT</label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[IMT]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['IMT']) ? $dataPengkajian['PengkajianKeperawatan']['IMT'] : '')}}" >
+                                            <input id="IMT" type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[IMT]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['IMT']) ? $dataPengkajian['PengkajianKeperawatan']['IMT'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data IMT Harus Diisi.
                                             </div>
@@ -419,7 +419,7 @@
             
                                         <div class="col-8 mt-3">
                                             <label for="LingkaranLenganAtas">Lingkaran Lengan Atas</label>
-                                            <input type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[LingkaranLenganAtas]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['LingkaranLenganAtas']) ? $dataPengkajian['PengkajianKeperawatan']['LingkaranLenganAtas'] : '')}}" >
+                                            <input id="LingkaranLenganAtas" type="text" onkeypress="return onlyNumberKey(event)" class="form-control" name="PengkajianKeperawatan[LingkaranLenganAtas]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['LingkaranLenganAtas']) ? $dataPengkajian['PengkajianKeperawatan']['LingkaranLenganAtas'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Lingkaran Lengan Atas Harus Diisi.
                                             </div>
@@ -439,7 +439,7 @@
             
                                         <div class="col-8 mt-3 mt-lg-0">
                                             <label for="AlatBantu">Alat Bantu</label>
-                                            <input type="text" class="form-control" name="PengkajianKeperawatan[AlatBantu]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['AlatBantu']) ? $dataPengkajian['PengkajianKeperawatan']['AlatBantu'] : '')}}" >
+                                            <input id="AlatBantu" type="text" class="form-control" name="PengkajianKeperawatan[AlatBantu]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['AlatBantu']) ? $dataPengkajian['PengkajianKeperawatan']['AlatBantu'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Alat Bantu Harus Diisi.
                                             </div>
@@ -447,7 +447,7 @@
             
                                         <div class="col-8 mt-3">
                                             <label for="Prothesa">Prothesa</label>
-                                            <input type="text" class="form-control" name="PengkajianKeperawatan[Prothesa]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['Prothesa']) ? $dataPengkajian['PengkajianKeperawatan']['Prothesa'] : '')}}" >
+                                            <input id="Prothesa" type="text" class="form-control" name="PengkajianKeperawatan[Prothesa]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['Prothesa']) ? $dataPengkajian['PengkajianKeperawatan']['Prothesa'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Prothesa Harus Diisi.
                                             </div>
@@ -483,7 +483,7 @@
                                         <div class="col-lg-6 col-12">
                                             <div class="form-group h-100">
                                                 <label for="RiwayatPenyakitDahulu">Riwayat Penyakit Dahulu</label>
-                                                <textarea class="form-control" name="PengkajianKeperawatan[RiwayatPenyakitDahulu]" >{{(!empty($dataPengkajian['PengkajianKeperawatan']['RiwayatPenyakitDahulu']) ? $dataPengkajian['PengkajianKeperawatan']['RiwayatPenyakitDahulu'] : '')}}</textarea>
+                                                <textarea id="RiwayatPenyakitDahulu" class="form-control" name="PengkajianKeperawatan[RiwayatPenyakitDahulu]" >{{(!empty($dataPengkajian['PengkajianKeperawatan']['RiwayatPenyakitDahulu']) ? $dataPengkajian['PengkajianKeperawatan']['RiwayatPenyakitDahulu'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Riwayat Penyakit Dahulu Harus Diisi.
                                                 </div>
@@ -492,7 +492,7 @@
                                         <div class="col-lg-6 col-12 mt-3 mt-lg-0">
                                             <div class="form-group h-100">
                                                 <label for="Alergi">Alergi</label>
-                                                <textarea class="form-control" name="PengkajianKeperawatan[Alergi]" >{{(!empty($dataPengkajian['PengkajianKeperawatan']['Alergi']) ? $dataPengkajian['PengkajianKeperawatan']['Alergi'] : '')}}</textarea>
+                                                <textarea id="Alergi" class="form-control" name="PengkajianKeperawatan[Alergi]" >{{(!empty($dataPengkajian['PengkajianKeperawatan']['Alergi']) ? $dataPengkajian['PengkajianKeperawatan']['Alergi'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Alergi Harus Diisi.
                                                 </div>
@@ -501,7 +501,7 @@
                                         @if(Auth::user()->KodeRuangan == "209")
                                         <div class="col-lg-3 col-12 mt-3">
                                             <label for="StatusObstetri-209">Status Obstetri</label>
-                                            <input type="text" class="form-control" name="PengkajianKeperawatan[StatusObstetri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['StatusObstetri']) ? $dataPengkajian['PengkajianKeperawatan']['StatusObstetri'] : '')}}" >
+                                            <input id="StatusObstetri-209" type="text" class="form-control" name="PengkajianKeperawatan[StatusObstetri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['StatusObstetri']) ? $dataPengkajian['PengkajianKeperawatan']['StatusObstetri'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Status Obstetri Harus Diisi.
                                             </div>
@@ -509,14 +509,14 @@
                                         @else
                                         <div class="col-lg-3 col-12 mt-3">
                                             <label for="StatusObstetri">Status Obstetri</label>
-                                            <input type="text" class="form-control" name="PengkajianKeperawatan[StatusObstetri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['StatusObstetri']) ? $dataPengkajian['PengkajianKeperawatan']['StatusObstetri'] : '')}}">
+                                            <input id="StatusObstetri" type="text" class="form-control" name="PengkajianKeperawatan[StatusObstetri]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['StatusObstetri']) ? $dataPengkajian['PengkajianKeperawatan']['StatusObstetri'] : '')}}">
                                         </div>
                                         @endif
     
                                         @if(Auth::user()->KodeRuangan == "209")
                                         <div class="col-lg-3 col-12 mt-3">
                                             <label for="HPTT-209">HPTT</label>
-                                            <input type="text" class="form-control" name="PengkajianKeperawatan[HPTT]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['HPTT']) ? $dataPengkajian['PengkajianKeperawatan']['HPTT'] : '')}}" >
+                                            <input id="HPTT-209" type="text" class="form-control" name="PengkajianKeperawatan[HPTT]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['HPTT']) ? $dataPengkajian['PengkajianKeperawatan']['HPTT'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data HPTT Harus Diisi.
                                             </div>
@@ -524,13 +524,13 @@
                                         @else
                                         <div class="col-lg-3 col-12 mt-3">
                                             <label for="HPTT">HPTT</label>
-                                            <input type="text" class="form-control" name="PengkajianKeperawatan[HPTT]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['HPTT']) ? $dataPengkajian['PengkajianKeperawatan']['HPTT'] : '')}}">
+                                            <input id="HPTT" type="text" class="form-control" name="PengkajianKeperawatan[HPTT]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['HPTT']) ? $dataPengkajian['PengkajianKeperawatan']['HPTT'] : '')}}">
                                         </div>
                                         @endif
     
                                         <div class="col-lg-4 col-12 mt-3">
                                             <label for="TP">TP</label>
-                                            <input type="text" class="form-control" name="PengkajianKeperawatan[TP]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TP']) ? $dataPengkajian['PengkajianKeperawatan']['TP'] : '')}}" >
+                                            <input id="TP" type="text" class="form-control" name="PengkajianKeperawatan[TP]" value="{{(!empty($dataPengkajian['PengkajianKeperawatan']['TP']) ? $dataPengkajian['PengkajianKeperawatan']['TP'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data TP Harus Diisi.
                                             </div>
@@ -569,8 +569,8 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group h-100">
-                                                <label for="anamnesis">Anamesis (S) <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                                <textarea class="form-control inpt-isRequired" name="PengkajianMedis[Anamnesis]" >{{(!empty($dataPengkajian['PengkajianMedis']['Anamnesis']) ? $dataPengkajian['PengkajianMedis']['Anamnesis'] : '')}}</textarea>
+                                                <label for="Anamnesis">Anamesis (S) <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <textarea id="Anamesis" class="form-control inpt-isRequired" name="PengkajianMedis[Anamnesis]" >{{(!empty($dataPengkajian['PengkajianMedis']['Anamnesis']) ? $dataPengkajian['PengkajianMedis']['Anamnesis'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Anamnesis Harus Diisi.
                                                 </div>
@@ -592,7 +592,7 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="kodeICD10">ICD 10 <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            <select multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
+                                            <select id="pilihDiagnosa" multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" required>
                                                 
                                                 @if ( !empty($diagnosa['KodeDiagnosa']) && !empty($diagnosa['NamaDiagnosa']) ) 
                                                     @for ($item = 0; $item < count($ICD10T); $item++ )
@@ -608,19 +608,19 @@
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <label for="diagnosa">Diagnosa (A)</label>
-                                            <textarea name="PengkajianMedis[Diagnosa(A)]" class="form-control">{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa(A)']) ? $dataPengkajian['PengkajianMedis']['Diagnosa(A)'] : '')}}</textarea>
+                                            <label for="Diagnosa">Diagnosa (A)</label>
+                                            <textarea id="Diagnosa" name="PengkajianMedis[Diagnosa(A)]" class="form-control">{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa(A)']) ? $dataPengkajian['PengkajianMedis']['Diagnosa(A)'] : '')}}</textarea>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <label for="komplikasi">Komplikasi</label>
-                                            <input type="text" class="form-control" name="PengkajianMedis[Komplikasi]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Komplikasi']) ? $dataPengkajian['PengkajianMedis']['Komplikasi'] : '')}}" >
+                                            <label for="Komplikasi">Komplikasi</label>
+                                            <input id="Komplikasi" type="text" class="form-control" name="PengkajianMedis[Komplikasi]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Komplikasi']) ? $dataPengkajian['PengkajianMedis']['Komplikasi'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Komplikasi Harus Diisi.
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <label for="komorbid">Komorbid</label>
-                                            <input type="text" class="form-control" name="PengkajianMedis[Komorbid]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Komorbid']) ? $dataPengkajian['PengkajianMedis']['Komorbid'] : '')}}" >
+                                            <label for="Komorbid">Komorbid</label>
+                                            <input id="Komorbid" type="text" class="form-control" name="PengkajianMedis[Komorbid]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Komorbid']) ? $dataPengkajian['PengkajianMedis']['Komorbid'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Komorbid Harus Diisi.
                                             </div>
@@ -632,7 +632,7 @@
                                         <div class="col-12">
                                             <div class="form-group h-100">
                                                 <label for="rencanadanterapi">Rencana dan Terapi (P) <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                                <textarea class="form-control inpt-isRequired" name="PengkajianMedis[RencanaDanTerapi]" id="rencanadanterapi" >{{(!empty($dataPengkajian['PengkajianMedis']['RencanaDanTerapi']) ? $dataPengkajian['PengkajianMedis']['RencanaDanTerapi'] : '')}}</textarea>
+                                                <textarea id="rencanadanterapi" class="form-control inpt-isRequired" name="PengkajianMedis[RencanaDanTerapi]" >{{(!empty($dataPengkajian['PengkajianMedis']['RencanaDanTerapi']) ? $dataPengkajian['PengkajianMedis']['RencanaDanTerapi'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Rencana dan Terapi Harus Diisi.
                                                 </div>
@@ -640,7 +640,7 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="kodeICD09">Kode ICD 9</label>
-                                            <select multiple="multiple" class="form-control pilihDiagnosaTindakan" name="PengkajianMedis[KodeICD9][]" id="kodeICD09">
+                                            <select id="kodeICD09" multiple="multiple" class="form-control pilihDiagnosaTindakan" name="PengkajianMedis[KodeICD9][]" >
                                                 @if ( !empty($diagnosaT['KodeDiagnosaT']) && !empty($diagnosaT['DiagnosaTindakan']) ) 
                                                     @for ($item = 0; $item < count($ICD09T); $item++ )
                                                         <option value="{{ $ICD09V[$item] }}" selected >{{$ICD09T[$item]}}</option>
@@ -653,7 +653,7 @@
                                         <div class="col-12">
                                             <div class="form-group h-100">
                                                 <label for="edukasi">Edukasi <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                                <textarea class="form-control inpt-isRequired" name="PengkajianMedis[Edukasi]" id="edukasi" >{{(!empty($dataPengkajian['PengkajianMedis']['Edukasi']) ? $dataPengkajian['PengkajianMedis']['Edukasi'] : '')}}</textarea>
+                                                <textarea id="edukasi" class="form-control inpt-isRequired" name="PengkajianMedis[Edukasi]" >{{(!empty($dataPengkajian['PengkajianMedis']['Edukasi']) ? $dataPengkajian['PengkajianMedis']['Edukasi'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Edukasi Harus Diisi.
                                                 </div>
@@ -661,7 +661,7 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="penyakitmenular">Penyakit Menular</label>
-                                            <input type="text" class="form-control" name="PengkajianMedis[PenyakitMenular]" value="{{(!empty($dataPengkajian['PengkajianMedis']['PenyakitMenular']) ? $dataPengkajian['PengkajianMedis']['PenyakitMenular'] : '')}}" >
+                                            <input id="penyakitmenular" type="text" class="form-control" name="PengkajianMedis[PenyakitMenular]" value="{{(!empty($dataPengkajian['PengkajianMedis']['PenyakitMenular']) ? $dataPengkajian['PengkajianMedis']['PenyakitMenular'] : '')}}" >
                                             <div class="invalid-feedback">
                                                 Data Penyakit Menular Harus Diisi.
                                             </div>
@@ -692,6 +692,8 @@
                                         </div>
                                         <div class="col-12 mt-3 d-none">
                                             <a href="#" id="profilRingkas" class="btn secondary">List dirujuk/konsul ke</a>
+                                        </div>
+                                        <div class="col-12 mt-3">
                                             @if(Auth::user()->Role == "1")
                                             <input type="checkbox" id="verifikasi">
                                             <label for="verifikasi"> Verifikasi final pasien</label><br>

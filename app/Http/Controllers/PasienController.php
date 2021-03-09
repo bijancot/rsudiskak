@@ -130,7 +130,7 @@ class PasienController extends Controller
                 <td data-label='Nama Pasien'>" . $data['Nama Pasien'] . "</td>
                 <td data-label='Umur'>" . $data['UmurTahun'] . " Th</td>
                 <td data-label='Jenis Kelamin'>" . $jenkel . "</td>
-                <td data-label='Tanggal Masuk'>" . date("d/m/Y", strtotime($poli['TglMasuk'])) . "</td>
+                <td data-label='Tanggal Masuk'>" . date("d/m/Y", strtotime($data['TglMasuk'])) . "</td>
                 <td data-label='Action' class='d-flex flex-row p-lg-1'>  
                 " . $pilihDokter . "" . $batalPeriksa . " 
                 </td>
@@ -147,6 +147,7 @@ class PasienController extends Controller
     public function getDataMasukPoliByDate(Request $request)
     {
         $getKdRuangan   = Auth::user()->KodeRuangan;
+        $ID             = Auth::user()->ID;
         date_default_timezone_set('Asia/Jakarta');
 
         $date = date("Y-m-d", strtotime($request->get('date')));
@@ -157,15 +158,13 @@ class PasienController extends Controller
 
         if (Auth::user()->Role == "1") {
 
-            $role             = "1";
-            $ID               = Auth::user()->ID;
-            $getKdRuangan     = Auth::user()->KodeRuangan;
-            $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->where('IdDokter', $ID)->where('KdRuangan', $getKdRuangan)->orderBy('WaktuMasukPoli', 'ASC')->get();
+            $role                   = "1";
+            $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->where('IdDokter', $ID)->orderBy('WaktuMasukPoli', 'ASC')->get();
             // endIf
 
         } else if (Auth::user()->Role == "2") {
 
-            $ID = Auth::user()->ID;
+
             $role = "2";
             // endElseIf
         }

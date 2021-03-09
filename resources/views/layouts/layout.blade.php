@@ -4,6 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <title>RSUD</title>
 
         <!-- logo title -->
@@ -25,10 +28,16 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js" integrity="sha512-53CQcu9ciJDlqhK7UD8dZZ+TF2PFGZrOngEYM/8qucuQba+a+BXOIRsp9PoMNJI3ZeLMVNIxIfZLbG/CdHI5PA==" crossorigin="anonymous"></script>
 
         <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
+        <!-- DataTable -->
         <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+        <!-- Select2 -->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 
+        <!-- Jquery-ui -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css" integrity="sha512-okE4owXD0kfXzgVXBzCDIiSSlpXn3tJbNodngsTnIYPJWjuYhtJ+qMoc0+WUwLHeOwns0wm57Ka903FqQKM1sA==" crossorigin="anonymous" />
+        
         <!-- DatePicker -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
@@ -44,6 +53,10 @@
         <!-- bootstrap slider  -->
         <script type="text/javascript" src="{{ URL::asset('js/BootSideMenu.js') }}"></script>
         <link rel="stylesheet" href="{{ URL::asset('css/BootSideMenu.css') }}" />
+
+        <!-- Tags Input -->
+        <link rel="stylesheet" href="{{ URL::asset('css/jquery.tagsinput-revisited.css') }}"/>
+        <script type="text/javascript" src="{{ URL::asset('js/jquery.tagsinput-revisited.js') }}"></script>
 
         <!-- Iconify -->
         <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
