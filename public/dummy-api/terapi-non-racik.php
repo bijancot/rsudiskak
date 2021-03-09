@@ -1,8 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<body>
-
     <?php
     $json = array(
         'meta' => array('code' => "200", 'description' => "success"),
@@ -13,7 +8,3 @@
     header('Content-Type: application/json');
     print_r(json_encode($json));
     ?>
-
-</body>
-
-</html>
