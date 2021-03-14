@@ -136,9 +136,7 @@ Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
     Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@formPengkajian');
 
     Route::post('getSuggestion', 'SuggestionController@getSuggestion');
-
-    Route::get('sgsAnamnesis', 'SuggestionController@getSgsAnamnesis');
-    Route::post('sgsAnamnesis', 'SuggestionController@storeSgsAnamnesis');
+    Route::post('storeSuggestion', 'SuggestionController@storeSuggestion');
 
     Route::post('listPasien/getDataMasukPoliByDate', 'PasienController@getDataMasukPoliByDate');
 

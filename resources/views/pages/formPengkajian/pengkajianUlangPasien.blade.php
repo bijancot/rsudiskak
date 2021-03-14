@@ -374,7 +374,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 mt-3">
+                                        {{-- <div class="col-12 mt-3">
                                             <div class="form-group h-100">
                                                 <label for="kodeICD10">Kode ICD 10 <span class="lbl-isRequired" style="color:red;">*</span></label>
                                                 <select id="pilihDiagnosa" type="text" multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" required>
@@ -390,23 +390,32 @@
                                                     Data Diagnosa Harus Diisi.
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 mt-3">
-                                            <label for="Diagnosa">Diagnosa (A)</label>
-                                            <textarea id="Diagnosa" class="form-control" name="PengkajianMedis[Diagnosa(A)]">{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa(A)']) ? $dataPengkajian['PengkajianMedis']['Diagnosa(A)'] : '')}}</textarea>
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="Komplikasi">Komplikasi</label>
-                                            <input id="Komplikasi" class="form-control" type="text" name="PengkajianMedis[Komplikasi]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Komplikasi']) ? $dataPengkajian['PengkajianMedis']['Komplikasi'] : '')}}">
-                                            <div class="invalid-feedback">
-                                                Data Komplikasi Harus Diisi.
+                                            <div class="form-group h-100">
+                                                <label for="Diagnosa">Diagnosa (A) <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <textarea id="Diagnosa" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa(A)]">{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa(A)']) ? $dataPengkajian['PengkajianMedis']['Diagnosa(A)'] : '')}}</textarea>
+                                                <div class="invalid-feedback">
+                                                    Data Diagnosa Harus Diisi.
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12 mt-3">
-                                            <label for="Komorbid">Komorbid</label>
-                                            <input id="Komorbid" type="text" class="form-control" name="PengkajianMedis[Komorbid]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Komorbid']) ? $dataPengkajian['PengkajianMedis']['Komorbid'] : '')}}">
-                                            <div class="invalid-feedback">
-                                                Data Komorbid Harus Diisi.
+                                            <div class="form-group h-100">
+                                                <label for="Komplikasi">Komplikasi<span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <textarea id="Komplikasi" class="form-control inpt-isRequired" name="PengkajianMedis[Komplikasi]">{{(!empty($dataPengkajian['PengkajianMedis']['Komplikasi']) ? $dataPengkajian['PengkajianMedis']['Komplikasi'] : '')}}</textarea>
+                                                <div class="invalid-feedback">
+                                                    Data Komplikasi Harus Diisi.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <div class="form-group h-100">
+                                                <label for="Komorbid">Komorbid<span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <textarea id="Komorbid" class="form-control inpt-isRequired" name="PengkajianMedis[Komorbid]">{{(!empty($dataPengkajian['PengkajianMedis']['Komorbid']) ? $dataPengkajian['PengkajianMedis']['Komorbid'] : '')}}</textarea>
+                                                <div class="invalid-feedback">
+                                                    Data Komorbid Harus Diisi.
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -416,13 +425,13 @@
                                         <div class="col-12">
                                             <div class="form-group h-100">
                                                 <label for="rencanadanterapi">Rencana dan Terapi (P) <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                                <textarea id="rencanadanterapi" class="form-control inpt-isRequired" name="PengkajianMedis[RencanaDanTerapi]" >{{(!empty($dataPengkajian['PengkajianMedis']['RencanaDanTerapi']) ? $dataPengkajian['PengkajianMedis']['RencanaDanTerapi'] : '')}}</textarea>
+                                                <a href="{{ route('rencanaTerapi.index', [$idForm, $NoCM, $noPendaftaran, $tglMasukPoli]) }}" id="btn-rencanadanterapi" class="form-control btn secondary ml-auto">Form Rencana & Terapi </a>
                                                 <div class="invalid-feedback">
                                                     Data Rencana dan Terapi Harus Diisi.
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 mt-3">
+                                        {{-- <div class="col-12 mt-3">
                                             <label for="kodeICD09">Kode ICD 9</label>
                                             <select id="kodeICD09" multiple="multiple" class="form-control pilihDiagnosaTindakan" name="PengkajianMedis[KodeICD9][]">
                                                 @if ( !empty($diagnosaT['KodeDiagnosaT']) && !empty($diagnosaT['DiagnosaTindakan']) ) 
@@ -433,6 +442,15 @@
                                                     
                                                 @endif
                                             </select>
+                                        </div> --}}
+                                        <div class="col-12 mt-3">
+                                            <div class="form-group h-100">
+                                                <label for="KodeICD9">Kode ICD  9<span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <textarea id="KodeICD9" class="form-control inpt-isRequired" name="PengkajianMedis[KodeICD9]">{{(!empty($dataPengkajian['PengkajianMedis']['KodeICD9']) ? $dataPengkajian['PengkajianMedis']['KodeICD9'] : '')}}</textarea>
+                                                <div class="invalid-feedback">
+                                                    Data KodeICD9 Harus Diisi.
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group h-100">
@@ -772,15 +790,159 @@
 
             $('#Anamnesis').tagsInput({
                 'autocomplete': {
-                    source: [
-                        'apple',
-                        'banana',
-                        'orange',
-                        'pizza'
-                    ]
-                } 
-            });
+                    source: (req, res) => {
+                        console.log(req)
+                        $.ajax({
+                            url         : "{{ action('SuggestionController@getSuggestion') }}",
+                            type        : 'post',
+                            encode      : true,
+                            data        : {collection: 'sgsAnamnesis', keyword: req.term},
+                            success     : function(results) {
+                                let arr = []
+                                for(item of results){
+                                    arr.push(item.name)
+                                }
+                                res(arr)
+                            }
+                        })
+                    }
+                },
+                onAddTag: (res) => {
+                    tags        = res.value.split(',')
+                    lastIndex   = tags.length - 1
 
+                    $.ajax({
+                        url         : "{{ action('SuggestionController@storeSuggestion') }}",
+                        type        : 'post',
+                        encode      : true,
+                        data        : {suggest: tags[lastIndex], collection: 'sgsAnamnesis'},
+                    })
+                }
+            });
+            $('#Diagnosa').tagsInput({
+                'autocomplete': {
+                    source: (req, res) => {
+                        console.log(req)
+                        $.ajax({
+                            url         : "{{ action('SuggestionController@getSuggestion') }}",
+                            type        : 'post',
+                            encode      : true,
+                            data        : {collection: 'sgsDiagnosa', keyword: req.term},
+                            success     : function(results) {
+                                let arr = []
+                                for(item of results){
+                                    arr.push(item.name)
+                                }
+                                res(arr)
+                            }
+                        })
+                    }
+                },
+                onAddTag: (res) => {
+                    tags        = res.value.split(',')
+                    lastIndex   = tags.length - 1
+
+                    $.ajax({
+                        url         : "{{ action('SuggestionController@storeSuggestion') }}",
+                        type        : 'post',
+                        encode      : true,
+                        data        : {suggest: tags[lastIndex], collection: 'sgsDiagnosa'},
+                    })
+                }
+            });
+            $('#Komplikasi').tagsInput({
+                'autocomplete': {
+                    source: (req, res) => {
+                        console.log(req)
+                        $.ajax({
+                            url         : "{{ action('SuggestionController@getSuggestion') }}",
+                            type        : 'post',
+                            encode      : true,
+                            data        : {collection: 'sgsKomplikasi', keyword: req.term},
+                            success     : function(results) {
+                                let arr = []
+                                for(item of results){
+                                    arr.push(item.name)
+                                }
+                                res(arr)
+                            }
+                        })
+                    }
+                },
+                onAddTag: (res) => {
+                    tags        = res.value.split(',')
+                    lastIndex   = tags.length - 1
+
+                    $.ajax({
+                        url         : "{{ action('SuggestionController@storeSuggestion') }}",
+                        type        : 'post',
+                        encode      : true,
+                        data        : {suggest: tags[lastIndex], collection: 'sgsKomplikasi'},
+                    })
+                }
+            });
+            $('#Komorbid').tagsInput({
+                'autocomplete': {
+                    source: (req, res) => {
+                        console.log(req)
+                        $.ajax({
+                            url         : "{{ action('SuggestionController@getSuggestion') }}",
+                            type        : 'post',
+                            encode      : true,
+                            data        : {collection: 'sgsKomorbid', keyword: req.term},
+                            success     : function(results) {
+                                let arr = []
+                                for(item of results){
+                                    arr.push(item.name)
+                                }
+                                res(arr)
+                            }
+                        })
+                    }
+                },
+                onAddTag: (res) => {
+                    tags        = res.value.split(',')
+                    lastIndex   = tags.length - 1
+
+                    $.ajax({
+                        url         : "{{ action('SuggestionController@storeSuggestion') }}",
+                        type        : 'post',
+                        encode      : true,
+                        data        : {suggest: tags[lastIndex], collection: 'sgsKomorbid'},
+                    })
+                }
+            });
+            $('#KodeICD9').tagsInput({
+                'autocomplete': {
+                    source: (req, res) => {
+                        console.log(req)
+                        $.ajax({
+                            url         : "{{ action('SuggestionController@getSuggestion') }}",
+                            type        : 'post',
+                            encode      : true,
+                            data        : {collection: 'sgsKodeICD9', keyword: req.term},
+                            success     : function(results) {
+                                let arr = []
+                                for(item of results){
+                                    arr.push(item.name)
+                                }
+                                res(arr)
+                            }
+                        })
+                    }
+                },
+                onAddTag: (res) => {
+                    tags        = res.value.split(',')
+                    lastIndex   = tags.length - 1
+
+                    $.ajax({
+                        url         : "{{ action('SuggestionController@storeSuggestion') }}",
+                        type        : 'post',
+                        encode      : true,
+                        data        : {suggest: tags[lastIndex], collection: 'sgsKodeICD9'},
+                    })
+                }
+            });
         });
 
 

@@ -7,16 +7,21 @@ use Illuminate\Http\Request;
 
 class SuggestionController extends Controller
 {
-    public function getSgsAnamnesis(Request $req){
-        $datas = DB::collection('sgsAnamnesis')->where('kdRuangan', '215')->orderBy('freqSelected', 'desc')->get();
+    public function getSuggestion(Request $req){
+        $datas = DB::collection($req['collection'])
+            ->where('kdRuangan', '215')
+            ->where('name', 'LIKE', '%' . $req['keyword'] . '%')
+            ->orderBy('freqSelected', 'desc')
+            ->limit(10)
+            ->get();
         return response()->json($datas);
     }
-    public function storeSgsAnamnesis(Request $req) {
-        $suggest = DB::collection('sgsAnamnesis')->where('name', $req['suggest'])->first();
+    public function storeSuggestion(Request $req) {
+        $suggest = DB::collection($req['collection'])->where('name', $req['suggest'])->first();
         if($suggest != null){
-            DB::collection('sgsAnamnesis')->where('_id', $suggest['_id'])->update(['freqSelected' => $suggest['freqSelected']+1]);
+            DB::collection($req['collection'])->where('_id', $suggest['_id'])->update(['freqSelected' => $suggest['freqSelected']+1]);
         }else{
-            DB::collection('sgsAnamnesis')->insert(['name' => $req['suggest'], 'freqSelected' => 1, 'kdRuangan' => "215"]);
+            DB::collection($req['collection'])->insert(['name' => $req['suggest'], 'freqSelected' => 1, 'kdRuangan' => "215"]);
         }
     }
 }
