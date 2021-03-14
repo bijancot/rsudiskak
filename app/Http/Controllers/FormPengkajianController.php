@@ -203,31 +203,32 @@ class FormPengkajianController extends Controller
             $ICD09V    = [];
 
             if (!empty($dataMasukPoli['DataPengkajian'])) {
+                if (array_key_exists('PengkajianMedis', $dataMasukPoli['DataPengkajian'])) {
+                    if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
 
-                if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+                        $diagnosa       = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa'];
+                        $pecahKode10    = explode(";", $diagnosa['KodeDiagnosa']); // dump($pecahKode10);
+                        $pecahNama10    = explode(";", $diagnosa['NamaDiagnosa']); // dump($pecahNama10);
 
-                    $diagnosa       = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa'];
-                    $pecahKode10    = explode(";", $diagnosa['KodeDiagnosa']); // dump($pecahKode10);
-                    $pecahNama10    = explode(";", $diagnosa['NamaDiagnosa']); // dump($pecahNama10);
-
-                    for ($item = 0; $item < count($pecahKode10); $item++) {
-                        array_push($ICD10T, $pecahKode10[$item] . " - " . $pecahNama10[$item]);
-                        array_push($ICD10V, $pecahKode10[$item] . ":" . $pecahNama10[$item]);
+                        for ($item = 0; $item < count($pecahKode10); $item++) {
+                            array_push($ICD10T, $pecahKode10[$item] . " - " . $pecahNama10[$item]);
+                            array_push($ICD10V, $pecahKode10[$item] . ":" . $pecahNama10[$item]);
+                        }
+                        // dump($ICD10T); // dump($ICD10V);
                     }
-                    // dump($ICD10T); // dump($ICD10V);
-                }
 
-                if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+                    if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
 
-                    $diagnosaT      = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9'];
-                    $pecahKode09    = explode(";", $diagnosaT['KodeDiagnosaT']);    // dump($pecahKode09);
-                    $pecahNama09    = explode(";", $diagnosaT['DiagnosaTindakan']); // dump($pecahNama09);
+                        $diagnosaT      = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9'];
+                        $pecahKode09    = explode(";", $diagnosaT['KodeDiagnosaT']);    // dump($pecahKode09);
+                        $pecahNama09    = explode(";", $diagnosaT['DiagnosaTindakan']); // dump($pecahNama09);
 
-                    for ($item = 0; $item < count($pecahKode09); $item++) {
-                        array_push($ICD09T, $pecahKode09[$item] . " - " . $pecahNama09[$item]);
-                        array_push($ICD09V, $pecahKode09[$item] . ":" . $pecahNama09[$item]);
+                        for ($item = 0; $item < count($pecahKode09); $item++) {
+                            array_push($ICD09T, $pecahKode09[$item] . " - " . $pecahNama09[$item]);
+                            array_push($ICD09V, $pecahKode09[$item] . ":" . $pecahNama09[$item]);
+                        }
+                        // dump($ICD09T); // dump($ICD09V);
                     }
-                    // dump($ICD09T); // dump($ICD09V);
                 }
             }
 
@@ -241,6 +242,7 @@ class FormPengkajianController extends Controller
 
                 $resKdRuangan[$i - 1] = $kdRuangan['data'];
             }
+
             $data = [
                 'form_id'           => $idForm,
                 'nama_form'         => $dataForm[0]['namaForm'],
@@ -259,7 +261,7 @@ class FormPengkajianController extends Controller
                 'tglMasukPoli'      => $tglMasukPoli,
                 'dataRiwayat'       => $dataRiwayat,
                 'dataDokumen'       => $dataDokumen,
-                'dataBB'       => $dataBB,
+                'dataBB'            => $dataBB,
                 'diagnosa'          => $diagnosa,
                 'diagnosaT'         => $diagnosaT,
                 'ICD10T'            => $ICD10T,
@@ -274,7 +276,6 @@ class FormPengkajianController extends Controller
             //endIF
 
         } else {
-
             return 'Halaman yang anda tuju tidak ada';
         }
         // return view('pages.formPengkajian.pengkajianAwalPasien', $no_cm);
@@ -378,7 +379,6 @@ class FormPengkajianController extends Controller
                 'Diagnosa'          => $oldDiagnosa,
                 'Komplikasi'        => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Komplikasi'],
                 'Komorbid'          => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Komorbid'],
-                'RencanaDanTerapi'  => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['RencanaDanTerapi'],
                 'KodeICD9'          => $oldICD9,
                 'Edukasi'           => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Edukasi'],
                 'PenyakitMenular'   => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['PenyakitMenular'],
@@ -562,7 +562,6 @@ class FormPengkajianController extends Controller
             'Diagnosa'          => $newDiagnosa,
             'Komplikasi'        => $dataUpdate['PengkajianMedis']['Komplikasi'],
             'Komorbid'          => $dataUpdate['PengkajianMedis']['Komorbid'],
-            'RencanaDanTerapi'  => $dataUpdate['PengkajianMedis']['RencanaDanTerapi'],
             'KodeICD9'          => $newICD9,
             'Edukasi'           => $dataUpdate['PengkajianMedis']['Edukasi'],
             'PenyakitMenular'   => $dataUpdate['PengkajianMedis']['PenyakitMenular'],
@@ -926,7 +925,10 @@ class FormPengkajianController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $lastPengkajianKeperawatan = $dataMasukPoli[1]['DataPengkajian']['PengkajianKeperawatan'];
+        $lastPengkajianKeperawatan = null;
+        if (array_key_exists('PengkajianKeperawatan', $dataMasukPoli[1]['DataPengkajian'])) {
+            $lastPengkajianKeperawatan = $dataMasukPoli[1]['DataPengkajian']['PengkajianKeperawatan'];
+        }
 
         return response()->json($lastPengkajianKeperawatan);
     }

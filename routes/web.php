@@ -14,6 +14,7 @@
 // use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use GuzzleHttp\Client;
 
 Route::get('/', function () {
     return view('pages.login');
@@ -95,7 +96,9 @@ Route::group(['middleware' => ['auth', 'cekRole:3']], function () {
     Route::post('manajemen_form/checkIdDuplicate', 'ManajemenFormController@checkIdDuplicate');
     Route::post('manajemen_form/getData', 'ManajemenFormController@getData');
 
-    Route::post('uploadFile', 'UploadFileController@store');
+    // Deprecated ?
+    // Route::post('uploadFile', 'UploadFileController@store');
+
     Route::post('dokumen', 'DokumenController@store');
     // Route::post('dokumen/getData', 'DokumenController@getData');
     // Route::post('dokumen/update', 'DokumenController@update');
@@ -132,6 +135,11 @@ Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
     Route::get('formPengkajianUlang/{no_cm}', 'FPengkajianUlangController@showRajal');
     Route::get('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'FormPengkajianController@formPengkajian');
 
+    Route::post('getSuggestion', 'SuggestionController@getSuggestion');
+
+    Route::get('sgsAnamnesis', 'SuggestionController@getSgsAnamnesis');
+    Route::post('sgsAnamnesis', 'SuggestionController@storeSgsAnamnesis');
+
     Route::post('listPasien/getDataMasukPoliByDate', 'PasienController@getDataMasukPoliByDate');
 
     Route::post('diagnosa/{no_cm}', 'DiagnosaController@storeDiagnosaAwal');
@@ -145,6 +153,17 @@ Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
     // Route::post('formPengkajian/{idForm}/{no_cm}/{noPendaftaran}/{subForm}/{isLastSubForm}', 'FormPengkajianController@storeFormPengkajian');
 
     Route::post('getPengkajian/lastPengkajianKeperawatan', 'FormPengkajianController@lastPengkajianKeperawatan');
+    Route::get('rencanaTerapi/{idForm}/{no_cm}/{noPendaftaran}/{tglMasukPoli}', 'RencanaTerapiController@rencanaTerapi')->name('rencanaTerapi.index');
+    Route::post('obatNonRacikan', 'RencanaTerapiController@obatNonRacikan')->name('obatNonRacikan.index');
+    Route::post('obatRacikan', 'RencanaTerapiController@obatRacikan')->name('obatRacikan.index');
+
+    Route::post('obatNonRacikan/store', 'RencanaTerapiController@storeObatNonRacikan')->name('obatNonRacikan.store');
+    Route::post('obatNonRacikan/update', 'RencanaTerapiController@updateObatNonRacikan')->name('obatNonRacikan.update');
+    Route::post('obatNonRacikan/destroy', 'RencanaTerapiController@destroyObatNonRacikan')->name('obatNonRacikan.destroy');
+
+    Route::post('obatRacikan/store', 'RencanaTerapiController@storeObatRacikan')->name('obatRacikan.store');
+    Route::post('obatRacikan/update', 'RencanaTerapiController@updateObatRacikan')->name('obatRacikan.update');
+    Route::post('obatRacikan/destroy', 'RencanaTerapiController@destroyObatRacikan')->name('obatRacikan.destroy');
 });
 
 Route::post('dokumen', 'DokumenController@store');
@@ -235,26 +254,189 @@ Route::get('footer', function () {
 
 Route::get('/ff', function () {
 
-    $dataMasukPoli = DB::collection('pasien_' . "11608050")
-        ->where('KdRuangan', "215")
+    $dataMasukPoli = DB::collection('pasien_' . '0746728')
+        ->where('NoPendaftaran', '1603100049')
+        ->where('TglMasukPoli', '2021-03-10')
+        ->where('KdRuangan', '215')
         ->where('deleted_at', null)
         ->whereNotNull('StatusPengkajian')
         ->orderBy('created_at', 'desc')
-        ->get();
+        ->first();
 
-    dump($dataMasukPoli);
+    if (array_key_exists('PengkajianMedis', $dataMasukPoli['DataPengkajian'])) {
+        if (array_key_exists('RencanaDanTerapi', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+            // $dataMasukPoli['DataPengkajian']['PengkajianMedis']['RencanaDanTerapi']['ObatNonRacikan'][1]['NamaObat'] = "a";
+            // $getUpdate = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['RencanaDanTerapi']['ObatNonRacikan'][1]['NamaObat'];
+            $dataUpdate = "a";
+        }
+    }
 
-    $lastPengkajianKeperawatan = $dataMasukPoli[1]['DataPengkajian']['PengkajianKeperawatan'];
+    // dd($dataUpdate);
+    //   update berdasarkan NoCM
+    $a = DB::collection('pasien_' . $dataMasukPoli['NoCM'])
+        ->where('NoPendaftaran', $dataMasukPoli['NoPendaftaran'])
+        ->where('TglMasukPoli', $dataMasukPoli['TglMasukPoli'])
+        ->where('KdRuangan', $dataMasukPoli['KdRuangan'])
+        ->where('deleted_at', null)
+        ->whereNotNull('StatusPengkajian')
+        ->update(['DataPengkajian.PengkajianMedis.RencanaDanTerapi.ObatNonRacikan.1.NamaObat' => $dataUpdate]);
 
-    dump($lastPengkajianKeperawatan['TekananDarah']['Sistolik']);
-    dump($lastPengkajianKeperawatan['TekananDarah']['Diastolik']);
-    dump($lastPengkajianKeperawatan['FrekuensiNadi']);
-    dump($lastPengkajianKeperawatan['Suhu']);
-    dump($lastPengkajianKeperawatan['FrekuensiNafas']);
-    dump($lastPengkajianKeperawatan['BeratBadan']);
-    dump($lastPengkajianKeperawatan['TinggiBadan']);
-    dump($lastPengkajianKeperawatan['SkorNyeri']);
-    dump($lastPengkajianKeperawatan['SkorJatuh']);
+    // update berdasarkan tanggal
+    // DB::collection('transaksi_' . $dataMasukPoli['TglMasukPoli'])
+    //     ->where('NoPendaftaran', $dataMasukPoli['NoPendaftaran'])
+    //     ->where('KdRuangan', $dataMasukPoli['KdRuangan'])
+    //     ->where('NoCM', $dataMasukPoli['NoCM'])
+    //     ->where('deleted_at', null)
+    //     ->whereNotNull('StatusPengkajian')
+    //     ->update([$dataUpdate => $dataValue]);
+
+    dump($a);
+
+
+    // ======
+
+    // $dataMasukPoli = DB::collection('pasien_' . "0746728")
+    //     ->where('KdRuangan', "215")
+    //     ->where('deleted_at', null)
+    //     ->whereNotNull('StatusPengkajian')
+    //     ->orderBy('created_at', 'desc')
+    //     ->get();
+
+    // dump($dataMasukPoli);
+
+    // $lastPengkajianKeperawatan  = null;
+    // $lastPengkajianMedis        = null;
+    // if (array_key_exists('PengkajianKeperawatan', $dataMasukPoli[1]['DataPengkajian'])) {
+    //     $lastPengkajianKeperawatan = $dataMasukPoli[1]['DataPengkajian']['PengkajianKeperawatan'];
+
+    //     dump("Sistolik : " . $lastPengkajianKeperawatan['TekananDarah']['Sistolik']);
+    //     dump("Diastolik : " . $lastPengkajianKeperawatan['TekananDarah']['Diastolik']);
+    //     dump("FrekuensiNadi : " . $lastPengkajianKeperawatan['FrekuensiNadi']);
+    //     dump("Suhu : " . $lastPengkajianKeperawatan['Suhu']);
+    //     dump("FrekuensiNafas : " . $lastPengkajianKeperawatan['FrekuensiNafas']);
+    //     dump("BeratBadan : " . $lastPengkajianKeperawatan['BeratBadan']);
+    //     dump("TinggiBadan : " . $lastPengkajianKeperawatan['TinggiBadan']);
+    //     dump("SkorNyeri : " . $lastPengkajianKeperawatan['SkorNyeri']);
+    //     dump("SkorJatuh : " . $lastPengkajianKeperawatan['SkorJatuh']);
+    // }
+
+    // if (array_key_exists('PengkajianMedis', $dataMasukPoli[1]['DataPengkajian'])) {
+    //     $lastPengkajianMedis = $dataMasukPoli[1]['DataPengkajian']['PengkajianMedis'];
+
+    //     dump($lastPengkajianMedis['RencanaDanTerapi']);
+    // }
+
+    // dump($lastPengkajianKeperawatan);
+    // dump($lastPengkajianMedis);
+
+
+    // $RencanaDanTerapi = array(
+    //     0 => array(
+    //         "NamaObat" => "Furosemide",
+    //         "Dosis" => "40",
+    //         "Jumlah" => "30",
+    //         "Signa" => array(
+    //             "Pagi" => "1/2",
+    //             "Siang" => "0",
+    //             "Malam" => "0",
+    //         ),
+    //         "Keterangan" => "Setelah makan",
+    //     ),
+    //     1 => array(
+    //         "NamaObat" => "Captopril",
+    //         "Dosis" => "12,5",
+    //         "Jumlah" => "30",
+    //         "Signa" => array(
+    //             "Pagi" => "1/2",
+    //             "Siang" => "0",
+    //             "Malam" => "0",
+    //         ),
+    //         "Keterangan" => "Setelah makan",
+    //     ),
+    // );
+
+    // dump($RencanaDanTerapi);
+
+    // foreach ($RencanaDanTerapi as $rowObat) {
+    //     // dump($rowObat['NamaObat']);
+    //     // dump($rowObat['Dosis']);
+    //     // dump($rowObat['Jumlah']);
+    //     // dump($rowObat['Keterangan']);
+    //     // dump($rowObat['Signa']['Pagi']);
+    //     // dump($rowObat['Signa']['Siang']);
+    //     // dump($rowObat['Signa']['Malam']);
+    //     $sub_array = array();
+    //     $sub_array[] = $rowObat['NamaObat'];
+    //     $sub_array[] = $rowObat['Dosis'];
+    //     $sub_array[] = $rowObat['Jumlah'];
+    //     $sub_array[] = $rowObat['Signa']['Pagi'];
+    //     $sub_array[] = $rowObat['Signa']['Siang'];
+    //     $sub_array[] = $rowObat['Signa']['Malam'];
+    //     $sub_array[] = $rowObat['Keterangan'];
+    //     $data[] = $sub_array;
+
+    //     dump($rowObat);
+    // }
+    // dump(array_keys($data));
+
+
+    // $dataMasukPoli = DB::collection('pasien_' . '0746728')
+    //     ->where('KdRuangan', '215')
+    //     ->where('deleted_at', null)
+    //     ->whereNotNull('StatusPengkajian')
+    //     ->orderBy('created_at', 'desc')
+    //     ->get();
+
+    // $lastPengkajianMedis        = null;
+    // $output = null;
+    // if (array_key_exists('PengkajianMedis', $dataMasukPoli[1]['DataPengkajian'])) {
+    //     $lastPengkajianMedis = $dataMasukPoli[1]['DataPengkajian']['PengkajianMedis'];
+    //     // dump($lastPengkajianMedis['RencanaDanTerapi']);
+    //     // $data = array();
+    //     $data = array(
+    //         '0' => [
+    //             '0' => '<td></td>',
+    //             '1' => "<td class='pr-1'><input type='text' placeholder='Captopril'></td>",
+    //             '2' => "<td class='pr-1'><input type='text' placeholder='12.5 mg'></td>",
+    //             '3' => "<td class='pr-1'><input type='text' placeholder='30'></td>",
+    //             '4' => "<td class='pr-1'><input type='text' placeholder='1'></td>",
+    //             '5' => "<td class='pr-1'><input type='text' placeholder='0'></td>",
+    //             '6' => "<td class='pr-1'><input type='text' placeholder='1'></td>",
+    //             '7' => "<td class='pr-1'><input type='text' placeholder='Setelah makan'></td>",
+    //             '8' => "<td class='pl-1 d-flex'><input type='text' placeholder='-'><a href='#'><i class='fas fa-plus ml-2'></i></a></td>"
+    //         ],
+    //     );
+    //     foreach ($lastPengkajianMedis['RencanaDanTerapi'] as $rowObat) {
+    //         $sub_array = array();
+    //         $sub_array[] = $rowObat['NamaObat'];
+    //         $sub_array[] = $rowObat['Dosis'];
+    //         $sub_array[] = $rowObat['Jumlah'];
+    //         $sub_array[] = $rowObat['Signa']['Pagi'];
+    //         $sub_array[] = $rowObat['Signa']['Siang'];
+    //         $sub_array[] = $rowObat['Signa']['Malam'];
+    //         $sub_array[] = $rowObat['Keterangan'];
+    //         $data[] = $sub_array;
+    //     }
+
+    //     $output = array(
+    //         'data'    => $data
+    //     );
+    //     dump($output);
+    // }
+
+
+    // $client = new Client();
+    // for ($i = 1; $i <= 2; $i++) {
+    //     $res = $client->request('GET', 'http://simrs.dev.rsudtulungagung.com/api/simrs/rj/v1/ruanganRJ?page=' . $i);
+    //     $statCode = $res->getStatusCode();
+    //     $kdRuangan = $res->getBody()->getContents();
+    //     $kdRuangan = json_decode($kdRuangan, true);
+
+    //     // $resKdRuangan[$i - 1] = $kdRuangan['data'];
+    //     $resKdRuangan = $kdRuangan['data'];
+    // }
+
+    // return $resKdRuangan;
 });
 
 
