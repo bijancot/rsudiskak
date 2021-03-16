@@ -57,22 +57,26 @@
                     <th class="font-weight-light th-last">Verifikasi Petugas</th>
                 </thead>
                 <tbody class="font-weight-bold text-black">
-                    <tr class="border-0">
-                        <td>13/09/2020</td>
-                        <td>Poli Jantung</td>
-                        <td>CAD, HF</td>
-                        <td></td>
-                        <td></td>
-                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
-                    </tr>
-                    <tr>
-                        <td>13/09/2020</td>
-                        <td>Poli Jantung</td>
-                        <td>CAD, HF</td>
-                        <td></td>
-                        <td></td>
-                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
-                    </tr>
+                    @php
+                        foreach($rwytKunjunganPoli['data'] as $item){
+                            $date = strftime("%d/%m/%Y", strtotime($item['TglBerkunjung']));
+                            if($item['VerifikasiPetugas'] == '2'){
+                                $lblStatus = '<span class="label-keterangan lime">Terverifikasi</span>';
+                            }else if($item['VerifikasiPetugas'] == '1'){
+                                $lblStatus = '<span class="label-keterangan gray">Belum Diverifikasi</span>';
+                            }
+                            echo '
+                                <tr class="border-0">
+                                    <td>'.$date.'</td>
+                                    <td>'.$item['Poliklinik'].'</td>
+                                    <td>'.$item['Diagnosis'].'</td>
+                                    <td>'.$item['Penatalaksanaan'].'</td>
+                                    <td>'.$item['RiwayatRawatInap'].'</td>
+                                    <td>'.$lblStatus.'</td>
+                                </tr>
+                            ';
+                        }
+                    @endphp
                 </tbody>
             </table>
 
@@ -96,22 +100,26 @@
                     <th class="font-weight-light th-last">Lihat Data</th>
                 </thead>
                 <tbody class="font-weight-bold text-black">
-                    <tr class="border-0">
-                        <td>13/09/2020</td>
-                        <td>Poli Jantung</td>
-                        <td>CAD, HF</td>
-                        <td>Furosemide 1x40 mg</td>
-                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
-                        <td><a class="label-keterangan gray px-0">PDF</a></td>
-                    </tr>
-                    <tr>
-                        <td>13/09/2020</td>
-                        <td>Poli Jantung</td>
-                        <td>CAD, HF</td>
-                        <td>Bendzodiazepin</td>
-                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
-                        <td><a class="label-keterangan gray px-0">PDF</a></td>
-                    </tr>
+                    @php
+                        foreach($rwytRawatJalan['data'] as $item){
+                            $date = strftime("%d/%m/%Y", strtotime($item['TglBerkunjung']));
+                            if($item['VerifikasiPetugas'] == '2'){
+                                $lblStatus = '<span class="label-keterangan lime">Terverifikasi</span>';
+                            }else if($item['VerifikasiPetugas'] == '1'){
+                                $lblStatus = '<span class="label-keterangan gray">Belum Diverifikasi</span>';
+                            }
+                            echo '
+                                <tr class="border-0">
+                                    <td>'.$date.'</td>
+                                    <td>'.$item['Poliklinik'].'</td>
+                                    <td>'.$item['Diagnosis'].'</td>
+                                    <td>'.$item['TatalaksanaTerapi'].'</td>
+                                    <td>'.$lblStatus.'</td>
+                                    <td><a class="label-keterangan gray px-0">PDF</a></td>
+                                </tr>
+                            ';
+                        }    
+                    @endphp
                 </tbody>
             </table>
 
@@ -135,22 +143,26 @@
                     <th class="font-weight-light th-last">Lihat Data</th>
                 </thead>
                 <tbody class="font-weight-bold text-black">
-                    <tr class="border-0">
-                        <td>13/09/2020</td>
-                        <td>Poli Jantung</td>
-                        <td>CAD, HF</td>
-                        <td>PCI</td>
-                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
-                        <td><a class="label-keterangan gray px-0">PDF</a></td>
-                    </tr>
-                    <tr>
-                        <td>13/09/2020</td>
-                        <td>Poli Jantung</td>
-                        <td>CAD, HF</td>
-                        <td></td>
-                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
-                        <td><a class="label-keterangan gray px-0">PDF</a></td>
-                    </tr>
+                    @php
+                        foreach($rwytRawatInap['data'] as $item){
+                            $date = strftime("%d/%m/%Y", strtotime($item['TglBerkunjung']));
+                            if($item['VerifikasiPetugas'] == '2'){
+                                $lblStatus = '<span class="label-keterangan lime">Terverifikasi</span>';
+                            }else if($item['VerifikasiPetugas'] == '1'){
+                                $lblStatus = '<span class="label-keterangan gray">Belum Diverifikasi</span>';
+                            }
+                            echo '
+                                <tr class="border-0">
+                                    <td>'.$date.'</td>
+                                    <td>'.$item['Ruangan'].'</td>
+                                    <td>'.$item['Diagnosis'].'</td>
+                                    <td>'.$item['Tindakan'].'</td>
+                                    <td>'.$lblStatus.'</td>
+                                    <td><a class="label-keterangan gray px-0">PDF</a></td>
+                                </tr>
+                            ';
+                        }    
+                    @endphp
                 </tbody>
             </table>
 
@@ -173,20 +185,25 @@
                     <th class="font-weight-light th-last">Verifikasi Petugas</th>
                 </thead>
                 <tbody class="font-weight-bold text-black">
-                    <tr class="border-0">
-                        <td>13/09/2020</td>
-                        <td>Poli Jantung</td>
-                        <td>CAD, HF</td>
-                        <td><a class="label-keterangan gray px-0">PDF</a></td>
-                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
-                    </tr>
-                    <tr>
-                        <td>13/09/2020</td>
-                        <td>Poli Jantung</td>
-                        <td>CAD, HF</td>
-                        <td><a class="label-keterangan gray px-0">PDF</a></td>
-                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
-                    </tr>
+                    @php
+                        foreach($rwytDiagnosa['data'] as $item){
+                            $date = strftime("%d/%m/%Y", strtotime($item['TglBerkunjung']));
+                            if($item['VerifikasiPetugas'] == '2'){
+                                $lblStatus = '<span class="label-keterangan lime">Terverifikasi</span>';
+                            }else if($item['VerifikasiPetugas'] == '1'){
+                                $lblStatus = '<span class="label-keterangan gray">Belum Diverifikasi</span>';
+                            }
+                            echo '
+                                <tr class="border-0">
+                                    <td>'.$date.'</td>
+                                    <td>'.$item['Instalasi'].'</td>
+                                    <td>'.$item['Pemeriksaan'].'</td>
+                                    <td><a class="label-keterangan gray px-0">PDF</a></td>
+                                    <td>'.$lblStatus.'</td>
+                                </tr>
+                            ';
+                        }    
+                    @endphp
                 </tbody>
             </table>
 
@@ -209,20 +226,25 @@
                     <th class="font-weight-light th-last">Verifikasi Petugas</th>
                 </thead>
                 <tbody class="font-weight-bold text-black px-5">
-                    <tr class="border-0">
-                        <td>13/09/2020</td>
-                        <td>Poli Jantung</td>
-                        <td>CAD, HF</td>
-                        <td><a class="label-keterangan gray px-0">PDF</a></td>
-                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
-                    </tr>
-                    <tr>
-                        <td>13/09/2020</td>
-                        <td>Poli Jantung</td>
-                        <td>CAD, HF</td>
-                        <td><a class="label-keterangan gray px-0">PDF</a></td>
-                        <td><span class="label-keterangan lime">Terverifikasi</span></td>
-                    </tr>
+                    @php
+                        foreach($rwytTindakan['data'] as $item){
+                            $date = strftime("%d/%m/%Y", strtotime($item['TglTindakan']));
+                            if($item['VerifikasiPetugas'] == '2'){
+                                $lblStatus = '<span class="label-keterangan lime">Terverifikasi</span>';
+                            }else if($item['VerifikasiPetugas'] == '1'){
+                                $lblStatus = '<span class="label-keterangan gray">Belum Diverifikasi</span>';
+                            }
+                            echo '
+                                <tr class="border-0">
+                                    <td>'.$date.'</td>
+                                    <td>'.$item['Diagnosis'].'</td>
+                                    <td>'.$item['Tindakan'].'</td>
+                                    <td><a class="label-keterangan gray px-0">PDF</a></td>
+                                    <td>'.$lblStatus.'</td>
+                                </tr>
+                            ';
+                        }    
+                    @endphp
                 </tbody>
             </table>
 
