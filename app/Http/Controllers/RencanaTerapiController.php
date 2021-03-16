@@ -45,6 +45,7 @@ class RencanaTerapiController extends Controller
         // cek LastKunjungan Pasien
         $lastKunjunganDataPasien    = ($getDataPasien->count() > 1) ? $getDataPasien->get()[1] : [];
 
+        // create Rencana Terapi
         $lastRencanaTerapi = [
             'ObatNonRacikan' => [],
             'ObatRacikan' => [],
@@ -99,15 +100,20 @@ class RencanaTerapiController extends Controller
             $queryTgl->update(['RencanaTerapi' => $lastRencanaTerapi]);
         }
 
+        $statusObatNonRacikan   = $lastRencanaTerapi['StatusTerapi']['ObatNonRacikan'];
+        $statusObatRacikan      = $lastRencanaTerapi['StatusTerapi']['ObatRacikan'];
+
         $data = [
-            'idForm'        => $idForm,
-            'NoCM'          => $NoCM,
-            'noPendaftaran' => $noPendaftaran,
-            'tglMasukPoli'  => $tglMasukPoli,
-            'kdRuangan'     => $resKdRuangan,
-            'dataMasukPoli' => $pasienMasukPoli,
-            'dataDokumen'   => $dataDokumen,
-            'urlPengkajian' => 'formPengkajian/' . $idForm . '/' . $NoCM . '/' . $noPendaftaran . '/' . $tglMasukPoli
+            'idForm'                => $idForm,
+            'NoCM'                  => $NoCM,
+            'noPendaftaran'         => $noPendaftaran,
+            'tglMasukPoli'          => $tglMasukPoli,
+            'kdRuangan'             => $resKdRuangan,
+            'dataMasukPoli'         => $pasienMasukPoli,
+            'statusObatNonRacikan'  => $statusObatNonRacikan,
+            'statusObatRacikan'     => $statusObatRacikan,
+            'dataDokumen'           => $dataDokumen,
+            'urlPengkajian'         => 'formPengkajian/' . $idForm . '/' . $NoCM . '/' . $noPendaftaran . '/' . $tglMasukPoli
         ];
         return view('pages.formPengkajian.rencanaTerapiPasien', $data);
     }
@@ -127,6 +133,10 @@ class RencanaTerapiController extends Controller
 
         if (array_key_exists('RencanaTerapi', $dataMasukPoli)) {
             $rencanaTerapi = $dataMasukPoli['RencanaTerapi'];
+            $canEdit    = "false";
+            if ($rencanaTerapi['StatusTerapi']['ObatNonRacikan'] == "0") {
+                $canEdit    = "true";
+            }
 
             $data = array();
             // $data = array(
@@ -143,13 +153,13 @@ class RencanaTerapiController extends Controller
             // );
             foreach ($rencanaTerapi['ObatNonRacikan'] as $key => $rowObat) {
                 $sub_array = array();
-                $sub_array[] = '<div contenteditable="true" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="NamaObat">'  . $rowObat['NamaObat'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Dosis">'  . $rowObat['Dosis'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Jumlah">'  . $rowObat['Jumlah'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Pagi">'  . $rowObat['Signa']['Pagi'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Siang">'  . $rowObat['Signa']['Siang'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Malam">'  . $rowObat['Signa']['Malam'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Keterangan">'  . $rowObat['Keterangan'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="NamaObat">'  . $rowObat['NamaObat'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Dosis">'  . $rowObat['Dosis'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Jumlah">'  . $rowObat['Jumlah'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Pagi">'  . $rowObat['Signa']['Pagi'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Siang">'  . $rowObat['Signa']['Siang'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Malam">'  . $rowObat['Signa']['Malam'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Keterangan">'  . $rowObat['Keterangan'] . '</div>';
                 $sub_array[] = '<td><a class="delete-nonRacikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '"data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '"><i class="fas fa-minus"></i></a></td>';
                 $data[] = $sub_array;
             }
@@ -341,6 +351,81 @@ class RencanaTerapiController extends Controller
         }
     }
 
+    public function lockObatNonRacikan(Request $request)
+    {
+        $status         = $request->get('status');
+        $NoCM           = $request->get('NoCM');
+        $NoPendaftaran  = $request->get('NoPendaftaran');
+        $TglMasukPoli   = $request->get('TglMasukPoli');
+        $KdRuangan      = $request->get('KdRuangan');
+
+        // get berdasarkan Pasien NoCM
+        $dataMasukPoli = DB::collection('pasien_' . $NoCM)
+            ->where('NoPendaftaran', $NoPendaftaran)
+            ->where('TglMasukPoli', $TglMasukPoli)
+            ->where('KdRuangan', $KdRuangan)
+            ->where('deleted_at', null)
+            ->whereNotNull('StatusPengkajian')
+            ->orderBy('created_at', 'desc');
+        $dataMasukPoli->first();
+
+        $pasienMasukPoli = $dataMasukPoli->first();
+        // dd([$status, $pasienMasukPoli]);
+
+        if (array_key_exists('RencanaTerapi', $pasienMasukPoli)) {
+
+            $dataMasukPoli->update(['RencanaTerapi.StatusTerapi.ObatNonRacikan' => "1"]);
+
+            // update berdasarkan tanggal
+            DB::collection('transaksi_' . $pasienMasukPoli['TglMasukPoli'])
+                ->where('NoPendaftaran', $pasienMasukPoli['NoPendaftaran'])
+                ->where('KdRuangan', $pasienMasukPoli['KdRuangan'])
+                ->where('NoCM', $pasienMasukPoli['NoCM'])
+                ->where('deleted_at', null)
+                ->whereNotNull('StatusPengkajian')
+                ->update(['RencanaTerapi.StatusTerapi.ObatNonRacikan' => "1"]);
+        }
+
+        return redirect()->back()->with('statusNotif', 'success')->with('lock', 'nonRacik');
+    }
+
+    public function unlockObatNonRacikan(Request $request)
+    {
+        $status         = $request->get('status');
+        $NoCM           = $request->get('NoCM');
+        $NoPendaftaran  = $request->get('NoPendaftaran');
+        $TglMasukPoli   = $request->get('TglMasukPoli');
+        $KdRuangan      = $request->get('KdRuangan');
+
+        // get berdasarkan Pasien NoCM
+        $dataMasukPoli = DB::collection('pasien_' . $NoCM)
+            ->where('NoPendaftaran', $NoPendaftaran)
+            ->where('TglMasukPoli', $TglMasukPoli)
+            ->where('KdRuangan', $KdRuangan)
+            ->where('deleted_at', null)
+            ->whereNotNull('StatusPengkajian')
+            ->orderBy('created_at', 'desc');
+        $dataMasukPoli->first();
+
+        $pasienMasukPoli = $dataMasukPoli->first();
+        // dd([$status, $pasienMasukPoli]);
+
+        if (array_key_exists('RencanaTerapi', $pasienMasukPoli)) {
+
+            $dataMasukPoli->update(['RencanaTerapi.StatusTerapi.ObatNonRacikan' => "0"]);
+
+            // update berdasarkan tanggal
+            DB::collection('transaksi_' . $pasienMasukPoli['TglMasukPoli'])
+                ->where('NoPendaftaran', $pasienMasukPoli['NoPendaftaran'])
+                ->where('KdRuangan', $pasienMasukPoli['KdRuangan'])
+                ->where('NoCM', $pasienMasukPoli['NoCM'])
+                ->where('deleted_at', null)
+                ->whereNotNull('StatusPengkajian')
+                ->update(['RencanaTerapi.StatusTerapi.ObatNonRacikan' => "0"]);
+        }
+
+        return redirect()->back()->with('statusNotif', 'success')->with('unlock', 'nonRacik');
+    }
 
 
     public function obatRacikan(Request $request)
@@ -359,17 +444,22 @@ class RencanaTerapiController extends Controller
         if (array_key_exists('RencanaTerapi', $dataMasukPoli)) {
             $rencanaTerapi = $dataMasukPoli['RencanaTerapi'];
 
+            $canEdit    = "false";
+            if ($rencanaTerapi['StatusTerapi']['ObatRacikan'] == "0") {
+                $canEdit    = "true";
+            }
+
             $data = array();
             foreach ($rencanaTerapi['ObatRacikan'] as $key => $rowObat) {
                 $sub_array = array();
-                $sub_array[] = '<div contenteditable="true" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="NamaObat">'  . $rowObat['NamaObat'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Dosis">'  . $rowObat['Dosis'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="RacikanDalam">'  . $rowObat['RacikanDalam'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Jumlah">'  . $rowObat['Jumlah'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Pagi">'  . $rowObat['Signa']['Pagi'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Siang">'  . $rowObat['Signa']['Siang'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Malam">'  . $rowObat['Signa']['Malam'] . '</div>';
-                $sub_array[] = '<div contenteditable="true" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Keterangan">'  . $rowObat['Keterangan'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="NamaObat">'  . $rowObat['NamaObat'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Dosis">'  . $rowObat['Dosis'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="RacikanDalam">'  . $rowObat['RacikanDalam'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Jumlah">'  . $rowObat['Jumlah'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Pagi">'  . $rowObat['Signa']['Pagi'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Siang">'  . $rowObat['Signa']['Siang'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Malam">'  . $rowObat['Signa']['Malam'] . '</div>';
+                $sub_array[] = '<div contenteditable="' . $canEdit . '" class="update-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '" data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '" data-column="Keterangan">'  . $rowObat['Keterangan'] . '</div>';
                 $sub_array[] = '<td><a class="delete-Racikan" data-rows="' . $key . '" data-nocm="' . $dataMasukPoli["NoCM"] . '"data-kdruangan="' . $dataMasukPoli["KdRuangan"] . '"><i class="fas fa-minus"></i></a></td>';
                 $data[] = $sub_array;
             }
@@ -550,5 +640,81 @@ class RencanaTerapiController extends Controller
                 ->whereNotNull('StatusPengkajian')
                 ->update(['RencanaTerapi.ObatRacikan' => $obatRacikan]);
         }
+    }
+
+    public function lockObatRacikan(Request $request)
+    {
+        $status         = $request->get('status');
+        $NoCM           = $request->get('NoCM');
+        $NoPendaftaran  = $request->get('NoPendaftaran');
+        $TglMasukPoli   = $request->get('TglMasukPoli');
+        $KdRuangan      = $request->get('KdRuangan');
+
+        // get berdasarkan Pasien NoCM
+        $dataMasukPoli = DB::collection('pasien_' . $NoCM)
+            ->where('NoPendaftaran', $NoPendaftaran)
+            ->where('TglMasukPoli', $TglMasukPoli)
+            ->where('KdRuangan', $KdRuangan)
+            ->where('deleted_at', null)
+            ->whereNotNull('StatusPengkajian')
+            ->orderBy('created_at', 'desc');
+        $dataMasukPoli->first();
+
+        $pasienMasukPoli = $dataMasukPoli->first();
+        // dd([$status, $pasienMasukPoli]);
+
+        if (array_key_exists('RencanaTerapi', $pasienMasukPoli)) {
+
+            $dataMasukPoli->update(['RencanaTerapi.StatusTerapi.ObatRacikan' => "1"]);
+
+            // update berdasarkan tanggal
+            DB::collection('transaksi_' . $pasienMasukPoli['TglMasukPoli'])
+                ->where('NoPendaftaran', $pasienMasukPoli['NoPendaftaran'])
+                ->where('KdRuangan', $pasienMasukPoli['KdRuangan'])
+                ->where('NoCM', $pasienMasukPoli['NoCM'])
+                ->where('deleted_at', null)
+                ->whereNotNull('StatusPengkajian')
+                ->update(['RencanaTerapi.StatusTerapi.ObatRacikan' => "1"]);
+        }
+
+        return redirect()->back()->with('statusNotif', 'success')->with('lock', 'Racik');
+    }
+
+    public function unlockObatRacikan(Request $request)
+    {
+        $status         = $request->get('status');
+        $NoCM           = $request->get('NoCM');
+        $NoPendaftaran  = $request->get('NoPendaftaran');
+        $TglMasukPoli   = $request->get('TglMasukPoli');
+        $KdRuangan      = $request->get('KdRuangan');
+
+        // get berdasarkan Pasien NoCM
+        $dataMasukPoli = DB::collection('pasien_' . $NoCM)
+            ->where('NoPendaftaran', $NoPendaftaran)
+            ->where('TglMasukPoli', $TglMasukPoli)
+            ->where('KdRuangan', $KdRuangan)
+            ->where('deleted_at', null)
+            ->whereNotNull('StatusPengkajian')
+            ->orderBy('created_at', 'desc');
+        $dataMasukPoli->first();
+
+        $pasienMasukPoli = $dataMasukPoli->first();
+        // dd([$status, $pasienMasukPoli]);
+
+        if (array_key_exists('RencanaTerapi', $pasienMasukPoli)) {
+
+            $dataMasukPoli->update(['RencanaTerapi.StatusTerapi.ObatRacikan' => "0"]);
+
+            // update berdasarkan tanggal
+            DB::collection('transaksi_' . $pasienMasukPoli['TglMasukPoli'])
+                ->where('NoPendaftaran', $pasienMasukPoli['NoPendaftaran'])
+                ->where('KdRuangan', $pasienMasukPoli['KdRuangan'])
+                ->where('NoCM', $pasienMasukPoli['NoCM'])
+                ->where('deleted_at', null)
+                ->whereNotNull('StatusPengkajian')
+                ->update(['RencanaTerapi.StatusTerapi.ObatRacikan' => "0"]);
+        }
+
+        return redirect()->back()->with('statusNotif', 'success')->with('unlock', 'Racik');
     }
 }

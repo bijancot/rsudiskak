@@ -213,7 +213,7 @@
                             <i class="fas fa-times" style="color: #ff0000; font-size:100px;"></i>
                             
                         </span>
-                        <p class="text-center"> <span id="msg_modal1"></span><br></p>
+                        <p class="text-center"> <span id="msg_modal-failed"></span><br></p>
                         <!-- <p>Modal body text goes here.</p> -->
                     </div>
                     <div class="modal-footer text-center">

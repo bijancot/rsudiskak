@@ -158,10 +158,14 @@ Route::group(['middleware' => ['auth', 'cekRole:1,2']], function () {
     Route::post('obatNonRacikan/store', 'RencanaTerapiController@storeObatNonRacikan')->name('obatNonRacikan.store');
     Route::post('obatNonRacikan/update', 'RencanaTerapiController@updateObatNonRacikan')->name('obatNonRacikan.update');
     Route::post('obatNonRacikan/destroy', 'RencanaTerapiController@destroyObatNonRacikan')->name('obatNonRacikan.destroy');
+    Route::post('obatNonRacikan/lock', 'RencanaTerapiController@lockObatNonRacikan')->name('obatNonRacikan.lock');
+    Route::post('obatNonRacikan/unlock', 'RencanaTerapiController@unlockObatNonRacikan')->name('obatNonRacikan.unlock');
 
     Route::post('obatRacikan/store', 'RencanaTerapiController@storeObatRacikan')->name('obatRacikan.store');
     Route::post('obatRacikan/update', 'RencanaTerapiController@updateObatRacikan')->name('obatRacikan.update');
     Route::post('obatRacikan/destroy', 'RencanaTerapiController@destroyObatRacikan')->name('obatRacikan.destroy');
+    Route::post('obatRacikan/lock', 'RencanaTerapiController@lockObatRacikan')->name('obatRacikan.lock');
+    Route::post('obatRacikan/unlock', 'RencanaTerapiController@unlockObatRacikan')->name('obatRacikan.unlock');
 });
 
 Route::post('dokumen', 'DokumenController@store');

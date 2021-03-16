@@ -20,6 +20,7 @@ class PasienController extends Controller
     public function listPasien()
     {
         // get data
+        $ID             = Auth::user()->ID;
         $getKdRuangan   = Auth::user()->KodeRuangan;
 
         date_default_timezone_set('Asia/Jakarta');
@@ -45,18 +46,18 @@ class PasienController extends Controller
         // $masukPoli->get();
         $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->where('KdRuangan', $getKdRuangan)->orderBy('WaktuMasukPoli', 'ASC')->get();
 
-
         if (Auth::user()->Role == "1") {
 
-            $role             = "1";
-            $ID               = Auth::user()->ID;
-            $getKdRuangan     = Auth::user()->KodeRuangan;
-            $getPasienMasukPoli     = $masukPoli->where('deleted_at', null)->where('IdDokter', $ID)->where('KdRuangan', $getKdRuangan)->orderBy('WaktuMasukPoli', 'ASC')->get();
+            $role               = "1";
+            $getPasienMasukPoli = $masukPoli->where('deleted_at', null)
+                ->where('IdDokter', $ID)
+                // ->where('KdRuangan', $getKdRuangan)
+                ->orderBy('WaktuMasukPoli', 'ASC')
+                ->get();
             // endIf
 
         } else if (Auth::user()->Role == "2") {
 
-            $ID = Auth::user()->ID;
             $role = "2";
             // endElseIf
         }

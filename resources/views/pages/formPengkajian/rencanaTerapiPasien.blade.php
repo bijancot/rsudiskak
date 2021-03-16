@@ -219,8 +219,13 @@
                         </tbody>
                     </table>
                     <div class="d-flex border-top px-4 py-2">
-                        {{-- <button class="ml-auto btn diagnosa-outline"><i class="fas fa-save m-0"></i> Simpan</button> --}}
-                        <button class="ml-auto btn diagnosa"><i class="fas fa-lock m-0"></i> Kunci Resep</button>
+                        {{-- <button class="ml-auto btn diagnosa-outline"><i class="fas fa-save m-0"></i> Buka Resep</button> --}}
+                        @if ($dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatNonRacikan'] == "0")
+                            <button data-toggle="modal" data-target="#btn-lock-NonRacik" data-statnonracik="{{ $statusObatNonRacikan }}" class="ml-auto btn diagnosa"><i class="fas fa-lock m-0"></i> Kunci Resep</button>    
+                        @else    
+                            <button data-toggle="modal" data-target="#btn-unlock-NonRacik" data-statnonracik="{{ $statusObatNonRacikan }}" class="ml-auto btn diagnosa-outline"><i class="fas fa-unlock m-0"></i> Buka Resep</button>
+                        @endif
+                        
                     </div>
 
                 </div>
@@ -272,7 +277,11 @@
                     </table>
                     <div class="d-flex border-top px-4 py-2">
                         {{-- <button class="ml-auto btn diagnosa-outline"><i class="fas fa-save m-0"></i> Simpan</button> --}}
-                        <button class="ml-auto btn diagnosa"><i class="fas fa-lock m-0"></i> Kunci Resep</button>
+                        @if ($dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatRacikan'] == "0")
+                            <button data-toggle="modal" data-target="#btn-lock-Racik" data-statracik="{{ $statusObatRacikan }}" class="ml-auto btn diagnosa"><i class="fas fa-lock m-0"></i> Kunci Resep</button>
+                        @else
+                            <button data-toggle="modal" data-target="#btn-unlock-Racik" data-statracik="{{ $statusObatRacikan }}" class="ml-auto btn diagnosa-outline"><i class="fas fa-unlock m-0"></i> Buka Resep</button>
+                        @endif
                     </div>
 
                 </div>
@@ -281,6 +290,115 @@
             
         </div>
     </div>
+
+    {{-- Modal lock resep --}}
+    <div class="modal fade" id="btn-lock-NonRacik" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white text-center">Kunci Resep </h5>
+                </div>
+                <form id="form-lock-nonRacik" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p style="text-align: center;">Apakah anda yakin mengunci resep ini ? </p>
+                            <input type="hidden" name="status" id="StatusTerapiNonRacik-lock" value="">
+                            <input type="hidden" name="NoCM" value="{{ $dataMasukPoli['NoCM'] }}">
+                            <input type="hidden" name="KdRuangan" value="{{ $dataMasukPoli['KdRuangan'] }}">
+                            <input type="hidden" name="TglMasukPoli" value="{{ $dataMasukPoli['TglMasukPoli'] }}">
+                            <input type="hidden" name="NoPendaftaran" value="{{ $dataMasukPoli['NoPendaftaran'] }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="btn-lock-Racik" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white text-center">Kunci Resep </h5>
+                </div>
+                <form id="form-lock-Racik" method="POST" >
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p style="text-align: center;">Apakah anda yakin mengunci resep ini ? </p>    
+                            <input type="hidden" name="status" id="StatusTerapiRacik-lock" value="">
+                            <input type="hidden" name="NoCM" value="{{ $dataMasukPoli['NoCM'] }}">
+                            <input type="hidden" name="KdRuangan" value="{{ $dataMasukPoli['KdRuangan'] }}">
+                            <input type="hidden" name="TglMasukPoli" value="{{ $dataMasukPoli['TglMasukPoli'] }}">
+                            <input type="hidden" name="NoPendaftaran" value="{{ $dataMasukPoli['NoPendaftaran'] }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal unlock resep --}}
+    <div class="modal fade" id="btn-unlock-NonRacik" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white text-center">Kunci Resep </h5>
+                </div>
+                <form id="form-unlock-nonRacik" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p style="text-align: center;">Apakah anda yakin mengunci resep ini ? </p>
+                            <input type="hidden" name="status" id="StatusTerapiNonRacik-unlock" value="">
+                            <input type="hidden" name="NoCM" value="{{ $dataMasukPoli['NoCM'] }}">
+                            <input type="hidden" name="KdRuangan" value="{{ $dataMasukPoli['KdRuangan'] }}">
+                            <input type="hidden" name="TglMasukPoli" value="{{ $dataMasukPoli['TglMasukPoli'] }}">
+                            <input type="hidden" name="NoPendaftaran" value="{{ $dataMasukPoli['NoPendaftaran'] }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="btn-unlock-Racik" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white text-center">Kunci Resep </h5>
+                </div>
+                <form id="form-unlock-Racik" method="POST" >
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p style="text-align: center;">Apakah anda yakin mengunci resep ini ? </p>    
+                            <input type="hidden" name="status" id="StatusTerapiRacik-unlock" value="">
+                            <input type="hidden" name="NoCM" value="{{ $dataMasukPoli['NoCM'] }}">
+                            <input type="hidden" name="KdRuangan" value="{{ $dataMasukPoli['KdRuangan'] }}">
+                            <input type="hidden" name="TglMasukPoli" value="{{ $dataMasukPoli['TglMasukPoli'] }}">
+                            <input type="hidden" name="NoPendaftaran" value="{{ $dataMasukPoli['NoPendaftaran'] }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <button type="submit" class="btn btn-dark diagnosa">Ya</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
     <script>
 
         $(document).ready(function(){
@@ -311,6 +429,43 @@
                 $('.lbl-isRequired').hide();
                 $('.inpt-isRequired').prop('required', false);
                 $('#statusPengkajian').val('1');
+            @endif
+
+            // status Btn-add Obat Non Racikan
+            @if($dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatNonRacikan'] == '0')
+                $('#add-TerapiNonRacikan').removeClass('disabled');
+            @else
+                $('#add-TerapiNonRacikan').addClass('disabled');
+            @endif
+
+            // status Btn-add Obat Racikan
+            @if($dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatRacikan'] == '0')
+                $('#add-TerapiRacikan').removeClass('disabled');
+            @else
+                $('#add-TerapiRacikan').addClass('disabled');
+            @endif
+
+            // alert Notification
+            @if(session('statusNotif') == 'success')
+                // NonRacik
+                @if(session('lock') == 'nonRacik')
+                    $('#msg_modal').html('Berhasil Mengunci Resep Non Racik');
+                    $('#modal_success').modal('toggle')
+                @endif
+                @if(session('unlock') == 'nonRacik')
+                    $('#msg_modal').html('Batal Mengunci Resep Non Racik');
+                    $('#modal_success').modal('toggle')
+                @endif
+
+                // Racik
+                @if(session('lock') == 'Racik')
+                    $('#msg_modal').html('Berhasil Mengunci Resep Racik');
+                    $('#modal_success').modal('toggle')
+                @endif
+                @if(session('unlock') == 'Racik')
+                    $('#msg_modal').html('Batal Mengunci Resep Racik');
+                    $('#modal_success').modal('toggle')
+                @endif
             @endif
 
             $('.tabPengkajian').click(function(){
@@ -450,7 +605,7 @@
                     success:function(data)
                     {
                         // $('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
-                        console.log(data);
+                        // console.log(data);
                         $('#msg_modal').html('Berhasil Mengupdate data Obat Non Racikan');
                         $('#modal_success').modal('toggle')
                         $('#tb-non_racikan').DataTable().destroy();
@@ -547,31 +702,33 @@
                 var kdRuangan       = $('#KdRuangan').val();
                 var noPendaftaran   = $('#NoPendaftaran').val();
                 var tglMasukPoli    = $('#TglMasukPoli').val();
-                console.log(rows);
-                if(confirm("Are you sure you want to remove this?"))
-                {
-                    $.ajax({
-                        url     : "{{ action('RencanaTerapiController@destroyObatNonRacikan') }}",
-                        method  : "POST",
-                        data    : {
-                            rows            : rows,
-                            NoCM            : noCM,
-                            KdRuangan       : kdRuangan,
-                            NoPendaftaran   : noPendaftaran,
-                            TglMasukPoli    : tglMasukPoli,
-                        },
-                        success : function(data){
-                            // console.log(data);
+                // console.log(rows);
+                @if($dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatNonRacikan'] == '0')
+                    if(confirm("Are you sure you want to remove this?"))
+                    {
+                        $.ajax({
+                            url     : "{{ action('RencanaTerapiController@destroyObatNonRacikan') }}",
+                            method  : "POST",
+                            data    : {
+                                rows            : rows,
+                                NoCM            : noCM,
+                                KdRuangan       : kdRuangan,
+                                NoPendaftaran   : noPendaftaran,
+                                TglMasukPoli    : tglMasukPoli,
+                            },
+                            success : function(data){
+                                // console.log(data);
+                                $('#msg_modal').html('Berhasil Menghapus data Obat Non Racikan');
+                                $('#modal_success').modal('toggle');
+                                $('#tb-non_racikan').DataTable().destroy();
+                                fetchNonRacikan();
+                            }
+                        });
+                        setInterval(function(){
                             $('#msg_modal').html('Berhasil Menghapus data Obat Non Racikan');
-                            $('#modal_success').modal('toggle');
-                            $('#tb-non_racikan').DataTable().destroy();
-                            fetchNonRacikan();
-                        }
-                    });
-                    setInterval(function(){
-                        $('#msg_modal').html('Berhasil Menghapus data Obat Non Racikan');
-                    }, 5000);
-                }
+                        }, 5000);
+                    }
+                @endif
             });
         });
 
@@ -707,7 +864,7 @@
                         }
                     });
                     setInterval(function(){
-                        $('#msg_modal').html('Berhasil Menambahkan data Obat  Racikan');
+                        $('#msg_modal').html('Berhasil Menambahkan data Obat Racikan');
                     }, 5000);
                 }
                 else
@@ -722,31 +879,110 @@
                 var kdRuangan       = $('#KdRuangan').val();
                 var noPendaftaran   = $('#NoPendaftaran').val();
                 var tglMasukPoli    = $('#TglMasukPoli').val();
-                console.log(rows);
-                if(confirm("Are you sure you want to remove this?"))
-                {
-                    $.ajax({
-                        url     : "{{ action('RencanaTerapiController@destroyObatRacikan') }}",
-                        method  : "POST",
-                        data    : {
-                            rows            : rows,
-                            NoCM            : noCM,
-                            KdRuangan       : kdRuangan,
-                            NoPendaftaran   : noPendaftaran,
-                            TglMasukPoli    : tglMasukPoli,
-                        },
-                        success : function(data){
-                            // console.log(data);
-                            $('#msg_modal').html('Berhasil Menghapus data Obat  Racikan');
-                            $('#modal_success').modal('toggle');
-                            $('#tb-racikan').DataTable().destroy();
-                            fetchRacikan();
-                        }
-                    });
-                    setInterval(function(){
-                        $('#msg_modal').html('Berhasil Menghapus data Obat  Racikan');
-                    }, 5000);
-                }
+                // console.log(rows);
+                @if($dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatRacikan'] == '0')
+                    if(confirm("Are you sure you want to remove this?"))
+                    {
+                        $.ajax({
+                            url     : "{{ action('RencanaTerapiController@destroyObatRacikan') }}",
+                            method  : "POST",
+                            data    : {
+                                rows            : rows,
+                                NoCM            : noCM,
+                                KdRuangan       : kdRuangan,
+                                NoPendaftaran   : noPendaftaran,
+                                TglMasukPoli    : tglMasukPoli,
+                            },
+                            success : function(data){
+                                // console.log(data);
+                                $('#msg_modal').html('Berhasil Menghapus data Obat Racikan');
+                                $('#modal_success').modal('toggle');
+                                $('#tb-racikan').DataTable().destroy();
+                                fetchRacikan();
+                            }
+                        });
+                        setInterval(function(){
+                            $('#msg_modal').html('Berhasil Menghapus data Obat Racikan');
+                        }, 5000);
+                    }
+                @endif
+            });
+        });
+
+        $(function() {
+
+            $('#btn-lock-NonRacik').on('show.bs.modal', function (event) {
+                var button          = $(event.relatedTarget) // Button that triggered the modal
+                var title           = "Obat Non Racik"
+                var status          = button.data('statnonracik');
+
+                var modal = $(this)
+                modal.find('.modal-title').text('Kunci Resep ' + title)
+                modal.find('.modal-body #StatusTerapiNonRacik-lock').val(status)
+                modal.find('#form-lock-nonRacik').attr('action', "{{ action('RencanaTerapiController@lockObatNonRacikan') }}")
+            });
+
+            $('#btn-lock-Racik').on('show.bs.modal', function (event) {
+                var button          = $(event.relatedTarget) // Button that triggered the modal
+                var title           = "Obat Racik"
+                var status          = button.data('statracik');
+                var noCM            = $('#NoCM').val();
+                var kdRuangan       = $('#KdRuangan').val();
+                var noPendaftaran   = $('#NoPendaftaran').val();
+                var tglMasukPoli    = $('#TglMasukPoli').val();
+
+                var modal = $(this)
+                modal.find('.modal-title').text('Kunci Resep ' + title)
+                modal.find('.modal-body #StatusTerapiRacik-lock').val(status)
+                modal.find('#form-lock-Racik').attr('action', "{{ action('RencanaTerapiController@lockObatRacikan') }}")
+            });
+
+            $('#btn-unlock-NonRacik').on('show.bs.modal', function (event) {
+                var button          = $(event.relatedTarget) // Button that triggered the modal
+                var title           = "Obat Non Racik"
+                var status          = button.data('statnonracik');
+
+                var modal = $(this)
+                modal.find('.modal-title').text('Kunci Resep ' + title)
+                modal.find('.modal-body #StatusTerapiNonRacik-unlock').val(status)
+                modal.find('#form-unlock-nonRacik').attr('action', "{{ action('RencanaTerapiController@unlockObatNonRacikan') }}")
+            });
+
+            $('#btn-unlock-Racik').on('show.bs.modal', function (event) {
+                var button          = $(event.relatedTarget) // Button that triggered the modal
+                var title           = "Obat Racik"
+                var status          = button.data('statracik');
+
+                var modal = $(this)
+                modal.find('.modal-title').text('Kunci Resep ' + title)
+                modal.find('.modal-body #StatusTerapiRacik-unlock').val(status)
+                modal.find('#form-unlock-Racik').attr('action', "{{ action('RencanaTerapiController@unlockObatRacikan') }}")
+            });
+
+            $('#form-nonRacik').submit(function () {
+            
+                // var status          = $('#StatusTerapiNonRacik-lock').val();
+                // var noCM            = $('#NoCM').val();
+                // var kdRuangan       = $('#KdRuangan').val();
+                // var noPendaftaran   = $('#NoPendaftaran').val();
+                // var tglMasukPoli    = $('#TglMasukPoli').val();
+                // console.log([status, noCM, kdRuangan, noPendaftaran, tglMasukPoli]);
+                // $.ajax({
+                //     url     : "{{ action('RencanaTerapiController@lockObatNonRacikan') }}",
+                //     method  : "POST",
+                //     data    : {
+                //         status          : status,
+                //         NoCM            : noCM,
+                //         KdRuangan       : kdRuangan,
+                //         NoPendaftaran   : noPendaftaran,
+                //         TglMasukPoli    : tglMasukPoli,
+                //     },
+                //     success : function(data){
+                //         console.log(data);
+                //         // $('#msg_modal').html('Berhasil Mengunci data Obat Non Racikan');
+                //         // $('#modal_success').modal('toggle');
+                //     }
+                // });
             });
         });
 
@@ -823,226 +1059,226 @@
             return true;
         });
         
-        </script>
-        {{-- upload dokumen --}}
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('#btn_tambah_submit').click(function(){
-                    let noPendaftaran = $('#noPendaftaran').val();
-                    let noRekamMedis = $('#noRekamMedis').val();
-                    let namaLengkap = $('#namaLengkap').val();
-                    let tglMasuk = $('#tglMasuk').val();
-                    let fileVal = $('#fileTambah').val();
-                    let file = $('#fileTambah');
-                    let fileExtension = ""
-                    // set var file fileExtension
-                    if(fileVal != ""){
-                        fileExtension = file[0].files[0].name;
-                        fileExtension = fileExtension.replace(/^.*\./, '');
-                    }
-                    
-                    if(noPendaftaran == ""){
-                        $('#noPendaftaran').addClass('isInValid')
-                        $('.noPendaftaran_isNull').css('display', 'block');
+    </script>
+    {{-- upload dokumen --}}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#btn_tambah_submit').click(function(){
+                let noPendaftaran = $('#noPendaftaran').val();
+                let noRekamMedis = $('#noRekamMedis').val();
+                let namaLengkap = $('#namaLengkap').val();
+                let tglMasuk = $('#tglMasuk').val();
+                let fileVal = $('#fileTambah').val();
+                let file = $('#fileTambah');
+                let fileExtension = ""
+                // set var file fileExtension
+                if(fileVal != ""){
+                    fileExtension = file[0].files[0].name;
+                    fileExtension = fileExtension.replace(/^.*\./, '');
+                }
+                
+                if(noPendaftaran == ""){
+                    $('#noPendaftaran').addClass('isInValid')
+                    $('.noPendaftaran_isNull').css('display', 'block');
+                }else{
+                    CheckIdDuplicate('noPendaftaran', noPendaftaran, noRekamMedis, 'tambah')
+                }
+                
+                // if(noRekamMedis == ""){
+                //     $('#noRekamMedis').addClass('isInValid')
+                //     $('.noRekamMedis_isNull').css('display', 'block');
+                // }else{
+                //     CheckNoCmIsNull('noRekamMedis', noRekamMedis, 'tambah');
+                // }
+
+                if(namaLengkap == ""){
+                    $('#namaLengkap').addClass('isInValid')
+                    $('.namaLengkap_isNull').css('display', 'block');
+                }
+
+                if(tglMasuk == ""){
+                    $('#tglMasuk').addClass('isInValid')
+                    $('.tglMasuk_isNull').css('display', 'block');
+                }
+
+                if(fileVal == ""){
+                    $('.fileTambah_isNull').css('display', 'block');
+                }
+                
+                let noPendaftaranCheckValid = $('#noPendaftaran_checkValid').val()
+                let noCmCheckValid = $('#noRekamMedis_checkValid').val()
+                if(fileExtension != 'pdf'){
+                    $('#fileExtension_isMaxSize').css('display', 'none');
+                    $('#fileExtension_isNull').css('display', 'block');
+                }else{
+                    $('#fileExtension_isNull').css('display', 'none');
+                    let fileSize = parseInt(file[0].files[0].size)
+                    if(fileSize > 2000000){
+                        $('#fileExtension_isMaxSize').css('display', 'block');
                     }else{
-                        CheckIdDuplicate('noPendaftaran', noPendaftaran, noRekamMedis, 'tambah')
-                    }
-                    
-                    // if(noRekamMedis == ""){
-                    //     $('#noRekamMedis').addClass('isInValid')
-                    //     $('.noRekamMedis_isNull').css('display', 'block');
-                    // }else{
-                    //     CheckNoCmIsNull('noRekamMedis', noRekamMedis, 'tambah');
-                    // }
-    
-                    if(namaLengkap == ""){
-                        $('#namaLengkap').addClass('isInValid')
-                        $('.namaLengkap_isNull').css('display', 'block');
-                    }
-    
-                    if(tglMasuk == ""){
-                        $('#tglMasuk').addClass('isInValid')
-                        $('.tglMasuk_isNull').css('display', 'block');
-                    }
-    
-                    if(fileVal == ""){
-                        $('.fileTambah_isNull').css('display', 'block');
-                    }
-                    
-                    let noPendaftaranCheckValid = $('#noPendaftaran_checkValid').val()
-                    let noCmCheckValid = $('#noRekamMedis_checkValid').val()
-                    if(fileExtension != 'pdf'){
                         $('#fileExtension_isMaxSize').css('display', 'none');
-                        $('#fileExtension_isNull').css('display', 'block');
-                    }else{
-                        $('#fileExtension_isNull').css('display', 'none');
-                        let fileSize = parseInt(file[0].files[0].size)
-                        if(fileSize > 2000000){
-                            $('#fileExtension_isMaxSize').css('display', 'block');
-                        }else{
-                            $('#fileExtension_isMaxSize').css('display', 'none');
-                            if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && fileVal != "" && noPendaftaranCheckValid == '1' && noCmCheckValid == '1'){
-                                $('#form-tambah').submit();
-                            }
+                        if(noPendaftaran != "" && noRekamMedis != "" && namaLengkap != "" && tglMasuk != "" && fileVal != "" && noPendaftaranCheckValid == '1' && noCmCheckValid == '1'){
+                            $('#form-tambah').submit();
                         }
                     }
-    
-                })
-                $('#btn_batal_upload').click(function(){
-                    $('#upload_section').removeClass('active')
-                    $('#upload_section').addClass('inactive')
-                })
-                $('.frm-input').keyup(function(){
-                    let id = $(this).attr('id');
-                    if($(this).val() == ""){
-                        $(this).removeClass('isInValid')
-                        $(this).removeClass('isValid')
-                        $('.'+id+'_isNull').css('display', 'none')
-                        $('.'+id+'_duplicated').css('display', 'none')
-                    }else{
-                        $(this).removeClass('isInValid')
-                        $(this).addClass('isValid')
-                        $('.'+id+'_isNull').css('display', 'none')
-                        $('.'+id+'_duplicated').css('display', 'none')
-                    }
-                })
-                $('.inptId').keyup(function(){
-                    let tagId = $(this).prop('id');
-                    let val = $(this).val();
-                    if($('#noRekamMedis').val() != ''){
-                        CheckIdDuplicate(tagId, val, $('#noRekamMedis').val(), 'tambah');
-                    }
-                })
-                $('.frm-tanggal').change(function(){
-                    let id = $(this).attr('id')
-                    if($(this).val() == ""){
-                        $(this).removeClass('isInValid')
-                        $(this).removeClass('isValid')
-                        $('.'+id+'_isNull').css('display', 'none')
-                    }else{
-                        $(this).removeClass('isInValid')
-                        $(this).addClass('isValid')
-                        $('.'+id+'_isNull').css('display', 'none')
-                    }
-                })
-                $('#fileTambah').change(function(){
-                    if($(this).val() != ""){
-                        $('.fileTambah_isNull').css('display', 'none')
-                    }
-                })
-                function onlyNumberKey(evt) { 
-                // Only ASCII charactar in that range allowed 
-                    var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
-                    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) 
-                        return false; 
-                    return true; 
                 }
-    
-                const CheckIdDuplicate = (tagId, val, noCm, method) => {
-                    let isUbah
-                    if(method == 'ubah'){
-                        isUbah = true;
-                    }else{
-                        isUbah = false;
-                    }
-    
-                    $.ajax({
-                        url: "{{url('dokumen/checkIdDuplicate')}}",
-                        method: 'post',
-                        data: {noPendaftaran: val, noCm: noCm, _token: '<?php echo csrf_token()?>'},
-                        success : function(res){
-                            if(val == ''){
-                                $('#'+tagId).removeClass('isInValid');
-                                $('#'+tagId).removeClass('isValid');
-                                $('.'+tagId+'_duplicated').css('display', 'none');
-                                $('.'+tagId+'_isNull').css('display', 'none');
-                                $('#'+tagId+'_checkValid').val('0');
-                            }else if(isUbah == true && res.ID == $('#ID_ubah_hidden').val()){
-                                $('#'+tagId).removeClass('isInValid');
-                                $('#'+tagId).removeClass('isValid');
-                                $('.'+tagId+'_duplicated').css('display', 'none');
-                                $('.'+tagId+'_isNull').css('display', 'none');
-                                $('#'+tagId+'_checkValid').val('1');
-                            }else if(res.status == true){
-                                $('#'+tagId).removeClass('isValid');
-                                $('#'+tagId).addClass('isInValid');
-                                $('.'+tagId+'_duplicated').css('display', 'block');
-                                $('#'+tagId+'_checkValid').val('0');
-                            }else{
-                                $('#'+tagId).removeClass('isInValid');
-                                $('#'+tagId).addClass('isValid');
-                                $('.'+tagId+'_duplicated').css('display', 'none');
-                                $('.'+tagId+'_isNull').css('display', 'none');
-                                $('#'+tagId+'_checkValid').val('1');
-                            }
-                        }
-                    })
-    
-                }
-    
-                const AjaxStore = () => {
-                    let dataForm = $('#form-tambah').serializeArray();
-                    console.log(dataForm)
-    
-                    // dataForm[6]['name'] = 'file';
-                    var dataFile = new FormData();
-                    jQuery.each(jQuery('#fileTambah')[0].files, function(i, file) {
-                        dataFile.append('file-'+i, file);
-                    });
-    
-                    console.log(dataFile)
-                    console.log(dataFile.FormData)
-    
-                    $.ajax({
-                        url: "{{url('dokumen/ajaxStore')}}",
-                        method: 'post',
-                        data: {dataForm: dataForm, _token: '<?php echo csrf_token()?>'},
-                        success: function(res){
-                            
-                        }
-                    })
-                    $.ajax({
-                        url: "{{url('dokumen/ajaxStore')}}",
-                        method: 'post',
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: dataFile,
-                        success: function(res){
-    
-                        }
-                    })
+
+            })
+            $('#btn_batal_upload').click(function(){
+                $('#upload_section').removeClass('active')
+                $('#upload_section').addClass('inactive')
+            })
+            $('.frm-input').keyup(function(){
+                let id = $(this).attr('id');
+                if($(this).val() == ""){
+                    $(this).removeClass('isInValid')
+                    $(this).removeClass('isValid')
+                    $('.'+id+'_isNull').css('display', 'none')
+                    $('.'+id+'_duplicated').css('display', 'none')
+                }else{
+                    $(this).removeClass('isInValid')
+                    $(this).addClass('isValid')
+                    $('.'+id+'_isNull').css('display', 'none')
+                    $('.'+id+'_duplicated').css('display', 'none')
                 }
             })
-        </script>
-        <!-- slider -->
-        <script type="text/javascript">
-            //$('#test').BootSideMenu({side:"left", autoClose:false});
-            $('#slider').BootSideMenu({
-                side: "right",
-                autoClose: true,
-                width: "43%",
-                closeOnClick: false
-            });
-
-            $('#sliderTable').dataTable( {
-                "scrollY": "100px",
-                "scrollCollapse": true,
-                "paging": false,
-                "order": [[ 1, "desc" ]]
-            } );
-            
-            function previewPDF(noCM, noPendaftaran, tahun){
-                
-                // let NoCM = $('.clickLihat').data('lihatNoCM');
-                let date = noCM+"/"+noPendaftaran+"_"+tahun+".pdf";
-                // alert(date);
-                // var test ="URL::asset('"+date+"')";
-                // alert(test);
-                var str = "<embed src='{{ URL::asset('dokumenRM/') }}/"+noCM+"/"+noPendaftaran+"_"+tahun+".pdf' width='100%' height='300px' />";
-                // // // // noPendaftaran + ' ' + noCM+ ' ' + thn;
-                $('.arema1').html(str);
-                
+            $('.inptId').keyup(function(){
+                let tagId = $(this).prop('id');
+                let val = $(this).val();
+                if($('#noRekamMedis').val() != ''){
+                    CheckIdDuplicate(tagId, val, $('#noRekamMedis').val(), 'tambah');
+                }
+            })
+            $('.frm-tanggal').change(function(){
+                let id = $(this).attr('id')
+                if($(this).val() == ""){
+                    $(this).removeClass('isInValid')
+                    $(this).removeClass('isValid')
+                    $('.'+id+'_isNull').css('display', 'none')
+                }else{
+                    $(this).removeClass('isInValid')
+                    $(this).addClass('isValid')
+                    $('.'+id+'_isNull').css('display', 'none')
+                }
+            })
+            $('#fileTambah').change(function(){
+                if($(this).val() != ""){
+                    $('.fileTambah_isNull').css('display', 'none')
+                }
+            })
+            function onlyNumberKey(evt) { 
+            // Only ASCII charactar in that range allowed 
+                var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
+                if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) 
+                    return false; 
+                return true; 
             }
-        </script>
+
+            const CheckIdDuplicate = (tagId, val, noCm, method) => {
+                let isUbah
+                if(method == 'ubah'){
+                    isUbah = true;
+                }else{
+                    isUbah = false;
+                }
+
+                $.ajax({
+                    url: "{{url('dokumen/checkIdDuplicate')}}",
+                    method: 'post',
+                    data: {noPendaftaran: val, noCm: noCm, _token: '<?php echo csrf_token()?>'},
+                    success : function(res){
+                        if(val == ''){
+                            $('#'+tagId).removeClass('isInValid');
+                            $('#'+tagId).removeClass('isValid');
+                            $('.'+tagId+'_duplicated').css('display', 'none');
+                            $('.'+tagId+'_isNull').css('display', 'none');
+                            $('#'+tagId+'_checkValid').val('0');
+                        }else if(isUbah == true && res.ID == $('#ID_ubah_hidden').val()){
+                            $('#'+tagId).removeClass('isInValid');
+                            $('#'+tagId).removeClass('isValid');
+                            $('.'+tagId+'_duplicated').css('display', 'none');
+                            $('.'+tagId+'_isNull').css('display', 'none');
+                            $('#'+tagId+'_checkValid').val('1');
+                        }else if(res.status == true){
+                            $('#'+tagId).removeClass('isValid');
+                            $('#'+tagId).addClass('isInValid');
+                            $('.'+tagId+'_duplicated').css('display', 'block');
+                            $('#'+tagId+'_checkValid').val('0');
+                        }else{
+                            $('#'+tagId).removeClass('isInValid');
+                            $('#'+tagId).addClass('isValid');
+                            $('.'+tagId+'_duplicated').css('display', 'none');
+                            $('.'+tagId+'_isNull').css('display', 'none');
+                            $('#'+tagId+'_checkValid').val('1');
+                        }
+                    }
+                })
+
+            }
+
+            const AjaxStore = () => {
+                let dataForm = $('#form-tambah').serializeArray();
+                console.log(dataForm)
+
+                // dataForm[6]['name'] = 'file';
+                var dataFile = new FormData();
+                jQuery.each(jQuery('#fileTambah')[0].files, function(i, file) {
+                    dataFile.append('file-'+i, file);
+                });
+
+                console.log(dataFile)
+                console.log(dataFile.FormData)
+
+                $.ajax({
+                    url: "{{url('dokumen/ajaxStore')}}",
+                    method: 'post',
+                    data: {dataForm: dataForm, _token: '<?php echo csrf_token()?>'},
+                    success: function(res){
+                        
+                    }
+                })
+                $.ajax({
+                    url: "{{url('dokumen/ajaxStore')}}",
+                    method: 'post',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: dataFile,
+                    success: function(res){
+
+                    }
+                })
+            }
+        })
+    </script>
+    <!-- slider -->
+    <script type="text/javascript">
+        //$('#test').BootSideMenu({side:"left", autoClose:false});
+        $('#slider').BootSideMenu({
+            side: "right",
+            autoClose: true,
+            width: "43%",
+            closeOnClick: false
+        });
+
+        $('#sliderTable').dataTable( {
+            "scrollY": "100px",
+            "scrollCollapse": true,
+            "paging": false,
+            "order": [[ 1, "desc" ]]
+        } );
+        
+        function previewPDF(noCM, noPendaftaran, tahun){
+            
+            // let NoCM = $('.clickLihat').data('lihatNoCM');
+            let date = noCM+"/"+noPendaftaran+"_"+tahun+".pdf";
+            // alert(date);
+            // var test ="URL::asset('"+date+"')";
+            // alert(test);
+            var str = "<embed src='{{ URL::asset('dokumenRM/') }}/"+noCM+"/"+noPendaftaran+"_"+tahun+".pdf' width='100%' height='300px' />";
+            // // // // noPendaftaran + ' ' + noCM+ ' ' + thn;
+            $('.arema1').html(str);
+            
+        }
+    </script>
 @endsection

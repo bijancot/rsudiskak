@@ -440,7 +440,7 @@
                         $('#modal_success').modal('toggle')
                 @elseif(session('statusNotif') == 'failed')
                         // alert Notification
-                        $('#msg_modal1').html('Data Pasien Belum lengkap (API)');
+                        $('#msg_modal-failed').html('Data Pasien Belum lengkap (API)');
                         $('#modal_failed').modal('toggle')
                 @endif
             @endif
@@ -456,7 +456,7 @@
             @if(session('statusDuplikatMasukPoli'))
                 @if(session('statusDuplikatMasukPoli') == true)
                         // alert Notification
-                        $('#msg_modal1').html('Pasien Sudah Tersedia');
+                        $('#msg_modal-failed').html('Pasien Sudah Tersedia');
                         $('#modal_failed').modal('toggle')    
                 @endif
             @endif

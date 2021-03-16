@@ -199,8 +199,8 @@ class FormPengkajianController extends Controller
 
             $ICD10T    = [];
             $ICD10V    = [];
-            $ICD09T    = [];
-            $ICD09V    = [];
+            // $ICD09T    = [];
+            // $ICD09V    = [];
 
             if (!empty($dataMasukPoli['DataPengkajian'])) {
                 if (array_key_exists('PengkajianMedis', $dataMasukPoli['DataPengkajian'])) {
@@ -217,18 +217,18 @@ class FormPengkajianController extends Controller
                         // dump($ICD10T); // dump($ICD10V);
                     }
 
-                    if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+                    // if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
 
-                        $diagnosaT      = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9'];
-                        $pecahKode09    = explode(";", $diagnosaT['KodeDiagnosaT']);    // dump($pecahKode09);
-                        $pecahNama09    = explode(";", $diagnosaT['DiagnosaTindakan']); // dump($pecahNama09);
+                    //     $diagnosaT      = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9'];
+                    //     $pecahKode09    = explode(";", $diagnosaT['KodeDiagnosaT']);    // dump($pecahKode09);
+                    //     $pecahNama09    = explode(";", $diagnosaT['DiagnosaTindakan']); // dump($pecahNama09);
 
-                        for ($item = 0; $item < count($pecahKode09); $item++) {
-                            array_push($ICD09T, $pecahKode09[$item] . " - " . $pecahNama09[$item]);
-                            array_push($ICD09V, $pecahKode09[$item] . ":" . $pecahNama09[$item]);
-                        }
-                        // dump($ICD09T); // dump($ICD09V);
-                    }
+                    //     for ($item = 0; $item < count($pecahKode09); $item++) {
+                    //         array_push($ICD09T, $pecahKode09[$item] . " - " . $pecahNama09[$item]);
+                    //         array_push($ICD09V, $pecahKode09[$item] . ":" . $pecahNama09[$item]);
+                    //     }
+                    //     // dump($ICD09T); // dump($ICD09V);
+                    // }
                 }
             }
 
@@ -266,8 +266,8 @@ class FormPengkajianController extends Controller
                 'diagnosaT'         => $diagnosaT,
                 'ICD10T'            => $ICD10T,
                 'ICD10V'            => $ICD10V,
-                'ICD09T'            => $ICD09T,
-                'ICD09V'            => $ICD09V,
+                // 'ICD09T'            => $ICD09T,
+                // 'ICD09V'            => $ICD09V,
                 'dataMasukPoli'     => $dataMasukPoli,
                 'kdRuangan'         => $resKdRuangan,
                 'urlPengkajian'     => 'formPengkajian/' . $idForm . '/' . $NoCM . '/' . $noPendaftaran . '/' . $tglMasukPoli
@@ -295,21 +295,51 @@ class FormPengkajianController extends Controller
         // $dataMasukPoli = $dataMasukPoli[0];
 
         //get data pasien berdasarkan noPendaftaran dan tanggal terakhir data diinputkan
-        $dataMasukPoli = DB::collection('pasien_' . $no_cm)
+        $dataPasien = DB::collection('pasien_' . $no_cm)
             ->where('NoPendaftaran', $noPendaftaran)
             ->where('TglMasukPoli', $tglMasukPoli)
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
-            ->orderBy('created_at', 'desc')
-            ->first();
+            ->orderBy('created_at', 'desc');
+        $dataMasukPoli = $dataPasien->first();
 
-        $old = $dataMasukPoli['DataPengkajian'];
-        // dump($old);
+        $dataPengkajian = $dataMasukPoli['DataPengkajian'];
+        // dump($DataPengkajian);
+
+        if ($request->get('StatusPengkajian') == "2") {
+            // create Rencana Terapi
+            $rencanaTerapi = [
+                'ObatNonRacikan' => [],
+                'ObatRacikan' => [],
+                'StatusTerapi' => [
+                    'ObatNonRacikan' => '0',
+                    'ObatRacikan' => '0',
+                ],
+            ];
+
+            if (array_key_exists('RencanaTerapi', $dataMasukPoli)) {
+                $rencanaTerapi = $dataMasukPoli['RencanaTerapi'];
+            }
+
+            if ($rencanaTerapi['StatusTerapi']['ObatNonRacikan'] == '0' || $rencanaTerapi['StatusTerapi']['ObatRacikan'] == '0') {
+
+                $msg = "";
+                if ($rencanaTerapi['StatusTerapi']['ObatNonRacikan'] == '0') {
+                    $msg = "Obat Non Racik belum dikunci";
+                }
+                if ($rencanaTerapi['StatusTerapi']['ObatRacikan'] == '0') {
+                    $msg = "Obat Racik belum dikunci";
+                }
+
+                return redirect()->back()->with('statusNotif', 'failed')->with('msg', $msg);
+            }
+        }
+
         $old = [];
         $oldKeperawatan = [];
         $oldMedis       = [];
         $oldDiagnosa    = "-";
-        $oldICD9        = "-";
+        // $oldICD9        = "-";
         if (array_key_exists('PengkajianKeperawatan', $dataMasukPoli['DataPengkajian'])) {
 
             if (array_key_exists('TekananDarah', $dataMasukPoli['DataPengkajian']['PengkajianKeperawatan'])) {
@@ -369,17 +399,19 @@ class FormPengkajianController extends Controller
             if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
                 $oldDiagnosa = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
             }
-            if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
-                $oldICD9     = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
-            }
+            // if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+            //     $oldICD9     = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
+            // }
 
             $oldMedis       = [
                 'Anamnesis'         => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Anamnesis'],
                 'PemeriksaanFisik'  => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['PemeriksaanFisik'],
-                'Diagnosa'          => $oldDiagnosa,
+                // 'Diagnosa'          => $oldDiagnosa,
+                'Diagnosa(A)'       => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa(A)'],
                 'Komplikasi'        => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Komplikasi'],
                 'Komorbid'          => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Komorbid'],
-                'KodeICD9'          => $oldICD9,
+                // 'KodeICD9'          => $oldICD9,
+                'KodeICD9'          => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9'],
                 'Edukasi'           => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Edukasi'],
                 'PenyakitMenular'   => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['PenyakitMenular'],
                 'KesanStatusGizi'   => $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KesanStatusGizi'],
@@ -424,34 +456,34 @@ class FormPengkajianController extends Controller
             // dump($dataUpdate['PengkajianMedis']['Diagnosa']);
         }
 
-        if (array_key_exists('KodeICD9', $dataUpdate['PengkajianMedis'])) {
-            // Jika KodeICD9 terisi
-            $ICD09      = $dataUpdate['PengkajianMedis']['KodeICD9'];
-            $kode9      = [];
-            $nama9      = [];
+        // if (array_key_exists('KodeICD9', $dataUpdate['PengkajianMedis'])) {
+        //     // Jika KodeICD9 terisi
+        //     $ICD09      = $dataUpdate['PengkajianMedis']['KodeICD9'];
+        //     $kode9      = [];
+        //     $nama9      = [];
 
-            for ($item = 0; $item < count($ICD09); $item++) {
+        //     for ($item = 0; $item < count($ICD09); $item++) {
 
-                $pemisahan[$item] = explode(":", $ICD09[$item]);
+        //         $pemisahan[$item] = explode(":", $ICD09[$item]);
 
-                array_push($kode9, $pemisahan[$item][0]);
-                array_push($nama9, $pemisahan[$item][1]);
-                // dump($kode9);
-                // dump($nama9);
+        //         array_push($kode9, $pemisahan[$item][0]);
+        //         array_push($nama9, $pemisahan[$item][1]);
+        //         // dump($kode9);
+        //         // dump($nama9);
 
-            }
+        //     }
 
-            $Jkode9 = implode(";", $kode9);
-            $Jnama9 = implode(";", $nama9);
+        //     $Jkode9 = implode(";", $kode9);
+        //     $Jnama9 = implode(";", $nama9);
 
-            $diagnosaT = [
-                'KodeDiagnosaT'     => $Jkode9,
-                'DiagnosaTindakan'  => $Jnama9,
-            ];
+        //     $diagnosaT = [
+        //         'KodeDiagnosaT'     => $Jkode9,
+        //         'DiagnosaTindakan'  => $Jnama9,
+        //     ];
 
-            $dataUpdate['PengkajianMedis']['KodeICD9'] = $diagnosaT;
-            // dump($dataUpdate['PengkajianMedis']['KodeICD9']);
-        }
+        //     $dataUpdate['PengkajianMedis']['KodeICD9'] = $diagnosaT;
+        //     // dump($dataUpdate['PengkajianMedis']['KodeICD9']);
+        // }
 
         // declare status pengkajian
         $statusPengkajian = $dataUpdate['StatusPengkajian'];
@@ -503,9 +535,9 @@ class FormPengkajianController extends Controller
         if (array_key_exists('Diagnosa', $dataUpdate['PengkajianMedis'])) {
             $newDiagnosa = $dataUpdate['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
         }
-        if (array_key_exists('KodeICD9', $dataUpdate['PengkajianMedis'])) {
-            $newICD9     = $dataUpdate['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
-        }
+        // if (array_key_exists('KodeICD9', $dataUpdate['PengkajianMedis'])) {
+        //     $newICD9     = $dataUpdate['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
+        // }
 
 
         if ($idForm == '1') {
@@ -559,10 +591,13 @@ class FormPengkajianController extends Controller
         $newMedis = [
             'Anamnesis'         => $dataUpdate['PengkajianMedis']['Anamnesis'],
             'PemeriksaanFisik'  => $dataUpdate['PengkajianMedis']['PemeriksaanFisik'],
-            'Diagnosa'          => $newDiagnosa,
+            // 'Diagnosa'          => $newDiagnosa,
+            'Diagnosa(A)'       => $dataUpdate['PengkajianMedis']['Diagnosa(A)'],
+            'Komplikasi'        => $dataUpdate['PengkajianMedis']['Komplikasi'],
             'Komplikasi'        => $dataUpdate['PengkajianMedis']['Komplikasi'],
             'Komorbid'          => $dataUpdate['PengkajianMedis']['Komorbid'],
-            'KodeICD9'          => $newICD9,
+            // 'KodeICD9'          => $newICD9,
+            'KodeICD9'          => $dataUpdate['PengkajianMedis']['KodeICD9'],
             'Edukasi'           => $dataUpdate['PengkajianMedis']['Edukasi'],
             'PenyakitMenular'   => $dataUpdate['PengkajianMedis']['PenyakitMenular'],
             'KesanStatusGizi'   => $dataUpdate['PengkajianMedis']['KesanStatusGizi'],

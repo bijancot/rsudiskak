@@ -640,8 +640,14 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group h-100">
+                                                {{-- @if(Session::has('msg'))
+                                                    <div class="alert alert-danger" role="alert">{{ Session::get('msg') }}</div>
+                                                @endif --}}
                                                 <label for="rencanadanterapi">Rencana dan Terapi (P) <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                                <a href="{{ route('rencanaTerapi.index', [$idForm, $NoCM, $noPendaftaran, $tglMasukPoli]) }}" id="btn-rencanadanterapi" class="form-control btn secondary ml-auto">Form Rencana & Terapi </a>
+                                                @php
+                                                    $isDisabled = (Auth::user()->Role == "2" ? 'disabled' : '');
+                                                @endphp
+                                                <a href="{{ route('rencanaTerapi.index', [$idForm, $NoCM, $noPendaftaran, $tglMasukPoli]) }}" id="btn-rencanadanterapi" target="_blank" class="form-control btn secondary ml-auto {{ $isDisabled }}">Form Rencana & Terapi </a>
                                                 <div class="invalid-feedback">
                                                     Data Rencana dan Terapi Harus Diisi.
                                                 </div>
@@ -775,6 +781,17 @@
                 $('.lbl-isRequired').hide();
                 $('.inpt-isRequired').prop('required', false);
                 $('#statusPengkajian').val('1');
+            @endif
+
+            @if(session('statusNotif') == 'failed')
+                // alert Notification
+                @if(Session::has('msg'))
+                    var html = '<div class="alert alert-danger" role="alert">{{ Session::get('msg') }}</div>';
+                @endif
+                $('#msg_modal-failed').html(
+                    'Data Rencana Terapi Belum Terverifikasi '+html 
+                );
+                $('#modal_failed').modal('toggle')
             @endif
 
             var table = $('#tbl_dokumen').DataTable();
