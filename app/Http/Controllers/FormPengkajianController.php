@@ -243,6 +243,31 @@ class FormPengkajianController extends Controller
                 $resKdRuangan[$i - 1] = $kdRuangan['data'];
             }
 
+            $res = $client->request('GET', 'https://bgskr-project.my.id/dummy-api/kunjungan-poli.php');
+            $rwytKunjunganPoli = $res->getBody()->getContents();
+            $rwytKunjunganPoli = json_decode($rwytKunjunganPoli, true);
+            $rwytKunjunganPoli = $rwytKunjunganPoli['response'];
+
+            $res = $client->request('GET', 'https://bgskr-project.my.id/dummy-api/rawat-jalan.php');
+            $rwytRawatJalan = $res->getBody()->getContents();
+            $rwytRawatJalan = json_decode($rwytRawatJalan, true);
+            $rwytRawatJalan = $rwytRawatJalan['response'];
+
+            $res = $client->request('GET', 'https://bgskr-project.my.id/dummy-api/rawat-inap.php');
+            $rwytRawatInap = $res->getBody()->getContents();
+            $rwytRawatInap = json_decode($rwytRawatInap, true);
+            $rwytRawatInap = $rwytRawatInap['response'];
+
+            $res = $client->request('GET', 'https://bgskr-project.my.id/dummy-api/diagnosa-penunjang.php');
+            $rwytDiagnosa = $res->getBody()->getContents();
+            $rwytDiagnosa = json_decode($rwytDiagnosa, true);
+            $rwytDiagnosa = $rwytDiagnosa['response'];
+
+            $res = $client->request('GET', 'https://bgskr-project.my.id/dummy-api/tindakan.php');
+            $rwytTindakan = $res->getBody()->getContents();
+            $rwytTindakan = json_decode($rwytTindakan, true);
+            $rwytTindakan = $rwytTindakan['response'];
+
             $data = [
                 'form_id'           => $idForm,
                 'nama_form'         => $dataForm[0]['namaForm'],
@@ -270,6 +295,11 @@ class FormPengkajianController extends Controller
                 // 'ICD09V'            => $ICD09V,
                 'dataMasukPoli'     => $dataMasukPoli,
                 'kdRuangan'         => $resKdRuangan,
+                'rwytKunjunganPoli' => $rwytKunjunganPoli,
+                'rwytRawatJalan'    => $rwytRawatJalan,
+                'rwytRawatInap'     => $rwytRawatInap,
+                'rwytDiagnosa'      => $rwytDiagnosa,
+                'rwytTindakan'      => $rwytTindakan,
                 'urlPengkajian'     => 'formPengkajian/' . $idForm . '/' . $NoCM . '/' . $noPendaftaran . '/' . $tglMasukPoli
             ];
             return view($dataForm[0]['namaFile'], $data);
