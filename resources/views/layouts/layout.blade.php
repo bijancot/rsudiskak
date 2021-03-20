@@ -203,7 +203,7 @@
             <div class="modal-dialog modal-dialog-centered modal-sm">
                 <div class="modal-content">
                     <div class="modal-header bg-danger">
-                        <h5 class="modal-title text-white font-weight-bold">Gagal Menambahkan data</h5>
+                        <h5 class="modal-title text-white font-weight-bold">Gagal Menambahkan Data</h5>
                         <!-- <button type="button bg-white" class="close" data-dismiss="modal" aria-label="Close"> -->
                         {{-- <span aria-hidden="true">&times;</span> --}}
                         <!-- </button> -->

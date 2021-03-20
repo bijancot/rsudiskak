@@ -221,9 +221,9 @@
                     <div class="d-flex border-top px-4 py-2">
                         {{-- <button class="ml-auto btn diagnosa-outline"><i class="fas fa-save m-0"></i> Buka Resep</button> --}}
                         @if ($dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatNonRacikan'] == "0")
-                            <button data-toggle="modal" data-target="#btn-lock-NonRacik" data-statnonracik="{{ $statusObatNonRacikan }}" class="ml-auto btn diagnosa"><i class="fas fa-lock m-0"></i> Kunci Resep</button>    
+                            <button data-toggle="modal" data-target="#btn-lock-NonRacik" data-statnonracik="{{ $dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatNonRacikan'] }}" class="ml-auto btn diagnosa"><i class="fas fa-lock m-0"></i> Kunci Resep</button>    
                         @else    
-                            <button data-toggle="modal" data-target="#btn-unlock-NonRacik" data-statnonracik="{{ $statusObatNonRacikan }}" class="ml-auto btn diagnosa-outline"><i class="fas fa-unlock m-0"></i> Buka Resep</button>
+                            <button data-toggle="modal" data-target="#btn-unlock-NonRacik" data-statnonracik="{{ $dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatNonRacikan'] }}" class="ml-auto btn diagnosa-outline"><i class="fas fa-unlock m-0"></i> Buka Resep</button>
                         @endif
                         
                     </div>
@@ -278,9 +278,9 @@
                     <div class="d-flex border-top px-4 py-2">
                         {{-- <button class="ml-auto btn diagnosa-outline"><i class="fas fa-save m-0"></i> Simpan</button> --}}
                         @if ($dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatRacikan'] == "0")
-                            <button data-toggle="modal" data-target="#btn-lock-Racik" data-statracik="{{ $statusObatRacikan }}" class="ml-auto btn diagnosa"><i class="fas fa-lock m-0"></i> Kunci Resep</button>
+                            <button data-toggle="modal" data-target="#btn-lock-Racik" data-statracik="{{ $dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatRacikan'] }}" class="ml-auto btn diagnosa"><i class="fas fa-lock m-0"></i> Kunci Resep</button>
                         @else
-                            <button data-toggle="modal" data-target="#btn-unlock-Racik" data-statracik="{{ $statusObatRacikan }}" class="ml-auto btn diagnosa-outline"><i class="fas fa-unlock m-0"></i> Buka Resep</button>
+                            <button data-toggle="modal" data-target="#btn-unlock-Racik" data-statracik="{{ $dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatRacikan'] }}" class="ml-auto btn diagnosa-outline"><i class="fas fa-unlock m-0"></i> Buka Resep</button>
                         @endif
                     </div>
 
@@ -659,7 +659,7 @@
                 var tglMasukPoli    = $('#TglMasukPoli').val();
                 // console.log(namaObat, dosis, jumlah, pagi, siang, malam, keterangan);
                 // console.log(noCM, kdRuangan, noPendaftaran, tglMasukPoli);
-                if(namaObat != '' && dosis != '' && jumlah != '' && pagi != '' && siang != '' && malam != '' && keterangan != '' )
+                if(namaObat != '' && dosis != '' && jumlah != '' && pagi != '' && siang != '' && malam != '' )
                 {
                     $.ajax({
                         url     :"{{ action('RencanaTerapiController@storeObatNonRacikan') }}",
@@ -704,8 +704,8 @@
                 var tglMasukPoli    = $('#TglMasukPoli').val();
                 // console.log(rows);
                 @if($dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatNonRacikan'] == '0')
-                    if(confirm("Are you sure you want to remove this?"))
-                    {
+                    // if(confirm("Are you sure you want to remove this?"))
+                    // {
                         $.ajax({
                             url     : "{{ action('RencanaTerapiController@destroyObatNonRacikan') }}",
                             method  : "POST",
@@ -727,7 +727,7 @@
                         setInterval(function(){
                             $('#msg_modal').html('Berhasil Menghapus data Obat Non Racikan');
                         }, 5000);
-                    }
+                    // }
                 @endif
             });
         });
@@ -835,7 +835,7 @@
                 var tglMasukPoli    = $('#TglMasukPoli').val();
                 // console.log(namaObat, dosis, jumlah, pagi, siang, malam, keterangan);
                 // console.log(noCM, kdRuangan, noPendaftaran, tglMasukPoli);
-                if(namaObat != '' && dosis != '' && racikanDalam != '' && jumlah != '' && pagi != '' && siang != '' && malam != '' && keterangan != '' )
+                if(namaObat != '' && dosis != '' && racikanDalam != '' && jumlah != '' && pagi != '' && siang != '' && malam != '' )
                 {
                     $.ajax({
                         url     :"{{ action('RencanaTerapiController@storeObatRacikan') }}",
@@ -881,8 +881,8 @@
                 var tglMasukPoli    = $('#TglMasukPoli').val();
                 // console.log(rows);
                 @if($dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatRacikan'] == '0')
-                    if(confirm("Are you sure you want to remove this?"))
-                    {
+                    // if(confirm("Are you sure you want to remove this?"))
+                    // {
                         $.ajax({
                             url     : "{{ action('RencanaTerapiController@destroyObatRacikan') }}",
                             method  : "POST",
@@ -904,7 +904,7 @@
                         setInterval(function(){
                             $('#msg_modal').html('Berhasil Menghapus data Obat Racikan');
                         }, 5000);
-                    }
+                    // }
                 @endif
             });
         });

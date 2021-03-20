@@ -32,32 +32,8 @@ class RencanaTerapiController extends Controller
             $resKdRuangan[$i - 1] = $kdRuangan['data'];
         }
 
-        $getKdRuangan   = Auth::user()->KodeRuangan;
+        $getKdRuangan   = Auth::user()->KodeRuangan; // not used 
         $dataDokumen    = DB::collection('dokumen_' . $NoCM)->whereNotNull('Status')->get();
-
-        $getDataPasien = DB::collection('pasien_' . $NoCM)
-            ->where('KdRuangan', $getKdRuangan)
-            ->where('deleted_at', null)
-            ->whereNotNull('StatusPengkajian')
-            ->orderBy('created_at', 'desc');
-        $getDataPasien->get();
-
-        // cek LastKunjungan Pasien
-        $lastKunjunganDataPasien    = ($getDataPasien->count() > 1) ? $getDataPasien->get()[1] : [];
-
-        // create Rencana Terapi
-        $lastRencanaTerapi = [
-            'ObatNonRacikan' => [],
-            'ObatRacikan' => [],
-            'StatusTerapi' => [
-                'ObatNonRacikan' => '0',
-                'ObatRacikan' => '0',
-            ],
-        ];
-
-        if (array_key_exists('RencanaTerapi', $lastKunjunganDataPasien)) {
-            $lastRencanaTerapi = $lastKunjunganDataPasien['RencanaTerapi'];
-        }
 
         $dataMasukPoli = DB::collection('pasien_' . $NoCM)
             ->where('NoPendaftaran', $noPendaftaran)
@@ -66,20 +42,34 @@ class RencanaTerapiController extends Controller
             ->whereNotNull('StatusPengkajian')
             ->orderBy('created_at', 'desc');
         $dataMasukPoli->first();
+        $kdRuangan = $dataMasukPoli->first()['KdRuangan'];
+
+        $getDataPasien = DB::collection('pasien_' . $NoCM)
+            ->where('KdRuangan', $kdRuangan)
+            ->where('deleted_at', null)
+            ->whereNotNull('StatusPengkajian')
+            ->orderBy('created_at', 'desc');
+        $getDataPasien->get();
+
+        // cek LastKunjungan Pasien
+        $lastKunjunganDataPasien    = ($getDataPasien->count() > 1) ? $getDataPasien->get()[1] : [];
+        // create Rencana Terapi
+        $lastRencanaTerapi = [
+            'ObatNonRacikan' => [],
+            'ObatRacikan' => [],
+            'StatusTerapi' => [
+                'ObatNonRacikan' => "0",
+                'ObatRacikan' => "0",
+            ],
+        ];
+
+        if (array_key_exists('RencanaTerapi', $lastKunjunganDataPasien)) {
+            $lastRencanaTerapi = $lastKunjunganDataPasien['RencanaTerapi'];
+        }
 
         $pasienMasukPoli = $dataMasukPoli->first();
 
-        if (!empty($pasienMasukPoli['RencanaTerapi'])) {
-            // jika data RencanaTerapi sudah ada di DataMasuk Poli
-
-            $rencanaTerapi = $pasienMasukPoli['RencanaTerapi'];
-            if ($rencanaTerapi['StatusTerapi']['ObatNonRacikan'] == "0") {
-                // dump('Do Nothing, StatusTerapi ObatNonRacikan = 0');
-            }
-            if ($rencanaTerapi['StatusTerapi']['ObatRacikan'] == "0") {
-                // dump('Do Nothing, StatusTerapi ObatRacikan = 0');
-            }
-        } else {
+        if (empty($pasienMasukPoli['RencanaTerapi'])) {
             // jika tidak ada RencanaTerapi di DataMasuk Poli (Data masih Baru)
 
             // Update RencanaTerapi & StatusTerapi berdasarkan NoCM
@@ -98,10 +88,20 @@ class RencanaTerapiController extends Controller
                 ->where('deleted_at', null)
                 ->whereNotNull('StatusPengkajian');
             $queryTgl->update(['RencanaTerapi' => $lastRencanaTerapi]);
+            //
+        } else {
+            // jika data RencanaTerapi sudah ada di DataMasuk Poli
+            $rencanaTerapi = $pasienMasukPoli['RencanaTerapi'];
+
+            if ($rencanaTerapi['StatusTerapi']['ObatNonRacikan'] == "0") {
+                // dump('Do Nothing, StatusTerapi ObatNonRacikan = 0');
+            }
+            if ($rencanaTerapi['StatusTerapi']['ObatRacikan'] == "0") {
+                // dump('Do Nothing, StatusTerapi ObatRacikan = 0');
+            }
         }
 
-        $statusObatNonRacikan   = $lastRencanaTerapi['StatusTerapi']['ObatNonRacikan'];
-        $statusObatRacikan      = $lastRencanaTerapi['StatusTerapi']['ObatRacikan'];
+        // dd($rencanaTerapi);
 
         $data = [
             'idForm'                => $idForm,
@@ -110,8 +110,6 @@ class RencanaTerapiController extends Controller
             'tglMasukPoli'          => $tglMasukPoli,
             'kdRuangan'             => $resKdRuangan,
             'dataMasukPoli'         => $pasienMasukPoli,
-            'statusObatNonRacikan'  => $statusObatNonRacikan,
-            'statusObatRacikan'     => $statusObatRacikan,
             'dataDokumen'           => $dataDokumen,
             'urlPengkajian'         => 'formPengkajian/' . $idForm . '/' . $NoCM . '/' . $noPendaftaran . '/' . $tglMasukPoli
         ];

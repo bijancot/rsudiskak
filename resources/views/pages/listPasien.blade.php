@@ -291,7 +291,7 @@
 
     <!-- modal pilih form -->
      <div class="modal fade" id="modal_pilih_form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-success">
                     <h5 class="modal-title text-white text-center">Pilih Form Pengkajian </h5>

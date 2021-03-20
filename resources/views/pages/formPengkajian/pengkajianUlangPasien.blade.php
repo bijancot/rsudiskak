@@ -334,7 +334,7 @@
                                     <div class="col-12">
                                         <input id="KodeRuangan" type="hidden" value="{{ $dataMasukPoli['KdRuangan'] }}">
                                         <input id="NoCM" type="hidden" value="{{ $dataMasukPoli['NoCM'] }}">
-                                        <a id="btn_get-lastData" class="btn green-long"> Ambil Data Keperawatan Terakhir</a>
+                                        <a id="btn_get-lastData" class="btn btn-success"> Ambil Data Antropometri Terakhir</a>
                                     </div>
 
                                 </div>
@@ -365,7 +365,7 @@
                                                 <div class="d-flex">
                                                     <label for="pemeriksaanFisik">Pemeriksaan Fisik (O) <span class="lbl-isRequired" style="color:red;">*</span></label>
                                                     <a id="btn-pemeriksaanFisik" class="btn diagnosa py-0 mb-1 ml-auto">
-                                                       + Get Data
+                                                       + Ambil Data
                                                     </a>
                                                 </div>
                                                 <textarea id="txt-pemeriksaanFisik" class="form-control inpt-isRequired" class="form-control" name="PengkajianMedis[PemeriksaanFisik]" >{{(!empty($dataPengkajian['PengkajianMedis']['PemeriksaanFisik']) ? $dataPengkajian['PengkajianMedis']['PemeriksaanFisik'] : '')}}</textarea>
@@ -431,7 +431,7 @@
                                                 @php
                                                     $isDisabled = (Auth::user()->Role == "2" ? 'disabled' : '');
                                                 @endphp
-                                                <a href="{{ route('rencanaTerapi.index', [$idForm, $NoCM, $noPendaftaran, $tglMasukPoli]) }}" id="btn-rencanadanterapi" target="_blank" class="form-control btn secondary ml-auto {{ $isDisabled }}">Form Rencana & Terapi </a>
+                                                <a href="{{ route('rencanaTerapi.index', [$idForm, $NoCM, $noPendaftaran, $tglMasukPoli]) }}" id="btn-rencanadanterapi" class="form-control btn secondary ml-auto {{ $isDisabled }}">Form Rencana & Terapi </a>
                                                 <div class="invalid-feedback">
                                                     Data Rencana dan Terapi Harus Diisi.
                                                 </div>
@@ -510,7 +510,7 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             <input type="hidden" id="statusPengkajian" name="StatusPengkajian">
-                                            <button type="submit" class="btn green-long">Submit</button> 
+                                            <button type="submit" class="btn green-long">Simpan</button> 
                                         </div>
                                     </div>
                                 </div>

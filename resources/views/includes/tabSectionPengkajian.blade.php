@@ -40,7 +40,7 @@
         </table>
     </div> -->
     <div class="content mt-5 soft-shadow collapsible" style="cursor: pointer;">
-        <div class="p-4 collapsible-head">
+        <div class="p-4 collapsible-head inactive">
             <p class="h6 font-weight-bold">Kunjungan Poli <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
         </div>
         <hr>
@@ -83,7 +83,7 @@
         </div>
     </div>
     <div class="content mt-3 soft-shadow collapsible" style="cursor: pointer;">
-        <div class="p-4 collapsible-head">
+        <div class="p-4 collapsible-head inactive">
             <p class="h6 font-weight-bold"> Rawat Jalan <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
         </div>
         <hr>
@@ -126,7 +126,7 @@
         </div>
     </div>
     <div class="content mt-3 soft-shadow collapsible" style="cursor: pointer;">
-        <div class="p-4 collapsible-head">
+        <div class="p-4 collapsible-head inactive">
             <p class="h6 font-weight-bold"> Rawat Inap <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
         </div>
         <hr>
@@ -169,7 +169,7 @@
         </div>
     </div>
     <div class="content mt-3 soft-shadow collapsible" style="cursor: pointer;">
-        <div class="p-4 collapsible-head">
+        <div class="p-4 collapsible-head inactive">
             <p class="h6 font-weight-bold"> Diagnosa Penunjang <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
         </div>
         <hr>
@@ -210,7 +210,7 @@
         </div>
     </div>
     <div class="content mt-3 soft-shadow collapsible" style="cursor: pointer;">
-        <div class="p-4 collapsible-head">
+        <div class="p-4 collapsible-head inactive">
             <p class="h6 font-weight-bold"> Tindakan <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="currentColor" d="M7,10L12,15L17,10H7Z" /></svg></p>
         </div>
         <hr>
