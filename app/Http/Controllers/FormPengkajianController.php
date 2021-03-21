@@ -350,7 +350,7 @@ class FormPengkajianController extends Controller
             if (array_key_exists('RencanaTerapi', $dataMasukPoli)) {
                 $rencanaTerapi = $dataMasukPoli['RencanaTerapi'];
             }
-
+            dd($rencanaTerapi);
             if ($rencanaTerapi['StatusTerapi']['ObatNonRacikan'] == '0' || $rencanaTerapi['StatusTerapi']['ObatRacikan'] == '0') {
 
                 $msg = "";
@@ -789,20 +789,20 @@ class FormPengkajianController extends Controller
             // generate file and upload
             $dataF = $dataForm[0]['namaFile'] . 'Print';
             $dataZ = str_replace("formPengkajian", "print", $dataF);
-            // return view($dataZ, $dataPrint);
+            return view($dataZ, $dataPrint);
 
-            $isExist = File::exists('dokumenRM/' . $no_cm);
+            // $isExist = File::exists('dokumenRM/' . $no_cm);
 
-            if ($isExist == false) {
-                File::makeDirectory('dokumenRM/' . $no_cm, 7777, false, false);
-            }
+            // if ($isExist == false) {
+            //     File::makeDirectory('dokumenRM/' . $no_cm, 7777, false, false);
+            // }
 
-            PDF::loadview($dataZ, $dataPrint)
-                ->setPaper('legal', 'potrait')
-                ->save(public_path() . '/dokumenRM/' . $no_cm . '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf');
-            // ->stream('Nama_File.pdf');
-            //
-            return redirect('lihatFormPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli)->with('isVerifRM', true);
+            // PDF::loadview($dataZ, $dataPrint)
+            //     ->setPaper('legal', 'potrait')
+            //     ->save(public_path() . '/dokumenRM/' . $no_cm . '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf');
+            // // ->stream('Nama_File.pdf');
+            // //
+            // return redirect('lihatFormPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli)->with('isVerifRM', true);
         }
 
         // return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);

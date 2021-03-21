@@ -132,7 +132,8 @@ function tgl_indo($tanggal){
             </td>
             <td>
                 Rencana dan Terapi(P)<br>
-                {{$listRiwayat['DataPengkajian']['PengkajianMedis']['RencanaDanTerapi']}}
+                {{-- {{ $listRiwayat['DataPengkajian']['PengkajianMedis']['RencanaDanTerapi'] }} --}}
+                {{-- {{ $listRiwayat['RencanaDanTerapi'] }} --}}
             </td>
             <td>
                 Kode ICD 9 CM<br>

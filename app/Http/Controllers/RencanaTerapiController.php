@@ -88,6 +88,8 @@ class RencanaTerapiController extends Controller
                 ->where('deleted_at', null)
                 ->whereNotNull('StatusPengkajian');
             $queryTgl->update(['RencanaTerapi' => $lastRencanaTerapi]);
+
+            $pasienMasukPoli = $queryNoCM->first();
             //
         } else {
             // jika data RencanaTerapi sudah ada di DataMasuk Poli
@@ -100,8 +102,6 @@ class RencanaTerapiController extends Controller
                 // dump('Do Nothing, StatusTerapi ObatRacikan = 0');
             }
         }
-
-        // dd($rencanaTerapi);
 
         $data = [
             'idForm'                => $idForm,

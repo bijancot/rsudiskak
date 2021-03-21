@@ -368,7 +368,7 @@
                                                        + Ambil Data
                                                     </a>
                                                 </div>
-                                                <textarea id="txt-pemeriksaanFisik" class="form-control inpt-isRequired" class="form-control" name="PengkajianMedis[PemeriksaanFisik]" >{{(!empty($dataPengkajian['PengkajianMedis']['PemeriksaanFisik']) ? $dataPengkajian['PengkajianMedis']['PemeriksaanFisik'] : '')}}</textarea>
+                                                <textarea id="txt-pemeriksaanFisik" readonly class="form-control inpt-isRequired" class="form-control" name="PengkajianMedis[PemeriksaanFisik]" >{{(!empty($dataPengkajian['PengkajianMedis']['PemeriksaanFisik']) ? $dataPengkajian['PengkajianMedis']['PemeriksaanFisik'] : '')}}</textarea>
                                                 <div class="invalid-feedback">
                                                     Data Pemeriksaan Fisik Harus Diisi.
                                                 </div>
@@ -500,12 +500,14 @@
                                         </div>
                                         <div class="col-12 mt-3 d-none">
                                             <a href="#" id="profilRingkas" class="btn secondary">List dirujuk/konsul ke</a>
+                                        </div>
+                                        <div class="col-12 mt-3">
                                             @if(Auth::user()->Role == "1")
-                                            <input type="checkbox" id="verifikasi">
-                                            <label for="verifikasi"> Verifikasi final pasien</label><br>
-                                            <div class="invalid-feedback">
-                                                Verifikasi Harus Tercentang
-                                            </div>
+                                                <input type="checkbox" id="verifikasi">
+                                                <label for="verifikasi"> Verifikasi final pasien</label><br>
+                                                <div class="invalid-feedback">
+                                                    Verifikasi Harus Tercentang
+                                                </div>
                                             @endif
                                         </div>
                                         <div class="col-12 mt-3">

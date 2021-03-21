@@ -719,11 +719,11 @@
                                         </div>
                                         <div class="col-12 mt-3">
                                             @if(Auth::user()->Role == "1")
-                                            <input type="checkbox" id="verifikasi">
-                                            <label for="verifikasi"> Verifikasi final pasien</label><br>
-                                            <div class="invalid-feedback">
-                                                Verifikasi Harus Tercentang
-                                            </div>
+                                                <input type="checkbox" id="verifikasi">
+                                                <label for="verifikasi"> Verifikasi final pasien</label><br>
+                                                <div class="invalid-feedback">
+                                                    Verifikasi Harus Tercentang
+                                                </div>
                                             @endif
                                         </div>
                                         <div class="col-12 mt-3">

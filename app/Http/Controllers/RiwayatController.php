@@ -10,6 +10,7 @@ use PDF;
 use File;
 use App\ManajemenForm;
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Client;
 
 class RiwayatController extends Controller
 {
@@ -175,8 +176,8 @@ class RiwayatController extends Controller
                 return redirect('formPengkajian/' . $dataMasukPoli['IdFormPengkajian'] . '/' . $NoCM . '/' . $noPendaftaran);
             }
             $dataRiwayat        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->get();
-            $dataRiwayatDetail        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian', '1')->first();
-            $dataRiwayatAlergi        = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian', '1')->get();
+            $dataRiwayatDetail  = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian', '1')->first();
+            $dataRiwayatAlergi  = DB::collection('pasien_' . $NoCM)->whereNotNull('StatusPengkajian')->where('IdFormPengkajian', '1')->get();
 
             $dataDokumen        = DB::collection('dokumen_' . $NoCM)->whereNotNull('Status')->get();
 
@@ -229,7 +230,7 @@ class RiwayatController extends Controller
             ->where('TglMasukPoli', $req->get('TglMasukPoli'))
             ->whereNotNull('StatusPengkajian')
             ->where('deleted_at', null)->update(['StatusPengkajian' => '1']);
-            DB::collection('transaksi_' . $req->get('TglMasukPoli'))
+        DB::collection('transaksi_' . $req->get('TglMasukPoli'))
             ->where('NoCM', $req->get('NoCM'))
             ->where('NoPendaftaran', $req->get('NoPendaftaran'))
             ->where('TglMasukPoli', $req->get('TglMasukPoli'))
@@ -243,18 +244,18 @@ class RiwayatController extends Controller
         // print($req->get('TglMasukPoli'));
 
         // delete data on collection dokumen_{no_cm}
-        $destination = 'dokumenRM/'.$req->get('NoCM');
+        $destination = 'dokumenRM/' . $req->get('NoCM');
         $deleteDate = date('Ymdhis');
-        $namaFileOld = $destination.'/'.$req->get('NoPendaftaran').'_'.$req->get('TglMasukPoli').'.pdf';
-        $namaFileNew = $destination.'/(deleted at '.$deleteDate.' )_'.$req->get('NoPendaftaran').'_'.$req->get('TglMasukPoli').'.pdf';
+        $namaFileOld = $destination . '/' . $req->get('NoPendaftaran') . '_' . $req->get('TglMasukPoli') . '.pdf';
+        $namaFileNew = $destination . '/(deleted at ' . $deleteDate . ' )_' . $req->get('NoPendaftaran') . '_' . $req->get('TglMasukPoli') . '.pdf';
 
         //move to deleted directory
         File::move($namaFileOld, $namaFileNew);
-        
+
         // delete data
-        DB::collection('dokumen_'.$req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->update(['Status' => null, 'NamaFile' => $namaFileNew]);
-        
-        
+        DB::collection('dokumen_' . $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->update(['Status' => null, 'NamaFile' => $namaFileNew]);
+
+
         // DB::collection('dokumen_'. $req->get('NoCM'))->where('NoCM', $req->get('NoCM'))->where('NoPendaftaran', $req->get('NoPendaftaran'))->delete();
 
         // // delete file
@@ -292,46 +293,73 @@ class RiwayatController extends Controller
             $statusPsikologi    = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
             $hambatanEdukasi    = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
 
-            $diagnosa           = [
-                'KodeDiagnosa'  => Null,
-                'NamaDiagnosa'  => Null,
-            ];
+            $client = new Client();
 
-            $diagnosaT          = [
-                'KodeDiagnosaT   ' => Null,
-                'DiagnosaTindakan' => Null,
-            ];
+            $res = $client->request('GET', 'https://bgskr-project.my.id/dummy-api/kunjungan-poli.php');
+            $rwytKunjunganPoli = $res->getBody()->getContents();
+            $rwytKunjunganPoli = json_decode($rwytKunjunganPoli, true);
+            $rwytKunjunganPoli = $rwytKunjunganPoli['response'];
 
-            $ICD10T    = [];
-            $ICD10V    = [];
-            $ICD09T    = [];
-            $ICD09V    = [];
+            $res = $client->request('GET', 'https://bgskr-project.my.id/dummy-api/rawat-jalan.php');
+            $rwytRawatJalan = $res->getBody()->getContents();
+            $rwytRawatJalan = json_decode($rwytRawatJalan, true);
+            $rwytRawatJalan = $rwytRawatJalan['response'];
+
+            $res = $client->request('GET', 'https://bgskr-project.my.id/dummy-api/rawat-inap.php');
+            $rwytRawatInap = $res->getBody()->getContents();
+            $rwytRawatInap = json_decode($rwytRawatInap, true);
+            $rwytRawatInap = $rwytRawatInap['response'];
+
+            $res = $client->request('GET', 'https://bgskr-project.my.id/dummy-api/diagnosa-penunjang.php');
+            $rwytDiagnosa = $res->getBody()->getContents();
+            $rwytDiagnosa = json_decode($rwytDiagnosa, true);
+            $rwytDiagnosa = $rwytDiagnosa['response'];
+
+            $res = $client->request('GET', 'https://bgskr-project.my.id/dummy-api/tindakan.php');
+            $rwytTindakan = $res->getBody()->getContents();
+            $rwytTindakan = json_decode($rwytTindakan, true);
+            $rwytTindakan = $rwytTindakan['response'];
+
+            // $diagnosa           = [
+            //     'KodeDiagnosa'  => Null,
+            //     'NamaDiagnosa'  => Null,
+            // ];
+
+            // $diagnosaT          = [
+            //     'KodeDiagnosaT   ' => Null,
+            //     'DiagnosaTindakan' => Null,
+            // ];
+
+            // $ICD10T    = [];
+            // $ICD10V    = [];
+            // $ICD09T    = [];
+            // $ICD09V    = [];
 
             if (!empty($dataMasukPoli['DataPengkajian'])) {
 
-                if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+                // if (array_key_exists('Diagnosa', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
 
-                    $diagnosa       = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa'];
-                    $pecahKode10    = explode(";", $diagnosa['KodeDiagnosa']);
-                    $pecahNama10    = explode(";", $diagnosa['NamaDiagnosa']);
+                //     $diagnosa       = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['Diagnosa'];
+                //     $pecahKode10    = explode(";", $diagnosa['KodeDiagnosa']);
+                //     $pecahNama10    = explode(";", $diagnosa['NamaDiagnosa']);
 
-                    for ($item = 0; $item < count($pecahKode10); $item++) {
-                        array_push($ICD10T, $pecahKode10[$item] . " - " . $pecahNama10[$item]);
-                        array_push($ICD10V, $pecahKode10[$item] . ":" . $pecahNama10[$item]);
-                    }
-                }
+                //     for ($item = 0; $item < count($pecahKode10); $item++) {
+                //         array_push($ICD10T, $pecahKode10[$item] . " - " . $pecahNama10[$item]);
+                //         array_push($ICD10V, $pecahKode10[$item] . ":" . $pecahNama10[$item]);
+                //     }
+                // }
 
-                if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
+                // if (array_key_exists('KodeICD9', $dataMasukPoli['DataPengkajian']['PengkajianMedis'])) {
 
-                    $diagnosaT      = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9'];
-                    $pecahKode09    = explode(";", $diagnosaT['KodeDiagnosaT']);
-                    $pecahNama09    = explode(";", $diagnosaT['DiagnosaTindakan']);
+                //     $diagnosaT      = $dataMasukPoli['DataPengkajian']['PengkajianMedis']['KodeICD9'];
+                //     $pecahKode09    = explode(";", $diagnosaT['KodeDiagnosaT']);
+                //     $pecahNama09    = explode(";", $diagnosaT['DiagnosaTindakan']);
 
-                    for ($item = 0; $item < count($pecahKode09); $item++) {
-                        array_push($ICD09T, $pecahKode09[$item] . " - " . $pecahNama09[$item]);
-                        array_push($ICD09V, $pecahKode09[$item] . ":" . $pecahNama09[$item]);
-                    }
-                }
+                //     for ($item = 0; $item < count($pecahKode09); $item++) {
+                //         array_push($ICD09T, $pecahKode09[$item] . " - " . $pecahNama09[$item]);
+                //         array_push($ICD09V, $pecahKode09[$item] . ":" . $pecahNama09[$item]);
+                //     }
+                // }
             }
             $data = [
                 'form_id'           => $idForm,
@@ -351,12 +379,17 @@ class RiwayatController extends Controller
                 'tglMasukPoli'      => $tglMasukPoli,
                 'dataRiwayat'       => $dataRiwayat,
                 'dataDokumen'       => $dataDokumen,
-                'diagnosa'          => $diagnosa,
-                'diagnosaT'         => $diagnosaT,
-                'ICD10T'            => $ICD10T,
-                'ICD10V'            => $ICD10V,
-                'ICD09T'            => $ICD09T,
-                'ICD09V'            => $ICD09V,
+                // 'diagnosa'          => $diagnosa,
+                // 'diagnosaT'         => $diagnosaT,
+                // 'ICD10T'            => $ICD10T,
+                // 'ICD10V'            => $ICD10V,
+                // 'ICD09T'            => $ICD09T,
+                // 'ICD09V'            => $ICD09V,
+                'rwytKunjunganPoli' => $rwytKunjunganPoli,
+                'rwytRawatJalan'    => $rwytRawatJalan,
+                'rwytRawatInap'     => $rwytRawatInap,
+                'rwytDiagnosa'      => $rwytDiagnosa,
+                'rwytTindakan'      => $rwytTindakan,
                 'dataMasukPoli'     => $dataMasukPoli
             ];
             return view($dataForm[0]['namaFile'] . 'Lihat', $data);
@@ -368,7 +401,8 @@ class RiwayatController extends Controller
         }
         // return view('pages.formPengkajian.pengkajianAwalPasien', $no_cm);
     }
-    public function printPreview($NoCM, $noPendaftaran, $tglMasukPoli){
+    public function printPreview($NoCM, $noPendaftaran, $tglMasukPoli)
+    {
         $data = [
             'NoCM' => $NoCM,
             'NoPendaftaran' => $noPendaftaran,
