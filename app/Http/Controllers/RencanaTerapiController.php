@@ -65,7 +65,18 @@ class RencanaTerapiController extends Controller
 
         if (array_key_exists('RencanaTerapi', $lastKunjunganDataPasien)) {
             $lastRencanaTerapi = $lastKunjunganDataPasien['RencanaTerapi'];
+            if (empty($lastRencanaTerapi)) {
+                $lastRencanaTerapi = [
+                    'ObatNonRacikan' => [],
+                    'ObatRacikan' => [],
+                    'StatusTerapi' => [
+                        'ObatNonRacikan' => "0",
+                        'ObatRacikan' => "0",
+                    ],
+                ];
+            }
         }
+
 
         $pasienMasukPoli = $dataMasukPoli->first();
 

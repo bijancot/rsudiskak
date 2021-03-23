@@ -259,27 +259,31 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 mt-3">
-                                        <div class="form-group h-100">
-                                            <label for="diagnosa">Kode ICD 10 <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                            {{-- <input disabled type="text" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa]" value="{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa']) ? $dataPengkajian['PengkajianMedis']['Diagnosa'] : '')}}"> --}}
-                                            <select disabled type="text" multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
-                                                @if ( !empty($diagnosa['KodeDiagnosa']) && !empty($diagnosa['NamaDiagnosa']) ) 
-                                                    @for ($item = 0; $item < count($ICD10T); $item++ )
-                                                        <option value="{{ $ICD10V[$item] }}" selected >{{$ICD10T[$item]}}</option>
-                                                    @endfor
-                                                @else
-                                                    
-                                                @endif                             
-                                            </select>
-                                            <div class="invalid-feedback">
-                                                Data Diagnosa Harus Diisi.
+                                        {{-- <div class="col-12 mt-3">
+                                            <div class="form-group h-100">
+                                                <label for="diagnosa">Kode ICD 10 <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <select disabled type="text" multiple="multiple" class="form-control inpt-isRequired pilihDiagnosa" name="PengkajianMedis[Diagnosa][]" id="pilihDiagnosa" required>
+                                                    @if ( !empty($diagnosa['KodeDiagnosa']) && !empty($diagnosa['NamaDiagnosa']) ) 
+                                                        @for ($item = 0; $item < count($ICD10T); $item++ )
+                                                            <option value="{{ $ICD10V[$item] }}" selected >{{$ICD10T[$item]}}</option>
+                                                        @endfor
+                                                    @else
+                                                        
+                                                    @endif                             
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Data Diagnosa Harus Diisi.
+                                                </div>
                                             </div>
-                                            </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12 mt-3">
-                                            <label for="kodeICD10">Diagnosa (A)</label>
-                                            <textarea disabled class="form-control"></textarea>
+                                            <div class="form-group h-100">
+                                                <label for="Diagnosa">Diagnosa (A) <span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <textarea disabled id="Diagnosa" class="form-control inpt-isRequired" name="PengkajianMedis[Diagnosa(A)]">{{(!empty($dataPengkajian['PengkajianMedis']['Diagnosa(A)']) ? $dataPengkajian['PengkajianMedis']['Diagnosa(A)'] : '')}}</textarea>
+                                                <div class="invalid-feedback">
+                                                    Data Diagnosa Harus Diisi.
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-12 mt-3">
                                             <label for="komplikasi">Komplikasi</label>
@@ -301,8 +305,14 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group h-100">
+                                                {{-- @if(Session::has('msg'))
+                                                    <div class="alert alert-danger" role="alert">{{ Session::get('msg') }}</div>
+                                                @endif --}}
                                                 <label for="rencanadanterapi">Rencana dan Terapi (P) <span class="lbl-isRequired" style="color:red;">*</span></label>
-                                                <textarea disabled class="form-control inpt-isRequired" name="PengkajianMedis[RencanaDanTerapi]" id="rencanadanterapi">{{(!empty($dataPengkajian['PengkajianMedis']['RencanaDanTerapi']) ? $dataPengkajian['PengkajianMedis']['RencanaDanTerapi'] : '')}}</textarea>
+                                                @php
+                                                    $isDisabled = (Auth::user()->Role == "2" ? 'disabled' : '');
+                                                @endphp
+                                                <a href="{{ route('rencanaTerapi.index', [$idForm, $NoCM, $noPendaftaran, $tglMasukPoli]) }}" id="btn-rencanadanterapi" class="form-control btn secondary ml-auto {{ $isDisabled }}">Form Rencana & Terapi </a>
                                                 <div class="invalid-feedback">
                                                     Data Rencana dan Terapi Harus Diisi.
                                                 </div>

@@ -31,37 +31,36 @@
     </style>
 </head>
 <body>
-<?php
-$inputTglLahir = $listRiwayat['TglLahir']; 
-$inputJamMasukPoli = $listRiwayat['TglWaktuMasukPoli'];
-$inputTanggalMasukPoli = $listRiwayat['TglWaktuMasukPoli'];
-$JamMasuk = strtotime($inputJamMasukPoli);
-$TglMasuk = strtotime($inputTanggalMasukPoli);
-$TglLahir = strtotime($inputTglLahir); 
-$TglLahir2 = date('Y-m-d', $TglLahir);
-$TglMasuk2 = date('Y-m-d', $TglMasuk);
+@php
+    $inputTglLahir          = $listRiwayat['TglLahir']; 
+    $inputJamMasukPoli      = $listRiwayat['TglWaktuMasukPoli'];
+    $inputTanggalMasukPoli  = $listRiwayat['TglWaktuMasukPoli'];
 
-function tgl_indo($tanggal){
-	$bulan = array (
-		1 =>   'Januari',
-		'Februari',
-		'Maret',
-		'April',
-		'Mei',
-		'Juni',
-		'Juli',
-		'Agustus',
-		'September',
-		'Oktober',
-		'November',
-		'Desember'
-	);
-	$pecahkan = explode('-', $tanggal);
-	
-	return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
-}
+    $JamMasuk = strtotime($inputJamMasukPoli);
+    $TglLahir = date('Y-m-d', strtotime($inputTglLahir));
+    $TglMasuk = date('Y-m-d', strtotime($inputTanggalMasukPoli));
 
-?>
+    function tgl_indo($tanggal){
+        $bulan = array (
+            1 =>   'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        );
+        $pecahkan = explode('-', $tanggal);
+        
+        return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+    }
+@endphp 
+
 <div class="float-right" style="font-size:12px;">RM 02 c </div> <br>&nbsp;<br>
 
     <table>
@@ -82,8 +81,8 @@ function tgl_indo($tanggal){
             </td>
             <td colspan=3>
                 <p style="font-size:10px">No. RM : {{ $listRiwayat['NoCM'] }}</p>
-                <p style="font-size:10px">Tgl Lahir : <?php echo tgl_indo($TglLahir2); ?> / {{ $listRiwayat['Umur'] }}</p>
-                <p style="font-size:10px">Tgl Masuk : <?php echo tgl_indo($TglMasuk2); ?> Jam: <?php echo date('H:i', $JamMasuk); ?></p>
+                <p style="font-size:10px">Tgl Lahir : <?php echo tgl_indo($TglLahir); ?> / {{ $listRiwayat['Umur'] }}</p>
+                <p style="font-size:10px">Tgl Masuk : <?php echo tgl_indo($TglMasuk); ?> Jam: <?php echo date('H:i', $JamMasuk); ?></p>
             </td>
         </tr>
         <tr>
@@ -95,16 +94,24 @@ function tgl_indo($tanggal){
         </tr>
         <tr>
             <td colspan=3>
-                {{-- nambah tekanan darah sistolik dan diastolik --}}
-                {{-- 1. Tekanan darah : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['TekananDarah']}} mmHg<br> --}}
-                2. Frekuensi nadi : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['FrekuensiNadi']}} x/menit<br>
-                3. Suhu : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['Suhu']}} C<br>
-                4. Frekuensi nafas : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['FrekuensiNafas']}} x/menit<br>
+                @php
+                    $tekananDarah   = $listRiwayat['DataPengkajian']['PengkajianKeperawatan']['TekananDarah'];
+                    $sistolik       = $tekananDarah['Sistolik'];
+                    $diastolik       = $tekananDarah['Diastolik'];
+                @endphp
+                1. Tekanan darah : <br>
+                    <ul>
+                        <li>Sistolik : {{ $sistolik }} mmHg</li> 
+                        <li>Diastolik : {{ $diastolik }} mmHg</li> 
+                    </ul>
+                2. Frekuensi nadi : {{ $listRiwayat['DataPengkajian']['PengkajianKeperawatan']['FrekuensiNadi'] }} x/menit<br>
+                3. Suhu : {{ $listRiwayat['DataPengkajian']['PengkajianKeperawatan']['Suhu'] }} C<br>
+                4. Frekuensi nafas : {{ $listRiwayat['DataPengkajian']['PengkajianKeperawatan']['FrekuensiNafas'] }} x/menit<br>
             </td>
             <td colspan=3>
-                1. Berat badan : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['BeratBadan']}}<br>
-                2. Tinggi badan : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['TinggiBadan']}}<br>
-                3. Skor Nyeri : {{$listRiwayat['DataPengkajian']['PengkajianKeperawatan']['SkorNyeri']}}<br>
+                1. Berat badan : {{ $listRiwayat['DataPengkajian']['PengkajianKeperawatan']['BeratBadan'] }}<br>
+                2. Tinggi badan : {{ $listRiwayat['DataPengkajian']['PengkajianKeperawatan']['TinggiBadan'] }}<br>
+                3. Skor Nyeri : {{ $listRiwayat['DataPengkajian']['PengkajianKeperawatan']['SkorNyeri'] }}<br>
                 4. Skala resiko jatuh : <br>
                 <input type="checkbox" <?php echo ($listRiwayat['DataPengkajian']['PengkajianKeperawatan']['SkorJatuh']=="rendah" ? 'checked' : '');?>> Rendah &nbsp;
                 <input type="checkbox" <?php echo ($listRiwayat['DataPengkajian']['PengkajianKeperawatan']['SkorJatuh']=="sedang" ? 'checked' : '');?>> Sedang &nbsp;
@@ -113,7 +120,7 @@ function tgl_indo($tanggal){
             </td>
             <td style="text-align:center" colspan=2>
                 Perawat / Terapis<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
-                {{$listRiwayat['NamaPerawat']}}
+                {{ $listRiwayat['NamaPerawat'] }}
             </td>
         </tr>
         <tr>
@@ -122,42 +129,50 @@ function tgl_indo($tanggal){
         <tr>
             <td rowspan="4" colspan="6">
                 Amnesis (S) : <br>
-                {{$listRiwayat['DataPengkajian']['PengkajianMedis']['Anamnesis']}}
+                {{ $listRiwayat['DataPengkajian']['PengkajianMedis']['Anamnesis'] }}
                 <br><br>
                 Pemeriksaan Fisik (O) : <br>
-                {{$listRiwayat['DataPengkajian']['PengkajianMedis']['PemeriksaanFisik']}}
+                {{ $listRiwayat['DataPengkajian']['PengkajianMedis']['PemeriksaanFisik'] }}
                 <br>&nbsp;<br>
                 <img src="https://cdn.pixabay.com/photo/2017/01/31/08/20/anatomical-2023188_960_720.png" width="50px">
                 
             </td>
             <td>
                 Rencana dan Terapi(P)<br>
+                {{-- Deprecated --}}
                 {{-- {{ $listRiwayat['DataPengkajian']['PengkajianMedis']['RencanaDanTerapi'] }} --}}
                 {{-- {{ $listRiwayat['RencanaDanTerapi'] }} --}}
             </td>
             <td>
                 Kode ICD 9 CM<br>
-                <?php
-                    if(isset($listRiwayat['DataPengkajian']['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'])){
-                        $ICD9 = $listRiwayat['DataPengkajian']['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
-                        $arrICD9=explode(";",$ICD9);
-                        foreach($arrICD9 as $dataICD9){echo $dataICD9.'<br>';}  
-                    }else{
-                        echo "-";
-                    }
-                    
-                ?>
+                @php
+                    // Deprecated
+                    // if(isset($listRiwayat['DataPengkajian']['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'])){
+                    //     $ICD9 = $listRiwayat['DataPengkajian']['PengkajianMedis']['KodeICD9']['KodeDiagnosaT'];
+                    //     $arrICD9=explode(";",$ICD9);
+                    //     foreach($arrICD9 as $dataICD9){echo $dataICD9.'<br>';}  
+                    // }else{
+                    //     echo "-";
+                    // }    
+                    $KodeICD9       = $listRiwayat['DataPengkajian']['PengkajianMedis']['KodeICD9'];
+                    $eachKodeICD9   = explode(",",$KodeICD9);
+                @endphp
+                <ol>  
+                    @foreach ($eachKodeICD9 as $item)
+                        <li>{{ $item }}</li> 
+                    @endforeach 
+                </ol>
         </tr>
         <tr>
             <td colspan=2>
                 Edukasi :<br>
-                {{$listRiwayat['DataPengkajian']['PengkajianMedis']['Edukasi']}}
+                {{ $listRiwayat['DataPengkajian']['PengkajianMedis']['Edukasi'] }}
             </td>
         </tr>
         <tr>
             <td colspan=2>
                 Penyakit menular : <br>
-                {{$listRiwayat['DataPengkajian']['PengkajianMedis']['PenyakitMenular']}}
+                {{ $listRiwayat['DataPengkajian']['PengkajianMedis']['PenyakitMenular'] }}
             </td>
         </tr>
         <tr>
@@ -168,22 +183,50 @@ function tgl_indo($tanggal){
         </tr>
         <tr>
             <td colspan=3>
-                <?php
-                    $diagnosa = $listRiwayat['DataPengkajian']['PengkajianMedis']['Diagnosa']['NamaDiagnosa'];
-                    $arrDiagnosa=explode(";",$diagnosa);
-                    
-                ?> 
-                Diagnosa : <br><?php foreach($arrDiagnosa as $dataDiagnosa){echo $dataDiagnosa.'<br>';}?><br>   
-                Komplikasi : {{$listRiwayat['DataPengkajian']['PengkajianMedis']['Komplikasi']}}<br>
-                Komorbid : {{$listRiwayat['DataPengkajian']['PengkajianMedis']['Komorbid']}}
+                @php
+                    /**
+                     * Example 
+                     * */
+                    // $diagnosa = $listRiwayat['DataPengkajian']['PengkajianMedis']['Diagnosa']['NamaDiagnosa'];
+                    // $arrDiagnosa=explode(";",$diagnosa);
+
+                    $diagnosa       = $listRiwayat['DataPengkajian']['PengkajianMedis']['Diagnosa(A)'];
+                    $eachDiagnosa   = explode(",",$diagnosa);
+
+                    $komplikasi     = $listRiwayat['DataPengkajian']['PengkajianMedis']['Komplikasi'];
+                    $eachKomplikasi = explode(",",$komplikasi);
+
+                    $komorbid       = $listRiwayat['DataPengkajian']['PengkajianMedis']['Komorbid'];
+                    $eachKomorbid   = explode(",",$komorbid);
+                @endphp
+                <?php //foreach($arrDiagnosa as $dataDiagnosa){ echo $dataDiagnosa.'<br>';}?>
+                
+                Diagnosa : <br>
+                <ol>  
+                    @foreach ($eachDiagnosa as $item)
+                        <li>{{ $item }}</li> 
+                    @endforeach 
+                </ol>
+                Komplikasi : <br> 
+                <ol>  
+                    @foreach ($eachKomplikasi as $item)
+                        <li>{{ $item }}</li> 
+                    @endforeach 
+                </ol>
+                Komorbid : <br>
+                <ol>  
+                    @foreach ($eachKomorbid as $item)
+                        <li>{{ $item }}</li> 
+                    @endforeach 
+                </ol>
             </td>
             <td colspan=3>
                 <?php
-                    $icd10 = $listRiwayat['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
-                    $arrICD10=explode(";",$icd10);
-                    
+                    // Deprecated
+                    // $icd10 = $listRiwayat['DataPengkajian']['PengkajianMedis']['Diagnosa']['KodeDiagnosa'];
+                    // $arrICD10=explode(";",$icd10);
                 ?>
-                Kode ICD 10 CM : <br><?php foreach($arrICD10 as $dataICD10){echo $dataICD10.'<br>';}?>
+                Kode ICD 10 CM : <br><?php //foreach($arrICD10 as $dataICD10){echo $dataICD10.'<br>';}?>
             </td>
             <td colspan=2>
                 Kesan Status Gizi : <br>
@@ -197,7 +240,7 @@ function tgl_indo($tanggal){
             <td colspan=2 style="text-align:center">Telah Dikode</td>
             <td colspan=2 style="text-align:center">Legalisasi Severity</td>
             <td colspan=2 rowspan=3 style="text-align:center">
-                Tulungagung, <?php echo tgl_indo($TglMasuk2); ?><br>
+                Tulungagung, <?php echo tgl_indo($TglMasuk); ?><br>
                 Dokter<br>
             </td>
         </tr>
@@ -209,15 +252,15 @@ function tgl_indo($tanggal){
             <td style="text-align:center" colspan=2>Komite Medis</td>
         </tr>
         <tr>
-            <td style="text-align:center"><?php echo tgl_indo($TglMasuk2); ?>&nbsp;<br>&nbsp;<br></td>
+            <td style="text-align:center"><?php echo tgl_indo($TglMasuk); ?>&nbsp;<br>&nbsp;<br></td>
             <td><br></td>
-            <td style="text-align:center"><?php echo tgl_indo($TglMasuk2); ?><br></td>
+            <td style="text-align:center"><?php echo tgl_indo($TglMasuk); ?><br></td>
             <td><br></td>
             <td colspan=2><br></td>
         </tr>
         <tr>
             <td colspan=6></td>
-            <td style="text-align:center" colspan=2>{{$listRiwayat['NamaDokter']}}</td>
+            <td style="text-align:center" colspan=2>{{ $listRiwayat['NamaDokter'] }}</td>
         </tr>
     </table>
 </body>

@@ -161,7 +161,10 @@
        
             <div class="d-flex align-items-center mb-5">
                 {{-- <a href="{{ url()->previous() }}" class="mr-auto"> --}}
-                <a href="/formPengkajian/{{$idForm}}/{{ $dataMasukPoli['NoCM'] }}/{{$dataMasukPoli['NoPendaftaran'] }}/{{$dataMasukPoli['TglMasukPoli']}}" class="mr-auto">
+                    @php
+                        $link = $dataMasukPoli['StatusPengkajian'] == "2" ? 'lihatFormPengkajian' : 'formPengkajian' ;        
+                    @endphp
+                <a href="/{{ $link }}/{{ $idForm }}/{{ $dataMasukPoli['NoCM'] }}/{{ $dataMasukPoli['NoPendaftaran'] }}/{{ $dataMasukPoli['TglMasukPoli'] }}" class="mr-auto">
                     <span>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 18L15.41 16.59L10.83 12L15.41 7.41L14 6L7.99997 12L14 18Z" fill="#00451F"/></svg>
                         Kembali
@@ -220,10 +223,14 @@
                     </table>
                     <div class="d-flex border-top px-4 py-2">
                         {{-- <button class="ml-auto btn diagnosa-outline"><i class="fas fa-save m-0"></i> Buka Resep</button> --}}
+                        @php
+                            $isDisabled = (Auth::user()->Role == "2" || $dataMasukPoli['StatusPengkajian'] == "2" ? 'disabled' : '');
+                            $toggle     = ($dataMasukPoli['StatusPengkajian'] == "2" ? '#' : 'modal');
+                        @endphp
                         @if ($dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatNonRacikan'] == "0")
-                            <button data-toggle="modal" data-target="#btn-lock-NonRacik" data-statnonracik="{{ $dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatNonRacikan'] }}" class="ml-auto btn diagnosa"><i class="fas fa-lock m-0"></i> Kunci Resep</button>    
+                            <button data-toggle="modal" data-target="#btn-lock-NonRacik" data-statnonracik="{{ $dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatNonRacikan'] }}" class="ml-auto btn diagnosa "><i class="fas fa-lock m-0"></i> Kunci Resep</button>    
                         @else    
-                            <button data-toggle="modal" data-target="#btn-unlock-NonRacik" data-statnonracik="{{ $dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatNonRacikan'] }}" class="ml-auto btn diagnosa-outline"><i class="fas fa-unlock m-0"></i> Buka Resep</button>
+                            <button data-toggle="{{ $toggle }}" data-target="#btn-unlock-NonRacik" data-statnonracik="{{ $dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatNonRacikan'] }}" class="ml-auto btn diagnosa-outline {{ $isDisabled }}"><i class="fas fa-unlock m-0"></i> Buka Resep</button>
                         @endif
                         
                     </div>
@@ -277,10 +284,14 @@
                     </table>
                     <div class="d-flex border-top px-4 py-2">
                         {{-- <button class="ml-auto btn diagnosa-outline"><i class="fas fa-save m-0"></i> Simpan</button> --}}
+                        @php
+                            $isDisabled = (Auth::user()->Role == "2" || $dataMasukPoli['StatusPengkajian'] == "2" ? 'disabled' : '');
+                            $toggle     = ($dataMasukPoli['StatusPengkajian'] == "2" ? '#' : 'modal');
+                        @endphp
                         @if ($dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatRacikan'] == "0")
                             <button data-toggle="modal" data-target="#btn-lock-Racik" data-statracik="{{ $dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatRacikan'] }}" class="ml-auto btn diagnosa"><i class="fas fa-lock m-0"></i> Kunci Resep</button>
                         @else
-                            <button data-toggle="modal" data-target="#btn-unlock-Racik" data-statracik="{{ $dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatRacikan'] }}" class="ml-auto btn diagnosa-outline"><i class="fas fa-unlock m-0"></i> Buka Resep</button>
+                            <button data-toggle="{{ $toggle }}" data-target="#btn-unlock-Racik" data-statracik="{{ $dataMasukPoli['RencanaTerapi']['StatusTerapi']['ObatRacikan'] }}" class="ml-auto btn diagnosa-outline {{ $isDisabled }}"><i class="fas fa-unlock m-0"></i> Buka Resep</button>
                         @endif
                     </div>
 
@@ -350,13 +361,13 @@
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header bg-danger">
-                    <h5 class="modal-title text-white text-center">Kunci Resep </h5>
+                    <h5 class="modal-title text-white text-center">Buka Kunci Resep </h5>
                 </div>
                 <form id="form-unlock-nonRacik" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <p style="text-align: center;">Apakah anda yakin mengunci resep ini ? </p>
+                            <p style="text-align: center;">Apakah anda yakin membuka resep ini ? </p>
                             <input type="hidden" name="status" id="StatusTerapiNonRacik-unlock" value="">
                             <input type="hidden" name="NoCM" value="{{ $dataMasukPoli['NoCM'] }}">
                             <input type="hidden" name="KdRuangan" value="{{ $dataMasukPoli['KdRuangan'] }}">
@@ -376,13 +387,13 @@
         <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header bg-danger">
-                    <h5 class="modal-title text-white text-center">Kunci Resep </h5>
+                    <h5 class="modal-title text-white text-center">Buka Kunci Resep </h5>
                 </div>
                 <form id="form-unlock-Racik" method="POST" >
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <p style="text-align: center;">Apakah anda yakin mengunci resep ini ? </p>    
+                            <p style="text-align: center;">Apakah anda yakin membuka resep ini ? </p>    
                             <input type="hidden" name="status" id="StatusTerapiRacik-unlock" value="">
                             <input type="hidden" name="NoCM" value="{{ $dataMasukPoli['NoCM'] }}">
                             <input type="hidden" name="KdRuangan" value="{{ $dataMasukPoli['KdRuangan'] }}">

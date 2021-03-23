@@ -404,9 +404,9 @@ class RiwayatController extends Controller
     public function printPreview($NoCM, $noPendaftaran, $tglMasukPoli)
     {
         $data = [
-            'NoCM' => $NoCM,
+            'NoCM'          => $NoCM,
             'NoPendaftaran' => $noPendaftaran,
-            'TglMasukPoli' => $tglMasukPoli
+            'TglMasukPoli'  => $tglMasukPoli
         ];
 
         return view('pages.print.printPreview', $data);

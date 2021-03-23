@@ -81,9 +81,10 @@ class FormPengkajianController extends Controller
             ->whereNotNull('StatusPengkajian')
             ->orderBy('created_at', 'desc')
             ->first();
+        $kdRuangan = $dataMasukPoli['KdRuangan'];
 
         $cekPasien = DB::collection('pasien_' . $no_cm)
-            ->where('KdRuangan', $getKdRuangan)
+            ->where('KdRuangan', $kdRuangan)
             ->where('deleted_at', null)
             ->whereNotNull('StatusPengkajian')
             ->count();
@@ -350,14 +351,16 @@ class FormPengkajianController extends Controller
             if (array_key_exists('RencanaTerapi', $dataMasukPoli)) {
                 $rencanaTerapi = $dataMasukPoli['RencanaTerapi'];
             }
-            dd($rencanaTerapi);
+
             if ($rencanaTerapi['StatusTerapi']['ObatNonRacikan'] == '0' || $rencanaTerapi['StatusTerapi']['ObatRacikan'] == '0') {
 
                 $msg = "";
-                if ($rencanaTerapi['StatusTerapi']['ObatNonRacikan'] == '0') {
+                $statusObatNonRacik = $rencanaTerapi['StatusTerapi']['ObatNonRacikan'];
+                $statusObatRacik    = $rencanaTerapi['StatusTerapi']['ObatRacikan'];
+                if ($statusObatNonRacik == '0') {
                     $msg = "Obat Non Racik belum dikunci";
                 }
-                if ($rencanaTerapi['StatusTerapi']['ObatRacikan'] == '0') {
+                if ($statusObatRacik == '0') {
                     $msg = "Obat Racik belum dikunci";
                 }
 
@@ -737,20 +740,20 @@ class FormPengkajianController extends Controller
             $tempatTinggal          = DB::collection('tempatTinggal')->where("deleted_at", Null)->get();
             $statusPsikologi        = DB::collection('statusPsikologi')->where("deleted_at", Null)->get();
             $hambatanEdukasi        = DB::collection('hambatanEdukasi')->where("deleted_at", Null)->get();
-            $diagnosa           = [
-                'KodeDiagnosa'  => Null,
-                'NamaDiagnosa'  => Null,
-            ];
+            // $diagnosa           = [
+            //     'KodeDiagnosa'  => Null,
+            //     'NamaDiagnosa'  => Null,
+            // ];
 
-            $diagnosaT          = [
-                'KodeDiagnosaT   ' => Null,
-                'DiagnosaTindakan' => Null,
-            ];
+            // $diagnosaT          = [
+            //     'KodeDiagnosaT   ' => Null,
+            //     'DiagnosaTindakan' => Null,
+            // ];
 
             $dataPrint = [
                 'listRiwayat'       => $PrintPasien,
-                'diagnosa'          => $diagnosa,
-                'diagnosaT'         => $diagnosaT,
+                // 'diagnosa'          => $diagnosa,
+                // 'diagnosaT'         => $diagnosaT,
                 'pekerjaan'         => $pekerjaan,
                 'agama'             => $agama,
                 'statusPernikahan'  => $statusPernikahan,
@@ -774,35 +777,35 @@ class FormPengkajianController extends Controller
             $destination    = 'dokumenRM/' . $no_cm;
 
             $dataDokumenInsert = [
-                'NoCM' => $PrintPasien['NoCM'],
+                'NoCM'          => $PrintPasien['NoCM'],
                 'NoPendaftaran' => $PrintPasien['NoPendaftaran'],
-                'NamaLengkap' => $PrintPasien['NamaLengkap'],
-                'KodeRuangan' => $PrintPasien['KdRuangan'],
-                'TanggalMasuk' => $PrintPasien['TglMasukPoli'],
-                'Status' => '1',
-                'NamaFile' => $destination . '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf',
-                'NamaRuangan' => $PrintPasien['Ruangan']
+                'NamaLengkap'   => $PrintPasien['NamaLengkap'],
+                'KodeRuangan'   => $PrintPasien['KdRuangan'],
+                'TanggalMasuk'  => $PrintPasien['TglMasukPoli'],
+                'Status'        => '1',
+                'NamaFile'      => $destination . '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf',
+                'NamaRuangan'   => $PrintPasien['Ruangan']
             ];
 
             DB::collection('dokumen_' . $PrintPasien['NoCM'])->insert($dataDokumenInsert);
 
             // generate file and upload
-            $dataF = $dataForm[0]['namaFile'] . 'Print';
-            $dataZ = str_replace("formPengkajian", "print", $dataF);
-            return view($dataZ, $dataPrint);
+            $formx      = $dataForm[0]['namaFile'] . 'Print'; // pages.formPengkajian.pengkajianUlangPasien
+            $fileViewx  = str_replace("formPengkajian", "print", $formx); // pages.print.pengkajianUlangPasien
+            // return view($fileViewx, $dataPrint);
 
-            // $isExist = File::exists('dokumenRM/' . $no_cm);
+            $isExist = File::exists('dokumenRM/' . $no_cm);
 
-            // if ($isExist == false) {
-            //     File::makeDirectory('dokumenRM/' . $no_cm, 7777, false, false);
-            // }
+            if ($isExist == false) {
+                File::makeDirectory('dokumenRM/' . $no_cm, 7777, false, false);
+            }
 
-            // PDF::loadview($dataZ, $dataPrint)
-            //     ->setPaper('legal', 'potrait')
-            //     ->save(public_path() . '/dokumenRM/' . $no_cm . '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf');
-            // // ->stream('Nama_File.pdf');
-            // //
-            // return redirect('lihatFormPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli)->with('isVerifRM', true);
+            PDF::loadview($fileViewx, $dataPrint)
+                ->setPaper('legal', 'potrait')
+                ->save(public_path() . '/dokumenRM/' . $no_cm . '/' . $noPendaftaran . '_' . $tglMasukPoli . '.pdf');
+            // ->stream('Nama_File.pdf');
+            //
+            return redirect('lihatFormPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli)->with('isVerifRM', true);
         }
 
         // return redirect('formPengkajian/' . $idForm . '/' . $no_cm . '/' . $noPendaftaran . '/' . $tglMasukPoli);
