@@ -138,13 +138,17 @@ class DiagnosaController extends Controller
                     break;
                 }
             }
+            if ($x == 20) {
+                return redirect('/listPasien')->with('statusNotif', 'failed_getAntrian');
+            }
+
             // get antrian sesuai dengan no_cm dan no_pendaftaran
             $a = $getAntrian['data'][$x];
 
             // get API detail data pasien
             $getDataPasien = $this->dataPasien($no_cm);
             if ($getDataPasien == null) {
-                return redirect('/listPasien')->with('statusNotif', 'failed');
+                return redirect('/listPasien')->with('statusNotif', 'failed_getDataPasien');
             }
 
             // dump($a);

@@ -438,7 +438,11 @@
                         // alert Notification
                         $('#msg_modal').html('Berhasil Menambahkan <br> Pasien Masuk Poli');
                         $('#modal_success').modal('toggle')
-                @elseif(session('statusNotif') == 'failed')
+                @elseif(session('statusNotif') == 'failed_getAntrian')
+                        // alert Notification
+                        $('#msg_modal-failed').html('Data Antrian Pasien Belum lengkap (API)');
+                        $('#modal_failed').modal('toggle')
+                @elseif(session('statusNotif') == 'failed_getDataPasien')
                         // alert Notification
                         $('#msg_modal-failed').html('Data Pasien Belum lengkap (API)');
                         $('#modal_failed').modal('toggle')
