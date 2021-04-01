@@ -318,7 +318,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 mt-3">
+                                        {{-- <div class="col-12 mt-3">
                                             <label for="kodeICD09">Kode ICD 9</label>
                                             <select disabled multiple="multiple" class="form-control pilihDiagnosaTindakan" name="PengkajianMedis[KodeICD9][]" id="kodeICD09">
                                                 @if ( !empty($diagnosaT['KodeDiagnosaT']) && !empty($diagnosaT['DiagnosaTindakan']) ) 
@@ -329,6 +329,15 @@
                                                     
                                                 @endif
                                             </select>
+                                        </div> --}}
+                                        <div class="col-12 mt-3">
+                                            <div class="form-group h-100">
+                                                <label for="KodeICD9">Kode ICD  9<span class="lbl-isRequired" style="color:red;">*</span></label>
+                                                <textarea disabled id="KodeICD9" class="form-control inpt-isRequired" name="PengkajianMedis[KodeICD9]">{{(!empty($dataPengkajian['PengkajianMedis']['KodeICD9']) ? $dataPengkajian['PengkajianMedis']['KodeICD9'] : '')}}</textarea>
+                                                <div class="invalid-feedback">
+                                                    Data KodeICD9 Harus Diisi.
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group h-100">
