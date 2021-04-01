@@ -236,7 +236,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan=2 style="text-align:center">Telah Direvifikasi</td>
+            <td colspan=2 style="text-align:center">Telah Diverifikasi</td>
             <td colspan=2 style="text-align:center">Telah Dikode</td>
             <td colspan=2 style="text-align:center">Legalisasi Severity</td>
             <td colspan=2 rowspan=3 style="text-align:center">
